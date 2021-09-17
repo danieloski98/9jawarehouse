@@ -21,8 +21,8 @@ async function bootstrap() {
   app.setViewEngine('hbs');
 
   const config = new DocumentBuilder()
-    .setTitle('EAZICRED')
-    .setDescription('The EaziCred API documentation')
+    .setTitle('PASS APP')
+    .setDescription('The Pass App API documentation')
     .setVersion('1.0')
     .build();
   const document = SwaggerModule.createDocument(app, config);

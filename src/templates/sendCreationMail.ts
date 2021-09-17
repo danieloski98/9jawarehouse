@@ -1,7 +1,7 @@
-import { User } from 'src/Schema/User.entity';
+import { UserDocument as User } from 'src/Schema/User.schema';
 
 export function sendCreationEmail(body: User): string {
-  const { id, firstname, lastname, email } = body;
+  const { _id: id, first_name: firstname, last_name: lastname, email } = body;
 
   return `
   <!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">

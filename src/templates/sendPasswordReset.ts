@@ -1,7 +1,7 @@
-import { User } from 'src/Schema/User.entity';
+import { UserDocument as User } from 'src/Schema/User.schema';
 
 export function sendResetLink(body: User): string {
-  const { id } = body;
+  const { _id: id } = body;
 
   return `
 

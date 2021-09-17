@@ -1,10 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
-//import { MailerService } from '@nestjs-modules/mailer';
 import { IReturnObject } from 'src/utils/ReturnObject';
 import { Return } from 'src/utils/Returnfunctions';
 import { ContactForm } from 'src/Types/Contactform';
-// import { join } from 'path';
-import { User } from 'src/Schema/User.entity';
 import * as nodemailer from 'nodemailer';
 import * as Mg from 'nodemailer-mailgun-transport';
 import { MailOptions } from 'nodemailer/lib/ses-transport';
@@ -14,6 +11,7 @@ import { sendSuccessEmail } from 'src/templates/Loanapplicationemail';
 import { ApplicationSuccessful } from 'src/templates/ApplicationSuccessful';
 import { ApplicationDeclined } from 'src/templates/ApplicationDeclined';
 import { AdminLoanSuccess } from 'src/templates/AdminLoanSuccess';
+import { User as MongoUser } from 'src/Schema/User.schema';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require('dotenv').config();
@@ -39,13 +37,13 @@ export class EmailService {
   //   },
   // });
 
-  public async sendConfirmationEmail(body: User): Promise<IReturnObject> {
+  public async sendConfirmationEmail(body: MongoUser): Promise<IReturnObject> {
     try {
       const mailOption: MailOptions = {
-        from: 'eazicred@gmail.com',
+        from: 'danielemmanuel257@gmail.com',
         to: body.email,
         subject: `Account creation Successful`,
-        html: sendCreationEmail(body),
+        html: `<p> Your account has been created successfully ${body.email}`,
       };
       this.transporter.sendMail(mailOption, (error: any, info: any) => {
         if (error) {
@@ -104,13 +102,13 @@ export class EmailService {
     }
   }
 
-  public async sendResetEmail(body: User): Promise<IReturnObject> {
+  public async sendResetEmail(body: MongoUser): Promise<IReturnObject> {
     try {
       const mailOption: MailOptions = {
-        from: 'support@eazicred.com',
+        from: 'danielemmanuel257@gmail.com',
         to: body.email,
         subject: `Password reset`,
-        html: sendResetLink(body),
+        html: `<p>Link resent </p>`,
       };
       this.transporter.sendMail(mailOption, (error: any, info: any) => {
         if (error) {

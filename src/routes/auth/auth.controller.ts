@@ -10,8 +10,8 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { Response } from 'express';
-import { User } from 'src/Schema/User.entity';
 import { UserService } from './services/user/user.service';
+import { User as MongoUser, UserDocument } from 'src/Schema/User.schema';
 
 class ChangePassword {
   @ApiProperty({
@@ -30,10 +30,9 @@ export class AuthController {
   constructor(private userService: UserService) {}
 
   // GET
-  @ApiBody({ type: User })
+  @ApiBody({ type: MongoUser })
   @ApiTags('AUTH')
   @Get('verify/:code')
-  @ApiBody({ type: User })
   @ApiOkResponse({ description: 'Account created' })
   @ApiBadRequestResponse({
     description: 'There was an error, check the return body',
@@ -52,10 +51,9 @@ export class AuthController {
 
   // POST ROUTES
 
-  @ApiBody({ type: User })
   @ApiTags('AUTH')
   @Post('register')
-  @ApiBody({ type: User })
+  @ApiBody({ type: MongoUser })
   @ApiOkResponse({ description: 'Account created' })
   @ApiBadRequestResponse({
     description: 'There was an error, check the return body',
@@ -63,15 +61,14 @@ export class AuthController {
   @ApiInternalServerErrorResponse({
     description: 'Interal server error, contact the dev!',
   })
-  async register(@Res() res: Response, @Body() body: User) {
+  async register(@Res() res: Response, @Body() body: MongoUser) {
     const result = await this.userService.createAccount(body);
     res.status(result.statusCode).send(result);
   }
 
-  @ApiBody({ type: User })
   @ApiTags('AUTH')
   @Post('login')
-  @ApiBody({ type: User })
+  @ApiBody({ type: MongoUser })
   @ApiOkResponse({ description: 'Account created' })
   @ApiBadRequestResponse({
     description: 'There was an error, check the return body',
@@ -79,12 +76,12 @@ export class AuthController {
   @ApiInternalServerErrorResponse({
     description: 'Interal server error, contact the dev!',
   })
-  async login(@Res() res: Response, @Body() body: Partial<User>) {
+  async login(@Res() res: Response, @Body() body: Partial<MongoUser>) {
     const result = await this.userService.loginUser(body);
     res.status(result.statusCode).send(result);
   }
 
-  @ApiBody({ type: User })
+  @ApiBody({ type: MongoUser })
   @ApiTags('AUTH')
   @Post('forgotpassword/:email')
   @ApiParam({ type: String, name: 'email' })
@@ -102,8 +99,6 @@ export class AuthController {
   }
 
   // PUT Routes
-
-  @ApiBody({ type: User })
   @ApiTags('AUTH')
   @Post('changepassword/:user_id')
   @ApiParam({ name: 'user_id', type: String })
@@ -127,7 +122,6 @@ export class AuthController {
     res.status(result.statusCode).send(result);
   }
 
-  @ApiBody({ type: User })
   @ApiTags('AUTH')
   @Post('resetpassword/:user_id')
   @ApiParam({ name: 'user_id', type: String })

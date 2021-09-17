@@ -1,15 +1,15 @@
-import { User } from './../Schema/User.entity';
+import { User, UserDocument } from 'src/Schema/User.schema';
 import { Injectable, Logger, NestMiddleware } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
 import { Request, Response } from 'express';
 import { verify } from 'jsonwebtoken';
 import { Return } from 'src/utils/Returnfunctions';
-import { Repository } from 'typeorm';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
 
 @Injectable()
 export class UsercheckMiddleware implements NestMiddleware {
   private logger = new Logger('UserCheckMiddleWare');
-  constructor(@InjectRepository(User) private userRepo: Repository<User>) {}
+  constructor(@InjectModel(User.name) private userRepo: Model<UserDocument>) {}
   async use(req: Request, res: Response, next: () => void) {
     // get token
     // check header
@@ -29,11 +29,11 @@ export class UsercheckMiddleware implements NestMiddleware {
 
     try {
       // verify the token
-      const verifiedtoken: Partial<User> = verify(token, 'EAZICRED', {
+      const verifiedtoken: Partial<UserDocument> = verify(token, 'EAZICRED', {
         algorithms: ['HS256'],
       }) as any;
       // check the user id
-      if (verifiedtoken.id === undefined) {
+      if (verifiedtoken._id === undefined) {
         const payload = Return({
           error: true,
           statusCode: 401,

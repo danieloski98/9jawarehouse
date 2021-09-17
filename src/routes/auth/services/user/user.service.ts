@@ -1,28 +1,29 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { User } from 'src/Schema/User.entity';
 import { Return } from 'src/utils/Returnfunctions';
 import { IReturnObject } from 'src/utils/ReturnObject';
 import { Repository } from 'typeorm';
 import { sign } from 'jsonwebtoken';
 import { compare, compareSync, genSaltSync, hash } from 'bcrypt';
-import { Admin } from 'src/Schema/Admin.entity';
 import { EmailService } from 'src/routes/admin/services/email/email.service';
+import { InjectModel } from '@nestjs/mongoose';
+import { User as MongoUser, UserDocument } from 'src/Schema/User.schema';
+import { Model } from 'mongoose';
 
 @Injectable()
 export class UserService {
   private logger = new Logger();
   constructor(
-    @InjectRepository(User) private userRepo: Repository<User>,
     private emailService: EmailService,
+    @InjectModel(MongoUser.name) private userModel: Model<UserDocument>,
   ) {}
 
-  async createAccount(userDetails: User): Promise<IReturnObject> {
+  async createAccount(userDetails: MongoUser): Promise<IReturnObject> {
     try {
       // check if there is an account with that email
       this.logger.log(userDetails);
-      const emailInUse = await this.userRepo.find({
-        where: { email: userDetails.email },
+      const emailInUse = await this.userModel.find({
+        email: userDetails.email,
       });
       if (emailInUse.length >= 1) {
         return Return({
@@ -34,8 +35,8 @@ export class UserService {
 
       //check for first and lastname
       if (
-        userDetails.firstname === undefined ||
-        userDetails.lastname === undefined
+        userDetails.first_name === undefined ||
+        userDetails.last_name === undefined
       ) {
         return Return({
           error: true,
@@ -62,13 +63,13 @@ export class UserService {
       const newUser = {
         email: userDetails.email,
         password: newPassword,
-        firstname: userDetails.firstname,
-        lastname: userDetails.lastname,
+        first_name: userDetails.first_name,
+        last_name: userDetails.last_name,
         phone: userDetails.phone,
-        referralCode: userDetails.referralCode,
       };
       // create the record
-      const savedUser = await this.userRepo.save(newUser);
+      const savedUser = new this.userModel(newUser);
+      savedUser.save();
       delete savedUser.password;
 
       //send email
@@ -101,14 +102,18 @@ export class UserService {
     }
   }
 
-  public async loginUser(payload: Partial<User>): Promise<IReturnObject> {
+  public async loginUser(
+    payload: Partial<UserDocument>,
+  ): Promise<IReturnObject> {
     try {
       // check if an account with the email exisits
-      const accountExisit = await this.userRepo.findOne({
-        where: { email: payload.email },
-        relations: ['SMEloans', 'paydayloans'],
-      });
-      if (accountExisit === undefined) {
+      const accountExisit = await this.userModel
+        .findOne({
+          email: payload.email,
+        })
+        .exec();
+      console.log(accountExisit);
+      if (accountExisit === null) {
         return Return({
           error: true,
           statusCode: 400,
@@ -128,12 +133,10 @@ export class UserService {
         });
       } else {
         // generate jwt
-        delete accountExisit.password;
-        delete accountExisit.created_at;
-        payload['id'] = accountExisit.id;
+        payload['id'] = accountExisit._id;
         this.logger.warn(typeof accountExisit);
         const jwt = await this.generateJWT(payload);
-
+        delete accountExisit.password;
         return Return({
           error: false,
           statusCode: 200,
@@ -160,9 +163,7 @@ export class UserService {
   ): Promise<IReturnObject> {
     try {
       // check if the user does exist
-      const userExist = await this.userRepo.find({
-        where: { id: user_id },
-      });
+      const userExist = await this.userModel.find({ _id: user_id });
       if (userExist.length < 1) {
         return Return({
           error: true,
@@ -204,8 +205,8 @@ export class UserService {
           // hash the new Password
           const hash = await this.generateHashedPassword(payload.newpassword);
 
-          const updatedUser = await this.userRepo.update(
-            { id: userExist[0].id },
+          const updatedUser = await this.userModel.updateOne(
+            { _id: userExist[0]._id },
             { password: hash },
           );
           this.logger.log(updatedUser);
@@ -229,11 +230,11 @@ export class UserService {
   // verify user
   async verifyUser(id: string): Promise<IReturnObject> {
     try {
-      const user = await this.userRepo.findOne({ where: { id } });
+      const user = await this.userModel.findOne({ _id: id });
       if (user !== undefined) {
         // update user
-        const updatedUser = await this.userRepo.update(
-          { id },
+        const updatedUser = await this.userModel.updateOne(
+          { _id: id },
           { verified: true },
         );
 
@@ -262,7 +263,7 @@ export class UserService {
   // forgot password
   async forgotpassword(email: string): Promise<IReturnObject> {
     try {
-      const account = await this.userRepo.findOne({ where: { email } });
+      const account = await this.userModel.findOne({ email });
       if (account === undefined || account === null) {
         return Return({
           error: true,
@@ -289,11 +290,11 @@ export class UserService {
   }
 
   async resetPassword(
-    id: string,
+    _id: string,
     passwords: { password: string; confirmpassword: string },
   ): Promise<IReturnObject> {
     try {
-      const user = await this.userRepo.findOne({ where: { id } });
+      const user = await this.userModel.findOne({ _id });
       if (user === undefined || user === null) {
         return Return({
           error: true,
@@ -315,12 +316,12 @@ export class UserService {
       const hash = await this.generateHashedPassword(passwords.confirmpassword);
 
       // update the users password
-      const updatedPassword = await this.userRepo
-        .createQueryBuilder()
-        .update()
-        .set({ password: hash })
-        .where({ id })
-        .execute();
+      const updatedPassword = await this.userModel.updateOne(
+        { _id },
+        { password: hash },
+      );
+
+      this.logger.log(updatedPassword);
 
       return Return({
         error: false,
@@ -337,9 +338,35 @@ export class UserService {
     }
   }
 
-  public async generateJWT(
-    payload: Partial<User> | Partial<Admin>,
-  ): Promise<string> {
+  async getUserByID(id: string): Promise<IReturnObject> {
+    try {
+      const user = await this.userModel.findOne({ _id: id });
+      if (user === null) {
+        return Return({
+          error: true,
+          statusCode: 400,
+          errorMessage: 'User not found',
+        });
+      } else {
+        delete user._id;
+        return Return({
+          error: false,
+          statusCode: 200,
+          successMessage: 'User found',
+          data: user,
+        });
+      }
+    } catch (error) {
+      return Return({
+        error: true,
+        statusCode: 500,
+        trace: error,
+        errorMessage: 'Internal Server error.',
+      });
+    }
+  }
+
+  public async generateJWT(payload: Partial<MongoUser>): Promise<string> {
     this.logger.warn(payload);
     const JWT = sign(payload, 'EAZICRED', {
       algorithm: 'HS256',
