@@ -15,13 +15,10 @@ console.log(process.env.SMTP_PORT);
 
 @Module({
   imports: [
-    MongooseModule.forRoot(
-      'mongodb+srv://danielemmanuel257:daniel98@ksih.iadjs.mongodb.net/passapp?retryWrites=true&w=majority',
-      {
-        useUnifiedTopology: true,
-        useNewUrlParser: true,
-      },
-    ),
+    MongooseModule.forRoot(process.env.DB_URL, {
+      useUnifiedTopology: true,
+      useNewUrlParser: true,
+    }),
     AuthModule,
     UserModule,
     // AdminModule,
