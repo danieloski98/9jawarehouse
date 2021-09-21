@@ -42,7 +42,7 @@ export class EmailService {
   ): Promise<IReturnObject> {
     try {
       const mailOption: MailOptions = {
-        from: 'danielemmanuel257@gmail.com',
+        from: process.env.COMPANY_EMAIL,
         to: body.email,
         subject: `Account creation Successful`,
         html: `<p> Your account has been created successfully ${body.email}. Please follow this link to verify your email address ${process.env.APP_URL}verify/${body._id}`,
@@ -72,7 +72,7 @@ export class EmailService {
   public async sendSupportEmail(support: ContactForm): Promise<IReturnObject> {
     try {
       const mailOption: MailOptions = {
-        from: `${support.email}`,
+        from: process.env.COMPANY_EMAIL,
         to: `eazicred@gmail.com`,
         subject: `Support form message from ${support.name}`,
         html: `<p>${support.message}</p>`,
@@ -107,7 +107,7 @@ export class EmailService {
   public async sendResetEmail(body: MongoUser): Promise<IReturnObject> {
     try {
       const mailOption: MailOptions = {
-        from: 'danielemmanuel257@gmail.com',
+        from: process.env.COMPANY_EMAIL,
         to: body.email,
         subject: `Password reset`,
         html: `<p>Link resent </p>`,
