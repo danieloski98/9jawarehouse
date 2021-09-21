@@ -25,6 +25,18 @@ class ChangePassword {
   oldpassword: string;
 }
 
+class LoginDetails {
+  @ApiProperty({
+    type: String,
+  })
+  email: string;
+
+  @ApiProperty({
+    type: String,
+  })
+  password: string;
+}
+
 @Controller('auth')
 export class AuthController {
   constructor(private userService: UserService) {}
@@ -43,9 +55,9 @@ export class AuthController {
   async verify(@Res() res: Response, @Param() param: any) {
     const result = await this.userService.verifyUser(param['code']);
     if (result.statusCode === 200) {
-      res.redirect('https://app.eazicred.com/login');
+      res.send('Account Verified');
     } else {
-      res.status(result.statusCode).send(result);
+      res.status(result.statusCode).send('Account Verification failed');
     }
   }
 
@@ -68,7 +80,7 @@ export class AuthController {
 
   @ApiTags('AUTH')
   @Post('login')
-  @ApiBody({ type: MongoUser })
+  @ApiBody({ type: LoginDetails })
   @ApiOkResponse({ description: 'Account created' })
   @ApiBadRequestResponse({
     description: 'There was an error, check the return body',

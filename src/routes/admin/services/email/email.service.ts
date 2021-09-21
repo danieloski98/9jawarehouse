@@ -11,7 +11,7 @@ import { sendSuccessEmail } from 'src/templates/Loanapplicationemail';
 import { ApplicationSuccessful } from 'src/templates/ApplicationSuccessful';
 import { ApplicationDeclined } from 'src/templates/ApplicationDeclined';
 import { AdminLoanSuccess } from 'src/templates/AdminLoanSuccess';
-import { User as MongoUser } from 'src/Schema/User.schema';
+import { User as MongoUser, UserDocument } from 'src/Schema/User.schema';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require('dotenv').config();
@@ -37,13 +37,15 @@ export class EmailService {
   //   },
   // });
 
-  public async sendConfirmationEmail(body: MongoUser): Promise<IReturnObject> {
+  public async sendConfirmationEmail(
+    body: UserDocument,
+  ): Promise<IReturnObject> {
     try {
       const mailOption: MailOptions = {
         from: 'danielemmanuel257@gmail.com',
         to: body.email,
         subject: `Account creation Successful`,
-        html: `<p> Your account has been created successfully ${body.email}`,
+        html: `<p> Your account has been created successfully ${body.email}. Please follow this link to verify your email address ${process.env.APP_URL}verify/${body._id}`,
       };
       this.transporter.sendMail(mailOption, (error: any, info: any) => {
         if (error) {
