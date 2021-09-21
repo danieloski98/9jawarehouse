@@ -45,7 +45,7 @@ export class EmailService {
         from: process.env.COMPANY_EMAIL,
         to: body.email,
         subject: `Account creation Successful`,
-        html: `<p> Your account has been created successfully ${body.email}. Please follow this link to verify your email address ${process.env.APP_URL}verify/${body._id}`,
+        html: `<p> Your account has been created successfully ${body.email}. Please follow this link to verify your email address ${process.env.APP_URL}auth/verify/${body._id}`,
       };
       this.transporter.sendMail(mailOption, (error: any, info: any) => {
         if (error) {

@@ -11,7 +11,7 @@ import { UserModule } from './routes/user/user.module';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require('dotenv').config();
 
-console.log(process.env.SMTP_PORT);
+console.log(process.env.COMPANY_EMAIL);
 
 @Module({
   imports: [
