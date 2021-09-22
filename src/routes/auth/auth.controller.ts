@@ -93,9 +93,8 @@ export class AuthController {
     res.status(result.statusCode).send(result);
   }
 
-  @ApiBody({ type: MongoUser })
-  @ApiTags('AUTH')
   @Post('forgotpassword/:email')
+  @ApiTags('AUTH')
   @ApiParam({ type: String, name: 'email' })
   @ApiOkResponse({ description: 'Account created' })
   @ApiBadRequestResponse({
