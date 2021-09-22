@@ -96,7 +96,7 @@ export class AuthController {
   @Post('forgotpassword/:email')
   @ApiTags('AUTH')
   @ApiParam({ type: String, name: 'email' })
-  @ApiOkResponse({ description: 'Account created' })
+  @ApiOkResponse({ description: 'link sent' })
   @ApiBadRequestResponse({
     description: 'There was an error, check the return body',
   })
