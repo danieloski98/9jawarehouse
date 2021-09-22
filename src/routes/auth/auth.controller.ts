@@ -42,9 +42,9 @@ export class AuthController {
   constructor(private userService: UserService) {}
 
   // GET
+  @Get('verify/:code')
   @ApiBody({ type: MongoUser })
   @ApiTags('AUTH')
-  @Get('verify/:code')
   @ApiOkResponse({ description: 'Account created' })
   @ApiBadRequestResponse({
     description: 'There was an error, check the return body',
