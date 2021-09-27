@@ -12,10 +12,14 @@ import { UserModule } from './routes/user/user.module';
 require('dotenv').config();
 
 console.log(process.env.COMPANY_EMAIL);
+const URL =
+  process.env.NODE_ENV === 'development'
+    ? process.env.LOCAL_DB
+    : process.env.DB_URL;
 
 @Module({
   imports: [
-    MongooseModule.forRoot(process.env.DB_URL, {
+    MongooseModule.forRoot(URL, {
       useUnifiedTopology: true,
       useNewUrlParser: true,
     }),

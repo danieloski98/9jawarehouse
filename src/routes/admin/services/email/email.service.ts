@@ -39,13 +39,14 @@ export class EmailService {
 
   public async sendConfirmationEmail(
     body: UserDocument,
+    code?: number,
   ): Promise<IReturnObject> {
     try {
       const mailOption: MailOptions = {
         from: process.env.COMPANY_EMAIL,
         to: body.email,
         subject: `Account creation Successful`,
-        html: `<p> Your account has been created successfully ${body.email}. Please follow this link to verify your email address ${process.env.APP_URL}auth/verify/${body._id}`,
+        html: `<p> Your account has been created successfully ${body.email}. Here is your otp code for the verification of your account <b>${code}</b> </p>`,
       };
       this.transporter.sendMail(mailOption, (error: any, info: any) => {
         if (error) {

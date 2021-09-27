@@ -1,14 +1,15 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
 import { Return } from 'src/utils/Returnfunctions';
 import { IReturnObject } from 'src/utils/ReturnObject';
-import { Repository } from 'typeorm';
 import { sign } from 'jsonwebtoken';
 import { compare, compareSync, genSaltSync, hash } from 'bcrypt';
 import { EmailService } from 'src/routes/admin/services/email/email.service';
 import { InjectModel } from '@nestjs/mongoose';
 import { User as MongoUser, UserDocument } from 'src/Schema/User.schema';
 import { Model } from 'mongoose';
+import { Code, CodeDocument } from 'src/Schema/Code.Schema';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const randomNumber = require('random-number');
 
 @Injectable()
 export class UserService {
@@ -16,6 +17,7 @@ export class UserService {
   constructor(
     private emailService: EmailService,
     @InjectModel(MongoUser.name) private userModel: Model<UserDocument>,
+    @InjectModel(Code.name) private codeModel: Model<CodeDocument>,
   ) {}
 
   async createAccount(userDetails: MongoUser): Promise<IReturnObject> {
@@ -72,9 +74,24 @@ export class UserService {
       savedUser.save();
       delete savedUser.password;
 
+      // generate code
+      const options = {
+        min: 1000,
+        max: 1999,
+        integer: true,
+      };
+      const code = randomNumber(options);
+      const newCode = await this.codeModel.create({
+        user_id: savedUser._id,
+        code,
+      });
+
+      this.logger.log(newCode);
+
       //send email
       const sentEmail = await this.emailService.sendConfirmationEmail(
         savedUser,
+        code,
       );
 
       this.logger.log(sentEmail);
@@ -82,6 +99,7 @@ export class UserService {
       if (sentEmail.error) {
         const sentEmail = await this.emailService.sendConfirmationEmail(
           savedUser,
+          code,
         );
       }
 
@@ -228,16 +246,26 @@ export class UserService {
   }
 
   // verify user
-  async verifyUser(id: string): Promise<IReturnObject> {
+  async verifyUser(id: string, code?: number): Promise<IReturnObject> {
     try {
-      const user = await this.userModel.findOne({ _id: id });
-      if (user !== undefined) {
-        // update user
-        const updatedUser = await this.userModel.updateOne(
-          { _id: id },
-          { verified: true },
-        );
-
+      const Existingcode = await this.codeModel.findOne({ code });
+      if (Existingcode !== null) {
+        // check the code
+        if (Existingcode.user_id !== id) {
+          return Return({
+            error: true,
+            statusCode: 400,
+            errorMessage: 'Invalid Code',
+          });
+        }
+        // verify the users account
+        const updateUser = await this.userModel
+          .updateOne({ _id: id }, { verified: true })
+          .exec();
+        // delete the code
+        const deleteCode = await this.codeModel.deleteOne({
+          _id: Existingcode._id,
+        });
         return Return({
           error: false,
           statusCode: 200,
@@ -247,7 +275,7 @@ export class UserService {
         return Return({
           error: true,
           statusCode: 400,
-          successMessage: 'Account not verified',
+          successMessage: 'code not found',
         });
       }
     } catch (error) {

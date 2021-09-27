@@ -42,10 +42,15 @@ export class AuthController {
   constructor(private userService: UserService) {}
 
   // GET
-  @Get('verify/:code')
-  @ApiBody({ type: MongoUser })
+  @Post('verify/:userid/:code')
+  @ApiParam({ name: 'userid', type: String, description: 'The users id' })
+  @ApiParam({
+    name: 'code',
+    type: Number,
+    description: 'The code the user recieved',
+  })
   @ApiTags('AUTH')
-  @ApiOkResponse({ description: 'Account created' })
+  @ApiOkResponse({ description: 'Account verified' })
   @ApiBadRequestResponse({
     description: 'There was an error, check the return body',
   })
@@ -53,11 +58,14 @@ export class AuthController {
     description: 'Interal server error, contact the dev!',
   })
   async verify(@Res() res: Response, @Param() param: any) {
-    const result = await this.userService.verifyUser(param['code']);
+    const result = await this.userService.verifyUser(
+      param['userid'],
+      param['code'],
+    );
     if (result.statusCode === 200) {
       res.send('Account Verified');
     } else {
-      res.status(result.statusCode).send('Account Verification failed');
+      res.status(result.statusCode).send(result);
     }
   }
 

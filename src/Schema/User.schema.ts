@@ -25,7 +25,7 @@ export class User {
   password: string;
 
   @Prop({
-    required: true,
+    required: false,
     type: String,
   })
   @ApiProperty({
