@@ -8,6 +8,8 @@ import { AuthModule } from './routes/auth/auth.module';
 import { EmailService } from './globalservices/email/email.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { UserModule } from './routes/user/user.module';
+import { TestModule } from './routes/test/test.module';
+import { VacinationModule } from './routes/vacination/vacination.module';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require('dotenv').config();
 
@@ -25,6 +27,8 @@ const URL =
     }),
     AuthModule,
     UserModule,
+    TestModule,
+    VacinationModule,
     // AdminModule,
     // NotificationsModule,
   ],
