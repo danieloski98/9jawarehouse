@@ -85,4 +85,31 @@ export class TestService {
       });
     }
   }
+
+  public async getAllTest(user_id: string): Promise<IReturnObject> {
+    try {
+      const tests = await this.testModel.find({ user_id });
+      if (tests.length < 1) {
+        return Return({
+          error: true,
+          statusCode: 400,
+          errorMessage: 'Record not found',
+        });
+      }
+
+      return Return({
+        error: false,
+        statusCode: 200,
+        successMessage: 'Test Records',
+        data: tests,
+      });
+    } catch (error) {
+      return Return({
+        error: true,
+        statusCode: 500,
+        errorMessage: 'Internal Server Error',
+        trace: error,
+      });
+    }
+  }
 }

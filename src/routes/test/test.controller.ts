@@ -1,4 +1,12 @@
-import { Body, Controller, Delete, Param, Post, Res } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Res,
+} from '@nestjs/common';
 import { ApiBody, ApiParam, ApiTags } from '@nestjs/swagger';
 import { Response } from 'express';
 import { Test, TestDocument } from 'src/Schema/Test.Schema';
@@ -7,6 +15,15 @@ import { TestService } from './services/test/test.service';
 @Controller('test')
 export class TestController {
   constructor(private testService: TestService) {}
+
+  @ApiTags('TESTS')
+  @ApiParam({ name: 'user_id', type: String })
+  @Get(':user_id')
+  async getTestResult(@Res() res: Response, @Param() param: any) {
+    const result = await this.testService.getAllTest(param['user_id']);
+    res.status(result.statusCode).send(result);
+  }
+
   @ApiTags('TESTS')
   @ApiBody({ type: Test })
   @Post()
