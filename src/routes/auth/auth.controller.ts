@@ -25,6 +25,18 @@ class ChangePassword {
   oldpassword: string;
 }
 
+export class ResetPassword {
+  @ApiProperty({
+    type: String,
+  })
+  newpassword: string;
+
+  @ApiProperty({
+    type: String,
+  })
+  confirmpassword: string;
+}
+
 class LoginDetails {
   @ApiProperty({
     type: String,
@@ -142,9 +154,10 @@ export class AuthController {
   }
 
   @ApiTags('AUTH')
-  @Post('resetpassword/:user_id')
+  @Post('resetpassword/:otp')
   @ApiParam({ name: 'user_id', type: String })
-  @ApiBody({ type: ChangePassword })
+  @ApiParam({ name: 'otp', type: Number })
+  @ApiBody({ type: ResetPassword })
   @ApiOkResponse({ description: 'password updated successfully' })
   @ApiBadRequestResponse({
     description: 'There was an error, check the return body',
@@ -155,9 +168,43 @@ export class AuthController {
   async resetpassword(
     @Res() res: Response,
     @Param() param: any,
-    @Body() body: { confirmpassword: string; password: string },
+    @Body() body: ResetPassword,
   ) {
-    const result = await this.userService.resetPassword(param['user_id'], body);
+    const result = await this.userService.resetPassword(param['otp'], body);
+    res.status(result.statusCode).send(result);
+  }
+
+  @ApiTags('AUTH')
+  @Post('resendverificationcode/:email')
+  @ApiParam({ name: 'email', type: String })
+  @ApiBody({ type: ResetPassword })
+  @ApiOkResponse({ description: 'password updated successfully' })
+  @ApiBadRequestResponse({
+    description: 'There was an error, check the return body',
+  })
+  @ApiInternalServerErrorResponse({
+    description: 'Interal server error, contact the dev!',
+  })
+  async resendVerificationode(@Res() res: Response, @Param() param: any) {
+    const result = await this.userService.resendVerificationCode(
+      param['email'],
+    );
+    res.status(result.statusCode).send(result);
+  }
+
+  @ApiTags('AUTH')
+  @Post('resendresetcode/:email')
+  @ApiParam({ name: 'email', type: String })
+  @ApiBody({ type: ResetPassword })
+  @ApiOkResponse({ description: 'password updated successfully' })
+  @ApiBadRequestResponse({
+    description: 'There was an error, check the return body',
+  })
+  @ApiInternalServerErrorResponse({
+    description: 'Interal server error, contact the dev!',
+  })
+  async resendResetCode(@Res() res: Response, @Param() param: any) {
+    const result = await this.userService.resendResetCode(param['email']);
     res.status(result.statusCode).send(result);
   }
 }

@@ -8,6 +8,11 @@ import { InjectModel } from '@nestjs/mongoose';
 import { User as MongoUser, UserDocument } from 'src/Schema/User.schema';
 import { Model } from 'mongoose';
 import { Code, CodeDocument } from 'src/Schema/Code.Schema';
+import {
+  ForgotPasswordDocument,
+  ForgotPasswordOTP,
+} from 'src/Schema/ForgotPasswordOTP';
+import { ResetPassword } from '../../auth.controller';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const randomNumber = require('random-number');
 
@@ -18,6 +23,8 @@ export class UserService {
     private emailService: EmailService,
     @InjectModel(MongoUser.name) private userModel: Model<UserDocument>,
     @InjectModel(Code.name) private codeModel: Model<CodeDocument>,
+    @InjectModel(ForgotPasswordOTP.name)
+    private FPModal: Model<ForgotPasswordDocument>,
   ) {}
 
   async createAccount(userDetails: MongoUser): Promise<IReturnObject> {
@@ -93,6 +100,12 @@ export class UserService {
         savedUser,
         code,
       );
+
+      // delete code after 5mins
+      const timeout = setTimeout(async () => {
+        const deletedCode = await this.FPModal.deleteOne({ code });
+        clearTimeout(timeout);
+      }, 5000 * 60);
 
       this.logger.log(sentEmail);
 
@@ -299,12 +312,30 @@ export class UserService {
           errorMessage: 'Email not found',
         });
       } else {
+        // generate code
+        // generate code
+        const options = {
+          min: 1000,
+          max: 1999,
+          integer: true,
+        };
+        const code = randomNumber(options);
+        const newCode = await this.FPModal.create({
+          code,
+          user_id: account._id,
+        });
+        console.log(code);
         // send the email
-        this.emailService.sendResetEmail(account);
+        this.emailService.sendResetEmail(account, code);
+        // delete code after 5mins
+        const timeout = setTimeout(async () => {
+          const deletedCode = await this.FPModal.deleteOne({ code });
+          clearTimeout(timeout);
+        }, 5000 * 60);
         return Return({
           error: false,
           statusCode: 200,
-          successMessage: `if an account exist with email ${email} a reset link has been sent to it`,
+          successMessage: `if an account exist with email ${email} an OTP code has been sent to it`,
         });
       }
     } catch (error) {
@@ -318,11 +349,21 @@ export class UserService {
   }
 
   async resetPassword(
-    _id: string,
-    passwords: { password: string; confirmpassword: string },
+    otp: number,
+    passwords: ResetPassword,
   ): Promise<IReturnObject> {
     try {
-      const user = await this.userModel.findOne({ _id });
+      // check the code
+      const code = await this.FPModal.findOne({ code: otp });
+      if (code === null || code === undefined) {
+        return Return({
+          error: true,
+          statusCode: 400,
+          errorMessage: 'Invalid Code',
+        });
+      }
+
+      const user = await this.userModel.findOne({ _id: code.user_id });
       if (user === undefined || user === null) {
         return Return({
           error: true,
@@ -332,7 +373,7 @@ export class UserService {
       }
 
       // check password
-      if (passwords.password !== passwords.confirmpassword) {
+      if (passwords.newpassword !== passwords.confirmpassword) {
         return Return({
           error: true,
           statusCode: 400,
@@ -345,11 +386,14 @@ export class UserService {
 
       // update the users password
       const updatedPassword = await this.userModel.updateOne(
-        { _id },
+        { _id: code.user_id },
         { password: hash },
       );
 
       this.logger.log(updatedPassword);
+
+      // delete the code
+      const deletedCode = await this.FPModal.deleteOne({ code: otp });
 
       return Return({
         error: false,
@@ -384,6 +428,112 @@ export class UserService {
           data: user,
         });
       }
+    } catch (error) {
+      return Return({
+        error: true,
+        statusCode: 500,
+        trace: error,
+        errorMessage: 'Internal Server error.',
+      });
+    }
+  }
+
+  public async resendVerificationCode(email: string): Promise<IReturnObject> {
+    try {
+      // check email
+      const accountExist = await this.userModel.findOne({ email });
+      if (accountExist === null) {
+        return Return({
+          error: true,
+          statusCode: 400,
+          errorMessage: 'Account not found',
+        });
+      }
+
+      // generate code
+      const options = {
+        min: 1000,
+        max: 1999,
+        integer: true,
+      };
+      const code = randomNumber(options);
+      const newCode = await this.codeModel.create({
+        user_id: accountExist._id,
+        code,
+      });
+
+      this.logger.log(newCode);
+
+      //send email
+      const sentEmail = await this.emailService.sendConfirmationEmail(
+        accountExist,
+        code,
+      );
+
+      // delete code after 5mins
+      const timeout = setTimeout(async () => {
+        const deletedCode = await this.FPModal.deleteOne({ code });
+        clearTimeout(timeout);
+      }, 5000 * 60);
+
+      return Return({
+        error: false,
+        statusCode: 200,
+        successMessage: 'Code Sent, Check your mail',
+      });
+    } catch (error) {
+      return Return({
+        error: true,
+        statusCode: 500,
+        trace: error,
+        errorMessage: 'Internal Server error.',
+      });
+    }
+  }
+
+  public async resendResetCode(email: string): Promise<IReturnObject> {
+    try {
+      // check email
+      const accountExist = await this.userModel.findOne({ email });
+      if (accountExist === null) {
+        return Return({
+          error: true,
+          statusCode: 400,
+          errorMessage: 'Account not found',
+        });
+      }
+
+      // generate code
+      const options = {
+        min: 1000,
+        max: 1999,
+        integer: true,
+      };
+      const code = randomNumber(options);
+      const newCode = await this.FPModal.create({
+        user_id: accountExist._id,
+        code,
+      });
+
+      this.logger.log(newCode);
+
+      //send email
+      const sentEmail = await this.emailService.sendResetEmail(
+        accountExist,
+        code,
+      );
+
+      // delete code after 5mins
+      const timeout = setTimeout(async () => {
+        const deletedCode = await this.FPModal.deleteOne({ code });
+        clearTimeout(timeout);
+      }, 5000 * 60);
+
+      return Return({
+        error: false,
+        statusCode: 200,
+        successMessage: 'Code Sent, Check your mail',
+      });
     } catch (error) {
       return Return({
         error: true,

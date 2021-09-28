@@ -105,13 +105,16 @@ export class EmailService {
     }
   }
 
-  public async sendResetEmail(body: MongoUser): Promise<IReturnObject> {
+  public async sendResetEmail(
+    body: MongoUser,
+    code?: number,
+  ): Promise<IReturnObject> {
     try {
       const mailOption: MailOptions = {
         from: process.env.COMPANY_EMAIL,
         to: body.email,
         subject: `Password reset`,
-        html: `<p>Link resent </p>`,
+        html: `<p>use the code ${code} </p>`,
       };
       this.transporter.sendMail(mailOption, (error: any, info: any) => {
         if (error) {
