@@ -75,7 +75,7 @@ export class AuthController {
       param['code'],
     );
     if (result.statusCode === 200) {
-      res.send('Account Verified');
+      res.status(result.statusCode).send(result);
     } else {
       res.status(result.statusCode).send(result);
     }

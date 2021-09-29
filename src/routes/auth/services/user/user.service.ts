@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 import { Injectable, Logger } from '@nestjs/common';
 import { Return } from 'src/utils/Returnfunctions';
 import { IReturnObject } from 'src/utils/ReturnObject';
@@ -15,6 +16,7 @@ import {
 import { ResetPassword } from '../../auth.controller';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const randomNumber = require('random-number');
+require('dotenv').config();
 
 @Injectable()
 export class UserService {
@@ -273,16 +275,31 @@ export class UserService {
         }
         // verify the users account
         const updateUser = await this.userModel
-          .updateOne({ _id: id }, { verified: true })
+          .updateOne({ _id: Existingcode.user_id }, { verified: true })
           .exec();
         // delete the code
         const deleteCode = await this.codeModel.deleteOne({
           _id: Existingcode._id,
         });
+
+        // get the user
+        const user = await this.userModel.findOne({
+          _id: Existingcode.user_id,
+        });
+
+        const token = await this.generateJWT({
+          email: user.email,
+          password: user.password,
+          _id: user._id,
+        });
         return Return({
           error: false,
           statusCode: 200,
           successMessage: 'Account Verified',
+          data: {
+            token,
+            user,
+          },
         });
       } else {
         return Return({
@@ -544,9 +561,9 @@ export class UserService {
     }
   }
 
-  public async generateJWT(payload: Partial<MongoUser>): Promise<string> {
+  public async generateJWT(payload: Partial<MongoUser | any>): Promise<string> {
     this.logger.warn(payload);
-    const JWT = sign(payload, 'EAZICRED', {
+    const JWT = sign(payload, process.env.ENCRYPTION_KEY, {
       algorithm: 'HS256',
       expiresIn: '5h',
     });
