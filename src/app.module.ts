@@ -10,6 +10,8 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { UserModule } from './routes/user/user.module';
 import { TestModule } from './routes/test/test.module';
 import { VacinationModule } from './routes/vacination/vacination.module';
+import { OtpGateway } from './websockets/otp.gateway';
+import { OtpModule } from './routes/otp/otp.module';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require('dotenv').config();
 
@@ -29,10 +31,11 @@ const URL =
     UserModule,
     TestModule,
     VacinationModule,
+    OtpModule,
     // AdminModule,
     // NotificationsModule,
   ],
   controllers: [AppController],
-  providers: [AppService, EmailService],
+  providers: [AppService, EmailService, OtpGateway],
 })
 export class AppModule {}
