@@ -155,7 +155,6 @@ export class AuthController {
 
   @ApiTags('AUTH')
   @Post('resetpassword/:otp')
-  @ApiParam({ name: 'user_id', type: String })
   @ApiParam({ name: 'otp', type: Number })
   @ApiBody({ type: ResetPassword })
   @ApiOkResponse({ description: 'password updated successfully' })

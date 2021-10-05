@@ -37,6 +37,8 @@ export class Vacination {
   })
   @Prop({
     type: [vacineSchema],
+    required: false,
+    default: null,
   })
   vacinations: Vacine[];
 

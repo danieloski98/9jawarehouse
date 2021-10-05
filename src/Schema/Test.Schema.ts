@@ -14,13 +14,15 @@ export class Test {
 
   @ApiProperty()
   @Prop({
-    required: true,
+    required: false,
+    default: null,
   })
   date_taken: string;
 
   @ApiProperty()
   @Prop({
-    required: true,
+    required: false,
+    default: null,
   })
   facility: string;
 
@@ -28,7 +30,8 @@ export class Test {
     description: '0=negative, 1=positive',
   })
   @Prop({
-    required: true,
+    required: false,
+    default: null,
   })
   result: number;
 
