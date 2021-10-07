@@ -18,7 +18,7 @@ export class VacinationController {
   constructor(private vacineService: VacinationService) {}
 
   @Post()
-  @UseInterceptors(FileInterceptor('file'))
+  @UseInterceptors(FileInterceptor('image_link', { dest: 'files' }))
   @ApiTags('VACINATION')
   @ApiBody({ type: Vacination })
   async createRecord(
@@ -29,8 +29,8 @@ export class VacinationController {
   ) {
     console.log(file);
     console.log('content-type', req.headers);
-    const result = await this.vacineService.createVacination(body);
-    console.log(result);
+    const result = await this.vacineService.createVacination(body, file);
+    console.log(body);
     res.status(result.statusCode).send(result);
   }
 }
