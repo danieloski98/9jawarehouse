@@ -40,6 +40,7 @@ export class VacinationService {
           width: 810,
           height: 456,
           crop: 'fill',
+          resource_type: 'image',
         });
         const update = await this.vacineModel.create({
           user_id: record.user_id,
