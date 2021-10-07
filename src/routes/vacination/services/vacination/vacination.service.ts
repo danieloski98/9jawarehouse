@@ -16,6 +16,7 @@ export class VacinationService {
 
   public async createVacination(record: Vacination): Promise<IReturnObject> {
     try {
+      console.log(record);
       const user = await this.userModel.findById(record.user_id);
       const vacineRecords = await this.vacineModel.find({
         user_id: record.user_id,

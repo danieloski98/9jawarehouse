@@ -16,6 +16,7 @@ export class TestService {
 
   public async createTestResult(test: TestDocument): Promise<IReturnObject> {
     try {
+      console.log(test);
       // check if the user exists
       const user = await this.userModel.findOne({ _id: test.user_id });
       if (user === null) {
