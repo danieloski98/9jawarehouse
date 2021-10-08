@@ -73,6 +73,7 @@ export class OtpController {
   }
 
   @Get('verify/:code')
+  @ApiTags('OTP')
   @ApiParam({ name: 'code', type: Number })
   async verifyCode(@Res() res: Response, @Param() param: any) {
     try {

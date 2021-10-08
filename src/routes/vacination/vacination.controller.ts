@@ -37,6 +37,7 @@ export class VacinationController {
   }
 
   @Delete(':id')
+  @ApiTags('VACINATION')
   @ApiParam({ name: 'id', type: String })
   async deleteRecord(@Res() res: Response, @Param() param: any) {
     const result = await this.vacineService.deleteRecord(param['id']);
