@@ -8,6 +8,7 @@ import cloudinary from 'src/utils/cloudinary';
 import { Return } from 'src/utils/Returnfunctions';
 import { IReturnObject } from 'src/utils/ReturnObject';
 import { join } from 'path';
+import { existsSync, rmSync } from 'fs';
 
 @Injectable()
 export class TestService {
@@ -46,6 +47,16 @@ export class TestService {
       );
       const image_url = upload.secure_url;
       console.log(image_url);
+
+      // delete file
+      const fileExist = existsSync(
+        join(process.cwd(), `/files/${file.filename}`),
+      );
+
+      if (fileExist) {
+        // delete the file
+        rmSync(join(process.cwd(), `/files/${file.filename}`));
+      }
 
       // create the object
       const obj = {

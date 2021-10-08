@@ -8,6 +8,7 @@ import cloudinary from 'src/utils/cloudinary';
 import { Return } from 'src/utils/Returnfunctions';
 import { IReturnObject } from 'src/utils/ReturnObject';
 import { join } from 'path';
+import { existsSync, rmSync } from 'fs';
 
 @Injectable()
 export class VacinationService {
@@ -53,6 +54,16 @@ export class VacinationService {
         user_id: record.user_id,
         image_link: image.secure_url,
       });
+
+      // delete file
+      const fileExist = existsSync(
+        join(process.cwd(), `/files/${file.filename}`),
+      );
+
+      if (fileExist) {
+        // delete the file
+        rmSync(join(process.cwd(), `/files/${file.filename}`));
+      }
       console.log(update);
       return Return({
         error: false,

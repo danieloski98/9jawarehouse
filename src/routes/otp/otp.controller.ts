@@ -7,6 +7,7 @@ import { Otp, OtpDocument } from 'src/Schema/Otp.schema';
 import { User, UserDocument } from 'src/Schema/User.schema';
 import { Return } from 'src/utils/Returnfunctions';
 import { OtpGateway } from 'src/websockets/otp.gateway';
+import { setTimeout } from 'timers';
 import { CrudService } from '../user/services/crud/crud.service';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const randomNumber = require('random-number');
@@ -51,6 +52,16 @@ export class OtpController {
         code,
       });
 
+      console.log(opt);
+
+      // delete code after 5 minutes
+      const timer = setTimeout(async () => {
+        // delete the code
+        await this.otpModel.updateOne({ code }, { expired: true });
+        console.log('deleted');
+        clearTimeout(timer);
+      }, 5000 * 60);
+
       // send out request
       this.webSocket.server.emit(`${param['user_id']}:otp`, code);
       res.status(200).send(
@@ -77,7 +88,10 @@ export class OtpController {
   @ApiParam({ name: 'code', type: Number })
   async verifyCode(@Res() res: Response, @Param() param: any) {
     try {
-      const checkcode = await this.otpModel.findOne({ code: param['code'] });
+      const checkcode = await this.otpModel.findOne({
+        code: param['code'],
+        expired: false,
+      });
       if (checkcode === null) {
         res.status(400).send(
           Return({

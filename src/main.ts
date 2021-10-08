@@ -4,7 +4,7 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { AppModule } from './app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { join } from 'path';
-import { json, urlencoded } from 'express';
+import { json } from 'express';
 import * as morgan from 'morgan';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require('dotenv').config();
