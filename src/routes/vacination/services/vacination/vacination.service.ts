@@ -69,4 +69,42 @@ export class VacinationService {
       });
     }
   }
+
+  async deleteRecord(_id: string): Promise<IReturnObject> {
+    try {
+      const vacine = await this.vacineModel.findOne({ _id });
+
+      if (vacine === null) {
+        return Return({
+          error: true,
+          statusCode: 400,
+          errorMessage: 'Record not found',
+        });
+      }
+
+      // delete vacine record
+      const deleted = await this.vacineModel.deleteOne({ _id });
+      if (deleted.deletedCount > 0) {
+        return Return({
+          error: false,
+          statusCode: 200,
+          successMessage: 'Record Deleted',
+        });
+      } else {
+        return Return({
+          error: true,
+          statusCode: 400,
+          errorMessage:
+            'An error occured while trying to delete the record, please try again',
+        });
+      }
+    } catch (error) {
+      return Return({
+        error: true,
+        statusCode: 500,
+        errorMessage: 'Internal Server Error',
+        trace: error,
+      });
+    }
+  }
 }

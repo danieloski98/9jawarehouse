@@ -3,9 +3,11 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Test, TestDocument } from 'src/Schema/Test.Schema';
 import { User, UserDocument } from 'src/Schema/User.schema';
+import { IFile } from 'src/Types/file';
 import cloudinary from 'src/utils/cloudinary';
 import { Return } from 'src/utils/Returnfunctions';
 import { IReturnObject } from 'src/utils/ReturnObject';
+import { join } from 'path';
 
 @Injectable()
 export class TestService {
@@ -14,11 +16,15 @@ export class TestService {
     @InjectModel(User.name) private userModel: Model<UserDocument>,
   ) {}
 
-  public async createTestResult(test: TestDocument): Promise<IReturnObject> {
+  public async createTestResult(
+    test: TestDocument,
+    file: IFile,
+  ): Promise<IReturnObject> {
     try {
       console.log(test);
       // check if the user exists
       const user = await this.userModel.findOne({ _id: test.user_id });
+      console.log(user);
       if (user === null) {
         return Return({
           error: true,
@@ -27,7 +33,17 @@ export class TestService {
         });
       }
       // upload the image to cloudinry
-      const upload = await cloudinary.uploader.upload(test.link);
+      const upload = await cloudinary.uploader.upload(
+        join(process.cwd(), `/files/${file.filename}`),
+        {
+          overwrite: true,
+          invalidate: true,
+          width: 810,
+          height: 456,
+          crop: 'fill',
+          resource_type: 'image',
+        },
+      );
       const image_url = upload.secure_url;
       console.log(image_url);
 
@@ -46,6 +62,7 @@ export class TestService {
         error: true,
         statusCode: 200,
         successMessage: 'Test result uploaded successfully',
+        data: newTest,
       });
     } catch (error) {
       return Return({
