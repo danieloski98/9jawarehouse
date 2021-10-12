@@ -63,7 +63,10 @@ export class OtpController {
       }, 5000 * 60);
 
       // send out request
-      this.webSocket.server.emit(`${param['user_id']}:otp`, code);
+      this.webSocket.server.emit(`${param['user_id']}:otp`, {
+        otp: code,
+        timeStamp: opt.created_at,
+      });
       res.status(200).send(
         Return({
           error: false,
