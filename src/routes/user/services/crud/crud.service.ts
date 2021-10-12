@@ -33,6 +33,7 @@ export class CrudService {
           statusCode: 200,
           successMessage: 'User found',
           data: {
+            id: user._id,
             email: user.email,
             phone: user.phone,
             first_name: user.first_name,
