@@ -2,7 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { EmailList, EmailListDocument } from 'src/Schema/EmailList.Schema';
-import { Message, MessageDocument } from 'src/schema/Message.Schema';
+import { Message, MessageDocument } from '../../../../Schema/Message.Schema';
+// import { Message, MessageDocument } from 'src/schema/Message.Schema';
 import { Return } from 'src/utils/Returnfunctions';
 import { IReturnObject } from 'src/utils/ReturnObject';
 
