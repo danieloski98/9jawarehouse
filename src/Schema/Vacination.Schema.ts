@@ -45,7 +45,7 @@ export class Vacination {
   @ApiProperty()
   @Prop({
     type: String,
-    default: new Date().toUTCString(),
+    default: new Date().toISOString(),
   })
   created_at: string;
 }

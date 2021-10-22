@@ -2,23 +2,16 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { ApiProperty } from '@nestjs/swagger';
 import { Document } from 'mongoose';
 
-export type OtpDocument = Otp & Document;
+export type EmailListDocument = EmailList & Document;
 
 @Schema()
-export class Otp {
-  @ApiProperty()
-  @Prop()
-  user_id: string;
-
-  @ApiProperty()
-  @Prop()
-  code: number;
-
+export class EmailList {
   @ApiProperty()
   @Prop({
-    default: false,
+    required: true,
+    trim: true,
   })
-  expired: boolean;
+  email: string;
 
   @ApiProperty()
   @Prop({
@@ -28,4 +21,4 @@ export class Otp {
   created_at: string;
 }
 
-export const OtpSchema = SchemaFactory.createForClass(Otp);
+export const EmailListSchema = SchemaFactory.createForClass(EmailList);

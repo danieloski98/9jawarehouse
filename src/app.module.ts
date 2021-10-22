@@ -12,6 +12,8 @@ import { TestModule } from './routes/test/test.module';
 import { VacinationModule } from './routes/vacination/vacination.module';
 import { OtpGateway } from './websockets/otp.gateway';
 import { OtpModule } from './routes/otp/otp.module';
+import { MessagesModule } from './routes/messages/messages.module';
+import { EmaillistModule } from './routes/emaillist/emaillist.module';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require('dotenv').config();
 
@@ -32,6 +34,8 @@ const URL =
     TestModule,
     VacinationModule,
     OtpModule,
+    MessagesModule,
+    EmaillistModule,
     // AdminModule,
     // NotificationsModule,
   ],
