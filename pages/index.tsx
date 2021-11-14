@@ -7,6 +7,9 @@ import styles from '../styles/Home.module.css'
 import Banner from '../components/Home/Banner';
 import Stats from '../components/Home/Stats';
 import Features from '../components/Home/Features';
+import Reviews from '../components/Home/Reviews';
+import Footer from '../components/Home/Footer';
+
 
 const Home: NextPage = () => {
   return (
@@ -14,6 +17,8 @@ const Home: NextPage = () => {
       <Banner />
       <Stats />
       <Features />
+      <Reviews />
+      <Footer />
     </div>
   )
 }

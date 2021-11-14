@@ -73,7 +73,7 @@ export default function Banner() {
         </div>
         <div className="flex-1 bg-yellow-200 xl:flex lg:flex md:hidden sm:hidden flex flex-col">
             <RightNavBar />
-            <div className="flex-1">
+            <div className="flex-1 overflow-hidden">
                 <Image src={Woman} alt="logo" className=" w-full h-full object-contain" />
             </div>
         </div>

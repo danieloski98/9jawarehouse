@@ -8,7 +8,7 @@ import Image from 'next/image';
 
 export default function componentName() {
   return (
-    <div className="w-full xl:h-screen lg:h-screen md:h-auto sm:h-auto flex flex-col py-10 mb-10">
+    <div className="w-full xl:h-auto lg:h-auto md:h-auto sm:h-auto flex flex-col py-10 mb-10">
 
         <div className="w-full h-2/4 flex xl:flex-row lg:flex-row md:flex-col sm:flex-col mb-24">
 
@@ -48,12 +48,12 @@ export default function componentName() {
                 </div>
             </div>
 
-            <div className="flex-1 flex flex-col xl:justify-center lg:justify-center md:justify-start sm:justify-start xl:items-start lg:items-start md:items-center sm:items-center text-left xl:pl-32 lg:pl-32 md:pl-0 sm:pl-0 pr-6">
+            <div className="flex-1 flex flex-col justify-center items-start text-left pl-20 pr-6">
                 <p className="mt-6 text-sm font-medium text-gray-500">FOR CUSTOMERS</p>
-                <h3 className="mt-6 text-themeGreen text-4xl font-semibold text-center">Hire A Pro</h3>
+                <h3 className="mt-6 text-themeGreen text-4xl font-semibold">Hire A Pro For Any Skill</h3>
                 
 
-                <ul className="list-disc mt-6 xl:ml-4 lg:ml-4 md:ml-0 sm:ml-0 text-sm font-medium text-gray-500">
+                <ul className="list-disc mt-6 ml-4 text-sm font-medium text-gray-500">
                     <li>Photography</li>
                     <li className="mt-3">Events</li>
                     <li className="mt-3">IT Specialists</li>
