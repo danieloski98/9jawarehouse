@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { FiSearch, FiMenu } from 'react-icons/fi'
 import { InputGroup, Input, InputLeftAddon, InputLeftElement } from '@chakra-ui/react'
 const colors = require('tailwindcss/colors')
+import { useRouter } from 'next/router'
 
 // images
 import Logo from '../../public/images/logo.svg';
@@ -23,20 +24,22 @@ const LeftNavbar = () => {
 }
 
 const RightNavBar = () => {
+    const router = useRouter();
+
     return (
         <div className="w-full h-24 flex justify-center items-center">
-            <a href="" className="text-sm font-semibold mx-5 flex items-center">
+            <p className="text-sm font-semibold mx-5 flex items-center cursor-pointer">
                 <FiSearch size={25} color="grey" />
                 <span>Find Services</span>
-            </a>
+            </p>
 
-            <a href="" className="text-sm font-semibold mx-5 flex items-center">
+            <p onClick={() => router.push('/auth/createaccount')} className="text-sm font-semibold mx-5 flex items-center cursor-pointer">
                 <span>Become A Vendor</span>
-            </a>
+            </p>
 
-            <a href="" className="text-sm font-semibold mx-5 flex items-center">
+            <p onClick={() => router.push('/auth/login')} className="text-sm font-semibold mx-5 flex items-center cursor-pointer">
                 <span>Login</span>
-            </a>
+            </p>
     </div>
     )
 }
