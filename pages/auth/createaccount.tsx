@@ -1,27 +1,13 @@
 import React from 'react';
 import { useRouter } from 'next/router'
+import { LeftNavbar } from '../../components/Home/Banner'
 
 // image
 import Image from 'next/image';
 import Girl from '../../public/images/girl2.png';
-import Logo from '../../public/images/logo.svg';
 import Google from '../../public/images/google.svg';
 import Mail from '../../public/images/mail.png';
-import { FiSearch, FiMenu } from 'react-icons/fi'
 
-// components
-// other components
-const LeftNavbar = () => {
-    return (
-        <div className="w-full h-24 flex justify-between items-center px-5">
-            <Image src={Logo} alt="logo" className=" w-20 h-20" />
-            <div className=" xl:hidden lg:hidden md:flex sm:flex w-20 justify-between items-center">
-                <FiSearch size={25} color="grey" />
-                <FiMenu size={25} color="grey" />
-            </div>
-        </div>
-    )
-}
 
 export default function CreateAccount() {
     const router = useRouter();

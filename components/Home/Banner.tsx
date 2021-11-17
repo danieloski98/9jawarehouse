@@ -1,7 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { FiSearch, FiMenu } from 'react-icons/fi'
-import { InputGroup, Input, InputLeftAddon, InputLeftElement } from '@chakra-ui/react'
+import { InputGroup, Input, InputLeftAddon, InputLeftElement, Drawer, DrawerOverlay, DrawerContent, DrawerBody, Avatar } from '@chakra-ui/react'
 const colors = require('tailwindcss/colors')
 import { useRouter } from 'next/router'
 
@@ -11,14 +11,33 @@ import Woman from '../../public/images/woman.svg';
 
 
 // other components
-const LeftNavbar = () => {
+export const LeftNavbar = () => {
+
+    const [open, setOpen] = React.useState(false);
+    const router = useRouter();
+
     return (
         <div className="w-full h-24 flex justify-between items-center px-5">
             <Image src={Logo} alt="logo" className=" w-20 h-20" />
             <div className=" xl:hidden lg:hidden md:flex sm:flex w-20 justify-between items-center">
                 <FiSearch size={25} color="grey" />
-                <FiMenu size={25} color="grey" />
+                <FiMenu size={25} color="grey" onClick={() => setOpen(true)} />
             </div>
+
+            {/* drawer */}
+            <Drawer isOpen={open} onClose={() => setOpen(false)} placement="top" >
+                <DrawerOverlay />
+                <DrawerContent>
+                    <DrawerBody>
+                        <div className="w-full flex flex-col items-center text-md font-light text-gray-600">
+                            <Avatar src="https://bit.ly/broken-link" className="" size="sm" />
+                            <p onClick={() => router.push('/auth/login')} className="mt-6">Login</p>
+                            <p onClick={() => router.push('/auth/createaccount')} className="mt-2 mb-4">Register</p>
+                        </div>
+                    </DrawerBody>
+                </DrawerContent>
+            </Drawer>
+
         </div>
     )
 }
