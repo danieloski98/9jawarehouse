@@ -76,6 +76,7 @@ export default function LoginForm() {
         <div className="w-2/5 h-full xl:block lg:block md:hidden sm:hidden">
             <Image src={Girl} alt="girl" className="w-full h-full" />
         </div>
+        
     </div>
   );
 }
