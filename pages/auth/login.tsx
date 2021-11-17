@@ -47,7 +47,7 @@ export default function Login() {
                     <span className="ml-4 text-sm font-semibold text-white">Continue Using Your Email</span>
                 </div>
                 <div className="xl:w-4/6 lg:w-4/6 md:w-full sm:w-full text-center">
-                    <p className="text-sm font-light mt-12 text-center text-gray-500">Don't have an account? <span className="text-themeGreen" onClick={() => router.push('/auth/createaccount')}>Create Account</span></p>
+                    <p className="text-sm font-light mt-12 text-center text-gray-500">Dont have an account? <span className="text-themeGreen" onClick={() => router.push('/auth/createaccount')}>Create Account</span></p>
                 </div>
             </div>
         </div>

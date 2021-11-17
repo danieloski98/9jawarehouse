@@ -67,7 +67,7 @@ export default function LoginForm() {
                 </div>
 
                 <div className="xl:w-4/6 lg:w-4/6 md:w-full sm:w-full text-center">
-                    <p onClick={() => router.push('/auth/createaccount')} className="text-sm font-light mt-12 text-center text-gray-500">Don't Have An Account? <span className="text-themeGreen">Create Account</span></p>
+                    <p onClick={() => router.push('/auth/createaccount')} className="text-sm font-light mt-12 text-center text-gray-500">Dont Have An Account? <span className="text-themeGreen">Create Account</span></p>
                 </div>
 
             </div>
