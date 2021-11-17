@@ -32,7 +32,7 @@ export default function CreateAccount() {
             <LeftNavbar />
             <div className="flex-1 xl:pl-10 lg:pl-10 md:pl-5 sm:pl-5 xl:pr-0 lg:pr-0 md:pr-5 sm:pr-5 flex flex-col justify-center items-start">
                 <h3 className="text-3xl font-semibold text-gray-700">Create An Account</h3>
-                <p className="text-sm font-light mt-4 text-gray-500">you are one step away from growing your business. Let's get you onboard</p>
+                <p className="text-sm font-light mt-4 text-gray-500">you are one step away from growing your business. Lets get you onboard</p>
 
                 <div className="xl:w-4/6 lg:w-4/6 md:w-full sm:w-full mt-6 h-12 bg-gray-200 cursor-pointer flex justify-center items-center">
                     <div className="w-8 h-8">

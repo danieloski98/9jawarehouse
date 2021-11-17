@@ -7,7 +7,7 @@ import BigScreen from '../components/completereg/bigScreen';
 export default function CompleteRegistration() {
   return (
     <div className="w-full h-screen flex flex-col">
-        <Navbar />
+        <Navbar page={1} setPage={() => {}} />
         <div className="w-full h-20 bg-white text-center shadow-lg z-20 xl:px-0 lg:px-0 md:px-5 sm:px-5 text-center">
             <p className="font-semibold text-sm text-gray-600 mt-6">Complete your 9jaWarehosue Account Set up</p>
         </div>
