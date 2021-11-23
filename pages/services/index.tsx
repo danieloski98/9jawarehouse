@@ -1,17 +1,44 @@
 import React from 'react';
-import Navbar from '../../components/general/Navbar';
 import { Select } from '@chakra-ui/react'
 import BusinessCard from '../../components/services/businesscard';
+import ServiceNavbar from '../../components/services/ServiceNav';
+import { FiFilter } from 'react-icons/fi'
 
 export default function Services() {
   return (
     <div className="w-full h-screen flex flex-col ">
-    <div className="w-full h-24 shadow-lg z-20">
-        <Navbar page={1} setPage={() => {}} />
+    <div className="w-full h-24 z-20">
+        <ServiceNavbar />
     </div>
 
-    <div className="w-full px-10 flex h-auto py-8 items-center">
+    <div className="w-full xl:px-10 lg:px-10 sm:px-5 md:px-5 flex h-auto py-8 items-center justify-between">
         <p className="font-light text-md">56 results for  fashion designers</p>
+        <FiFilter size={25} color="grey" className="xl:hidden lg:hidden md:block sm:block" />
+    </div>
+
+    <div className="w-auto overflow-x-auto flex-nowrap px-5 xl:hidden lg:hidden md:flex sm:flex">
+        <p className="flex-1">Hello</p>
+                <p className="text-sm font-semibold mb-4">Tailor</p>
+                <p className="text-sm font-semibold mb-4">Tailor</p>
+                <p className="text-sm font-semibold mb-4">Tailor</p>
+                <p className="text-sm font-semibold mb-4">Tailor</p>
+                <p className="text-sm font-semibold mb-4">Tailor</p>
+                <p className="text-sm font-semibold mb-4">Tailor</p>
+                <p className="text-sm font-semibold mb-4">Tailor</p>
+                <p className="text-sm font-semibold mb-4">Tailor</p>
+                <p className="text-sm font-semibold mb-4">Tailor</p>
+                <p className="text-sm font-semibold mb-4">Tailor</p>
+                <p className="text-sm font-semibold mb-4">Tailor</p>
+                <p className="text-sm font-semibold mb-4">Tailor</p>
+                <p className="text-sm font-semibold mb-4">Tailor</p>
+                <p className="text-sm font-semibold mb-4">Tailor</p>
+                <p className="text-sm font-semibold mb-4">Tailor</p>
+                <p className="text-sm font-semibold mb-4">Tailor</p>
+                <p className="text-sm font-semibold mb-4">Tailor</p>
+                <p className="text-sm font-semibold mb-4">Tailor</p>
+                <p className="text-sm font-semibold mb-4">Tailor</p>
+                <p className="text-sm font-semibold mb-4">Tailor</p>
+                <p className="text-sm font-semibold mb-4">Tailor</p>
     </div>
 
     <div className="z-10 flex-1 h-full overflow-auto xl:p-0 lg:p-0 md:p-5 sm:p-5 flex justify-between">
