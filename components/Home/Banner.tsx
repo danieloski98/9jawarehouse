@@ -47,7 +47,7 @@ const RightNavBar = () => {
 
     return (
         <div className="w-full h-24 flex justify-center items-center">
-            <p className="text-sm font-semibold mx-5 flex items-center cursor-pointer">
+            <p onClick={() => router.push('/services') } className="text-sm font-semibold mx-5 flex items-center cursor-pointer">
                 <FiSearch size={25} color="grey" />
                 <span>Find Services</span>
             </p>

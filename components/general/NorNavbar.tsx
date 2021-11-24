@@ -1,6 +1,6 @@
 import React from 'react';
-import { FiSearch, FiBell, FiMenu, FiChevronDown } from 'react-icons/fi'
-import { Avatar, Drawer, DrawerOverlay, DrawerContent, DrawerBody, Menu, MenuButton, MenuList, MenuItem, Button} from '@chakra-ui/react'
+import { FiSearch, FiBell, FiMenu, FiChevronDown, FiX } from 'react-icons/fi'
+import { Avatar, Drawer, DrawerOverlay, DrawerContent, DrawerBody, Menu, MenuButton, MenuList, MenuItem, Button, Accordion, AccordionItem, AccordionButton, AccordionPanel, AccordionIcon, Box } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 
@@ -60,18 +60,97 @@ export default function NormNavbar() {
           <FiMenu size={30} color="grey" onClick={() => setOpen(true)} />
         </div>
 
-        {/* navigation drawer for small screens and medium screens */}
+         {/* navigation drawer for small screens and medium screens */}
 
-        {/* <Drawer isOpen={open} onClose={() => setOpen(false)}>
+         <Drawer isOpen={open} onClose={() => setOpen(false)}>
             <DrawerOverlay />
             <DrawerContent>
               <DrawerBody className="bg-gray-100">
                 <div className="w-full h-auto bg-gray-100 p-0 flex flex-col">
-                  <Sidebar page={page} setPage={setPage} />
+
+                  {/* logo box */}
+
+                  <div className="w-full h-20 flex justify-between items-center">
+
+                    <Link href="/">
+                      <a>
+                        {/* <Image src={Logo} alt="logo" className="w-20 h-full" /> */}
+                      </a>
+                    </Link>
+
+                    <FiX size={25} color="grey" onClick={() => setOpen(false)} />
+
+                  </div>
+
+                  {/* menu */}
+
+                  <div className="w-full flex flex-col">
+                    <div className="w-full h-10 text-white flex justify-center items-center bg-themeGreen">
+                        PIN: 9080998
+                    </div>
+
+                    <Link href="/dashboard">
+                        <a className="text-themeGreen mt-5 text-lg font-light">Dashboard</a>
+                    </Link>
+
+                    <Accordion className="mt-5" allowToggle allowMultiple defaultIndex={[0]}>
+                        {/* <AccordionItem>
+                            <AccordionButton>
+                                <Box flex="1" textAlign="left">
+                                  <p className="text-xl font-light text-themeGreen">Dashboard</p>
+                                </Box>
+                                <AccordionIcon />
+                            </AccordionButton>
+
+                            <AccordionPanel>
+                              <div className="w-full flex flex-col">
+                                <p onClick={() => setPage(1)}>Profile</p>
+                                <p className="mt-3" onClick={() => setPage(2)}>Customer Reviews</p>
+                                <p className="mt-3" onClick={() => setPage(3)}>Subscriptions</p>
+                                <p className="mt-3">Notifications</p>
+                                <p className="mt-3" onClick={() => setPage(4)}>Settings</p>
+                              </div>
+                            </AccordionPanel>
+                        </AccordionItem> */}
+
+                        <AccordionItem>
+                            <AccordionButton>
+                                <Box flex="1" textAlign="left">
+                                  <p className="text-xl font-light text-themeGreen">Find Services</p>
+                                </Box>
+                                <AccordionIcon />
+                            </AccordionButton>
+
+                            <AccordionPanel>
+                              <div className="w-full h-64 overflow-y-auto flex flex-col">
+                                <p>Profile</p>
+                                <p className="mt-3">Dry cleaner</p>
+                                <p className="mt-3">Laundary</p>
+                                <p className="mt-3">Cleaner</p>
+                                <p className="mt-3">Barber</p>
+                                {/* <p>Profile</p> */}
+                                <p className="mt-3">Dry cleaner</p>
+                                <p className="mt-3">Laundary</p>
+                                <p className="mt-3">Cleaner</p>
+                                <p className="mt-3">Barber</p>
+                                {/* <p>Profile</p> */}
+                                <p className="mt-3">Dry cleaner</p>
+                                <p className="mt-3">Laundary</p>
+                                <p className="mt-3">Cleaner</p>
+                                <p className="mt-3">Barber</p>
+                              </div>
+                            </AccordionPanel>
+                        </AccordionItem>
+                    </Accordion>
+
+                    <p className="text-red-500 mt-5 text-sm font-light">Logout</p>
+                  </div>
+
+
                 </div>
               </DrawerBody>
             </DrawerContent>
-        </Drawer> */}
+        </Drawer>
     </div>
   );
 }

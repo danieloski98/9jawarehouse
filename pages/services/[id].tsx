@@ -8,6 +8,7 @@ import Image from 'next/image'
 import Banner from '../../public/images/banner.png'
 import ProfileBox from '../../components/services/Profilebox';
 import RateBox from '../../components/services/RateBox';
+import ReviewModal from '../../components/services/ReviewModal';
 
 const ContactBox = () => {
     return (
@@ -22,22 +23,28 @@ const ContactBox = () => {
     )
 }
 
-const ReviewBox = () => {
+const ReviewBox = (props: { open: Function }) => {
     return (
         <div className="w-full p-5 border-2 border-gray-200 flex flex-col">
             <p className="font-light text-lg text-themeGreen">Review Business/Vendor</p>
             <p className="mt-2 text-sm font-semibold text-gray-500">Reach out to through phone or email vendor to start a conversation</p>
-            <button className="mt-3 w-32 bg-themeGreen h-10 text-sm text-white">Write a review</button>
+
+            <button onClick={() => props.open(true)} className="mt-3 w-32 bg-themeGreen h-10 text-sm text-white">Write a review</button>
             
         </div>
     )
 }
 
 export default function Business() {
+    const [showModal, setShowModal] = React.useState(false);
   return (
     <div className="w-full h-auto flex flex-col overflow-y-auto overflow-x-hidden">
 
         <ServiceNavbar />
+
+        {/* modal */}
+
+        <ReviewModal open={showModal} setOpen={setShowModal} />
 
         <div className="w-full h-20 flex items-center xl:px-10 lg:px-10 md:px-5 sm:px-5 mt-16">
             <FiChevronLeft size={30} color="grey" />
@@ -71,7 +78,7 @@ export default function Business() {
             </div>
             <div className="w-64 h-80 xl:flex lg:flex md:hidden sm:hidden flex-col">
                 <ContactBox />
-                <ReviewBox />
+                <ReviewBox open={setShowModal} />
             </div>
         </div>
 

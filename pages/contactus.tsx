@@ -13,10 +13,10 @@ export default function ContactUs() {
 
         <NormNavbar />
 
-        <div className="flex-1 px-12 flex pt-24 pb-10">
+        <div className="flex-1 px-12 flex xl:flex-row lg:flex-row md:flex-col-reverse sm:flex-col-reverse pt-24 pb-10">
 
-            <div className="w-3/4 mr-10 flex">
-                <div className="w-2/4 h-full ">
+            <div className="xl:w-3/4 lg:w-3/4 md:w-full sm:w-full mr-10 flex">
+                <div className="xl:w-2/4 lg:w-2/4 md:w-full sm:w-full h-full ">
                     <p className="text-3xl text-themeGreen font-light">Contact Us</p>
                     <p className="text-sm font-semibold mt-3 text-gray-500">Create screens directly in Method or add your images from Sketch. You can even sync designs from your cloud storage!</p>
 
@@ -50,7 +50,7 @@ export default function ContactUs() {
                 </div>
             </div>
 
-            <div className="bg-gray-20 w-72 h-96">
+            <div className="bg-gray-20 xl:w-72 lg:w-72 md:w-full sm:w-full xl:h-96 lg:h-96 md:h-auto sm:h-auto xl:mt-0 lg:mt-0 md:mb-6 sm:mb-6">
                 <div className="flex flex-col">
                     <p className="text-xl font-light">Phone</p>
                     <p className="mt-0 font-semibold text-themeGreen">+1 234 567 89 10</p>

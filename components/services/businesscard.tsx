@@ -3,8 +3,11 @@ import Image from 'next/image'
 import Img from '../../public/images/girl2.png'
 import { Avatar } from '@chakra-ui/react'
 import ReactStars from "react-rating-stars-component";
+import { useRouter } from 'next/router'
 
 export default function BusinessCard() {
+    const router = useRouter();
+
     const ratingChanged = (newRating: any) => {
         console.log(newRating);
       };
@@ -32,7 +35,7 @@ export default function BusinessCard() {
                         {/* <p className="text-sm font-semibold text-gray-600 ml-4">10 Reviews</p> */}
                     </div>
                 </div>
-                <button className="w-24 bg-themeGreen text-white text-sm font-semibold h-10">View</button>
+                <button onClick={() => router.push('/services/9ja') } className="w-24 bg-themeGreen text-white text-sm font-semibold h-10">View</button>
         </div>
 
     </div>
