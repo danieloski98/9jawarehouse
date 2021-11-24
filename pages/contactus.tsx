@@ -5,11 +5,14 @@ import { InputGroup, InputLeftElement, InputRightElement, Input } from '@chakra-
 import { FiSearch, FiMenu } from 'react-icons/fi'
 import { FiMail, FiLock, FiEye, FiEyeOff, FiUser } from 'react-icons/fi'
 import Footer from '../components/Home/Footer';
+import NormNavbar from '../components/general/NorNavbar';
 
 export default function ContactUs() {
   return (
-    <div className="w-full h-screen flex flex-col">
-        <ServiceNavbar />
+    <div className="w-full h-auto flex flex-col">
+
+        <NormNavbar />
+
         <div className="flex-1 px-12 flex pt-24 pb-10">
 
             <div className="w-3/4 mr-10 flex">

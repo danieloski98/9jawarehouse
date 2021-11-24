@@ -5,14 +5,15 @@ import { Accordion, AccordionItem, AccordionButton, AccordionIcon, AccordionPane
 import { FiSearch, FiMenu } from 'react-icons/fi'
 import { FiMail, FiLock, FiEye, FiEyeOff, FiUser } from 'react-icons/fi'
 import Footer from '../components/Home/Footer';
+import NormNavbar from '../components/general/NorNavbar';
 
 
 export default function Faqs() {
-    const vals = [1,2,3,4,5,6];
+  const vals = [1,2,3,4,5,6];
   return (
     <div className="w-full h-auto flex flex-col">
 
-        <ServiceNavbar />
+        <NormNavbar />
 
         <div className="w-full flex flex-col items-center mt-20">
             <div className="xl:w-4/5 lg:w-4/5 md:w-full sm:w-full h-auto flex flex-col py-6 xl:px-0 lg:px-0 md:px-5 sm:px-5">

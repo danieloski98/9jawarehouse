@@ -10,12 +10,13 @@ import Footer from '../components/Home/Footer';
 import Image from 'next/image'
 import Guy from '../public/images/guy4.png';
 import Banner from '../public/images/banner.png';
+import NormNavbar from '../components/general/NorNavbar';
 
 export default function AboutUs() {
   return (
     <div className="w-full h-auto flex flex-col">
 
-        <ServiceNavbar />
+        <NormNavbar />
 
         {/* Banner */}
 
