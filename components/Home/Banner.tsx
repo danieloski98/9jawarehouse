@@ -46,10 +46,10 @@ const RightNavBar = () => {
     const router = useRouter();
 
     return (
-        <div className="w-full h-24 flex justify-center items-center">
+        <div className="w-full h-24 flex justify-center items-center text-white">
             <p onClick={() => router.push('/services') } className="text-sm font-semibold mx-5 flex items-center cursor-pointer">
-                <FiSearch size={25} color="grey" />
-                <span>Find Services</span>
+                <FiSearch size={25} color="white" />
+                <span className="ml-2">Find Services</span>
             </p>
 
             <p onClick={() => router.push('/auth/createaccount')} className="text-sm font-semibold mx-5 flex items-center cursor-pointer">
@@ -93,7 +93,7 @@ export default function Banner() {
                 </div>
             </div>
         </div>
-        <div className="flex-1 bg-yellow-200 xl:flex lg:flex md:hidden sm:hidden flex flex-col">
+        <div className="flex-1 bg-themeGreen xl:flex lg:flex md:hidden sm:hidden flex flex-col">
             <RightNavBar />
             <div className="flex-1 overflow-hidden">
                 <Image src={Woman} alt="logo" className=" w-full h-full object-contain" />

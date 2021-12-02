@@ -1,15 +1,17 @@
 import React from 'react';
-import { InputGroup, InputLeftElement, InputRightElement, Input } from '@chakra-ui/react'
+import { InputGroup, InputLeftElement, InputRightElement, Input, Spinner } from '@chakra-ui/react'
 import { FiMail, FiLock, FiEye, FiEyeOff, FiUser } from 'react-icons/fi'
 import { useRouter } from 'next/router'
 
 // image
 import Image from 'next/image';
-import Girl from '../../public/images/girl2.png';
-import Logo from '../../public/images/logo.svg';
-import Google from '../../public/images/google.svg';
-import Mail from '../../public/images/mail.png';
+import Girl from '../../../public/images/girl2.png';
+import Logo from '../../../public/images/logo.svg';
+import Google from '../../../public/images/google.svg';
+import Mail from '../../../public/images/mail.png';
 import { FiSearch, FiMenu } from 'react-icons/fi'
+import url from '../../../utils/url';
+
 
 // components
 // other components
@@ -27,7 +29,26 @@ const LeftNavbar = () => {
 
 export default function VerifyAccount() {
     const [show, setShow] = React.useState(false);
+    const [loading, setLoading] = React.useState(false);
+    const [code, setCode] = React.useState('');
     const router = useRouter();
+
+    const verify = async() => {
+        setLoading(true);
+        console.log(router.query);
+        const request = await fetch(`${url}auth/verify/${router.query.id}/${code}`, {
+            method: 'post',
+        });
+
+        const json = await request.json()
+
+        if (json.statusCode !== 200) {
+            alert(json.errorMessage);
+        }else {
+            router.push('/completeregistration')
+            console.log(json);
+        }
+    }
 
   return (
     <div className="w-full h-screen flex">
@@ -44,7 +65,7 @@ export default function VerifyAccount() {
                         <InputLeftElement>
                             <FiLock size={25} color="gray" />
                         </InputLeftElement>
-                        <Input />
+                        <Input name="code" onChange={(e) => setCode(e.target.value)} />
                     </InputGroup>
                 </div>
 
@@ -53,8 +74,9 @@ export default function VerifyAccount() {
                         Resend Code 4:59
                     </button>
 
-                    <button onClick={() => router.push('/completeregistration')} className="w-45/100 h-full bg-themeGreen text-white font-semibold text-xs">
-                        Verify
+                    <button onClick={verify} className="w-45/100 h-full bg-themeGreen text-white font-semibold text-xs">
+                        {loading && <Spinner color="white" />}
+                        {!loading && <span>Verify</span>}
                     </button>
                 </div>
 

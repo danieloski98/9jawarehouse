@@ -1,7 +1,18 @@
 import React from 'react';
-import { InputGroup, InputLeftElement, InputRightElement, Input } from '@chakra-ui/react'
+import { InputGroup, InputLeftElement, InputRightElement, Input, Spinner } from '@chakra-ui/react'
 import { FiMail, FiLock, FiEye, FiEyeOff, FiUser } from 'react-icons/fi'
 import { useRouter } from 'next/router'
+
+// form
+import * as yup from 'yup';
+import { useFormik } from 'formik'
+
+// validationschema
+const validationSchema = yup.object({
+    email: yup.string().required().email(),
+    username: yup.string().required().min(3, 'minimium of 3 characters'),
+    password: yup.string().required().min(8)
+})
 
 // image
 import Image from 'next/image';
@@ -10,6 +21,7 @@ import Logo from '../../public/images/logo.svg';
 import Google from '../../public/images/google.svg';
 import Mail from '../../public/images/mail.png';
 import { FiSearch, FiMenu } from 'react-icons/fi'
+import url from '../../utils/url';
 
 // components
 // other components
@@ -27,7 +39,58 @@ const LeftNavbar = () => {
 
 export default function Signup() {
     const [show, setShow] = React.useState(false);
+    const [loading, setLoading] = React.useState(false);
     const router = useRouter();
+
+    // formik
+    const formik = useFormik({
+        initialValues: {
+            email: '',
+            username: '',
+            password: '',
+        },
+        validationSchema,
+        onSubmit: () => {},
+    });
+
+    const submit = async() => {
+        if (!formik.isValid) {
+            alert('Please fillin the form correctly');
+            return;
+        }
+        if (!formik.dirty) {
+            alert('Please filling the form to continue');
+            return;
+        }
+
+        // create the object
+        setLoading(true);
+
+        const obj = {
+            ...formik.values,
+            passwordless: false,
+        }
+
+        // make request
+        const request = await fetch(`${url}auth/register`, {
+            method: 'post',
+            headers: {
+                'content-type': 'application/json',
+            },
+            body: JSON.stringify(obj)
+        });
+
+        const json = await request.json();
+
+        setLoading(false);
+
+        if (json.statusCode !== 200) {
+            alert(json.errorMessage);
+        }else {
+            router.push(`/auth/verify/${json.data._id}`)
+        }
+    }
+    
 
   return (
     <div className="w-full h-screen flex">
@@ -44,8 +107,11 @@ export default function Signup() {
                         <InputLeftElement>
                             <FiMail size={25} color="gray" />
                         </InputLeftElement>
-                        <Input />
+                        <Input type="text" name="email" value={formik.values.email} onChange={formik.handleChange} onBlur={formik.handleBlur} />
                     </InputGroup>
+                    {formik.touched.email && formik.errors.email && (
+                            <p className="mt-1 text-sm text-red-400 font-semibold">{formik.errors.email}</p>
+                    )}
                 </div>
 
                 <div className="flex flex-col xl:w-4/6 lg:w-4/6 md:w-full sm:w-full mt-6">
@@ -54,8 +120,11 @@ export default function Signup() {
                         <InputLeftElement>
                             <FiUser size={25} color="gray" />
                         </InputLeftElement>
-                        <Input />
+                        <Input type="text" name="username" value={formik.values.username} onChange={formik.handleChange} onBlur={formik.handleBlur} />
                     </InputGroup>
+                    {formik.touched.username && formik.errors.username && (
+                            <p className="mt-1 text-sm text-red-400 font-semibold">{formik.errors.username}</p>
+                    )}
                 </div>
 
                 <div className="flex flex-col xl:w-4/6 lg:w-4/6 md:w-full sm:w-full mt-6">
@@ -64,17 +133,21 @@ export default function Signup() {
                         <InputLeftElement>
                             <FiLock size={25} color="gray" />
                         </InputLeftElement>
-                        <Input type={show ? 'text':'password'} />
+                        <Input type={show ? 'text':'password'}  name="password" onChange={formik.handleChange} onBlur={formik.handleBlur} />
                         <InputRightElement>
                             {!show && <FiEye size={25} color="gray" onClick={() => setShow(true)} />}
                             {show && <FiEyeOff size={25} color="gray" onClick={() => setShow(false)} />}
                         </InputRightElement>
                     </InputGroup>
+                    {formik.touched.password && formik.errors.password && (
+                            <p className="mt-1 text-sm text-red-400 font-semibold">{formik.errors.password}</p>
+                    )}
                 </div>
 
-                <div onClick={() => router.push('/auth/verifyaccount')} className="xl:w-4/6 lg:w-4/6 md:w-full sm:w-full mt-8 h-12 bg-themeGreen cursor-pointer flex justify-center items-center">
-                    <span className="ml-4 text-sm font-semibold text-white">Create Account</span>
-                </div>
+                <button disabled={loading}  onClick={submit} className="xl:w-4/6 lg:w-4/6 md:w-full sm:w-full mt-8 h-12 bg-themeGreen cursor-pointer flex justify-center items-center">
+                    {loading && <Spinner color="white" />}
+                    {!loading && <span className="ml-4 text-sm font-semibold text-white">Create Account</span>}
+                </button>
 
                 <div className="xl:w-4/6 lg:w-4/6 md:w-full sm:w-full text-center">
                     <p onClick={() => router.push('/auth/login')} className="text-sm font-light mt-12 text-center text-gray-500">Already have an account? <span className="text-themeGreen">Log in</span></p>
