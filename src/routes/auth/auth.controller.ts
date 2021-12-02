@@ -53,7 +53,7 @@ class LoginDetails {
 export class AuthController {
   constructor(private userService: UserService) {}
 
-  // GET
+  // POST
   @Post('verify/:userid/:code')
   @ApiParam({ name: 'userid', type: String, description: 'The users id' })
   @ApiParam({

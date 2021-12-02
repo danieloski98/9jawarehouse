@@ -24,12 +24,12 @@ async function bootstrap() {
   app.setViewEngine('hbs');
 
   const config = new DocumentBuilder()
-    .setTitle('PASS APP')
-    .setDescription('The Pass App API documentation')
+    .setTitle('9jawarehouse APP')
+    .setDescription('The 9jawarehouse API documentation')
     .setVersion('1.0')
     .build();
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document);
+  SwaggerModule.setup('documentation', app, document);
 
   logger.debug(`Server Started on Port ${port}`);
   await app.listen(port);

@@ -33,9 +33,15 @@ export class UserService {
     try {
       // check if there is an account with that email
       this.logger.log(userDetails);
+
       const emailInUse = await this.userModel.find({
-        email: userDetails.email,
+        email: userDetails.email.toLowerCase(),
       });
+
+      const username = await this.userModel.find({
+        username: userDetails.username.toLowerCase(),
+      });
+
       if (emailInUse.length >= 1) {
         return Return({
           error: true,
@@ -44,15 +50,11 @@ export class UserService {
         });
       }
 
-      //check for first and lastname
-      if (
-        userDetails.first_name === undefined ||
-        userDetails.last_name === undefined
-      ) {
+      if (username.length >= 1) {
         return Return({
           error: true,
           statusCode: 400,
-          errorMessage: 'First and lastname is required',
+          errorMessage: 'username already in use',
         });
       }
 
@@ -66,27 +68,34 @@ export class UserService {
       }
 
       // hash the password
-      const newPassword = await this.generateHashedPassword(
-        userDetails.password,
-      );
+      const newPassword = userDetails.passwordless
+        ? null
+        : await this.generateHashedPassword(userDetails.password);
       // send email
       // construct new user
-      const newUser = {
-        email: userDetails.email,
-        password: newPassword,
-        first_name: userDetails.first_name,
-        last_name: userDetails.last_name,
-        phone: userDetails.phone,
-      };
+      const newUser = userDetails.passwordless
+        ? {
+            email: userDetails.email.toLowerCase(),
+            username: userDetails.username.toLowerCase(),
+            phone: userDetails.phone,
+          }
+        : {
+            email: userDetails.email.toLowerCase(),
+            username: userDetails.username.toLowerCase(),
+            password: newPassword,
+            phone: userDetails.phone,
+          };
+
       // create the record
-      const savedUser = new this.userModel(newUser);
-      savedUser.save();
+      const savedUser = await this.userModel.create(newUser);
+      // const savedUser = new this.userModel(newUser);
+      // savedUser.save();
       delete savedUser.password;
 
       // generate code
       const options = {
-        min: 1000,
-        max: 1999,
+        min: 100000,
+        max: 199999,
         integer: true,
       };
       const code = randomNumber(options);
@@ -154,17 +163,7 @@ export class UserService {
         });
       }
 
-      // verify the password
-      const existingPassword = accountExisit.password;
-      const passwordMatch = compareSync(payload.password, existingPassword);
-
-      if (!passwordMatch) {
-        return Return({
-          error: true,
-          statusCode: 400,
-          errorMessage: 'Invalid email or password.',
-        });
-      } else {
+      if (accountExisit.passwordless) {
         // generate jwt
         payload['id'] = accountExisit._id;
         this.logger.warn(typeof accountExisit);
@@ -179,6 +178,33 @@ export class UserService {
             user: accountExisit,
           },
         });
+      } else {
+        // verify the password
+        const existingPassword = accountExisit.password;
+        const passwordMatch = compareSync(payload.password, existingPassword);
+
+        if (!passwordMatch) {
+          return Return({
+            error: true,
+            statusCode: 400,
+            errorMessage: 'Invalid email or password.',
+          });
+        } else {
+          // generate jwt
+          payload['id'] = accountExisit._id;
+          this.logger.warn(typeof accountExisit);
+          const jwt = await this.generateJWT(payload);
+          delete accountExisit.password;
+          return Return({
+            error: false,
+            statusCode: 200,
+            successMessage: 'Login successful',
+            data: {
+              token: jwt,
+              user: accountExisit,
+            },
+          });
+        }
       }
     } catch (error) {
       return Return({
