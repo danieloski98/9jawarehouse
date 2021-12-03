@@ -7,5 +7,4 @@ export interface IFile {
   path: string;
   size: number;
   originalname: string;
-
 }
