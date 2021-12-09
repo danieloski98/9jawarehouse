@@ -31,6 +31,10 @@ export default function VerifyAccount() {
     const [show, setShow] = React.useState(false);
     const [loading, setLoading] = React.useState(false);
     const [code, setCode] = React.useState('');
+    const [min, setMin] = React.useState(0);
+    const [sec, setSec] = React.useState(0);
+    const [disabled, setDisabled] = React.useState(false)
+
     const router = useRouter();
 
     const verify = async() => {
@@ -48,6 +52,42 @@ export default function VerifyAccount() {
             router.push('/completeregistration')
             console.log(json);
         }
+    }
+
+    const startTimer = async() => {
+        setMin(1);
+        setSec(2);
+        setDisabled(true);
+
+        const request = await fetch(`${url}auth/resendverificationcode/${router.query.id}`, {
+            method: 'post',
+        });
+        const json = await request.json();
+        console.log(json);
+        
+        if (json.statusCode !== 200) {
+            alert(json.errorMessage);
+        } else {
+            alert(json.successMessage);
+        }
+
+        const interval = setInterval(() => {
+           if (min > 0) {
+               if (sec >= 1) { setSec(prev => prev - 1)}
+               if (sec === 0) {
+                   setMin(prev => prev - 1);
+                   setSec(59);
+               }
+           } else if (min !== 0) {
+               setSec(prev => prev - 1);
+           } 
+           else if (min === 0 && sec > 0) {
+               setSec(prev => prev - 1);
+           } else if (min === 0 && sec === 0) {
+               setDisabled(false);
+               clearInterval(interval);
+           }
+        }, 1000);
     }
 
   return (
@@ -70,8 +110,8 @@ export default function VerifyAccount() {
                 </div>
 
                 <div className="xl:w-4/6 lg:w-4/6 md:w-full sm:w-full mt-8 h-12 flex justify-between">
-                    <button className="w-45/100 h-full bg-green-200 text-green-500 font-semibold text-xs">
-                        Resend Code 4:59
+                    <button onClick={startTimer} disabled={disabled} className="w-45/100 h-full bg-green-200 text-green-500 font-semibold text-xs">
+                        Resend Code {disabled && min} {disabled && ':'} {disabled && sec}
                     </button>
 
                     <button onClick={verify} className="w-45/100 h-full bg-themeGreen text-white font-semibold text-xs">

@@ -4,6 +4,11 @@ import { Avatar, Drawer, DrawerOverlay, DrawerContent, DrawerBody, Menu, MenuBut
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 
+// redux
+import {useSelector, useDispatch} from 'react-redux';
+import { RootState } from '../../store/index';
+import { updateUser } from '../../reducers/User.reducer';
+
 // images
 import Image from 'next/image';
 import Logo from '../../public/images/logo.svg';
@@ -16,6 +21,8 @@ interface IProps {
 
 export default function Navbar({page, setPage}: IProps) {
   const [open, setOpen] = React.useState(false);
+  const user = useSelector((state:RootState) => state.UserReducer.user);
+  console.log(user);
   const router = useRouter();
 
   return (
@@ -51,7 +58,7 @@ export default function Navbar({page, setPage}: IProps) {
               </MenuList>
             </Menu>
             
-            <Avatar src="https://bit.ly/broken-link" className="mr-6" size="sm" />
+            <Avatar src={user.profile_pic} className="mr-6" size="sm" />
 
             <FiBell size={25} color="black" />
         </div>

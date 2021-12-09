@@ -4,12 +4,100 @@ import PersonalInfo from './PersonalInfo';
 import BusinessInfo from './businessScreen';
 import SocialMediaInfo from './socialMedia';
 
+import * as yup from 'yup';
+import { useFormik } from 'formik';
+import { states } from '../../components/completereg/index';
+import { IServices } from '../../utils/types/services';
+import { ICertificate } from '../../utils/types/certificate';
+import url from '../../utils/url';
+import { IServerReturnObject } from '../../utils/types/serverreturntype';
+
+// validationSchema
+const validationSchema = yup.object({
+    first_name: yup.string().required('This field is required'),
+    last_name: yup.string().required(),
+    email: yup.string().required(),
+    phone: yup.string().required(),
+    address: yup.string().required(),
+    country: yup.string().required(),
+    state: yup.string().required(),
+    lga: yup.string().required(),
+    business_name: yup.string().required(),
+    business_description: yup.string().required(),
+    instagram: yup.string(),
+    facebook: yup.string(),
+    whatsapp: yup.string(),
+    twitter: yup.string(),
+    website: yup.string(),
+});
+
+export const initialValues =  {
+    firstname: '',
+    lastname: '',
+    email: '',
+    phone: '',
+    address: '',
+    country: 'Nigeria',
+    state: '',
+    business_name: '',
+    description: '',
+    instagram: '',
+    facebook: '',
+    whatsapp: '',
+    twitter: '',
+    website: '',
+    lga: ''
+}
+
 const ACTIVE = 'w-8 h-8 rounded-full bg-themeGreen text-white text-sm flex justify-center items-center';
 const INACTIVE = 'w-8 h-8 rounded-full bg-green-200 text-green-600 text-sm flex justify-center items-center';
 
-export default function BigScreen() {
+export default function BigScreen({ states, services}: {states: states[], services: IServices[]}) {
     const [step, setStep] = React.useState(1);
     const [progress, setProgress] = React.useState(33);
+    const [images, setImages] = React.useState([] as any[]);
+    const [imagesFiles, setImagesFiles] = React.useState([] as any[]);
+    const [profilePic, setProfilePic] = React.useState({});
+    const [profile, setProfile] = React.useState("");
+    const [service, setServices] = React.useState([] as Array<string>);
+    const [certificates, setCertificates] = React.useState([] as Array<ICertificate>);
+    let fileReader = React.useRef(new FileReader).current;
+    const picker = document.getElementById('picker');
+    const [caller, setCaller] = React.useState(1);
+
+    React.useEffect(() => {
+        setCertificates([
+            {
+                certificate: '',
+                organization: '',
+                year: '',
+                link: '',
+            }
+        ])
+    }, []);
+
+    React.useEffect(() => {
+        fileReader.addEventListener('load', () => {
+            if (caller === 1) {
+                const imgs = [...images, fileReader.result];
+                setImages(imgs);
+                return;
+            } else if (caller === 2) {
+                setProfile(fileReader.result as string);
+                return;
+            }
+        });
+
+        return () => {
+            fileReader.removeEventListener('load', () => {});
+        }
+    }, [fileReader, caller, images])
+
+    const formik: any = useFormik({
+        initialValues,
+        validationSchema,
+        onSubmit: () => {},
+    });
 
     const move = (val: number) => {
         if (val === 1) {
@@ -29,13 +117,13 @@ export default function BigScreen() {
     const switcher = () => {
         switch(step) {
             case 1: {
-                return <PersonalInfo next={move} />
+                return <PersonalInfo next={move} states={states} formik={formik} />
             }
             case 2: {
-                return <BusinessInfo next={move} />
+                return <BusinessInfo next={move} images={images} profilePic={profile} picker={pickImages} formik={formik} services={services} selectService={selectService} selectedSerices={service} deleteService={deleteService} certificates={certificates} addCerts={addCert} changeCert={changeCertValue} deleteCert={deleteCert}  />
             }
             case 3: {
-                return <SocialMediaInfo next={move} />
+                return <SocialMediaInfo next={move} formik={formik} submit={submit} />
             }
         }
     }
@@ -53,9 +141,114 @@ export default function BigScreen() {
             }
         }
     }
+
+    const pickImages = (call: number) => {
+        setCaller(call);
+        picker?.click();
+    }
+
+    const fileProcessor = (files: any[]) => {
+        if (caller === 1) {
+            const imgs = [...imagesFiles, files[0]];
+            setImagesFiles(imgs);
+        } else if (caller === 2) {
+            setProfilePic(files[0]);
+        }
+        fileReader.readAsDataURL(files[0]);
+    }
+
+    const selectService = (servi: string) => {
+        if (service.length < 3) {
+            const serv = [...service, servi];
+            setServices(serv);
+            return;
+        } else {
+            alert('You can only pick 3 services')
+            return;
+        }
+        
+    }
+
+    const deleteService = (index: number) => {
+        service.splice(index, 1);
+        const newSer = service;
+        setServices(newSer)
+    }
+
+    const addCert = () => {
+        const cert: ICertificate = {
+            certificate: '',
+            organization: '',
+            link: '',
+            year: '',
+        };
+        const certs = [...certificates, cert];
+        setCertificates(certs);
+    }
+
+    const changeCertValue = (index: number, name: string, value: string) =>{
+        const active: any = certificates[index];
+        active[name] = value;
+        certificates[index] = active;
+        setCertificates(certificates);
+    }
+
+    const deleteCert = (index: number) => {
+        certificates.splice(index, 1);
+        const newCert = certificates;
+        setCertificates(newCert)
+    }
+
+    const submit = async() => {
+        const imgs = new FormData();
+        const pp = new FormData();
+
+        const result1 = await fetch(`${url}user/61ae0a1fd9394d66befbdcfd`, {
+            method: 'post',
+            headers: {
+                'content-type': "application/json"
+            },
+            body: JSON.stringify({
+                ...formik.values,
+                certificates,
+                services: service,
+            })
+        })
+
+        const json1 = await result1.json() as IServerReturnObject;
+
+        if(json1.statusCode !== 200) {
+            alert(json1.errorMessage);
+        }
+
+        if (json1.statusCode === 200) {
+            // send images
+            imagesFiles.map((item) => {
+                imgs.append('pic', item);
+            })
+
+            const result = await fetch(`${url}user/61ae0a1fd9394d66befbdcfd/images`, {
+                method: 'put',
+                body: imgs,
+            });
+
+            const json = await result.json() as IServerReturnObject;
+
+            if (json.statusCode === 200) {
+                pp.append('pic', profilePic as any);
+                const result = await fetch(`${url}user/61ae0a1fd9394d66befbdcfd/profilepic`, {
+                    method: 'put',
+                    body: pp,
+                });
+    
+                const json = await result.json() as IServerReturnObject;
+            }
+        }
+    }
+    
   return (
     <div className="w-full h-auto flex flex-col items-center justify-center">
-
+        <input hidden type="file" id="picker" accept="image/*" onChange={(e) => fileProcessor(e.target.files as any)} />
         <div className="xl:flex lg:flex md:hidden sm:hidden justify-center">
 
             <div className="flex items-center">

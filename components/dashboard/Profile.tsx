@@ -1,20 +1,28 @@
 import React from "react";
-import { Input, Avatar } from "@chakra-ui/react";
+import { Input, Avatar, Image as Img } from "@chakra-ui/react";
 import Image from 'next/image'
 import Banner from '../../public/images/banner.png';
+
+// redux
+import { RootState } from '../../store/index'
+import { useSelector } from 'react-redux'
 
 interface IProps {
   setPage: Function;
 }
 
 export default function Profile({ setPage }: IProps) {
+
+  const userDetails = useSelector((state: RootState) => state.UserReducer.user);
+  const pic = userDetails.pictures[0];
+
   return (
     <div className="w-full h-auto pb-10">
       <div className="w-full h-auto py-6 pb-10 flex flex-col bg-white">
         <p className="text-2xl font-light text-gray-600 ml-5">Profile</p>
 
         <div className="w-full h-64 mt-6">
-          <Image src={Banner} alt="banner" className="w-full h-64" />
+          <Img src={pic} alt="banner" className="w-full h-64" />
         </div>
 
         {/* details */}
@@ -22,17 +30,21 @@ export default function Profile({ setPage }: IProps) {
         <div className="w-full flex xl:flex-row lg:flex-row md:flex-col sm:flex-col justify-between xl:px-10 lg:px-10 md:px-10 sm:px-5 mt-6">
           <div className="flex flex-1">
             <Avatar
-              rc="https://bit.ly/broken-link"
+              src={userDetails.profile_pic}
               className="mr-6"
               size="lg"
             />
             <div className="flex flex-col justify-center">
               <p className="text-md font-light text-gray-600">
-                Limmer makeover
+                {userDetails.business_name}
               </p>
-              <p className="text-sm text-themeGreen font-semibold">
-                Makeup Artist
-              </p>
+              <div className="flex w-auto h-auto flex-nowrap mt-2">
+                {userDetails.services.map((item, index) => (
+                  <p key={index.toString()} className="text-xs text-themeGreen font-semibold">
+                    {item}
+                  </p>
+                ))}
+              </div>
             </div>
           </div>
           <div className="xl:mt-0 lg:mt-0 md:mt-6 sm:mt-6 ">
@@ -47,12 +59,7 @@ export default function Profile({ setPage }: IProps) {
         <div className="w-full xl:px-10 lg:px-10 md:px-5 sm:px-5 mt-10 flex flex-col">
           <p className="text-2xl font-light text-gray-600">Description</p>
           <p className="text-sm font-semibold mt-4 text-gray-500 text-justify">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam,
-            dolorem. Enim voluptates itaque suscipit sapiente quaerat vitae amet
-            impedit quam, delectus, iusto quas. Esse porro voluptas quam eos.
-            Quis accusamus corrupti rerum recusandae laboriosam vel cupiditate,
-            itaque alias fuga eveniet ratione aut dicta sapiente libero rem
-            tempore dignissimos natus quo.
+           {userDetails.business_description}
           </p>
         </div>
 
@@ -62,19 +69,19 @@ export default function Profile({ setPage }: IProps) {
           <div className="flex flex-col xl:mt-0 lg:mt-0 md:mt-4 sm:mt-4">
             <p className="text-md font-light text-gray-600">Location</p>
             <p className="text-sm text-gray-500 font-semibold">
-              Choba, port harcourt, Nigeria.
+              {userDetails.business_address}
             </p>
           </div>
 
           <div className="flex flex-col xl:mt-0 lg:mt-0 md:mt-4 sm:mt-4">
             <p className="text-md font-light text-gray-600">Phone</p>
-            <p className="text-sm text-gray-500 font-semibold">08033783940</p>
+            <p className="text-sm text-gray-500 font-semibold">{userDetails.phone}</p>
           </div>
 
           <div className="flex flex-col xl:mt-0 lg:mt-0 md:mt-4 sm:mt-4">
             <p className="text-md font-light text-gray-600">Email</p>
             <p className="text-sm text-gray-500 font-semibold">
-              9jawarehouse@9ja.com
+              {userDetails.email}
             </p>
           </div>
         </div>

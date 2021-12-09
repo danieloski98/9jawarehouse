@@ -1,7 +1,13 @@
 import React from 'react';
 import { Input } from '@chakra-ui/react'
 
+// redux
+import { RootState } from '../../store/index'
+import { useSelector } from 'react-redux'
+
 export default function Settings() {
+  const user = useSelector((state: RootState) => state.UserReducer.user);
+
   return (
     <div className="w-full h-auto flex flex-col bg-white p-5">
         <p className="text-2xl font-light text-gray-600 ml-0">Settings</p>
@@ -12,7 +18,7 @@ export default function Settings() {
             <div className="xl:w-2/4 lg:w-2/4 md:w-full sm:w-full flex flex-col mt-4">
                 <p className="text-sm font-semibold text-gray-600">Email</p>
 
-                <Input border="none" bgColor="whitesmoke" borderRadius={0} className="bg-gray-100 mt-3" />
+                <Input border="none" bgColor="whitesmoke" fontSize="sm" borderRadius={0} disabled className="bg-gray-100 mt-3" value={user.email} />
             </div>
         </div>
 
