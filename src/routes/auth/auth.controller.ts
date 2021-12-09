@@ -174,9 +174,8 @@ export class AuthController {
   }
 
   @ApiTags('AUTH')
-  @Post('resendverificationcode/:email')
-  @ApiParam({ name: 'email', type: String })
-  @ApiBody({ type: ResetPassword })
+  @Post('resendverificationcode/:id')
+  @ApiParam({ name: 'id', type: String })
   @ApiOkResponse({ description: 'password updated successfully' })
   @ApiBadRequestResponse({
     description: 'There was an error, check the return body',
@@ -185,9 +184,7 @@ export class AuthController {
     description: 'Interal server error, contact the dev!',
   })
   async resendVerificationode(@Res() res: Response, @Param() param: any) {
-    const result = await this.userService.resendVerificationCode(
-      param['email'],
-    );
+    const result = await this.userService.resendVerificationCode(param['id']);
     res.status(result.statusCode).send(result);
   }
 

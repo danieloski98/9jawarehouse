@@ -481,10 +481,10 @@ export class UserService {
     }
   }
 
-  public async resendVerificationCode(email: string): Promise<IReturnObject> {
+  public async resendVerificationCode(_id: string): Promise<IReturnObject> {
     try {
       // check email
-      const accountExist = await this.userModel.findOne({ email });
+      const accountExist = await this.userModel.findOne({ _id });
       if (accountExist === null) {
         return Return({
           error: true,

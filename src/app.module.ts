@@ -11,6 +11,7 @@ import { UserModule } from './routes/user/user.module';
 import { OtpGateway } from './websockets/otp.gateway';
 import { EmaillistModule } from './routes/emaillist/emaillist.module';
 import { ServicesModule } from './routes/services/services.module';
+import { CommentsModule } from './routes/comments/comments.module';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require('dotenv').config();
 
@@ -30,6 +31,7 @@ const URL =
     UserModule,
     EmaillistModule,
     ServicesModule,
+    CommentsModule,
     // AdminModule,
     // NotificationsModule,
   ],

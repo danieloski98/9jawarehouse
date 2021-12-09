@@ -16,7 +16,7 @@ export class User {
   email: string;
 
   @Prop({
-    required: false,
+    required: true,
     type: String,
   })
   @ApiProperty({
@@ -27,7 +27,6 @@ export class User {
   @Prop({
     required: false,
     type: String,
-    default: '',
   })
   @ApiProperty({
     type: String,
@@ -62,15 +61,6 @@ export class User {
     default: false,
   })
   verified: boolean;
-
-  @ApiProperty({
-    type: Boolean,
-  })
-  @Prop({
-    type: Boolean,
-    default: false,
-  })
-  enabled: boolean;
 
   @ApiProperty({
     type: Boolean,
@@ -230,6 +220,7 @@ export class User {
   @Prop({
     required: false,
     type: Array,
+    default: [],
   })
   @ApiProperty({
     type: Array,
