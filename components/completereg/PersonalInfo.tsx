@@ -31,7 +31,7 @@ export default function PersonalInfo({ next, states, formik }: IProps) {
 
     React.useMemo(() => {
         (async function() {
-            const request = await fetch(`http://locationsng-api.herokuapp.com/api/v1/states/${formik.values.state}/lgas`);
+            const request = await fetch(`https://locationsng-api.herokuapp.com/api/v1/states/${formik.values.state}/lgas`);
             const json = await request.json() as Array<string>;
             setLgas(json);
         })()
