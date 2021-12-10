@@ -28,7 +28,7 @@ export default function CompleteRegistration() {
   React.useMemo(() => {
     (async function() {
       const request1 = await fetch(`${url}services`);
-      const request2 = await fetch('http://locationsng-api.herokuapp.com/api/v1/states');
+      const request2 = await fetch('https://locationsng-api.herokuapp.com/api/v1/states');
       const json1 = await request1.json() as IServerReturnObject;
       const json2 = await request2.json() as Array<states>;
       const ser = json1.data;
