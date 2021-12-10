@@ -247,6 +247,7 @@ export default function BigScreen({ states, services}: {states: states[], servic
                 });
     
                 const json = await result.json() as IServerReturnObject;
+                router.push('/auth/login')
             }
         }
     }
