@@ -193,7 +193,7 @@ export default function BigScreen({ states, services}: {states: states[], servic
         setCertificates(certs);
     }
 
-    const changeCertValue = (index: number, name: string, value: string) =>{
+    const changeCertValue = (index: number, name: 'year' | 'link' | 'organization' | 'certificate', value: string) =>{
        const newObj = [...certificates]
        newObj[index][name] = value;
        setCertificates(newObj);
