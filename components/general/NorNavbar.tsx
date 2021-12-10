@@ -1,13 +1,15 @@
 import React from 'react';
 import { FiSearch, FiBell, FiMenu, FiChevronDown, FiX } from 'react-icons/fi'
-import { Avatar, Drawer, DrawerOverlay, DrawerContent, DrawerBody, Menu, MenuButton, MenuList, MenuItem, Button, Accordion, AccordionItem, AccordionButton, AccordionPanel, AccordionIcon, Box } from '@chakra-ui/react'
+import { Avatar, Drawer, DrawerOverlay, DrawerContent, DrawerBody, Menu, MenuButton, MenuList, MenuItem, Button, Accordion, AccordionItem, AccordionButton, AccordionPanel, AccordionIcon, Box, Divider  } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 
 // redux
 import {useSelector, useDispatch} from 'react-redux';
 import { RootState } from '../../store/index';
+import { setServices as SetServ } from '../../reducers/services.reducer'
 import { updateUser } from '../../reducers/User.reducer';
+import { login } from '../../reducers/logged'
 
 // images
 import Image from 'next/image';
@@ -18,6 +20,9 @@ import Sidebar from '../dashboard/Sidebar';
 export default function NormNavbar() {
   const [open, setOpen] = React.useState(false);
   const user = useSelector((state:RootState) => state.UserReducer.user);
+  const loggedIn = useSelector((state: RootState) => state.LoggedInReducer.loggedIn);
+  const serv = useSelector((state: RootState) => state.ServicesReducer.services)
+  const dispatch = useDispatch();
   console.log(user);
   const router = useRouter();
 
@@ -42,25 +47,23 @@ export default function NormNavbar() {
                 </p>
               </MenuButton>
               <MenuList w="1000px" size maxH="500px" overflow="auto" className="grid grid-cols-4 font-light text-sm">
-                <MenuItem>Download</MenuItem>
-                <MenuItem>Create a Copy</MenuItem>
-                <MenuItem>Mark as Draft</MenuItem>
-                <MenuItem>Delete</MenuItem>
-                <MenuItem>Attend a Workshop</MenuItem>
-                <MenuItem>Download</MenuItem>
-                <MenuItem>Create a Copy</MenuItem>
-                <MenuItem>Mark as Draft</MenuItem>
-                <MenuItem>Delete</MenuItem>
-                <MenuItem>Attend a Workshop</MenuItem>
-                <MenuItem>Download</MenuItem>
-                <MenuItem>Create a Copy</MenuItem>
-             
+                {serv.map((item, index) => (
+                  <MenuItem key={index.toString()}>
+                    <Link href={`/services`}>{item.name}</Link>
+                  </MenuItem>
+                ))}
               </MenuList>
             </Menu>
             
-            <Avatar src={user.profile_pic} className="mr-6" size="sm" />
+            {loggedIn && <Avatar src={user.profile_pic} className="mr-6" size="sm" />}
+            {loggedIn && <FiBell size={25} color="black" />}
 
-            <FiBell size={25} color="black" />
+            {!loggedIn && (
+              <div className="flex font-light text-sm cursor-pointer">
+                <p className="mr-3"><Link href="/auth/createaccount">Create Account</Link></p>
+                <p><Link href="/auth/login">Login</Link></p>
+              </div>
+            )}
         </div>
 
         <div className="xl:hidden lg:hidden md:flex sm:flex items-center">
@@ -92,9 +95,13 @@ export default function NormNavbar() {
                   {/* menu */}
 
                   <div className="w-full flex flex-col">
-                    <div className="w-full h-10 text-white flex justify-center items-center bg-themeGreen">
-                        PIN: 9080998
-                    </div>
+                  {
+                      loggedIn && (
+                        <div className="w-full h-10 text-white flex justify-center items-center bg-themeGreen">
+                            PIN: 9080998
+                        </div>
+                      )
+                    }
 
                     <Link href="/dashboard">
                         <a className="text-themeGreen mt-5 text-lg font-light">Dashboard</a>
@@ -130,21 +137,18 @@ export default function NormNavbar() {
 
                             <AccordionPanel>
                               <div className="w-full h-64 overflow-y-auto flex flex-col">
-                                <p>Profile</p>
-                                <p className="mt-3">Dry cleaner</p>
-                                <p className="mt-3">Laundary</p>
-                                <p className="mt-3">Cleaner</p>
-                                <p className="mt-3">Barber</p>
                                 {/* <p>Profile</p> */}
-                                <p className="mt-3">Dry cleaner</p>
-                                <p className="mt-3">Laundary</p>
-                                <p className="mt-3">Cleaner</p>
-                                <p className="mt-3">Barber</p>
-                                {/* <p>Profile</p> */}
-                                <p className="mt-3">Dry cleaner</p>
-                                <p className="mt-3">Laundary</p>
-                                <p className="mt-3">Cleaner</p>
-                                <p className="mt-3">Barber</p>
+                                  {serv.map((item, index) => (
+                                    <>
+                                      <p className="mt-3 mb-3" key={index.toString()}>
+                                        <Link href={`/services`}>{item.name}</Link>
+                                      </p>
+
+                                      {index !== serv.length - 1 && (
+                                        <Divider />
+                                      )}
+                                    </>
+                                  ))}
                               </div>
                             </AccordionPanel>
                         </AccordionItem>

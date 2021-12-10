@@ -1,5 +1,5 @@
 import React from 'react';
-import { Input, InputGroup, InputLeftElement, Select } from '@chakra-ui/react'
+import { Input, InputGroup, InputLeftElement, Select, Spinner } from '@chakra-ui/react'
 import { FiChevronLeft, FiCamera, FiX } from 'react-icons/fi'
 import { useRouter } from 'next/router'
 import { FormikProps } from 'formik';
@@ -28,9 +28,15 @@ interface IProps {
 }
 
 export default function SocialMediaInfo({ next, formik, submit }: IProps) {
-    const router = useRouter();
+    const [loading, setLoading] = React.useState(false);
+const router = useRouter();
     
 
+const sub = () => {
+    setLoading(true);
+    submit()
+    setLoading(false);
+}
 
   return (
     <div className="w-full h-auto flex flex-col">
@@ -112,7 +118,14 @@ export default function SocialMediaInfo({ next, formik, submit }: IProps) {
         </div>
 
         <div className="w-full flex justify-end mt-6">
-            <button onClick={() => submit()} className="w-32 bg-themeGreen h-12 text-sm font-semibold text-white">Save</button>
+            <button onClick={() => submit()} className="w-32 bg-themeGreen h-12 text-sm font-semibold text-white">
+                {!loading && (
+                    <span>Save</span>
+                )}
+                {loading && (
+                    <Spinner color="white" size="md" />
+                )}
+            </button>
         </div>
 
 

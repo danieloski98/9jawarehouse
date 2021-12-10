@@ -13,6 +13,7 @@ import { useRouter } from 'next/router'
 import { RootState } from '../store/index'
 import { updateUser } from '../reducers/User.reducer';
 import { updatetoken } from '../reducers/Token.reducer';
+import { login } from '../reducers/logged'
 import { useDispatch } from 'react-redux'
 // import Footer from '../components/Home/Footer';
 
@@ -31,6 +32,7 @@ export default function Dashboard() {
       } else {
           const json = JSON.parse(data);
             dispatch(updateUser(json));
+            dispatch(login());
             setLoading(false);
       }
   })

@@ -49,7 +49,7 @@ export default function VerifyAccount() {
         if (json.statusCode !== 200) {
             alert(json.errorMessage);
         }else {
-            router.push('/completeregistration')
+            router.push(`/registration/${router.query.id}`)
             console.log(json);
         }
     }

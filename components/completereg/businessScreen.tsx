@@ -40,6 +40,31 @@ interface IProps {
 
 export default function BusinessInfo({ next, images, picker, profilePic, formik, services, selectService, selectedSerices, deleteService, certificates, addCerts, changeCert, deleteCert }: IProps) {
 
+    const nextPage = (page: number) => {
+        // validate images
+        if (images.length < 1) {
+            alert('You must select at least 1 image to continue');
+            return;
+        }
+
+        if (services.length < 1) {
+            alert('You must select at least 1 service to continue');
+            return;
+        }
+
+        if (profilePic === "" || profilePic === null) {
+            alert('You have to choose a profile picture');
+            return;
+        }
+
+        if (formik.errors.business_name || formik.errors.business_description) {
+            alert('Please fillin the form correctly');
+            return;
+        }
+
+        next(page);
+    }
+
   return (
     <div className="w-full h-auto flex flex-col">
         <div className="flex items-center h-auto">
@@ -138,7 +163,7 @@ export default function BusinessInfo({ next, images, picker, profilePic, formik,
                     ))}
         </div>
 
-        <p className="mt-6 font-semibold text-sm text-gray-500">Certificate</p>
+        <p className="mt-6 font-semibold text-sm text-gray-500">Certification</p>
 
         {certificates.map((item, index) => (
             <>
@@ -188,10 +213,10 @@ export default function BusinessInfo({ next, images, picker, profilePic, formik,
 
         
 
-        <p className="mt-6 font-semibold text-sm text-gray-500 cursor-pointer" onClick={() => addCerts()}>+ Add Another Certification</p>
+        <p className="mt-6 font-light text-md text-gray-500 cursor-pointer" onClick={() => addCerts()}>+ Add Another Certification</p>
 
         <div className="w-full flex justify-end mt-6">
-            <button onClick={() => next(3)} className="w-32 bg-themeGreen h-12 text-sm font-semibold text-white">Continue</button>
+            <button onClick={() => nextPage(3)} className="w-32 bg-themeGreen h-12 text-sm font-semibold text-white">Continue</button>
         </div>
 
 

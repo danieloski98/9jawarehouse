@@ -3,6 +3,7 @@ import UserReducer from '../reducers/User.reducer'
 import LoggedInReducer from '../reducers/logged';
 import TokenReducer from '../reducers/Token.reducer';
 import CommentReducer from '../reducers/comment.reducer';
+import ServicesReducer from '../reducers/services.reducer';
 
 export const store = configureStore({
     reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
         LoggedInReducer,
         TokenReducer,
         CommentReducer,
+        ServicesReducer,
     },
 });
 

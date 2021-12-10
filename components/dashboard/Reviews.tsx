@@ -6,8 +6,11 @@ import { IServerReturnObject } from '../../utils/types/serverreturntype';
 import { Spinner } from '@chakra-ui/react'
 import { IComment } from '../../utils/types/comments';
 
-const getReviews = async() => {
-    const result = await fetch(`${url}comments/61ae0a1fd9394d66befbdcfd`);
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store/index'
+
+const getReviews = async(id: string) => {
+    const result = await fetch(`${url}comments/${id}`);
     const json = await result.json() as IServerReturnObject;
 
     if (!result.ok) {
@@ -51,11 +54,13 @@ export default function Reviews() {
     const [error, setError] = React.useState(false);
     const [text, setText] = React.useState("Loading Revieews");
     const [reviews, setReviews] = React.useState([] as IComment[]);
+    const user = useSelector((state: RootState) => state.UserReducer.user);
 
-    const { refetch } = useQuery('getReviews', getReviews, {
+    const { refetch } = useQuery(['getReviews', user._id], () => getReviews(user._id), {
         onSuccess: (data: IServerReturnObject) => {
             setLoading(false);
             if (data.statusCode !== 200) {
+                alert(data.errorMessage);
                 setError(true);
                 setText(data.errorMessage);
             } else {

@@ -35,7 +35,18 @@ export default function PersonalInfo({ next, states, formik }: IProps) {
             const json = await request.json() as Array<string>;
             setLgas(json);
         })()
-    }, [formik.values.state])
+    }, [formik.values.state]);
+
+  const nextPage = (page: number) => {
+      //validate
+      if (formik.errors.first_name || formik.errors.last_name || formik.errors.email || formik.errors.phone || formik.errors.address || formik.errors.country || formik.errors.state || formik.errors.lga) {
+          alert('Please fillin the form correctly');
+          return;
+      } else {
+          next(page);
+      }
+  }
+
   return (
     <div className="w-full h-auto flex flex-col">
         <p className="text-2xl font-light text-gray-600">Personal Information</p>
@@ -128,7 +139,7 @@ export default function PersonalInfo({ next, states, formik }: IProps) {
         </div>
 
         <div className="w-full flex justify-end mt-6">
-            <button onClick={() => next(2)} className="w-32 bg-themeGreen h-12 text-sm font-semibold text-white">Continue</button>
+            <button onClick={() => nextPage(2)} className="w-32 bg-themeGreen h-12 text-sm font-semibold text-white">Continue</button>
         </div>
 
 

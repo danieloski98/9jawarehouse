@@ -3,6 +3,8 @@ import { Progress } from '@chakra-ui/react'
 import PersonalInfo from './PersonalInfo';
 import BusinessInfo from './businessScreen';
 import SocialMediaInfo from './socialMedia';
+import {useRouter} from 'next/router'
+
 
 import * as yup from 'yup';
 import { useFormik } from 'formik';
@@ -63,6 +65,7 @@ export default function BigScreen({ states, services}: {states: states[], servic
     const [certificates, setCertificates] = React.useState([] as Array<ICertificate>);
     let fileReader = React.useRef(new FileReader).current;
     const picker = document.getElementById('picker');
+    const router = useRouter();
     const [caller, setCaller] = React.useState(1);
 
     React.useEffect(() => {
@@ -78,11 +81,12 @@ export default function BigScreen({ states, services}: {states: states[], servic
 
     React.useEffect(() => {
         fileReader.addEventListener('load', () => {
+            console.log(caller);
             if (caller === 1) {
                 const imgs = [...images, fileReader.result];
                 setImages(imgs);
                 return;
-            } else if (caller === 2) {
+            } else {
                 setProfile(fileReader.result as string);
                 return;
             }
@@ -158,6 +162,10 @@ export default function BigScreen({ states, services}: {states: states[], servic
     }
 
     const selectService = (servi: string) => {
+        if (service.includes(servi)) {
+            alert('You have already selected this service');
+            return;
+        }
         if (service.length < 3) {
             const serv = [...service, servi];
             setServices(serv);
@@ -170,9 +178,8 @@ export default function BigScreen({ states, services}: {states: states[], servic
     }
 
     const deleteService = (index: number) => {
-        service.splice(index, 1);
-        const newSer = service;
-        setServices(newSer)
+        const servi = service.filter((it, i) => i !== index);
+        setServices(servi);
     }
 
     const addCert = () => {
@@ -187,23 +194,21 @@ export default function BigScreen({ states, services}: {states: states[], servic
     }
 
     const changeCertValue = (index: number, name: string, value: string) =>{
-        const active: any = certificates[index];
-        active[name] = value;
-        certificates[index] = active;
-        setCertificates(certificates);
+       const newObj = [...certificates]
+       newObj[index][name] = value;
+       setCertificates(newObj);
     }
 
     const deleteCert = (index: number) => {
-        certificates.splice(index, 1);
-        const newCert = certificates;
-        setCertificates(newCert)
+        const certs = certificates.filter((item, ind) => ind !== index)
+        setCertificates(certs);
     }
 
     const submit = async() => {
         const imgs = new FormData();
         const pp = new FormData();
 
-        const result1 = await fetch(`${url}user/61ae0a1fd9394d66befbdcfd`, {
+        const result1 = await fetch(`${url}user/${router.query['id']}`, {
             method: 'post',
             headers: {
                 'content-type': "application/json"
@@ -227,7 +232,7 @@ export default function BigScreen({ states, services}: {states: states[], servic
                 imgs.append('pic', item);
             })
 
-            const result = await fetch(`${url}user/61ae0a1fd9394d66befbdcfd/images`, {
+            const result = await fetch(`${url}user/${router.query['id']}/images`, {
                 method: 'put',
                 body: imgs,
             });
@@ -236,7 +241,7 @@ export default function BigScreen({ states, services}: {states: states[], servic
 
             if (json.statusCode === 200) {
                 pp.append('pic', profilePic as any);
-                const result = await fetch(`${url}user/61ae0a1fd9394d66befbdcfd/profilepic`, {
+                const result = await fetch(`${url}user/${router.query['id']}/profilepic`, {
                     method: 'put',
                     body: pp,
                 });
