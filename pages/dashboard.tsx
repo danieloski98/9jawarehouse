@@ -15,6 +15,8 @@ import { updateUser } from '../reducers/User.reducer';
 import { updatetoken } from '../reducers/Token.reducer';
 import { login } from '../reducers/logged'
 import { useDispatch } from 'react-redux'
+import url from '../utils/url';
+import { IServerReturnObject } from '../utils/types/serverreturntype';
 // import Footer from '../components/Home/Footer';
 
 export default function Dashboard() {
@@ -24,18 +26,35 @@ export default function Dashboard() {
   const router = useRouter();
   const dispatch = useDispatch();
 
+  const fetchUser = React.useCallback( async() => {
+    setLoading(true);
+    const _id = JSON.parse(localStorage.getItem('9jauser') as string)._id;
+    const request = await fetch(`${url}user/${_id}`);
+    const json = await request.json() as IServerReturnObject;
+
+    if (json.statusCode !== 200) {
+        alert(json.errorMessage);
+        setLoading(false);
+        return
+    } else {
+        dispatch(updateUser(json.data));
+        dispatch(login());
+        setLoading(false);
+    }
+  }, [dispatch])
+
+
   React.useEffect(() => {
       const data = localStorage.getItem('9jauser');
 
       if (data === null || data === undefined) {
           router.push('/auth/login');
       } else {
-          const json = JSON.parse(data);
-            dispatch(updateUser(json));
-            dispatch(login());
-            setLoading(false);
+          fetchUser();
       }
-  })
+  }, [fetchUser, router]);
+
+ 
 
   const changePage = (page: 1|2|3|4|5) =>{
     setPage(page);

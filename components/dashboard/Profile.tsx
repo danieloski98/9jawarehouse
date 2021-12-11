@@ -2,6 +2,8 @@ import React from "react";
 import { Input, Avatar, Image as Img } from "@chakra-ui/react";
 import Image from 'next/image'
 import Banner from '../../public/images/banner.png';
+import { FaFacebook, FaWhatsapp, FaInstagram, FaInternetExplorer, FaTwitter } from 'react-icons/fa'
+
 
 // redux
 import { RootState } from '../../store/index'
@@ -35,13 +37,13 @@ export default function Profile({ setPage }: IProps) {
               size="lg"
             />
             <div className="flex flex-col justify-center">
-              <p className="text-md font-light text-gray-600">
+              <p className="text-lg font-bold text-gray-600">
                 {userDetails.business_name}
               </p>
-              <div className="flex w-auto h-auto flex-nowrap mt-2">
+              <div className="flex w-96 h-auto flex-nowrap mt-2">
                 {userDetails.services.map((item, index) => (
-                  <p key={index.toString()} className="text-xs text-themeGreen font-semibold">
-                    {item}
+                  <p key={index.toString()} className="text-xs text-themeGreen font-light">
+                    {item},
                   </p>
                 ))}
               </div>
@@ -57,8 +59,8 @@ export default function Profile({ setPage }: IProps) {
         {/* description box */}
 
         <div className="w-full xl:px-10 lg:px-10 md:px-5 sm:px-5 mt-10 flex flex-col">
-          <p className="text-2xl font-light text-gray-600">Description</p>
-          <p className="text-sm font-semibold mt-4 text-gray-500 text-justify">
+          <p className="text-md font-semibold text-gray-600">Description</p>
+          <p className="text-sm font-light mt-4 text-gray-500 text-justify">
            {userDetails.business_description}
           </p>
         </div>
@@ -67,20 +69,20 @@ export default function Profile({ setPage }: IProps) {
 
         <div className="w-full flex xl:flex-row lg:flex-row md:flex-col sm:flex-col justify-between xl:px-10 lg:px-10 md:px-5 sm:px-5 mt-10">
           <div className="flex flex-col xl:mt-0 lg:mt-0 md:mt-4 sm:mt-4">
-            <p className="text-md font-light text-gray-600">Location</p>
-            <p className="text-sm text-gray-500 font-semibold">
+            <p className="text-md font-semibold text-gray-600">Location</p>
+            <p className="text-sm text-gray-500 font-light">
               {userDetails.business_address}
             </p>
           </div>
 
           <div className="flex flex-col xl:mt-0 lg:mt-0 md:mt-4 sm:mt-4">
-            <p className="text-md font-light text-gray-600">Phone</p>
-            <p className="text-sm text-gray-500 font-semibold">{userDetails.phone}</p>
+            <p className="text-md font-semibold text-gray-600">Phone</p>
+            <p className="text-sm text-gray-500 font-light">{userDetails.phone}</p>
           </div>
 
           <div className="flex flex-col xl:mt-0 lg:mt-0 md:mt-4 sm:mt-4">
-            <p className="text-md font-light text-gray-600">Email</p>
-            <p className="text-sm text-gray-500 font-semibold">
+            <p className="text-md font-semibold text-gray-600">Email</p>
+            <p className="text-sm text-gray-500 font-light">
               {userDetails.email}
             </p>
           </div>
@@ -89,21 +91,56 @@ export default function Profile({ setPage }: IProps) {
         {/* social media links */}
 
         <div className="w-full flex xl:flex-row lg:flex-row md:flex-col sm:flex-col justify-between xl:px-10 lg:px-10 md:px-5 sm:px-5 mt-10">
-          <div className="flex flex-col xl:mt-0 lg:mt-0 md:mt-4 sm:mt-4">
-            <p className="text-md font-light text-gray-600">
+          <div className="flex flex-col flex-1 xl:mt-0 lg:mt-0 md:mt-4 sm:mt-4">
+            <p className="text-md font-semibold text-gray-600">
               Social Media Links
             </p>
-            <p className="text-sm text-gray-500 font-semibold">
-              Choba, port harcourt, Nigeria.
-            </p>
+            <div className="flex w-full mt-2">
+              {userDetails.facebook !== "" && (
+                <a href={userDetails.facebook}>
+                  <FaFacebook size={25} color="lightblue" />
+                </a>
+              )}
+
+              {userDetails.instagram !== "" && (
+                <a href={userDetails.instagram} className="ml-3">
+                  <FaInstagram size={25} color="pink" />
+                </a>
+              )}
+
+              {userDetails.twitter !== "" && (
+                <a href={userDetails.twitter} className="ml-3">
+                  <FaTwitter size={25} color="blue" />
+                </a>
+              )}
+
+              {userDetails.whatsapp !== "" && (
+                <a href={userDetails.whatsapp} className="ml-3">
+                  <FaWhatsapp size={25} color="green" />
+                </a>
+              )}
+
+              {userDetails.website !== "" && (
+                <a href={userDetails.website} className="ml-3">
+                  <FaInternetExplorer size={25} color="blue" />
+                </a>
+              )}        
+            </div>
           </div>
 
-          <div className="flex flex-col xl:mt-0 lg:mt-0 md:mt-4 sm:mt-4">
-            <p className="text-md font-light text-gray-600">Phone</p>
-            <p className="text-sm text-gray-500 font-semibold">08033783940</p>
+          <div className="flex flex-col xl:mt-0 lg:mt-0 md:mt-4 sm:mt-4 flex-1 ml-1">
+            <p className="text-md font-semibold text-gray-600">Certifications</p>
+            {userDetails.certificates.length > 0 && userDetails.certificates.map((item, index) => (
+              <div key={index.toString()} className="mt-2" >
+                  <p className="text-sm font-light">{item.certificate}</p>
+                  <p className="text-sm font-light mt-1">{item.organization}</p>
+                  <p className="text-sm font-light mt-1">{item.year}</p>
+                  <button className="w-40 h-10 border-2 border-themeGreen text-themeGreen mt-2">View</button>
+              </div>
+            ))}
           </div>
 
-          <div className="flex flex-col">
+          <div className="flex flex-1 flex-col">
             {/* <p className="text-md font-light text-gray-600">Email</p>
         <p className="text-sm text-gray-500 font-semibold">9jawarehouse@9ja.com.fake</p> */}
           </div>

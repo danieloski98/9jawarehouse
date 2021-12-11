@@ -45,7 +45,14 @@ export interface IUser {
 
   website: string;
 
-  certificates: any[];
+  certificates: ICertificate[];
 
   createAt: string;
+}
+
+export interface ICertificate {
+  certificate: string;
+  year: string;
+  link: string;
+  organization: string;
 }

@@ -67,6 +67,7 @@ export default function BigScreen({ states, services}: {states: states[], servic
     const picker = document.getElementById('picker');
     const router = useRouter();
     const [caller, setCaller] = React.useState(1);
+    const [loading, setLoading] = React.useState(false);
 
     React.useEffect(() => {
         setCertificates([
@@ -127,7 +128,7 @@ export default function BigScreen({ states, services}: {states: states[], servic
                 return <BusinessInfo next={move} images={images} profilePic={profile} picker={pickImages} formik={formik} services={services} selectService={selectService} selectedSerices={service} deleteService={deleteService} certificates={certificates} addCerts={addCert} changeCert={changeCertValue} deleteCert={deleteCert}  />
             }
             case 3: {
-                return <SocialMediaInfo next={move} formik={formik} submit={submit} />
+                return <SocialMediaInfo next={move} formik={formik} submit={submit} loading={loading} />
             }
         }
     }
@@ -137,7 +138,7 @@ export default function BigScreen({ states, services}: {states: states[], servic
             case 1: {
                 return 'Personal Information'
             }
-            case 2: {
+            case 2: { 
                 return 'Business Information'
             }
             case 3: {
@@ -207,6 +208,7 @@ export default function BigScreen({ states, services}: {states: states[], servic
     const submit = async() => {
         const imgs = new FormData();
         const pp = new FormData();
+        setLoading(true);
 
         const result1 = await fetch(`${url}user/${router.query['id']}`, {
             method: 'post',
@@ -224,6 +226,7 @@ export default function BigScreen({ states, services}: {states: states[], servic
 
         if(json1.statusCode !== 200) {
             alert(json1.errorMessage);
+            setLoading(false);
         }
 
         if (json1.statusCode === 200) {
@@ -247,7 +250,8 @@ export default function BigScreen({ states, services}: {states: states[], servic
                 });
     
                 const json = await result.json() as IServerReturnObject;
-                router.push('/auth/login')
+                router.push('/dashboard');
+                setLoading(false);
             }
         }
     }

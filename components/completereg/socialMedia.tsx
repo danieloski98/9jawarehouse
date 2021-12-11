@@ -8,6 +8,7 @@ import { FormikProps } from 'formik';
 interface IProps {
     next: Function;
     submit: Function;
+    loading: boolean;
     formik: FormikProps<{
         firstname: '',
         lastname: '',
@@ -27,15 +28,13 @@ interface IProps {
     }>;
 }
 
-export default function SocialMediaInfo({ next, formik, submit }: IProps) {
-    const [loading, setLoading] = React.useState(false);
+export default function SocialMediaInfo({ next, formik, submit, loading }: IProps) {
+
 const router = useRouter();
     
 
 const sub = () => {
-    setLoading(true);
     submit()
-    setLoading(false);
 }
 
   return (

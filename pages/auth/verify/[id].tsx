@@ -3,6 +3,13 @@ import { InputGroup, InputLeftElement, InputRightElement, Input, Spinner } from 
 import { FiMail, FiLock, FiEye, FiEyeOff, FiUser } from 'react-icons/fi'
 import { useRouter } from 'next/router'
 
+// redux 
+import { RootState } from '../../../store/index'
+import { useDispatch } from 'react-redux'
+import { updateUser } from '../../../reducers/User.reducer'
+import { login } from '../../../reducers/logged'
+import { updatetoken } from '../../../reducers/Token.reducer'
+
 // image
 import Image from 'next/image';
 import Girl from '../../../public/images/girl2.png';
@@ -11,6 +18,7 @@ import Google from '../../../public/images/google.svg';
 import Mail from '../../../public/images/mail.png';
 import { FiSearch, FiMenu } from 'react-icons/fi'
 import url from '../../../utils/url';
+import { IServerReturnObject } from '../../../utils/types/serverreturntype';
 
 
 // components
@@ -35,6 +43,8 @@ export default function VerifyAccount() {
     const [sec, setSec] = React.useState(0);
     const [disabled, setDisabled] = React.useState(false)
 
+    const dispatch = useDispatch();
+
     const router = useRouter();
 
     const verify = async() => {
@@ -44,11 +54,17 @@ export default function VerifyAccount() {
             method: 'post',
         });
 
-        const json = await request.json()
+        const json = await request.json() as IServerReturnObject;
 
         if (json.statusCode !== 200) {
             alert(json.errorMessage);
         }else {
+            // login user
+            const stringified = localStorage.setItem('9jauser', JSON.stringify(json.data.user));
+            const token = localStorage.setItem('9jatoken', json.data.token);
+            dispatch(updateUser(json.data.user));
+            dispatch(updatetoken(json.data.token));
+            dispatch(login())
             router.push(`/registration/${router.query.id}`)
             console.log(json);
         }
