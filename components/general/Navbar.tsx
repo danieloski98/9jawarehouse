@@ -1,6 +1,6 @@
 import React from 'react';
 import { FiSearch, FiBell, FiMenu, FiChevronDown, FiX } from 'react-icons/fi'
-import { Avatar, Drawer, DrawerOverlay, DrawerContent, DrawerBody, Menu, MenuButton, MenuList, MenuItem, Button, Accordion, AccordionButton, AccordionItem, AccordionPanel, AccordionIcon, Box, Divider } from '@chakra-ui/react'
+import { Avatar, Drawer, DrawerOverlay, DrawerContent, DrawerBody, Menu, MenuButton, MenuList, MenuItem, Button, Accordion, AccordionButton, AccordionItem, AccordionPanel, AccordionIcon, Box, Divider, DrawerCloseButton } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 
@@ -25,6 +25,7 @@ interface IProps {
 
 export default function Navbar({page, setPage}: IProps) {
   const [open, setOpen] = React.useState(false);
+  const [showNoti, setShowNoti] = React.useState(false);
   const user = useSelector((state:RootState) => state.UserReducer.user);
   const loggedIn = useSelector((state: RootState) => state.LoggedInReducer.loggedIn);
   console.log(user);
@@ -69,7 +70,7 @@ export default function Navbar({page, setPage}: IProps) {
             </Menu>
             
             {loggedIn && <Avatar src={user.profile_pic} className="mr-6" size="sm" />}
-            {loggedIn && <FiBell size={25} color="black" />}
+            {loggedIn && <FiBell size={25} color="black" className='cursor-pointer' onClick={() => setShowNoti(true)} />}
 
             {!loggedIn && (
               <div className="flex font-light text-sm cursor-pointer">
@@ -81,7 +82,20 @@ export default function Navbar({page, setPage}: IProps) {
 
         <div className="xl:hidden lg:hidden md:flex sm:flex items-center">
           <FiMenu size={30} color="grey" onClick={() => setOpen(true)} />
+          {loggedIn && <FiBell size={25} color="black" className='ml-5 cursor-pointer' onClick={() => setShowNoti(true)} />}
         </div>
+
+        {/* Notofication Drawer */}
+        <Drawer isOpen={showNoti} onClose={() => setShowNoti(false)}>
+          <DrawerOverlay />
+          <DrawerContent>
+            <DrawerCloseButton />
+            <DrawerBody>
+              <p>Notifications</p>
+              <div className="w-full h-64 bg-green-300 mt-4"></div>
+            </DrawerBody>
+          </DrawerContent>
+        </Drawer>
 
         {/* navigation drawer for small screens and medium screens */}
 

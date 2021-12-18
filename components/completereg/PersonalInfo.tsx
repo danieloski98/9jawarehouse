@@ -11,7 +11,7 @@ interface IProps {
         last_name: '',
         email: '',
         phone: '',
-        address: '',
+        business_address: '',
         country: '',
         state: '',
         business_name: '',
@@ -39,7 +39,7 @@ export default function PersonalInfo({ next, states, formik }: IProps) {
 
   const nextPage = (page: number) => {
       //validate
-      if (formik.errors.first_name || formik.errors.last_name || formik.errors.email || formik.errors.phone || formik.errors.address || formik.errors.country || formik.errors.state || formik.errors.lga) {
+      if (formik.errors.first_name || formik.errors.last_name || formik.errors.email || formik.errors.phone || formik.errors.business_address || formik.errors.country || formik.errors.state || formik.errors.lga) {
           alert('Please fillin the form correctly');
           return;
       } else {
@@ -99,9 +99,9 @@ export default function PersonalInfo({ next, states, formik }: IProps) {
             <div className="w-full">
                 <label>House / Business Address</label>
                 <div className="xl:w-11/12 lg:w-11/12 md:w-full sm:w-full">
-                    <Input border="none" bgColor="whitesmoke" borderRadius={0} className="bg-gray-100 mt-3" name="address" value={formik.values.address} onChange={formik.handleChange} onFocus={() => formik.setFieldTouched('address', true, true)} />
+                    <Input border="none" bgColor="whitesmoke" borderRadius={0} className="bg-gray-100 mt-3" name="business_address" value={formik.values.business_address} onChange={formik.handleChange} onFocus={() => formik.setFieldTouched('address', true, true)} />
                 </div>
-                {formik.touched.address && formik.errors.address && <p className="text-xs mt-1 font-light text-red-400">{formik.errors.address}</p>}
+                {formik.touched.business_address && formik.errors.business_address && <p className="text-xs mt-1 font-light text-red-400">{formik.errors.business_address}</p>}
             </div>
             <div className="w-full xl:mt-0 lg:mt-0 md:mt-2 sm:mt-2">
                 <label>Country</label>

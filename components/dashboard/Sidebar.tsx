@@ -1,6 +1,10 @@
 import React from 'react';
 import { FiUser, FiStar, FiDollarSign, FiSettings, FiHelpCircle } from 'react-icons/fi'
 
+// redux
+import { useSelector } from 'react-redux'
+import { RootState } from '../../store/index'
+
 const ACTIVE = 'flex justify-between border-r-4 border-themeGreen h-12 text-themeGreen cursor-pointer';
 const INACTIVE = 'flex justify-between h-12 text-gray-500 hover:bg-gray-100 cursor-pointer'
 
@@ -10,6 +14,7 @@ interface IProps {
 }
 
 export default function Sidebar({page, setPage}: IProps) {
+    const userDetails = useSelector((state: RootState) => state.UserReducer.user);
   return (
     <div className="w-full h-auto flex flex-col pb-10">
 
@@ -44,9 +49,22 @@ export default function Sidebar({page, setPage}: IProps) {
                 </div>
             </div>
 
-            <div className="w-11/12 mt-5 flex items-center justify-center mx-3 h-12 bg-green-100 text-green-600">
-                PIN - 867585
-            </div>
+            {
+                userDetails.pin && (
+                    <div className="w-11/12 mt-5 flex items-center justify-center mx-3 h-12 bg-green-100 text-green-600">
+                        PIN - 867585
+                    </div>
+                )
+            }
+
+
+            {
+                !userDetails.pin && (
+                    <button className="w-11/12 mt-5 flex items-center justify-center mx-3 h-12 bg-green-100 text-green-600">
+                       Generate PIN
+                    </button>
+                )
+            }
         </div>
 
         <div className="w-full h-auto bg-white mt-6 flex flex-col p-6">

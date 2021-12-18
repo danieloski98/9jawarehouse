@@ -13,6 +13,8 @@ export interface IUser {
 
   verified: boolean;
 
+  pin: boolean;
+
   passwordless: boolean;
 
   blocked: boolean;

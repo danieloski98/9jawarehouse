@@ -24,7 +24,7 @@ interface IProps {
         lastname: '',
         email: '',
         phone: '',
-        address: '',
+        business_address: '',
         country: '',
         state: '',
         business_name: '',
