@@ -66,7 +66,7 @@ export default function Services({states, services}: IProps) {
                    <Select border="none" bgColor="whitesmoke" borderRadius="0">
                        <option value="" selected>State</option>
                        {states.map((item, index) => (
-                           <option key={index.toString()} value={item.name}>{item.capital}</option>
+                           <option key={index.toString()} value={item.name}>{item.name}</option>
                        ))}
                    </Select>
                </div>
