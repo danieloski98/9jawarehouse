@@ -71,9 +71,9 @@ export default function Services({states, services}: IProps) {
                    </Select>
                </div>
                <div className="w-full h-10 mb-5">
-                   <Select border="none" bgColor="whitesmoke">
+                   <Select border="none" bgColor="whitesmoke" onChange={(e) => setState(e.target.value)}>
                        <option value="" selected>LGA</option>
-                       {lgas.length > 1 && lgas.map((item, index) => (
+                       {lgas.length > 0 && lgas.map((item, index) => (
                            <option key={index.toString()} value={item}>{item}</option>
                        ))}
                    </Select>
