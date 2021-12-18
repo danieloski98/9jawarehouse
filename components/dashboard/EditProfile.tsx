@@ -36,7 +36,7 @@ export default function EditProfile({ next }: IProps) {
 
         <div className="w-full h-auto bg-white flex flex-col justify-center py-6">
           <p className="text-md font-light">
-            Note: You won't be able to update the following fields from here
+            Note: You wont be able to update the following fields from here
           </p>
           <ol className="list-decimal list-inside text-sm font-semibold mt-3">
             <li>Business Name</li>
