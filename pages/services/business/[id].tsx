@@ -13,6 +13,16 @@ import Banner from '../../../public/images/banner.png'
 import ProfileBox from '../../../components/services/Profilebox';
 import RateBox from '../../../components/services/RateBox';
 import ReviewModal from '../../../components/services/ReviewModal';
+import { GetStaticPaths } from 'next';
+
+export const getStaticPaths: GetStaticPaths<{ slug: string }> = async () => {
+
+    return {
+        paths: [], //indicates that no page needs be created at build time
+        fallback: 'blocking' //indicates the type of fallback
+    }
+}
+
 
 const ContactBox = () => {
     return (
