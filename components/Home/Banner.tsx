@@ -1,13 +1,23 @@
 import React from 'react';
 import Image from 'next/image';
 import { FiSearch, FiMenu } from 'react-icons/fi'
-import { InputGroup, Input, InputLeftAddon, InputLeftElement, Drawer, DrawerOverlay, DrawerContent, DrawerBody, Avatar } from '@chakra-ui/react'
+import { InputGroup, Input, InputLeftAddon, InputLeftElement, Drawer, DrawerOverlay, DrawerContent, DrawerBody, Avatar, Menu, MenuButton, MenuList, MenuItem, } from '@chakra-ui/react'
 const colors = require('tailwindcss/colors')
 import { useRouter } from 'next/router'
+import { FiBell, FiChevronDown, FiX } from 'react-icons/fi'
+import Link from 'next/link'
+
+// redux
+// redux
+import {useSelector, useDispatch} from 'react-redux';
+import { RootState } from '../../store/index';
+import { setServices as SetServ } from '../../reducers/services.reducer'
 
 // images
 import Logo from '../../public/images/logo.svg';
 import Woman from '../../public/images/woman.svg';
+import url from '../../utils/url';
+import { IServerReturnObject } from '../../utils/types/serverreturntype';
 
 
 // other components
@@ -45,12 +55,41 @@ export const LeftNavbar = () => {
 const RightNavBar = () => {
     const router = useRouter();
 
+    const dispatch = useDispatch();
+    const serv = useSelector((state: RootState) => state.ServicesReducer.services)
+
+    React.useMemo(() => {
+    (async function() {
+      const request1 = await fetch(`${url}services`);
+      const json1 = await request1.json() as IServerReturnObject;
+      const ser = json1.data;
+
+      dispatch(SetServ(ser))
+    })()
+  }, [dispatch]);
+
     return (
         <div className="w-full h-24 flex justify-center items-center text-white">
-            <p onClick={() => router.push('/services') } className="text-sm font-semibold mx-5 flex items-center cursor-pointer">
-                <FiSearch size={25} color="white" />
-                <span className="ml-2">Find Services</span>
-            </p>
+             <Menu size="lg" preventOverflow={true}>
+              <MenuButton
+                rightIcon={<FiChevronDown size={20} color="grey" />}
+              >
+                <p className="flex mr-6">
+                  <FiSearch size={20} className="text-white" />
+                  <span className="ml-3 font-semibold text-sm cursor-pointer">Find Service</span>
+                  <FiChevronDown size={20} color="white" className="ml-1 mt-0" />
+                </p>
+              </MenuButton>
+              <MenuList w="1000px" size maxH="500px" overflow="auto" mr="200px" className="grid grid-cols-4 font-light text-sm">
+                {serv.map((item, index) => (
+                  <MenuItem key={index.toString()}>
+                    <a href={`/services/${item.name}`}>
+                        <p className="text-gray-600">{item.name}</p>
+                    </a>
+                  </MenuItem>
+                ))}
+              </MenuList>
+            </Menu>
 
             <p onClick={() => router.push('/auth/createaccount')} className="text-sm font-semibold mx-5 flex items-center cursor-pointer">
                 <span>Become A Vendor</span>

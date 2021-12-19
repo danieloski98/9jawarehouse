@@ -56,14 +56,14 @@ export default function Navbar({page, setPage}: IProps) {
               >
                 <p className="flex mr-6">
                   <FiSearch size={20} className="text-themeGreen" />
-                  <span className="ml-3 font-light text-sm cursor-pointer">Find Service</span>
+                  <span className="ml-3 font-semibold text-sm cursor-pointer">Find Service</span>
                   <FiChevronDown size={20} color="grey" className="ml-1 mt-0" />
                 </p>
               </MenuButton>
               <MenuList w="1000px" size maxH="500px" overflow="auto" className="grid grid-cols-4 font-light text-sm">
                 {serv.map((item, index) => (
                   <MenuItem key={index.toString()}>
-                    <Link href={`/services`}>{item.name}</Link>
+                    <Link href={`/services/${item.name}`}>{item.name}</Link>
                   </MenuItem>
                 ))}
               </MenuList>
@@ -168,7 +168,7 @@ export default function Navbar({page, setPage}: IProps) {
                                   {serv.map((item, index) => (
                                     <>
                                       <p className="mt-3 mb-3" key={index.toString()}>
-                                        <Link href={`/services`}>{item.name}</Link>
+                                        <Link href={`/services/${item.name}`}>{item.name}</Link>
                                       </p>
 
                                       {index !== serv.length - 1 && (
