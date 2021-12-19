@@ -23,6 +23,12 @@ export const getStaticPaths: GetStaticPaths<{ slug: string }> = async () => {
     }
 }
 
+export async function getStaticProps() {
+    return {
+        props: {},
+    }
+}
+
 
 const ContactBox = () => {
     return (
