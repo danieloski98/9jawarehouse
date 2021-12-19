@@ -163,6 +163,36 @@ export class User {
     default: '',
   })
   @ApiProperty({
+    type: [String],
+  })
+  lga: string;
+
+  @Prop({
+    required: false,
+    type: String,
+    default: '',
+  })
+  @ApiProperty({
+    type: String,
+  })
+  country: string;
+
+  @Prop({
+    required: false,
+    type: String,
+    default: '',
+  })
+  @ApiProperty({
+    type: String,
+  })
+  state: string;
+
+  @Prop({
+    required: false,
+    type: String,
+    default: '',
+  })
+  @ApiProperty({
     type: String,
   })
   facebook: string;
@@ -216,6 +246,15 @@ export class User {
     type: String,
   })
   website: string;
+
+  @Prop({
+    type: Boolean,
+    default: false,
+  })
+  @ApiProperty({
+    type: Boolean,
+  })
+  pin: boolean;
 
   @Prop({
     required: false,

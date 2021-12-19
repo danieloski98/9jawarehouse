@@ -47,6 +47,36 @@ export class CrudService {
     }
   }
 
+  async getUsers(query?: {
+    service: string;
+    state: string;
+    lga: string;
+  }): Promise<IReturnObject> {
+    try {
+      const user = await this.userModel.find({
+        verified: true,
+        disabled: false,
+        services: query.service || '',
+        state: query.state || '',
+        lga: query.lga || '',
+      });
+      console.log(user);
+      return Return({
+        error: false,
+        statusCode: 200,
+        successMessage: 'User found',
+        data: user,
+      });
+    } catch (error) {
+      return Return({
+        error: true,
+        statusCode: 500,
+        trace: error,
+        errorMessage: 'Internal Server error.',
+      });
+    }
+  }
+
   async uploadBusinessDetails(
     id: string,
     details: Partial<User>,

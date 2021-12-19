@@ -5,6 +5,7 @@ import {
   Param,
   Post,
   Put,
+  Query,
   Res,
   UploadedFiles,
   UseInterceptors,
@@ -26,6 +27,15 @@ export class UserController {
   @Get(':id')
   async getUserbyid(@Res() res: Response, @Param() param: any) {
     const result = await this.crudService.getUserByID(param['id']);
+    res.status(result.statusCode).send(result);
+  }
+
+  @ApiTags('User')
+  // @ApiParam({ type: String, name: 'id' })
+  @Get('')
+  async getUsers(@Res() res: Response, @Query() query: any) {
+    console.log(query);
+    const result = await this.crudService.getUsers(query);
     res.status(result.statusCode).send(result);
   }
 

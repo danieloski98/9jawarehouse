@@ -78,6 +78,7 @@ export class CrudService {
       }
 
       const reviews = await this.commentModel.find({ business_id: id });
+      console.log(reviews);
       return Return({
         error: false,
         statusCode: 200,
