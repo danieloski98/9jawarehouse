@@ -37,18 +37,18 @@ const SubModal = ({ open, onClose }: IProps) => {
                                 <p className="font-light text-xl text-themeGreen">Monthly Plan</p>
                                 <p className="font-semibold mt-4 text-sm text-gray-500">You will have all full access on this account to all features. Auto Renewal will be activated </p>
                                 <div className="flex justify-center items-center mt-6">
-                                    <span className="text-xl font-light text-gray-500">N1,000</span> <span className="font-semibold text-sm text-gray-500 ml-4">/ Month</span>
+                                    <span className="text-xl font-light text-gray-500">N2,000</span> <span className="font-semibold text-sm text-gray-500 ml-4">/ Month</span>
                                 </div>
                             </div>
 
-                            <div onClick={() => setSel(2)} className={sel === 2 ? SELECTED:NOTSELECTED}>
+                            {/* <div onClick={() => setSel(2)} className={sel === 2 ? SELECTED:NOTSELECTED}>
                                 <p className="font-light text-xl text-themeGreen">Yearly Plan</p>
                                 <p className="font-semibold mt-4 text-sm text-gray-500">Save 20%  on this plan.
 You will have all full access on this account to all features. Auto Renewal will be activated</p>
                                 <div className="flex justify-center items-center mt-6">
                                     <span className="text-xl font-light text-gray-500">N10,000</span> <span className="font-semibold text-sm text-gray-500 ml-4">/ Month</span>
                                 </div>
-                            </div>
+                            </div> */}
 
                         </div>
 

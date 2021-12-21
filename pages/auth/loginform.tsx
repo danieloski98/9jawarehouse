@@ -141,13 +141,15 @@ export default function LoginForm() {
                     )}
                 </div>
 
-                <div onClick={submit} className="xl:w-4/6 lg:w-4/6 md:w-full sm:w-full mt-8 h-12 bg-themeGreen cursor-pointer flex justify-center items-center">
+                <p onClick={() => router.push('/auth/forgotpassword')} className='font-semibold text-sm my-5 cursor-pointer text-themeGreen'>Forgot your password ?</p>
+
+                <div onClick={submit} className="xl:w-4/6 lg:w-4/6 md:w-full sm:w-full mt-2 h-12 bg-themeGreen cursor-pointer flex justify-center items-center">
                     {!loading && <span className="ml-4 text-sm font-semibold text-white">Login</span>}
                     {loading && <Spinner color="white" size="sm" />}
                 </div>
 
                 <div className="xl:w-4/6 lg:w-4/6 md:w-full sm:w-full text-center">
-                    <p onClick={() => router.push('/auth/createaccount')} className="text-sm font-light mt-12 text-center text-gray-500">Dont Have An Account? <span className="text-themeGreen">Create Account</span></p>
+                    <p onClick={() => router.push('/auth/createaccount')} className="text-sm font-light mt-12 text-center text-gray-500 cursor-pointer">Dont Have An Account? <span className="text-themeGreen">Create Account</span></p>
                 </div>
 
             </div>
