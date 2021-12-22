@@ -18,7 +18,7 @@ import { PinService } from './services/pin/pin.service';
 export class PinController {
   constructor(private testService: PinService) {}
 
-  @ApiTags('TESTS')
+  @ApiTags('PIN')
   @ApiParam({ name: 'user_id', type: String })
   @Get(':user_id')
   async getTestResult(@Res() res: Response, @Param() param: any) {
