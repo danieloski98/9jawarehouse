@@ -18,13 +18,13 @@ import { PinService } from './services/pin/pin.service';
 export class PinController {
   constructor(private testService: PinService) {}
 
-  // @ApiTags('TESTS')
-  // @ApiParam({ name: 'user_id', type: String })
-  // @Get(':user_id')
-  // async getTestResult(@Res() res: Response, @Param() param: any) {
-  //   const result = await this.testService.getAllTest(param['user_id']);
-  //   res.status(result.statusCode).send(result);
-  // }
+  @ApiTags('TESTS')
+  @ApiParam({ name: 'user_id', type: String })
+  @Get(':user_id')
+  async getTestResult(@Res() res: Response, @Param() param: any) {
+    const result = await this.testService.getPin(param['user_id']);
+    res.status(result.statusCode).send(result);
+  }
 
   @ApiTags('PIN')
   @ApiBody({ type: PIN })

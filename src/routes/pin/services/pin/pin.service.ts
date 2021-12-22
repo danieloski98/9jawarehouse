@@ -6,6 +6,7 @@ import { User, UserDocument } from 'src/Schema/User.schema';
 import { IFile } from 'src/Types/file';
 import { Return } from 'src/utils/Returnfunctions';
 import { IReturnObject } from 'src/utils/ReturnObject';
+import { pipeline } from 'stream';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const randomNumber = require('random-number');
 
@@ -28,40 +29,72 @@ export class PinService {
           errorMessage: 'Account not found',
         });
       }
-      // generate PIN
-      const options = {
-        min: 1000,
-        max: 1999,
-        integer: true,
-      };
-      const code = randomNumber(options);
+      // check if the user has a pin
+      const piinn = await this.pinModel.find({ business_id: user_id });
+      this.logger.error(piinn);
 
-      const pin = await this.pinModel.create({
-        code,
-        business_id: user_id,
-      });
+      if (piinn.length < 1) {
+        // generate PIN
+        const options = {
+          min: 1000,
+          max: 1999,
+          integer: true,
+        };
+        const code = randomNumber(options);
 
-      this.logger.log(pin);
+        const pin = await this.pinModel.create({
+          code,
+          business_id: user_id,
+        });
 
-      // update the user
-      const updatedUser = await this.userModel.updateOne(
-        { _id: user_id },
-        { pin: true },
-      );
-      this.logger.log(updatedUser);
+        this.logger.log(pin);
 
-      // get new User
-      const user = await this.userModel.findById(user_id);
+        // update the user
+        const updatedUser = await this.userModel.updateOne(
+          { _id: user_id },
+          { pin: true },
+        );
+        this.logger.log(updatedUser);
 
-      return Return({
-        error: false,
-        statusCode: 200,
-        successMessage: 'Pin generated succesfully',
-        data: {
-          user,
-          pin: code,
-        },
-      });
+        // get new User
+        const user = await this.userModel.findById(user_id);
+
+        return Return({
+          error: false,
+          statusCode: 200,
+          successMessage: 'Pin generated succesfully',
+          data: {
+            user,
+            pin: code,
+          },
+        });
+      } else {
+        // renew Pin
+        // generate PIN
+        const options = {
+          min: 1000,
+          max: 1999,
+          integer: true,
+        };
+        const code = randomNumber(options);
+
+        const pin = await this.pinModel.updateOne(
+          { _id: piinn[0]._id },
+          {
+            code,
+          },
+        );
+
+        this.logger.log(pin);
+        return Return({
+          error: false,
+          statusCode: 200,
+          successMessage: 'Pin generated succesfully',
+          data: {
+            pin,
+          },
+        });
+      }
     } catch (error) {
       return Return({
         error: true,
@@ -72,33 +105,29 @@ export class PinService {
     }
   }
 
-  // public async deleteTest(id: string): Promise<IReturnObject> {
-  //   try {
-  //     const test = await this.testModel.findOne({ _id: id });
-  //     if (test === null) {
-  //       return Return({
-  //         error: true,
-  //         statusCode: 400,
-  //         errorMessage: 'Record not found',
-  //       });
-  //     }
-
-  //     // delete
-  //     const deleted = await this.testModel.deleteOne({ _id: id });
-  //     console.log(deleted);
-
-  //     return Return({
-  //       error: false,
-  //       statusCode: 200,
-  //       successMessage: 'Test Record Deleted',
-  //     });
-  //   } catch (error) {
-  //     return Return({
-  //       error: true,
-  //       statusCode: 500,
-  //       errorMessage: 'Internal Server Error',
-  //       trace: error,
-  //     });
-  //   }
-  // }
+  public async getPin(id: string): Promise<IReturnObject> {
+    try {
+      const pin = await this.pinModel.findOne({ business_id: id });
+      if (pin === null) {
+        return Return({
+          error: true,
+          statusCode: 400,
+          errorMessage: 'Pin not found',
+        });
+      }
+      return Return({
+        error: false,
+        statusCode: 200,
+        successMessage: 'Pin',
+        data: pin,
+      });
+    } catch (error) {
+      return Return({
+        error: true,
+        statusCode: 500,
+        errorMessage: 'Internal Server Error',
+        trace: error,
+      });
+    }
+  }
 }
