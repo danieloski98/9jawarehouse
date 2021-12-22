@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Test, TestDocument } from 'src/Schema/Test.Schema';
+import { PIN, PINDocument } from 'src/Schema/PIN.Schema';
 import { User, UserDocument } from 'src/Schema/User.schema';
 import { IFile } from 'src/Types/file';
 import cloudinary from 'src/utils/cloudinary';
@@ -13,68 +13,15 @@ import { existsSync, rmSync } from 'fs';
 @Injectable()
 export class TestService {
   constructor(
-    @InjectModel(Test.name) private testModel: Model<TestDocument>,
+    @InjectModel(PIN.name) private testModel: Model<PINDocument>,
     @InjectModel(User.name) private userModel: Model<UserDocument>,
   ) {}
 
   public async createTestResult(
-    test: TestDocument,
-    file: IFile,
+    test?: PINDocument,
+    file?: IFile,
   ): Promise<IReturnObject> {
     try {
-      console.log(test);
-      // check if the user exists
-      const user = await this.userModel.findOne({ _id: test.user_id });
-      console.log(user);
-      if (user === null) {
-        return Return({
-          error: true,
-          statusCode: 400,
-          errorMessage: 'User not found',
-        });
-      }
-      // upload the image to cloudinry
-      const upload = await cloudinary.uploader.upload(
-        join(process.cwd(), `/files/${file.filename}`),
-        {
-          overwrite: true,
-          invalidate: true,
-          width: 810,
-          height: 456,
-          crop: 'fill',
-          resource_type: 'image',
-        },
-      );
-      const image_url = upload.secure_url;
-      console.log(image_url);
-
-      // delete file
-      const fileExist = existsSync(
-        join(process.cwd(), `/files/${file.filename}`),
-      );
-
-      if (fileExist) {
-        // delete the file
-        rmSync(join(process.cwd(), `/files/${file.filename}`));
-      }
-
-      // create the object
-      const obj = {
-        link: image_url,
-        user_id: test.user_id,
-        facility: test.facility,
-        date_taken: test.date_taken,
-        result: test.result,
-      };
-      const newTest = await this.testModel.create(obj);
-      console.log(newTest);
-
-      return Return({
-        error: true,
-        statusCode: 200,
-        successMessage: 'Test result uploaded successfully',
-        data: newTest,
-      });
     } catch (error) {
       return Return({
         error: true,

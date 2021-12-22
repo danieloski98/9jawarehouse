@@ -12,15 +12,15 @@ import {
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiBody, ApiParam, ApiTags } from '@nestjs/swagger';
 import { Response } from 'express';
-import { Test, TestDocument } from 'src/Schema/Test.Schema';
+import { PIN, PINDocument } from 'src/Schema/PIN.Schema';
 import { IFile } from 'src/Types/file';
 import { TestService } from './services/test/test.service';
 
-@Controller('test')
+@Controller('pin')
 export class TestController {
   constructor(private testService: TestService) {}
 
-  @ApiTags('TESTS')
+  // @ApiTags('TESTS')
   @ApiParam({ name: 'user_id', type: String })
   @Get(':user_id')
   async getTestResult(@Res() res: Response, @Param() param: any) {
@@ -28,20 +28,20 @@ export class TestController {
     res.status(result.statusCode).send(result);
   }
 
-  @ApiTags('TESTS')
-  @ApiBody({ type: Test })
+  @ApiTags('PIN')
+  @ApiBody({ type: PIN })
   @UseInterceptors(FileInterceptor('link', { dest: 'files' }))
-  @Post()
+  @Post('create')
   async uploadTestResult(
     @Res() res: Response,
-    @Body() body: TestDocument,
+    @Body() body: PINDocument,
     @UploadedFile() file: IFile,
   ) {
     const result = await this.testService.createTestResult(body, file);
     res.status(result.statusCode).send(result);
   }
 
-  @ApiTags('TESTS')
+  @ApiTags('PIN')
   @ApiParam({ name: 'id', type: String })
   @Delete(':id')
   async deleteTestResult(@Res() res: Response, @Param() param: any) {

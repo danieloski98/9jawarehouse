@@ -1,9 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Test, TestDocument } from 'src/Schema/Test.Schema';
 import { UserDocument, User } from 'src/Schema/User.schema';
-import { Vacination, VacinationDocument } from 'src/Schema/Vacination.Schema';
 import { IFile } from 'src/Types/file';
 import { Return } from 'src/utils/Returnfunctions';
 import { IReturnObject } from 'src/utils/ReturnObject';
@@ -13,12 +11,7 @@ import cloudinary from 'src/utils/cloudinary';
 
 @Injectable()
 export class CrudService {
-  constructor(
-    @InjectModel(User.name) private userModel: Model<UserDocument>,
-    @InjectModel(Vacination.name)
-    private VacinationModel: Model<VacinationDocument>,
-    @InjectModel(Test.name) private testModel: Model<TestDocument>,
-  ) {}
+  constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
 
   async getUserByID(id: string): Promise<IReturnObject> {
     try {
