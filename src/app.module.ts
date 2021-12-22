@@ -12,6 +12,7 @@ import { OtpGateway } from './websockets/otp.gateway';
 import { EmaillistModule } from './routes/emaillist/emaillist.module';
 import { ServicesModule } from './routes/services/services.module';
 import { CommentsModule } from './routes/comments/comments.module';
+import { PinModule } from './routes/pin/pin.module';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require('dotenv').config();
 
@@ -32,6 +33,7 @@ const URL =
     EmaillistModule,
     ServicesModule,
     CommentsModule,
+    PinModule,
     // AdminModule,
     // NotificationsModule,
   ],

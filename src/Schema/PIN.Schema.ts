@@ -27,6 +27,13 @@ export class PIN {
 
   @ApiProperty()
   @Prop({
+    required: true,
+    default: true,
+  })
+  active: boolean;
+
+  @ApiProperty()
+  @Prop({
     type: String,
     default: new Date().toISOString(),
   })
