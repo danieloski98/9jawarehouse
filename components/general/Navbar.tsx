@@ -1,6 +1,6 @@
 import React from 'react';
 import { FiSearch, FiBell, FiMenu, FiChevronDown, FiX } from 'react-icons/fi'
-import { Avatar, Drawer, DrawerOverlay, DrawerContent, DrawerBody, Menu, MenuButton, MenuList, MenuItem, Button, Accordion, AccordionButton, AccordionItem, AccordionPanel, AccordionIcon, Box, Divider, DrawerCloseButton } from '@chakra-ui/react'
+import { Avatar, Drawer, DrawerOverlay, DrawerContent, DrawerBody, Menu, MenuButton, MenuList, MenuItem, Button, Accordion, AccordionButton, AccordionItem, AccordionPanel, AccordionIcon, Box, Divider, DrawerCloseButton, Spinner } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 
@@ -8,6 +8,8 @@ import Link from 'next/link'
 import {useSelector, useDispatch} from 'react-redux';
 import { RootState } from '../../store/index';
 import { setServices as SetServ } from '../../reducers/services.reducer'
+import { updateUser } from '../../reducers/User.reducer'
+import { updatePin } from '../../reducers/pin.reducer'
 
 // images
 import Image from 'next/image';
@@ -16,6 +18,7 @@ import Sidebar from '../dashboard/Sidebar';
 import { IServices } from '../../utils/types/services';
 import { IServerReturnObject } from '../../utils/types/serverreturntype';
 import url from '../../utils/url';
+import { IUser } from '../../utils/types/user';
 
 interface IProps {
   page: number;
@@ -25,8 +28,10 @@ interface IProps {
 
 export default function Navbar({page, setPage}: IProps) {
   const [open, setOpen] = React.useState(false);
+  const [loading, setLoading] = React.useState(true);
   const [showNoti, setShowNoti] = React.useState(false);
   const user = useSelector((state:RootState) => state.UserReducer.user);
+  const pin = useSelector((state: RootState) => state.PinReducer.pin);
   const loggedIn = useSelector((state: RootState) => state.LoggedInReducer.loggedIn);
   console.log(user);
   const router = useRouter();
@@ -43,6 +48,48 @@ export default function Navbar({page, setPage}: IProps) {
       dispatch(SetServ(ser))
     })()
   }, [dispatch]);
+
+  React.useEffect(() => {
+        (async function() {
+            if (user.pin) {
+                // fetch new Pin
+                const request = await fetch(`${url}pin/${user._id}`);
+                const json = await request.json() as IServerReturnObject;
+
+                if (json.statusCode !== 200) {
+                  alert(json.errorMessage);
+                  setLoading(false);
+                  return;
+                }
+              
+                dispatch(updatePin(json.data.code));
+
+                setLoading(false);
+            }
+        })()
+    });
+
+    const generatePin = async () => {
+      setLoading(true);
+      const request = await fetch(`${url}pin/generate/${user._id}`, {
+          method: 'post',
+      });
+  
+      const json = await request.json() as IServerReturnObject;
+      const userr = json.data.user as IUser;
+      const code = json.data.pin;
+
+      if (json.statusCode !== 200) {
+        alert(json.errorMessage);
+        setLoading(false);
+        return;
+      }
+  
+      dispatch(updateUser(userr));
+      dispatch(updatePin(code));
+  
+      setLoading(false);
+  }
 
   return (
     <div className="w-full h-20 bg-white px-10 flex justify-between z-40">
@@ -92,7 +139,9 @@ export default function Navbar({page, setPage}: IProps) {
             <DrawerCloseButton />
             <DrawerBody>
               <p>Notifications</p>
-              <div className="w-full h-64 bg-green-300 mt-4"></div>
+              <div className="w-full h-64 mt-4">
+                <p>You have no new Notification</p>
+              </div>
             </DrawerBody>
           </DrawerContent>
         </Drawer>
@@ -124,9 +173,26 @@ export default function Navbar({page, setPage}: IProps) {
                   <div className="w-full flex flex-col">
                     {
                       loggedIn && (
-                        <div className="w-full h-10 text-white flex justify-center items-center bg-themeGreen">
-                            PIN: 9080998
-                        </div>
+                       <div className='w-full'>
+                          {
+                          user.pin && (
+                            <div className="w-11/12 mt-5 flex items-center justify-center mx-3 h-12 bg-green-100 text-green-600">
+                                {!loading && <span>PIN - {pin}</span>}
+                                {loading && <Spinner color="white" size="lg" />}
+                            </div>
+                          )
+                      }
+
+
+                      {
+                          !user.pin && (
+                            <button onClick={generatePin} className="w-11/12 mt-5 flex items-center justify-center mx-3 h-12 bg-green-100 text-green-600">
+                                {!loading && <span>Generate PIN</span>}
+                                {loading && <Spinner color="white" size="lg" />}
+                            </button>
+                          )
+                      }
+                       </div>
                       )
                     }
 

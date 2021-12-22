@@ -1,8 +1,8 @@
 import React from "react";
-import { Input, Avatar, Image as Img } from "@chakra-ui/react";
+import { Input, Avatar, Image as Img, Modal, ModalOverlay, ModalBody, ModalContent } from "@chakra-ui/react";
 import Image from 'next/image'
 import Banner from '../../public/images/banner.png';
-import { FaFacebook, FaWhatsapp, FaInstagram, FaInternetExplorer, FaTwitter } from 'react-icons/fa'
+import { FaFacebook, FaWhatsapp, FaInstagram, FaInternetExplorer, FaTwitter, FaLink, FaCopy } from 'react-icons/fa'
 
 
 // redux
@@ -13,13 +13,67 @@ interface IProps {
   setPage: Function;
 }
 
+const ConnectModal = ({icon, isOpen, close, value}: {icon: number; isOpen: boolean; close: Function, value: string}) => {
+   const iconSwitcher  = () => {
+     switch(icon) {
+       case 1 : {
+         return  <FaFacebook size={55} color="#0085CC" />
+       }
+       case 2: {
+        return <FaInstagram size={55} color="#A46599" />
+       } case 3: {
+        return <FaTwitter size={55} color="#0ACAFF" />
+       }
+       case 4: {
+        return <FaWhatsapp size={55} color="green" />
+       }
+       case 5: {
+        return <FaLink size={55} color="#0ACAFF" />
+       }
+     }
+   } 
+  return (
+    <Modal isCentered isOpen={isOpen} onClose={() => close()}>
+      <ModalOverlay />
+      <ModalContent>
+        <ModalBody className="flex flex-col items-center justify-center">
+          {iconSwitcher()}
+          <div className="w-full h-12 flex justify-center items-center">
+            <p className="font-light text-lg">{value}</p>
+            <FaCopy size={20} className="ml-3 cursor-pointer text-themeGreen" />
+          </div>
+        </ModalBody>
+      </ModalContent>
+    </Modal>
+  )
+}
+
 export default function Profile({ setPage }: IProps) {
+
+  // states
+  const [icon, setIcon] = React.useState(0);
+  const [modalValue, setModalValue] = React.useState("");
+  const [openModal, setOpenModal] = React.useState(false);
 
   const userDetails = useSelector((state: RootState) => state.UserReducer.user);
   const pic = userDetails.pictures[0];
 
+  const close = () => {
+    setOpenModal(false);
+  }
+
+  const open = (ico: number, value: string) => {
+    setIcon(ico);
+    setModalValue(value);
+    setOpenModal(true);
+  }
+
   return (
     <div className="w-full h-auto pb-10">
+
+      {/* modal */}
+      <ConnectModal isOpen={openModal} close={close} value={modalValue} icon={icon} />
+
       <div className="w-full h-auto py-6 pb-10 flex flex-col bg-white">
         <p className="text-2xl font-light text-gray-600 ml-5">Profile</p>
 
@@ -97,33 +151,33 @@ export default function Profile({ setPage }: IProps) {
             </p>
             <div className="flex w-full mt-2">
               {userDetails.facebook !== "" && (
-                <a href={userDetails.facebook}>
-                  <FaFacebook size={25} color="lightblue" />
-                </a>
+                <p className="cursor-pointer" title={userDetails.facebook} onClick={() => open(1, userDetails.facebook)}>
+                  <FaFacebook size={25} color="#0085CC" />
+                </p>
               )}
 
               {userDetails.instagram !== "" && (
-                <a href={userDetails.instagram} className="ml-3">
-                  <FaInstagram size={25} color="pink" />
-                </a>
+                <p title={userDetails.instagram} className="ml-3 cursor-pointer" onClick={() => open(2, userDetails.instagram)}>
+                  <FaInstagram size={25} color="#A46599" />
+                </p>
               )}
 
               {userDetails.twitter !== "" && (
-                <a href={userDetails.twitter} className="ml-3">
-                  <FaTwitter size={25} color="blue" />
-                </a>
+                <p title={userDetails.twitter} className="ml-3 cursor-pointer" onClick={() => open(3, userDetails.twitter)}>
+                  <FaTwitter size={25} color="#0ACAFF" />
+                </p>
               )}
 
               {userDetails.whatsapp !== "" && (
-                <a href={userDetails.whatsapp} className="ml-3">
+                <p title={userDetails.whatsapp} className="ml-3 cursor-pointer" onClick={() => open(4, userDetails.whatsapp)}>
                   <FaWhatsapp size={25} color="green" />
-                </a>
+                </p>
               )}
 
               {userDetails.website !== "" && (
-                <a href={userDetails.website} className="ml-3">
-                  <FaInternetExplorer size={25} color="blue" />
-                </a>
+                <p title={userDetails.website} className="ml-3 cursor-pointer" onClick={() => open(5, userDetails.website)}>
+                  <FaLink size={25} color="#0ACAFF" />
+                </p>
               )}        
             </div>
           </div>

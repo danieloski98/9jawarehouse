@@ -1,9 +1,16 @@
 import React from 'react';
 import { FiUser, FiStar, FiDollarSign, FiSettings, FiHelpCircle } from 'react-icons/fi'
+import { Spinner } from '@chakra-ui/react'
 
 // redux
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { RootState } from '../../store/index'
+import { updateUser } from '../../reducers/User.reducer'
+import { updatePin } from '../../reducers/pin.reducer'
+
+import { IServerReturnObject } from '../../utils/types/serverreturntype';
+import { IUser } from '../../utils/types/user';
+import url from '../../utils/url';
 
 const ACTIVE = 'flex justify-between border-r-4 border-themeGreen h-12 text-themeGreen cursor-pointer';
 const INACTIVE = 'flex justify-between h-12 text-gray-500 hover:bg-gray-100 cursor-pointer'
@@ -15,6 +22,55 @@ interface IProps {
 
 export default function Sidebar({page, setPage}: IProps) {
     const userDetails = useSelector((state: RootState) => state.UserReducer.user);
+    const pin = useSelector((state: RootState) => state.PinReducer.pin);
+    const dispatch = useDispatch();
+
+    const [loading, setLoading] = React.useState(true);
+
+    React.useEffect(() => {
+        (async function() {
+            if (userDetails.pin) {
+                // fetch new Pin
+                const request = await fetch(`${url}pin/${userDetails._id}`);
+                const json = await request.json() as IServerReturnObject;
+
+                if (json.statusCode !== 200) {
+                    alert(json.errorMessage);
+                    setLoading(false);
+                    return;
+                }
+              
+                dispatch(updatePin(json.data.code));
+
+                setLoading(false);
+            } else {
+                setLoading(false);
+            }
+        })()
+    });
+
+    const generatePin = async () => {
+        setLoading(true);
+        const request = await fetch(`${url}pin/generate/${userDetails._id}`, {
+            method: 'post',
+        });
+
+        const json = await request.json() as IServerReturnObject;
+        const user = json.data.user as IUser;
+        const code = json.data.pin;
+
+        if (json.statusCode !== 200) {
+            alert(json.errorMessage);
+            setLoading(false);
+            return;
+        }
+
+        dispatch(updateUser(user));
+        dispatch(updatePin(code));
+
+        setLoading(false);
+    }
+
   return (
     <div className="w-full h-auto flex flex-col pb-10">
 
@@ -52,7 +108,8 @@ export default function Sidebar({page, setPage}: IProps) {
             {
                 userDetails.pin && (
                     <div className="w-11/12 mt-5 flex items-center justify-center mx-3 h-12 bg-green-100 text-green-600">
-                        PIN - 867585
+                        {!loading && <span>PIN - {pin}</span>}
+                        {loading && <Spinner color="white" size="lg" />}
                     </div>
                 )
             }
@@ -60,8 +117,9 @@ export default function Sidebar({page, setPage}: IProps) {
 
             {
                 !userDetails.pin && (
-                    <button className="w-11/12 mt-5 flex items-center justify-center mx-3 h-12 bg-green-100 text-green-600">
-                       Generate PIN
+                    <button onClick={generatePin} className="w-11/12 mt-5 flex items-center justify-center mx-3 h-12 bg-green-100 text-green-600">
+                       {!loading && <span>Generate PIN</span>}
+                       {loading && <Spinner color="white" size="lg" />}
                     </button>
                 )
             }

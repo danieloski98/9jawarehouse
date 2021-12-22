@@ -5,6 +5,7 @@ import TokenReducer from '../reducers/Token.reducer';
 import CommentReducer from '../reducers/comment.reducer';
 import ServicesReducer from '../reducers/services.reducer';
 import ActiveUser from '../reducers/Activeuser.reducer'
+import PinReducer from '../reducers/pin.reducer';
 
 export const store = configureStore({
     reducer: {
@@ -14,6 +15,7 @@ export const store = configureStore({
         CommentReducer,
         ServicesReducer,
         ActiveUser,
+        PinReducer,
     },
 });
 
