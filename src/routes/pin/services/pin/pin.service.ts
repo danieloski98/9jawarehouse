@@ -3,10 +3,9 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { PIN, PINDocument } from 'src/Schema/PIN.Schema';
 import { User, UserDocument } from 'src/Schema/User.schema';
-import { IFile } from 'src/Types/file';
 import { Return } from 'src/utils/Returnfunctions';
 import { IReturnObject } from 'src/utils/ReturnObject';
-import { pipeline } from 'stream';
+import { OtpGateway } from 'src/websockets/otp.gateway';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const randomNumber = require('random-number');
 
@@ -16,9 +15,10 @@ export class PinService {
   constructor(
     @InjectModel(PIN.name) private pinModel: Model<PINDocument>,
     @InjectModel(User.name) private userModel: Model<UserDocument>,
+    private SocketGateway: OtpGateway,
   ) {}
 
-  public async createTestResult(user_id: string): Promise<IReturnObject> {
+  public async createPin(user_id: string): Promise<IReturnObject> {
     try {
       // check if the account exist
       const account = await this.userModel.findById(user_id);
@@ -77,11 +77,12 @@ export class PinService {
           integer: true,
         };
         const code = randomNumber(options);
-
+        this.SocketGateway.server.emit(`PINCHANGED:${user_id}`, code);
         const pin = await this.pinModel.updateOne(
           { _id: piinn[0]._id },
           {
             code,
+            use_count: 0,
           },
         );
 

@@ -3,10 +3,16 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CommentDocument, Comment } from 'src/Schema/Comment.Schema';
 import { UserDocument, User } from 'src/Schema/User.schema';
+import { PinService } from 'src/routes/pin/services/pin/pin.service';
 
 import * as joi from 'joi';
 import { IReturnObject } from 'src/utils/ReturnObject';
 import { Return } from 'src/utils/Returnfunctions';
+import { PINDocument, PIN } from 'src/Schema/PIN.Schema';
+import { IFile } from 'src/Types/file';
+import Cloudinary from 'src/utils/cloudinary';
+import { join } from 'path';
+import { existsSync, rmSync } from 'fs';
 
 @Injectable()
 export class CrudService {
@@ -14,9 +20,15 @@ export class CrudService {
   constructor(
     @InjectModel(Comment.name) private commentModel: Model<CommentDocument>,
     @InjectModel(User.name) private userModel: Model<UserDocument>,
+    @InjectModel(PIN.name) private pinModel: Model<PINDocument>,
+    private pinService: PinService,
   ) {}
 
-  async addCommnet(id: string, payload: Comment): Promise<IReturnObject> {
+  async addCommnet(
+    user_id: string,
+    pin: string,
+    payload: Comment,
+  ): Promise<IReturnObject> {
     try {
       const validationSchema = joi.object({
         fullname: joi.string().required(),
@@ -26,36 +38,91 @@ export class CrudService {
         pictures: joi.array().optional(),
       });
 
-      const userExist = await this.userModel.findById(id);
-      if (userExist === null) {
+      const pinActive = await this.pinModel.findOne({
+        business_id: user_id,
+        code: pin,
+      });
+
+      if (pinActive === null) {
         return Return({
           error: true,
           statusCode: 400,
-          errorMessage: 'User not found',
+          errorMessage:
+            'Invalid pin, please contact the vendor for the correct pin.',
         });
       }
 
-      // validate record
-      const validation = validationSchema.validate(payload);
-      if (validation.error) {
+      if (pinActive.use_count < 5) {
+        const userExist = await this.userModel.findById(user_id);
+        if (userExist === null) {
+          return Return({
+            error: true,
+            statusCode: 400,
+            errorMessage: 'User not found',
+          });
+        }
+
+        // validate record
+        const validation = validationSchema.validate(payload);
+        if (validation.error) {
+          return Return({
+            error: true,
+            statusCode: 400,
+            errorMessage: validation.error.message,
+          });
+        }
+        const obj: Comment = {
+          ...payload,
+          business_id: user_id,
+        };
+        const newComment = await this.commentModel.create(obj);
+        const updatePin = await this.pinModel.updateOne(
+          { _id: pinActive._id },
+          { use_count: pinActive.use_count + 1 },
+        );
+        console.log(updatePin);
+        this.logger.log(newComment);
         return Return({
-          error: true,
-          statusCode: 400,
-          errorMessage: validation.error.message,
+          error: false,
+          statusCode: 200,
+          successMessage: 'Review sent submitted',
+          data: newComment,
+        });
+      } else {
+        const userExist = await this.userModel.findById(user_id);
+        if (userExist === null) {
+          return Return({
+            error: true,
+            statusCode: 400,
+            errorMessage: 'User not found',
+          });
+        }
+
+        // validate record
+        const validation = validationSchema.validate(payload);
+        if (validation.error) {
+          return Return({
+            error: true,
+            statusCode: 400,
+            errorMessage: validation.error.message,
+          });
+        }
+        const obj: Comment = {
+          ...payload,
+          business_id: user_id,
+        };
+        const newComment = await this.commentModel.create(obj);
+        // renew pin
+        await this.pinService.createPin(user_id);
+
+        this.logger.log(newComment);
+        return Return({
+          error: false,
+          statusCode: 200,
+          successMessage: 'Review sent submitted',
+          data: newComment,
         });
       }
-      const obj: Comment = {
-        ...payload,
-        business_id: id,
-      };
-      const newComment = await this.commentModel.create(obj);
-      this.logger.log(newComment);
-      return Return({
-        error: false,
-        statusCode: 200,
-        successMessage: 'Review sent submitted',
-        data: newComment,
-      });
     } catch (error) {
       return Return({
         error: true,
@@ -85,6 +152,68 @@ export class CrudService {
         successMessage: 'Reviews gotten',
         data: reviews,
       });
+    } catch (error) {
+      return Return({
+        error: true,
+        statusCode: 500,
+        errorMessage: 'Internal server Error',
+        trace: error,
+      });
+    }
+  }
+
+  async uploadReviewImages(
+    id: string,
+    images: Array<IFile>,
+  ): Promise<IReturnObject> {
+    try {
+      // check if the comment exist
+      const comment = await this.commentModel.findById(id);
+      if (comment === null) {
+        return Return({
+          error: true,
+          statusCode: 400,
+          errorMessage: 'Comment not found',
+        });
+      }
+      // upload images
+      if (images.length < 1) {
+        return Return({
+          error: true,
+          statusCode: 400,
+          errorMessage: 'No image to upload',
+        });
+      } else {
+        const imgs: string[] = [];
+        for (let i = 0; i < images.length; i++) {
+          const upload = await Cloudinary.uploader.upload(
+            join(process.cwd(), `/commentPics/${images[i].filename}`),
+          );
+          imgs.push(upload.secure_url);
+
+          // delete file
+          const fileExist = existsSync(
+            join(process.cwd(), `/commentPics/${images[i].filename}`),
+          );
+
+          if (fileExist) {
+            // delete the file
+            rmSync(join(process.cwd(), `/commentPics/${images[i].filename}`));
+          }
+        }
+
+        const update = await this.commentModel.updateOne(
+          { _id: id },
+          { pictures: imgs },
+        );
+        console.log(update);
+
+        return Return({
+          error: false,
+          statusCode: 200,
+          successMessage: 'Image uploaded Successfully',
+        });
+      }
     } catch (error) {
       return Return({
         error: true,

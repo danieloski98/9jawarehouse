@@ -31,7 +31,7 @@ export class PinController {
   @UseInterceptors(FileInterceptor('link', { dest: 'files' }))
   @Post('generate/:id')
   async uploadTestResult(@Res() res: Response, @Param() param: any) {
-    const result = await this.testService.createTestResult(param['id']);
+    const result = await this.testService.createPin(param['id']);
     res.status(result.statusCode).send(result);
   }
 

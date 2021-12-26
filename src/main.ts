@@ -14,7 +14,9 @@ async function bootstrap() {
   const logger = new Logger();
 
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
-  app.enableCors();
+  app.enableCors({
+    origin: '*',
+  });
   app.use(morgan('combined'));
   app.use(json({ limit: '60mb' }));
   // app.use(urlencoded({ limit: '60mb' }));

@@ -4,6 +4,7 @@ import { PinService } from './services/pin/pin.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { PINSchema, PIN } from 'src/Schema/PIN.Schema';
 import { User, UserSchema } from 'src/Schema/User.schema';
+import { OtpGateway } from 'src/websockets/otp.gateway';
 
 @Module({
   imports: [
@@ -16,6 +17,6 @@ import { User, UserSchema } from 'src/Schema/User.schema';
     ]),
   ],
   controllers: [PinController],
-  providers: [PinService],
+  providers: [PinService, OtpGateway],
 })
 export class PinModule {}
