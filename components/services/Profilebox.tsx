@@ -1,16 +1,71 @@
 import React from "react";
-import { Input, Avatar } from "@chakra-ui/react";
+import { Input, Avatar, Modal, ModalOverlay, ModalBody, ModalContent } from "@chakra-ui/react";
 import Image from 'next/image'
 import Banner from '../../public/images/banner.png';
 import { IUser } from "../../utils/types/user";
+import { FaFacebook, FaWhatsapp, FaInstagram, FaInternetExplorer, FaTwitter, FaLink, FaCopy } from 'react-icons/fa'
 
 interface IProps {
   user: IUser;
 }
 
+const ConnectModal = ({icon, isOpen, close, value}: {icon: number; isOpen: boolean; close: Function, value: string}) => {
+  const iconSwitcher  = () => {
+    switch(icon) {
+      case 1 : {
+        return  <FaFacebook size={55} color="#0085CC" />
+      }
+      case 2: {
+       return <FaInstagram size={55} color="#A46599" />
+      } case 3: {
+       return <FaTwitter size={55} color="#0ACAFF" />
+      }
+      case 4: {
+       return <FaWhatsapp size={55} color="green" />
+      }
+      case 5: {
+       return <FaLink size={55} color="#0ACAFF" />
+      }
+    }
+  } 
+ return (
+   <Modal isCentered isOpen={isOpen} onClose={() => close()}>
+     <ModalOverlay />
+     <ModalContent>
+       <ModalBody className="flex flex-col items-center justify-center">
+         {iconSwitcher()}
+         <div className="w-full h-12 flex justify-center items-center">
+           <p className="font-light text-lg">{value}</p>
+           <FaCopy size={20} className="ml-3 cursor-pointer text-themeGreen" />
+         </div>
+       </ModalBody>
+     </ModalContent>
+   </Modal>
+ )
+}
+
 export default function ProfileBox({user}: IProps) {
+   // states
+   const [icon, setIcon] = React.useState(0);
+   const [modalValue, setModalValue] = React.useState("");
+   const [openModal, setOpenModal] = React.useState(false);
+
+  const close = () => {
+    setOpenModal(false);
+  }
+
+  const open = (ico: number, value: string) => {
+    setIcon(ico);
+    setModalValue(value);
+    setOpenModal(true);
+  }
+
   return (
     <div className="w-full h-auto pb-10 border-2 border-gray-200 mb-8">
+
+      {/* modals */}
+      <ConnectModal isOpen={openModal} close={close} value={modalValue} icon={icon} />
+
       <div className="w-full h-auto py-6 pb-10 flex flex-col bg-white">
     
         {/* details */}
@@ -26,8 +81,8 @@ export default function ProfileBox({user}: IProps) {
               <p className="text-md font-light text-gray-600">
                 {user.business_name}
               </p>
-              <div className="flex w-full">
-              {user.services.map((item, index) => (
+              <div className="flex w-full flex-wrap">
+              {user !== undefined && user.services.map((item, index) => (
                 <p key={index.toString()} className="text-sm text-themeGreen font-semibold mr-2">
                   {item}, 
                 </p>
@@ -81,9 +136,37 @@ export default function ProfileBox({user}: IProps) {
             <p className="text-md font-light text-gray-600">
               Social Media Links
             </p>
-            <p className="text-sm text-gray-500 font-semibold">
-              Choba, port harcourt, Nigeria.
-            </p>
+            <div className="flex w-full mt-2">
+              {user.facebook !== "" && (
+                <p className="cursor-pointer" title={user.facebook} onClick={() => open(1, user.facebook)}>
+                  <FaFacebook size={25} color="#0085CC" />
+                </p>
+              )}
+
+              {user.instagram !== "" && (
+                <p title={user.instagram} className="ml-3 cursor-pointer" onClick={() => open(2, user.instagram)}>
+                  <FaInstagram size={25} color="#A46599" />
+                </p>
+              )}
+
+              {user.twitter !== "" && (
+                <p title={user.twitter} className="ml-3 cursor-pointer" onClick={() => open(3, user.twitter)}>
+                  <FaTwitter size={25} color="#0ACAFF" />
+                </p>
+              )}
+
+              {user.whatsapp !== "" && (
+                <p title={user.whatsapp} className="ml-3 cursor-pointer" onClick={() => open(4, user.whatsapp)}>
+                  <FaWhatsapp size={25} color="green" />
+                </p>
+              )}
+
+              {user.website !== "" && (
+                <p title={user.website} className="ml-3 cursor-pointer" onClick={() => open(5, user.website)}>
+                  <FaLink size={25} color="#0ACAFF" />
+                </p>
+              )}        
+            </div>
           </div>
 
           <div className="flex flex-col xl:mt-0 lg:mt-0 md:mt-4 sm:mt-4">
@@ -97,10 +180,18 @@ export default function ProfileBox({user}: IProps) {
           </div>
         </div>
 
-        <div className="xl:mt-10 lg:mt-10 md:mt-6 sm:mt-6 xl:ml-10 lg:ml-10 md:mx-5 sm:mx-5 ">
-            <button className="xl:w-40 lg:w-40 md:w-full sm:w-full h-12 border-2 border-themeGreen text-themeGreen">
-              View Certificates
-            </button>
+        <div className="flex flex-col xl:mt-5 lg:mt-5 md:mt-4 sm:mt-4 flex-1 xl:ml-10 lg:ml-10 md:ml-5 sm:ml-5">
+            <p className="text-md font-semibold text-gray-600">Certifications</p>
+          <div className="flex flex-wrap">
+          {user.certificates.length > 0 && user.certificates.map((item, index) => (
+              <div key={index.toString()} className="mt-2 mb-5" >
+                  <p className="text-sm font-light">{item.certificate}</p>
+                  <p className="text-sm font-light mt-1">{item.organization}</p>
+                  <p className="text-sm font-light mt-1">{item.year}</p>
+                  <button className="w-40 h-10 border-2 border-themeGreen text-themeGreen mt-2">View</button>
+              </div>
+            ))}
+          </div>
           </div>
 
       </div>

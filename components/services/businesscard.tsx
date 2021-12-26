@@ -22,7 +22,7 @@ export default function BusinessCard({user}: {user: IUser}) {
 
       const move = () => {
           dispatch(updateUser(user));
-          router.push(`/services/business/${user.business_name}`)
+          router.push(`/services/business/${user._id}`)
       }
       
   return (

@@ -97,9 +97,9 @@ export default function Navbar({page, setPage}: IProps) {
             <Image src={Logo} alt="logo" className="w-20 h-20" />
         </div>
         <div className="flex-1 xl:flex lg:flex md:hidden sm:hidden justify-end items-center z-20">
-            <Menu size="lg" preventOverflow={true}>
+            <Menu size="lg" >
               <MenuButton
-                rightIcon={<FiChevronDown size={20} color="grey" />}
+                righticon={<FiChevronDown size={20} color="grey" />}
               >
                 <p className="flex mr-6">
                   <FiSearch size={20} className="text-themeGreen" />
@@ -107,7 +107,7 @@ export default function Navbar({page, setPage}: IProps) {
                   <FiChevronDown size={20} color="grey" className="ml-1 mt-0" />
                 </p>
               </MenuButton>
-              <MenuList w="1000px" size maxH="500px" overflow="auto" className="grid grid-cols-4 font-light text-sm">
+              <MenuList w="1000px" maxH="500px" overflow="auto" className="grid grid-cols-4 font-light text-sm">
                 {serv.map((item, index) => (
                   <MenuItem key={index.toString()}>
                     <Link href={`/services/${item.name}`}>{item.name}</Link>
@@ -232,7 +232,7 @@ export default function Navbar({page, setPage}: IProps) {
                               <div className="w-full h-64 overflow-y-auto flex flex-col">
                                 {/* <p>Profile</p> */}
                                   {serv.map((item, index) => (
-                                    <>
+                                    <div key={index.toString()}>
                                       <p className="mt-3 mb-3" key={index.toString()}>
                                         <Link href={`/services/${item.name}`}>{item.name}</Link>
                                       </p>
@@ -240,7 +240,7 @@ export default function Navbar({page, setPage}: IProps) {
                                       {index !== serv.length - 1 && (
                                         <Divider />
                                       )}
-                                    </>
+                                    </div>
                                   ))}
                               </div>
                             </AccordionPanel>

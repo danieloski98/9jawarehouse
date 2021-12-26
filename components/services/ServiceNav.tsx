@@ -53,9 +53,9 @@ export default function ServiceNavbar() {
                     </InputRightElement>
                 </InputGroup>
             </div>
-            <Menu size="lg" preventOverflow={true}>
+            <Menu preventOverflow={true}>
               <MenuButton
-                rightIcon={<FiChevronDown size={20} color="grey" />}
+                righticon={<FiChevronDown size={20} color="grey" />}
               >
                 <p className="flex mr-6">
                   <FiSearch size={20} className="text-themeGreen" />
@@ -63,7 +63,7 @@ export default function ServiceNavbar() {
                   <FiChevronDown size={20} color="grey" className="ml-1 mt-1" />
                 </p>
               </MenuButton>
-              <MenuList w="1000px" size maxH="500px" overflow="auto" className="grid grid-cols-4 font-light text-sm">
+              <MenuList w="1000px" maxH="500px" overflow="auto" className="grid grid-cols-4 font-light text-sm">
                 <MenuItem>Download</MenuItem>
                 <MenuItem>Create a Copy</MenuItem>
                 <MenuItem>Mark as Draft</MenuItem>

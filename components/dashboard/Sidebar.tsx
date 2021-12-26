@@ -60,10 +60,10 @@ export default function Sidebar({page, setPage}: IProps) {
         const code = json.data.pin;
 
         if (json.statusCode !== 200) {
-            alert(json.errorMessage);
-            setLoading(false);
-            return;
-        }
+                    alert(json.errorMessage);
+                    setLoading(false);
+                    return;
+                }
 
         dispatch(updateUser(user));
         dispatch(updatePin(code));

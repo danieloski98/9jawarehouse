@@ -94,7 +94,7 @@ export default function Profile({ setPage }: IProps) {
               <p className="text-lg font-bold text-gray-600">
                 {userDetails.business_name}
               </p>
-              <div className="flex w-96 h-auto flex-nowrap mt-2">
+              <div className="flex w-auto h-auto flex-wrap mt-2">
                 {userDetails.services.map((item, index) => (
                   <p key={index.toString()} className="text-xs text-themeGreen font-light">
                     {item},

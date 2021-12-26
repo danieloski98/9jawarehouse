@@ -1,4 +1,6 @@
 export interface IComment {
+  _id: string;
+  
     business_id: string;
 
     rating: number;

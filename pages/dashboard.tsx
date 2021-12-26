@@ -6,15 +6,19 @@ import Settings from '../components/dashboard/Settings';
 import Sidebar from '../components/dashboard/Sidebar';
 import Subscription from '../components/dashboard/Subscription';
 import Navbar from '../components/general/Navbar';
-import { Modal, ModalOverlay, ModalContent, ModalBody, Spinner } from '@chakra-ui/react'
+import { Modal, ModalOverlay, ModalContent, ModalBody, Spinner, useToast } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
+
+// socket
+import { io, Manager } from 'socket.io-client'
 
 // redux
 import { RootState } from '../store/index'
 import { updateUser } from '../reducers/User.reducer';
 import { updatetoken } from '../reducers/Token.reducer';
+import { updatePin } from '../reducers/pin.reducer'
 import { login } from '../reducers/logged'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import url from '../utils/url';
 import { IServerReturnObject } from '../utils/types/serverreturntype';
 // import Footer from '../components/Home/Footer';
@@ -23,8 +27,28 @@ export default function Dashboard() {
 
   const [page, setPage] = React.useState(1 as number);
   const [loading, setLoading] = React.useState(true);
+  const user = useSelector((state: RootState) => state.UserReducer.user);
+  const Toast = useToast();
   const router = useRouter();
   const dispatch = useDispatch();
+
+  const socket = io(`http://localhost:80`, {
+      rejectUnauthorized: false,
+  });
+
+  const ev = socket.on(`PINCHANGED:${user._id}`, (data: number) => {
+      Toast({
+          position: 'top-right',
+          title: 'PIN changed',
+          description: data,
+          duration: 10000,
+          status: 'success',
+          isClosable: true,
+      });
+      dispatch(updatePin(data));
+      ev.disconnect();
+  });
+
 
   const fetchUser = React.useCallback( async() => {
     setLoading(true);
@@ -107,10 +131,6 @@ export default function Dashboard() {
                             </div>
 
                             <div className="xl:w-9/12 lg:w-9/12 md:w-full sm:w-full h-auto  xl:ml-10 lg:ml-10 md:ml-0 sm:ml-0 p-0">
-                                {/* <EditProfile next={() => {}} /> */}
-                                {/* <Settings /> */}
-                                {/* <Profile /> */}
-                                {/* <Reviews /> */}
                                 {switcher()}
                             </div>
 
