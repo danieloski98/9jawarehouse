@@ -5,6 +5,9 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { User, UserSchema } from 'src/Schema/User.schema';
 import { Vacination, VacinationSchema } from 'src/Schema/Vacination.Schema';
 import { PIN, PINSchema } from 'src/Schema/PIN.Schema';
+import { Picture, PictureSchema } from 'src/Schema/Pictures.Schema';
+import { ProfilePic, ProfilePicSchema } from 'src/Schema/ProfilePic.Schema';
+import { PicsService } from './services/pics/pics.service';
 
 @Module({
   imports: [
@@ -12,9 +15,11 @@ import { PIN, PINSchema } from 'src/Schema/PIN.Schema';
       { name: User.name, schema: UserSchema },
       { name: Vacination.name, schema: VacinationSchema },
       { name: PIN.name, schema: PINSchema },
+      { name: Picture.name, schema: PictureSchema },
+      { name: ProfilePic.name, schema: ProfilePicSchema },
     ]),
   ],
   controllers: [UserController],
-  providers: [CrudService],
+  providers: [CrudService, PicsService],
 })
 export class UserModule {}

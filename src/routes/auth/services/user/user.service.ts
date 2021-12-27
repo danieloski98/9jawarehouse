@@ -222,30 +222,30 @@ export class UserService {
   ): Promise<IReturnObject> {
     try {
       // check if the user does exist
-      const userExist = await this.userModel.find({ _id: user_id });
-      if (userExist.length < 1) {
+      const userExist = await this.userModel.findOne({ _id: user_id });
+      if (userExist === null) {
         return Return({
           error: true,
           statusCode: 400,
           errorMessage: 'User not found',
         });
       } else {
+        console.log(payload);
         // check the old password
         const passwordCheck = await compare(
           payload.oldpassword,
-          userExist[0].password,
+          userExist.password,
         );
-
         const samePassword = await compare(
           payload.newpassword,
-          userExist[0].password,
+          userExist.password,
         );
 
         if (!passwordCheck) {
           return Return({
             error: true,
             statusCode: 400,
-            errorMessage: 'Passwords do not match',
+            errorMessage: 'Old Password does not match',
           });
         } else if (samePassword) {
           return Return({
@@ -265,7 +265,7 @@ export class UserService {
           const hash = await this.generateHashedPassword(payload.newpassword);
 
           const updatedUser = await this.userModel.updateOne(
-            { _id: userExist[0]._id },
+            { _id: userExist._id },
             { password: hash },
           );
           this.logger.log(updatedUser);
@@ -277,6 +277,7 @@ export class UserService {
         }
       }
     } catch (error) {
+      console.log(error);
       return Return({
         error: true,
         statusCode: 500,

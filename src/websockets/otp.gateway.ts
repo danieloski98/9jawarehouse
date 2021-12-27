@@ -6,7 +6,7 @@ import {
 } from '@nestjs/websockets';
 import { Server } from 'socket.io';
 
-@WebSocketGateway(80, { cors: { origin: '*' } })
+@WebSocketGateway()
 export class OtpGateway implements OnGatewayConnection {
   @WebSocketServer()
   server: Server;
