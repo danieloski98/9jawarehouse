@@ -4,8 +4,6 @@ import { Model } from 'mongoose';
 import { LgaDocument, Lga } from 'src/Schema/Lga.Schema';
 import { State, StateDocument } from 'src/Schema/State.Schema';
 import { readFile } from 'fs';
-import StateJson from '../../../states.json';
-import LgaJson from '../../../lgas.json';
 import { Response } from 'express';
 import { Return } from 'src/utils/Returnfunctions';
 import { ILga, IState } from 'src/Types/ILga';
