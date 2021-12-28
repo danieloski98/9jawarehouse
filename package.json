@@ -31,6 +31,7 @@
     "@nestjs/typeorm": "^7.1.5",
     "@nestjs/websockets": "^8.0.8",
     "@types/dotenv": "^8.2.0",
+    "axios": "^0.24.0",
     "bcrypt": "^5.0.1",
     "cloudinary": "^1.27.0",
     "compression": "^1.7.4",

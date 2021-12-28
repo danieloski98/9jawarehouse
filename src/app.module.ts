@@ -13,6 +13,8 @@ import { EmaillistModule } from './routes/emaillist/emaillist.module';
 import { ServicesModule } from './routes/services/services.module';
 import { CommentsModule } from './routes/comments/comments.module';
 import { PinModule } from './routes/pin/pin.module';
+import { PaymentModule } from './routes/payment/payment.module';
+import { StatesModule } from './routes/states/states.module';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require('dotenv').config();
 
@@ -34,6 +36,8 @@ const URL =
     ServicesModule,
     CommentsModule,
     PinModule,
+    PaymentModule,
+    StatesModule,
     // AdminModule,
     // NotificationsModule,
   ],
