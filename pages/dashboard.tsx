@@ -31,23 +31,27 @@ export default function Dashboard() {
   const Toast = useToast();
   const router = useRouter();
   const dispatch = useDispatch();
-
-  const socket = io(`http://localhost:80`, {
+  const socket = React.useRef(io(`http://localhost:80`, {
       rejectUnauthorized: false,
-  });
+  }))
 
-  const ev = socket.on(`PINCHANGED:${user._id}`, (data: number) => {
-      Toast({
-          position: 'top-right',
-          title: 'PIN changed',
-          description: data,
-          duration: 10000,
-          status: 'success',
-          isClosable: true,
-      });
-      dispatch(updatePin(data));
-      ev.disconnect();
-  });
+//   const socket = io(`http://localhost:80`, {
+//       rejectUnauthorized: false,
+//   });
+
+ React.useMemo(() => {
+    const ev = socket.current.on(`PINCHANGED:${user._id}`, (data: number) => {
+        Toast({
+            position: 'top-right',
+            title: 'PIN changed',
+            description: data,
+            duration: 10000,
+            status: 'success',
+            isClosable: true,
+        });
+        dispatch(updatePin(data));
+    });
+ }, [])
 
 
   const fetchUser = React.useCallback( async() => {

@@ -10,11 +10,12 @@ import { IServices } from '../../utils/types/services';
 import { GetStaticPaths } from 'next';
 import { IUser } from '../../utils/types/user';
 import { useRouter } from 'next/router'
+import { ILga, IState } from '../../utils/types/Lga&State';
 
 
 
 interface IProps {
-    states: Array<states>;
+    states: Array<IState>;
     services: Array<IServices>;
 }
 
@@ -28,15 +29,17 @@ export const getStaticPaths: GetStaticPaths<{ slug: string }> = async () => {
 }
 
 export async function getStaticProps() {
-    const states = await fetch('https://locationsng-api.herokuapp.com/api/v1/states');
+    const states = await fetch(`${url}states`);
     const services = await fetch(`${url}services`);
 
-    const statesJ = await states.json() as Array<states>;
+    const statesJ = await states.json() as IServerReturnObject;
     const servicesJ = await services.json() as IServerReturnObject;
+
+    const st = statesJ.data;
 
     return {
         props: {
-            states: statesJ,
+            states: st,
             services: servicesJ.data,
         }
     }
@@ -45,7 +48,7 @@ export async function getStaticProps() {
 export default function Services({states, services}: IProps) {
     const [drawer, setDrawer] = React.useState(false);
     const [state, setState] = React.useState("");
-    const [lgas, setLgas] = React.useState([] as Array<string>);
+    const [lgas, setLgas] = React.useState([] as Array<ILga>);
     const [businesses, setBusinesses] = React.useState([2] as Array<IUser | any>);
     const [loading, setLoading] = React.useState(true);
 
@@ -59,10 +62,10 @@ export default function Services({states, services}: IProps) {
 
     React.useMemo(() => {
         (async function() {
-            const request = await fetch(`https://locationsng-api.herokuapp.com/api/v1/states/${state}/lgas`);
-            const json = await request.json() as Array<string>;
-            console.log(json);
-            setLgas(json);
+                const request = await fetch(`${url}states/lgas/${state}`);
+                const json = await request.json() as IServerReturnObject;
+                const lga = json.data as Array<ILga>;
+                setLgas(lga);
         })()
     }, [state]);
 
@@ -129,15 +132,15 @@ export default function Services({states, services}: IProps) {
                    <Select border="none" bgColor="whitesmoke" borderRadius="0" onChange={(e) => SelectState(e.target.value)}>
                        <option value="" selected>State</option>
                        {states.map((item, index) => (
-                           <option key={index.toString()} value={item.name}>{item.name}</option>
+                           <option key={index.toString()} value={item.officialName}>{item.officialName}</option>
                        ))}
                    </Select>
                </div>
                <div className="w-full h-10 mb-5">
                    <Select border="none" bgColor="whitesmoke" onChange={(e) => setLa(e.target.value)}>
                        <option value="" selected>LGA</option>
-                       {lgas.length > 0 && lgas.map((item, index) => (
-                           <option key={index.toString()} value={item}>{item}</option>
+                       {lgas !== undefined && lgas.length > 0 && lgas.map((item, index) => (
+                           <option key={index.toString()} value={item.LGA}>{item.LGA}</option>
                        ))}
                    </Select>
                </div>
@@ -200,15 +203,15 @@ export default function Services({states, services}: IProps) {
                     <Select border="none" bgColor="whitesmoke" borderRadius="0" onChange={(e) => SelectState(e.target.value)}>
                        <option value="" selected>State</option>
                        {states.map((item, index) => (
-                           <option key={index.toString()} value={item.name}>{item.name}</option>
+                           <option key={index.toString()} value={item.officialName}>{item.officialName}</option>
                        ))}
                    </Select>
                </div>
                <div className="w-32 h-10 ml-6">
                     <Select border="none" bgColor="whitesmoke" onChange={(e) => setLa(e.target.value)}>
                        <option value="" selected>LGA</option>
-                       {lgas.length > 0 && lgas.map((item, index) => (
-                           <option key={index.toString()} value={item}>{item}</option>
+                       {lgas !== undefined && lgas.length > 0 && lgas.map((item, index) => (
+                           <option key={index.toString()} value={item.LGA}>{item.LGA}</option>
                        ))}
                    </Select>    
                </div>

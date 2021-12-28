@@ -16,11 +16,12 @@ import url from '../../utils/url';
 import { IServerReturnObject } from '../../utils/types/serverreturntype';
 import { IServices } from '../../utils/types/services';
 import Footer from '../Home/Footer';
+import { IState } from '../../utils/types/Lga&State';
 
 
 export default function CompleteRegistration() {
   const [services, setServices] = React.useState([] as Array<IServices>);
-  const [states, setStates] = React.useState([] as Array<states>);
+  const [states, setStates] = React.useState([] as Array<IState>);
 
   const dispatch = useDispatch();
  
@@ -28,11 +29,11 @@ export default function CompleteRegistration() {
   React.useMemo(() => {
     (async function() {
       const request1 = await fetch(`${url}services`);
-      const request2 = await fetch('https://locationsng-api.herokuapp.com/api/v1/states');
+      const request2 = await fetch(`${url}states`);
       const json1 = await request1.json() as IServerReturnObject;
-      const json2 = await request2.json() as Array<states>;
+      const json2 = await request2.json() as IServerReturnObject;
       const ser = json1.data;
-      const stat = json2;
+      const stat = json2.data as IState[];
 
       setServices(ser);
       dispatch(SetServ(ser))

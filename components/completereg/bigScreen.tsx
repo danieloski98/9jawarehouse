@@ -13,6 +13,7 @@ import { IServices } from '../../utils/types/services';
 import { ICertificate } from '../../utils/types/certificate';
 import url from '../../utils/url';
 import { IServerReturnObject } from '../../utils/types/serverreturntype';
+import { IState } from '../../utils/types/Lga&State';
 
 // validationSchema
 const validationSchema = yup.object({
@@ -54,7 +55,7 @@ export const initialValues =  {
 const ACTIVE = 'w-8 h-8 rounded-full bg-themeGreen text-white text-sm flex justify-center items-center';
 const INACTIVE = 'w-8 h-8 rounded-full bg-green-200 text-green-600 text-sm flex justify-center items-center';
 
-export default function BigScreen({ states, services}: {states: states[], services: IServices[]}) {
+export default function BigScreen({ states, services}: {states: IState[], services: IServices[]}) {
     const [step, setStep] = React.useState(1);
     const [progress, setProgress] = React.useState(33);
     const [images, setImages] = React.useState([] as any[]);

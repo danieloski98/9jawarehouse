@@ -2,10 +2,13 @@ import React from 'react';
 import { Input, InputGroup, InputLeftElement, Select } from '@chakra-ui/react'
 import { states } from './index';
 import { FormikContextType, FormikProps } from 'formik';
+import { ILga, IState } from '../../utils/types/Lga&State';
+import url from '../../utils/url';
+import { IServerReturnObject } from '../../utils/types/serverreturntype';
 
 interface IProps {
     next: Function;
-    states: states[];
+    states: IState[];
     formik: FormikProps<{
         first_name: '',
         last_name: '',
@@ -27,13 +30,14 @@ interface IProps {
 
 export default function PersonalInfo({ next, states, formik }: IProps) {
 
-    const [lgas, setLgas] = React.useState([] as Array<string>);
+    const [lgas, setLgas] = React.useState([] as Array<ILga>);
 
     React.useMemo(() => {
         (async function() {
-            const request = await fetch(`https://locationsng-api.herokuapp.com/api/v1/states/${formik.values.state}/lgas`);
-            const json = await request.json() as Array<string>;
-            setLgas(json);
+            const request = await fetch(`${url}states/lgas/${formik.values.state}`);
+            const json = await request.json() as IServerReturnObject;
+            const lga = json.data as ILga[];
+            setLgas(lga);
         })()
     }, [formik.values.state]);
 
@@ -117,8 +121,8 @@ export default function PersonalInfo({ next, states, formik }: IProps) {
                 <label>State</label>
                 <div className="xl:w-11/12 lg:w-11/12 md:w-full sm:w-full">
                     <Select border="none" bgColor="whitesmoke" borderRadius={0} className="bg-gray-100 mt-3" name="state" value={formik.values.state} onChange={formik.handleChange} onFocus={() => formik.setFieldTouched('state', true, true)}>
-                        {states.map((item, index) => (
-                            <option value={item.name} key={index.toString()}>{item.name}</option>
+                        {states !== undefined && states.map((item, index) => (
+                            <option value={item.officialName} key={index.toString()}>{item.officialName}</option>
                         ))}
                     </Select>
                 </div>
@@ -129,8 +133,8 @@ export default function PersonalInfo({ next, states, formik }: IProps) {
             <label>LGA</label>
                 <div className="xl:w-11/12 lg:w-11/12 md:w-full sm:w-full">
                     <Select border="none" bgColor="whitesmoke" borderRadius={0} className="bg-gray-100 mt-3" name="lga" value={formik.values.lga} onChange={formik.handleChange} onFocus={() => formik.setFieldTouched('lga', true, true)}>
-                        {lgas.length > 0 && lgas.map((item, index) => (
-                            <option value={item} key={index.toString()}>{item}</option>
+                        {lgas !== undefined && lgas.length > 0 && lgas.map((item, index) => (
+                            <option value={item.LGA} key={index.toString()}>{item.LGA}</option>
                         ))}
                     </Select>
                 </div>
