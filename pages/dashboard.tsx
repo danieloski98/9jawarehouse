@@ -9,9 +9,6 @@ import Navbar from '../components/general/Navbar';
 import { Modal, ModalOverlay, ModalContent, ModalBody, Spinner, useToast } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 
-// socket
-import { io, Manager } from 'socket.io-client'
-
 // redux
 import { RootState } from '../store/index'
 import { updateUser } from '../reducers/User.reducer';
@@ -21,6 +18,8 @@ import { login } from '../reducers/logged'
 import { useDispatch, useSelector } from 'react-redux'
 import url from '../utils/url';
 import { IServerReturnObject } from '../utils/types/serverreturntype';
+// import { socket } from '../utils/WebSocket';
+import { pusher } from '../utils/Pusher';
 // import Footer from '../components/Home/Footer';
 
 export default function Dashboard() {
@@ -31,27 +30,31 @@ export default function Dashboard() {
   const Toast = useToast();
   const router = useRouter();
   const dispatch = useDispatch();
-  const socket = React.useRef(io(`http://localhost:80`, {
-      rejectUnauthorized: false,
-  }))
 
-//   const socket = io(`http://localhost:80`, {
-//       rejectUnauthorized: false,
-//   });
 
- React.useMemo(() => {
-    const ev = socket.current.on(`PINCHANGED:${user._id}`, (data: number) => {
-        Toast({
-            position: 'top-right',
-            title: 'PIN changed',
-            description: data,
-            duration: 10000,
-            status: 'success',
-            isClosable: true,
-        });
-        dispatch(updatePin(data));
+  pusher.bind(`PINCHANGED:${user._id}`, (data: number) => {
+    Toast({
+        position: 'top-right',
+        title: 'PIN changed',
+        description: data,
+        duration: 10000,
+        status: 'success',
+        isClosable: true,
     });
- }, [])
+    dispatch(updatePin(data));
+  });
+
+//   socket.on(`PINCHANGED:${user._id}`, (data: number) => {
+//     Toast({
+//             position: 'top-right',
+//             title: 'PIN changed',
+//             description: data,
+//             duration: 10000,
+//             status: 'success',
+//             isClosable: true,
+//     });
+//     dispatch(updatePin(data));
+//   });
 
 
   const fetchUser = React.useCallback( async() => {
@@ -61,6 +64,7 @@ export default function Dashboard() {
     const json = await request.json() as IServerReturnObject;
 
     if (json.statusCode !== 200) {
+        router.push('/');
         alert(json.errorMessage);
         setLoading(false);
         return
@@ -69,7 +73,7 @@ export default function Dashboard() {
         dispatch(login());
         setLoading(false);
     }
-  }, [dispatch])
+  }, [dispatch, router])
 
 
   React.useEffect(() => {

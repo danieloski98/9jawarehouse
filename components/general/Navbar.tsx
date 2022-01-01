@@ -67,7 +67,7 @@ export default function Navbar({page, setPage}: IProps) {
                 setLoading(false);
             }
         })()
-    });
+    }, [dispatch, user._id, user.pin]);
 
     const generatePin = async () => {
       setLoading(true);
@@ -110,7 +110,7 @@ export default function Navbar({page, setPage}: IProps) {
               <MenuList w="1000px" maxH="500px" overflow="auto" className="grid grid-cols-4 font-light text-sm">
                 {serv.map((item, index) => (
                   <MenuItem key={index.toString()}>
-                    <Link href={`/services/${item.name}`}>{item.name}</Link>
+                    <Link prefetch={false} shallow={true} href={`/services/${item.name}`}>{item.name}</Link>
                   </MenuItem>
                 ))}
               </MenuList>

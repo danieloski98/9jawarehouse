@@ -8,6 +8,7 @@ import { FaFacebook, FaWhatsapp, FaInstagram, FaInternetExplorer, FaTwitter, FaL
 // redux
 import { RootState } from '../../store/index'
 import { useSelector } from 'react-redux'
+import { ICertificate } from "../../utils/types/certificate";
 
 interface IProps {
   setPage: Function;
@@ -54,9 +55,15 @@ export default function Profile({ setPage }: IProps) {
   const [icon, setIcon] = React.useState(0);
   const [modalValue, setModalValue] = React.useState("");
   const [openModal, setOpenModal] = React.useState(false);
+  const [pic, setPic] = React.useState('');
 
-  const userDetails = useSelector((state: RootState) => state.UserReducer.user);
-  const pic = userDetails.pictures[0];
+  const userDetails = useSelector((state: RootState) => state.UserReducer.user as any);
+
+  React.useEffect(() => {
+    if (userDetails !== undefined || userDetails !== {}) {
+      setPic(userDetails.pictures[0]);
+    }
+  }, [userDetails]);
 
   const close = () => {
     setOpenModal(false);
@@ -78,7 +85,7 @@ export default function Profile({ setPage }: IProps) {
         <p className="text-2xl font-light text-gray-600 ml-5">Profile</p>
 
         <div className="w-full h-64 mt-6">
-          <Img src={pic} alt="banner" className="w-full h-64" />
+          {userDetails !== undefined && <Img src={pic} alt="banner" className="w-full h-64" />}
         </div>
 
         {/* details */}
@@ -95,7 +102,7 @@ export default function Profile({ setPage }: IProps) {
                 {userDetails.business_name}
               </p>
               <div className="flex w-auto h-auto flex-wrap mt-2">
-                {userDetails.services.map((item, index) => (
+                {userDetails !== {} && userDetails.services.map((item: string, index: number) => (
                   <p key={index.toString()} className="text-xs text-themeGreen font-light">
                     {item},
                   </p>
@@ -184,7 +191,7 @@ export default function Profile({ setPage }: IProps) {
 
           <div className="flex flex-col xl:mt-0 lg:mt-0 md:mt-4 sm:mt-4 flex-1 ml-1">
             <p className="text-md font-semibold text-gray-600">Certifications</p>
-            {userDetails.certificates.length > 0 && userDetails.certificates.map((item, index) => (
+            {userDetails.certificates.length > 0 && userDetails.certificates.map((item: ICertificate, index: number) => (
               <div key={index.toString()} className="mt-2" >
                   <p className="text-sm font-light">{item.certificate}</p>
                   <p className="text-sm font-light mt-1">{item.organization}</p>
