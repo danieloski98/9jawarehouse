@@ -9,9 +9,12 @@ import {
   Subscription,
   SubscriptionSchema,
 } from 'src/Schema/Subscriptions.Schema';
+import { NotificationsModule } from '../notifications/notifications.module';
+import { NotificationUserService } from '../notifications/services/user/user.service';
 
 @Module({
   imports: [
+    NotificationsModule,
     HttpModule,
     MongooseModule.forFeature([
       { name: User.name, schema: UserSchema },
@@ -19,6 +22,6 @@ import {
     ]),
   ],
   controllers: [PaymentController],
-  providers: [UserService, AdminService],
+  providers: [UserService, AdminService, NotificationUserService],
 })
 export class PaymentModule {}

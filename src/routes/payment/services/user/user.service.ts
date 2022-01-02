@@ -10,6 +10,7 @@ import {
 } from 'src/Schema/Subscriptions.Schema';
 import { IReturnObject } from 'src/utils/ReturnObject';
 import { Return } from 'src/utils/Returnfunctions';
+import { NotificationUserService as UserNotificationService } from 'src/routes/notifications/services/user/user.service';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require('dotenv').config();
@@ -23,6 +24,7 @@ export class UserService {
     @InjectModel(User.name) private userModel: Model<UserDocument>,
     @InjectModel(Subscription.name)
     private subscriptionModel: Model<SubscriptionDocument>,
+    private userNotificationService: UserNotificationService,
   ) {}
 
   async generateLink(_id: string, amount: number): Promise<IReturnObject> {
@@ -117,6 +119,10 @@ export class UserService {
         .toPromise();
 
       if (request.data.data.status !== 'success') {
+        this.userNotificationService.triggerNotification(
+          sub.business_id,
+          'Your subscription payment failed. Please try again or contact support',
+        );
         const markDeclined = await this.subscriptionModel.updateOne(
           { _id: sub._id },
           { status: 3 },
@@ -138,6 +144,10 @@ export class UserService {
       );
       console.log(userEnabled);
       // console.log(markDeclined);
+      this.userNotificationService.triggerNotification(
+        sub.business_id,
+        'Your subscription payment was successful',
+      );
       return Return({
         error: true,
         statusCode: 200,

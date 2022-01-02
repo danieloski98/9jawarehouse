@@ -13,6 +13,7 @@ import { IFile } from 'src/Types/file';
 import Cloudinary from 'src/utils/cloudinary';
 import { join } from 'path';
 import { existsSync, rmSync } from 'fs';
+import { NotificationUserService as UserNotificationService } from 'src/routes/notifications/services/user/user.service';
 
 @Injectable()
 export class CrudService {
@@ -22,6 +23,7 @@ export class CrudService {
     @InjectModel(User.name) private userModel: Model<UserDocument>,
     @InjectModel(PIN.name) private pinModel: Model<PINDocument>,
     private pinService: PinService,
+    private userNotificationService: UserNotificationService,
   ) {}
 
   async addCommnet(
@@ -82,6 +84,10 @@ export class CrudService {
         );
         console.log(updatePin);
         this.logger.log(newComment);
+        this.userNotificationService.triggerNotification(
+          user_id,
+          `User with name ${payload.fullname} left a review for your business. The review is await approval.`,
+        );
         return Return({
           error: false,
           statusCode: 200,

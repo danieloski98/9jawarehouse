@@ -3,6 +3,9 @@
 /node_modules
 /public
 /docs
+/files
+/pictures
+/commentPics
 
 .env
 

@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Param, Post, Res } from '@nestjs/common';
 import { ApiBody, ApiParam, ApiProperty, ApiTags } from '@nestjs/swagger';
 import { Response } from 'express';
-import { UserService } from './services/user/user.service';
+import { UserService as PaymentUserService } from './services/user/user.service';
 
 class GenLinkPayload {
   @ApiProperty()
@@ -13,7 +13,7 @@ class GenLinkPayload {
 
 @Controller('payment')
 export class PaymentController {
-  constructor(private userService: UserService) {}
+  constructor(private userService: PaymentUserService) {}
 
   @ApiTags('PAYMENT')
   @ApiParam({ name: 'id' })
