@@ -1,13 +1,34 @@
 import React from 'react';
-import { FiSearch, FiBell, FiMenu, FiChevronDown, FiX } from 'react-icons/fi'
-import { Avatar, Drawer, DrawerOverlay, DrawerContent, DrawerBody, Menu, MenuButton, MenuList, MenuItem, Button, InputGroup, Input, InputLeftElement, InputRightElement, Accordion, AccordionItem, AccordionButton, AccordionPanel, AccordionIcon, Box } from '@chakra-ui/react'
+import { FiSearch, FiBell, FiMenu, FiChevronDown, FiX, FiTrash2 } from 'react-icons/fi'
+import { Avatar, Drawer, DrawerOverlay, DrawerContent, DrawerBody, Menu, MenuButton, MenuList, MenuItem, Button, InputGroup, Input, InputLeftElement, InputRightElement, Accordion, AccordionItem, AccordionButton, AccordionPanel, AccordionIcon, Box, Divider, DrawerCloseButton, Spinner } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
+import { useQuery } from 'react-query'
 
 // images
 import Image from 'next/image';
 import Logo from '../../public/images/logo.svg';
 import Sidebar from '../dashboard/Sidebar';
+
+// redux
+import {useSelector, useDispatch} from 'react-redux';
+import { RootState } from '../../store/index';
+import { setServices as SetServ } from '../../reducers/services.reducer'
+import { updateUser } from '../../reducers/User.reducer'
+import { updatePin } from '../../reducers/pin.reducer'
+import { IServerReturnObject } from '../../utils/types/serverreturntype';
+import url from '../../utils/url';
+import { INotification } from '../../utils/types/Notification';
+
+// query frunction
+const getNotifications = async (user_id: string) => {
+  const request = await fetch(`${url}notifications/${user_id}`);
+  const json = await request.json() as IServerReturnObject;
+  if (!request.ok) {
+    throw new Error('An Error Occured')
+  }
+  return json;
+}
 
 interface IProps {
   page: number;
@@ -16,7 +37,52 @@ interface IProps {
 
 export default function ServiceNavbar() {
   const [open, setOpen] = React.useState(false);
+  const [query, setQuery] = React.useState('');
+  const [notiLoading, setNotiLoading] = React.useState(true);
+  const [notiError, setNotiError] = React.useState(false);
+  const [notifications, setNotifications] = React.useState([] as Array<INotification>);
+  const [showNoti, setShowNoti] = React.useState(false);
   const router = useRouter();
+  const user = useSelector((state:RootState) => state.UserReducer.user);
+  const loggedIn = useSelector((state: RootState) => state.LoggedInReducer.loggedIn);
+  const serv = useSelector((state: RootState) => state.ServicesReducer.services)
+
+  // query
+  const getNotificationQuery = useQuery('getNotifications', () => getNotifications(user._id), {
+    onSuccess: (data) => {
+      const dt = data.data as Array<INotification>;
+      setNotifications(dt);
+      setNotiLoading(false);
+      setNotiError(false)
+    },
+    onError: (error) => {
+      console.log(error);
+      setNotiLoading(false);
+      setNotiError(true);
+    }
+  })
+
+  const handleKeydonw = (e: any) => {
+    if (e.key === 'Enter') {
+      router.push(`/services/${query}`);
+    }
+  }
+
+    const deleteNoti = async (id: string) => {
+    setNotiLoading(true);
+    const request = await fetch(`${url}notifications/${id}`, {
+      method: 'delete',
+    });
+    const json = await request.json() as IServerReturnObject;
+    setNotiLoading(false);
+    if (json.statusCode !== 200) {
+      alert(json.errorMessage);
+      return;
+    }else {
+      alert(json.successMessage);
+      return;
+    }
+  }
 
   return (
     <div className="w-full h-20 bg-white xl:px-10 lg:px-10 md:px-5 sm:px-5 flex justify-between fixed z-50">
@@ -34,7 +100,7 @@ export default function ServiceNavbar() {
                 <InputLeftElement>
                     <FiSearch size={25} color="grey" />
                 </InputLeftElement>
-                <Input />
+                <Input onKeyPress={handleKeydonw} onChange={(e) => setQuery(e.target.value)} />
                 <InputRightElement>
                     <FiX size={20} color="grey" />
                 </InputRightElement>
@@ -47,7 +113,7 @@ export default function ServiceNavbar() {
                     <InputLeftElement>
                         <FiSearch size={25} color="grey" />
                     </InputLeftElement>
-                    <Input />
+                    <Input onKeyPress={handleKeydonw} onChange={(e) => setQuery(e.target.value)} />
                     <InputRightElement>
                         <FiX size={20} color="grey" />
                     </InputRightElement>
@@ -64,34 +130,69 @@ export default function ServiceNavbar() {
                 </p>
               </MenuButton>
               <MenuList w="1000px" maxH="500px" overflow="auto" className="grid grid-cols-4 font-light text-sm">
-                <MenuItem>Download</MenuItem>
-                <MenuItem>Create a Copy</MenuItem>
-                <MenuItem>Mark as Draft</MenuItem>
-                <MenuItem>Delete</MenuItem>
-                <MenuItem>Attend a Workshop</MenuItem>
-                <MenuItem>Download</MenuItem>
-                <MenuItem>Create a Copy</MenuItem>
-                <MenuItem>Mark as Draft</MenuItem>
-                <MenuItem>Delete</MenuItem>
-                <MenuItem>Attend a Workshop</MenuItem>
-                <MenuItem>Download</MenuItem>
-                <MenuItem>Create a Copy</MenuItem>
-             
+                {serv.map((item, index) => (
+                  <MenuItem key={index.toString()}>
+                    <Link prefetch={false} shallow={true} href={`/services/${item.name}`}>{item.name}</Link>
+                  </MenuItem>
+                ))}             
               </MenuList>
             </Menu>
             
-            <Link href="/dashboard">
-              <a>
-                <Avatar src="https://bit.ly/broken-link" className="mr-6" size="sm" />
-              </a>
-            </Link>
+            {loggedIn && <Avatar src={user.profile_pic} className="mr-6" size="sm" />}
+            {loggedIn && <FiBell size={25} color="black" className='cursor-pointer' onClick={() => setShowNoti(true)} />}
 
-            <FiBell size={25} color="black" />
+            {!loggedIn && (
+              <div className="flex font-light text-sm cursor-pointer">
+                <p className="mr-3"><Link href="/auth/createaccount">Create Account</Link></p>
+                <p><Link href="/auth/login">Login</Link></p>
+              </div>
+            )}
         </div>
 
         <div className="xl:hidden lg:hidden md:flex sm:flex items-center">
           <FiMenu size={30} color="grey" onClick={() => setOpen(true)} />
         </div>
+
+         {/* Notofication Drawer */}
+         <Drawer isOpen={showNoti} onClose={() => setShowNoti(false)}>
+          <DrawerOverlay />
+          <DrawerContent>
+            <DrawerCloseButton />
+            <DrawerBody>
+              <p>Notifications</p>
+              {!notiLoading && !notiError && notifications.length < 1 && (
+                <div className="w-full h-64 mt-4">
+                  <p>You have no new Notification</p>
+              </div>
+              )}
+
+              {notiLoading && (
+                <div className="w-full h-40 flex justify-center items-center mt-4">
+                  <Spinner size="lg" color="green" />
+                </div>
+              )}
+
+              {!notiLoading && !notiError && notifications.length > 0 && (
+                <div className="mt-8">
+                  {notifications.map((item, index) => (
+                    <div className="w-full h-auto px-0 py-6 flex border-b-2 border-gray-300" key={index.toString()}>
+                      <div className="flex-1 flex flex-col justify-evenly pr-2">
+                        <p className='font-light text-sm text-black mb-3'>{item.message}</p>
+                        <div className="flex flex-col">
+                          <Divider />
+                          <p className='font-semibold text-xs text-gray-600 mt-3'>{new Date(item.created_at).toDateString()}</p>
+                        </div>
+                      </div>
+                      <div className="w-12  cursor-pointer h-full flex flex-col justify-center items-center">
+                        <FiTrash2 size={25} color="red" onClick={() => deleteNoti(item._id)} />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </DrawerBody>
+          </DrawerContent>
+        </Drawer>
 
          {/* navigation drawer for small screens and medium screens */}
 
@@ -118,9 +219,9 @@ export default function ServiceNavbar() {
                   {/* menu */}
 
                   <div className="w-full flex flex-col">
-                    <div className="w-full h-10 text-white flex justify-center items-center bg-themeGreen">
+                    {/* <div className="w-full h-10 text-white flex justify-center items-center bg-themeGreen">
                         PIN: 9080998
-                    </div>
+                    </div> */}
 
                     <Link href="/dashboard">
                         <a className="text-themeGreen mt-5 text-lg font-light">Dashboard</a>

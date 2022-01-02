@@ -1,8 +1,9 @@
 import React from 'react';
-import { FiSearch, FiBell, FiMenu, FiChevronDown, FiX } from 'react-icons/fi'
+import { FiSearch, FiBell, FiMenu, FiChevronDown, FiX, FiTrash2 } from 'react-icons/fi'
 import { Avatar, Drawer, DrawerOverlay, DrawerContent, DrawerBody, Menu, MenuButton, MenuList, MenuItem, Button, Accordion, AccordionButton, AccordionItem, AccordionPanel, AccordionIcon, Box, Divider, DrawerCloseButton, Spinner } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
+import { useQuery } from 'react-query'
 
 // redux
 import {useSelector, useDispatch} from 'react-redux';
@@ -19,6 +20,7 @@ import { IServices } from '../../utils/types/services';
 import { IServerReturnObject } from '../../utils/types/serverreturntype';
 import url from '../../utils/url';
 import { IUser } from '../../utils/types/user';
+import { INotification } from '../../utils/types/Notification';
 
 interface IProps {
   page: number;
@@ -26,9 +28,22 @@ interface IProps {
   setPage: Function;
 }
 
+// query frunction
+const getNotifications = async (user_id: string) => {
+  const request = await fetch(`${url}notifications/${user_id}`);
+  const json = await request.json() as IServerReturnObject;
+  if (!request.ok) {
+    throw new Error('An Error Occured')
+  }
+  return json;
+}
+
 export default function Navbar({page, setPage}: IProps) {
   const [open, setOpen] = React.useState(false);
   const [loading, setLoading] = React.useState(true);
+  const [notiLoading, setNotiLoading] = React.useState(true);
+  const [notiError, setNotiError] = React.useState(false);
+  const [notifications, setNotifications] = React.useState([] as Array<INotification>);
   const [showNoti, setShowNoti] = React.useState(false);
   const user = useSelector((state:RootState) => state.UserReducer.user);
   const pin = useSelector((state: RootState) => state.PinReducer.pin);
@@ -38,6 +53,21 @@ export default function Navbar({page, setPage}: IProps) {
 
   const dispatch = useDispatch();
   const serv = useSelector((state: RootState) => state.ServicesReducer.services)
+
+  // query
+  const getNotificationQuery = useQuery('getNotifications', () => getNotifications(user._id), {
+    onSuccess: (data) => {
+      const dt = data.data as Array<INotification>;
+      setNotifications(dt);
+      setNotiLoading(false);
+      setNotiError(false)
+    },
+    onError: (error) => {
+      console.log(error);
+      setNotiLoading(false);
+      setNotiError(true);
+    }
+  })
 
   React.useMemo(() => {
     (async function() {
@@ -91,6 +121,22 @@ export default function Navbar({page, setPage}: IProps) {
       setLoading(false);
   }
 
+  const deleteNoti = async (id: string) => {
+    setNotiLoading(true);
+    const request = await fetch(`${url}notifications/${id}`, {
+      method: 'delete',
+    });
+    const json = await request.json() as IServerReturnObject;
+    setNotiLoading(false);
+    if (json.statusCode !== 200) {
+      alert(json.errorMessage);
+      return;
+    }else {
+      alert(json.successMessage);
+      return;
+    }
+  }
+
   return (
     <div className="w-full h-20 bg-white px-10 flex justify-between z-40">
         <div className="flex-1 flex items-center">
@@ -139,9 +185,36 @@ export default function Navbar({page, setPage}: IProps) {
             <DrawerCloseButton />
             <DrawerBody>
               <p>Notifications</p>
-              <div className="w-full h-64 mt-4">
-                <p>You have no new Notification</p>
+              {!notiLoading && !notiError && notifications.length < 1 && (
+                <div className="w-full h-64 mt-4">
+                  <p>You have no new Notification</p>
               </div>
+              )}
+
+              {notiLoading && (
+                <div className="w-full h-40 flex justify-center items-center mt-4">
+                  <Spinner size="lg" color="green" />
+                </div>
+              )}
+
+              {!notiLoading && !notiError && notifications.length > 0 && (
+                <div className="mt-8">
+                  {notifications.map((item, index) => (
+                    <div className="w-full h-auto px-0 py-6 flex border-b-2 border-gray-300" key={index.toString()}>
+                      <div className="flex-1 flex flex-col justify-evenly pr-2">
+                        <p className='font-light text-sm text-black mb-3'>{item.message}</p>
+                        <div className="flex flex-col">
+                          <Divider />
+                          <p className='font-semibold text-xs text-gray-600 mt-3'>{new Date(item.created_at).toDateString()}</p>
+                        </div>
+                      </div>
+                      <div className="w-12  cursor-pointer h-full flex flex-col justify-center items-center">
+                        <FiTrash2 size={25} color="red" onClick={() => deleteNoti(item._id)} />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
             </DrawerBody>
           </DrawerContent>
         </Drawer>

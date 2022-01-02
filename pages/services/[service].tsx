@@ -57,7 +57,7 @@ export default function Services({states, services}: IProps) {
 
     // filters
     const [st, setSt] = React.useState("");
-    const [sr, setSr] = React.useState("");
+    const [sr, setSr] = React.useState(router.query['service']);
     const [la, setLa] = React.useState("");
 
     React.useMemo(() => {
@@ -68,6 +68,7 @@ export default function Services({states, services}: IProps) {
                 setLgas(lga);
         })()
     }, [state]);
+    
 
     React.useEffect(() => {
         (async function() {
@@ -81,6 +82,7 @@ export default function Services({states, services}: IProps) {
     }, [sr]);
 
     React.useEffect(() => {
+        setSr(router.query['service']);
         setLoading(true);
         (async function() {
             (async function() {
@@ -99,12 +101,14 @@ export default function Services({states, services}: IProps) {
     }
 
     async function getUsers() {
+
         setLoading(true);
         const request = await fetch(`${url}user?service=${sr}&state=${st}&lga=${la}`);
         const json = await request.json() as IServerReturnObject;
         const data = json.data as IUser[];
         setBusinesses(data);
         setLoading(false);
+        setDrawer(false);
     }
     
   return (
@@ -144,7 +148,10 @@ export default function Services({states, services}: IProps) {
                        ))}
                    </Select>
                </div>
-               <button onClick={getUsers} className="w-full h-10 bg-themeGreen text-white font-light">Apply</button>
+               <button onClick={getUsers} className="w-full h-10 bg-themeGreen text-white font-light">
+                   {loading && <Spinner color="green" size="md" /> }
+                   {!loading && <span>Apply</span> }
+               </button>
            </div>
 
             </DrawerBody>
@@ -158,7 +165,7 @@ export default function Services({states, services}: IProps) {
     {/* {businesses.length} */}
 
     <div className="w-full xl:px-5 lg:px-5 sm:px-5 md:px-5 flex h-auto py-8 items-center justify-between">
-        <p className="font-light text-md"> results for  {router.query['service']}</p>
+        <p className="font-light text-md"> results for  {sr}</p>
         <FiFilter size={25} color="grey" className="xl:hidden lg:hidden md:block sm:block" onClick={() => setDrawer(true)} />
     </div>
 

@@ -105,6 +105,14 @@ const RightNavBar = () => {
 
 
 export default function Banner() {
+    const [query, setQuery] = React.useState('');
+    const router = useRouter();
+
+    const handleKeydonw = (e: any) => {
+        if (e.key === 'Enter') {
+          router.push(`/services/${query}`);
+        }
+      }
   return (
     <div className="w-full h-screen flex">
         <div className="flex-1 flex flex-col">
@@ -122,12 +130,12 @@ export default function Banner() {
 
                 <div className="xl:w-9/12 lg:w-9/12 md:w-full sm:w-full mt-6">
                     <InputGroup>
-                        <InputLeftAddon bgColor="#1A8F85">
+                        <InputLeftElement bgColor="#1A8F85">
                         <div className=" w-full flex items-center justify-center">
                             <FiSearch color="white" size={20} />
                         </div>
-                        </InputLeftAddon>
-                        <Input placeholder="search for services or businesses" />
+                        </InputLeftElement>
+                        <Input onKeyPress={handleKeydonw} onChange={(e) => setQuery(e.target.value)} placeholder="search for services or businesses" fontSize="xs" paddingLeft="50px" />
                     </InputGroup>
                 </div>
             </div>
