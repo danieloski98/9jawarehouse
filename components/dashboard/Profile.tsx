@@ -3,6 +3,7 @@ import { Input, Avatar, Image as Img, Modal, ModalOverlay, ModalBody, ModalConte
 import Image from 'next/image'
 import Banner from '../../public/images/banner.png';
 import { FaFacebook, FaWhatsapp, FaInstagram, FaInternetExplorer, FaTwitter, FaLink, FaCopy } from 'react-icons/fa'
+import { Carousel } from 'react-responsive-carousel';
 
 
 // redux
@@ -57,7 +58,7 @@ export default function Profile({ setPage }: IProps) {
   const [openModal, setOpenModal] = React.useState(false);
   const [pic, setPic] = React.useState('');
 
-  const userDetails = useSelector((state: RootState) => state.UserReducer.user as any);
+  const userDetails = useSelector((state: RootState) => state.UserReducer.user);
 
   React.useEffect(() => {
     if (userDetails !== undefined || userDetails !== {}) {
@@ -84,9 +85,15 @@ export default function Profile({ setPage }: IProps) {
       <div className="w-full h-auto py-6 pb-10 flex flex-col bg-white">
         <p className="text-2xl font-light text-gray-600 ml-5">Profile</p>
 
-        <div className="w-full h-64 mt-6">
-          {userDetails !== undefined && <Img src={pic} alt="banner" className="w-full h-64" />}
-        </div>
+       <div className="w-full h-64 overflow-hidden mt-6">
+        <Carousel showArrows showIndicators dynamicHeight={false} autoPlay interval={7000} infiniteLoop>
+            {userDetails.pictures.map((item, index) => (
+              <div key={index.toString()} className="w-full h-64">
+                <Img src={item} alt="img" className="w-full h-64" />
+              </div>
+            ))}
+          </Carousel>
+       </div>
 
         {/* details */}
 
@@ -102,7 +109,7 @@ export default function Profile({ setPage }: IProps) {
                 {userDetails.business_name}
               </p>
               <div className="flex w-auto h-auto flex-wrap mt-2">
-                {userDetails !== {} && userDetails.services.map((item: string, index: number) => (
+                {userDetails.services.map((item: string, index: number) => (
                   <p key={index.toString()} className="text-xs text-themeGreen font-light">
                     {item},
                   </p>
@@ -152,7 +159,7 @@ export default function Profile({ setPage }: IProps) {
         {/* social media links */}
 
         <div className="w-full flex xl:flex-row lg:flex-row md:flex-col sm:flex-col justify-between xl:px-10 lg:px-10 md:px-5 sm:px-5 mt-10">
-          <div className="flex flex-col flex-1 xl:mt-0 lg:mt-0 md:mt-4 sm:mt-4">
+          <div className="flex flex-col flex-1 xl:mt-0 lg:mt-0 md:mt-0 sm:mt-0">
             <p className="text-md font-semibold text-gray-600">
               Social Media Links
             </p>
@@ -189,14 +196,16 @@ export default function Profile({ setPage }: IProps) {
             </div>
           </div>
 
-          <div className="flex flex-col xl:mt-0 lg:mt-0 md:mt-4 sm:mt-4 flex-1 ml-1">
+          <div className="flex flex-col xl:mt-0 lg:mt-0 md:mt-6 sm:mt-6 flex-1 ml-1">
             <p className="text-md font-semibold text-gray-600">Certifications</p>
             {userDetails.certificates.length > 0 && userDetails.certificates.map((item: ICertificate, index: number) => (
-              <div key={index.toString()} className="mt-2" >
+              <div key={index.toString()} className="mt-6 " >
                   <p className="text-sm font-light">{item.certificate}</p>
                   <p className="text-sm font-light mt-1">{item.organization}</p>
                   <p className="text-sm font-light mt-1">{item.year}</p>
-                  <button className="w-40 h-10 border-2 border-themeGreen text-themeGreen mt-2">View</button>
+                  <a href={item.link} target="_blank" rel="noreferrer">
+                    <button className="w-40 h-10 border-2 border-themeGreen text-themeGreen mt-2">View</button>
+                  </a>
               </div>
             ))}
           </div>

@@ -6,6 +6,7 @@ import { ChakraProvider } from '@chakra-ui/react'
 import { store } from '../store';
 import { Provider } from 'react-redux'
 import { QueryClientProvider, QueryClient } from 'react-query';
+import "react-responsive-carousel/lib/styles/carousel.min.css"; 
 
 function MyApp({ Component, pageProps }: AppProps) {
   const queryClient = new QueryClient();

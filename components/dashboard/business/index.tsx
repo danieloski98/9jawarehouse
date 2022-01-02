@@ -1,8 +1,9 @@
 import React from 'react';
 import ServiceNavbar from '../../../components/services/ServiceNav';
 import { FiChevronLeft, FiChevronsLeft, FiPhone, FiMail } from 'react-icons/fi'
-import { Breadcrumb, BreadcrumbItem, Image, Modal, ModalOverlay, ModalContent, ModalBody, Spinner, Skeleton } from '@chakra-ui/react'
+import { Breadcrumb, BreadcrumbItem, Image as Img, Modal, ModalOverlay, ModalContent, ModalBody, Spinner, Skeleton } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
+import { Carousel } from 'react-responsive-carousel';
 
 // redux
 import { useDispatch, useSelector } from 'react-redux'
@@ -81,14 +82,12 @@ export default function Business() {
 
     React.useEffect(() => {
         (async function() {
-            console.log(router.query['id'])
             const request = await fetch(`${url}user/${router.query['id']}`);
             const request2 = await fetch(`${url}comments/${router.query['id']}`);
             const json = await request.json() as IServerReturnObject;
             const json2 = await request2.json() as IServerReturnObject;
             // console.log(json);
             setUser(json.data);
-            setBanner(json.data.pictures[0]);
             setReviews(json2.data);
             setCommentsLoading(false);
             setLoading(false);
@@ -114,7 +113,7 @@ export default function Business() {
        )}
 
         <div className="w-full h-20 flex items-center xl:px-10 lg:px-10 md:px-5 sm:px-5 mt-16">
-            <FiChevronLeft size={30} color="grey" />
+            <FiChevronLeft size={30} color="grey" className="cursor-pointer" onClick={() => router.back()} />
             <div className="ml-6">
                 <Breadcrumb className="text-sm font-light text-gray-400">
                     <BreadcrumbItem>
@@ -134,9 +133,17 @@ export default function Business() {
 
         {/* Banner */}
 
-        <div className="w-full h-72 bg-gray-200 overflow-hidden">
-            <Image src={banner} alt="banner" className="w-full h-full" />
-        </div>
+        {!loading && (
+            <div className="w-full h-64 overflow-hidden mt-6">
+            <Carousel showArrows showIndicators dynamicHeight={false} autoPlay interval={7000} infiniteLoop>
+                {user.pictures.map((item, index) => (
+                  <div key={index.toString()} className="w-full h-64">
+                    <Img src={item} alt="img" className="w-full h-64" />
+                  </div>
+                ))}
+              </Carousel>
+           </div>
+        )}
 
         <div className="flex-1 h-full flex xl:px-10 lg:px-10 md:px-5 sm:px-5 py-10 ">
             <div className="xl:w-3/4 lg:w-3/4 md:w-full sm:w-full xl:mr-12 lg:mr-12 md:mr-0 sm:mr-0 h-auto">

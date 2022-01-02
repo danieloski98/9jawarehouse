@@ -26,6 +26,7 @@
     "react-query": "^3.32.3",
     "react-rating-stars-component": "^2.2.0",
     "react-redux": "^7.2.6",
+    "react-responsive-carousel": "^3.2.22",
     "recoil": "^0.5.2",
     "redux": "^4.1.2",
     "socket.io-client": "^4.4.0",

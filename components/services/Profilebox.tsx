@@ -180,15 +180,17 @@ export default function ProfileBox({user}: IProps) {
           </div>
         </div>
 
-        <div className="flex flex-col xl:mt-5 lg:mt-5 md:mt-4 sm:mt-4 flex-1 xl:ml-10 lg:ml-10 md:ml-5 sm:ml-5">
+        <div className="flex flex-col xl:mt-10 lg:mt-10 md:mt-4 sm:mt-4 flex-1 xl:ml-10 lg:ml-10 md:ml-5 sm:ml-5">
             <p className="text-md font-semibold text-gray-600">Certifications</p>
           <div className="flex flex-wrap">
           {user.certificates.length > 0 && user.certificates.map((item, index) => (
-              <div key={index.toString()} className="mt-2 mb-5" >
+              <div key={index.toString()} className="mt-2 mb-5 mr-6" >
                   <p className="text-sm font-light">{item.certificate}</p>
                   <p className="text-sm font-light mt-1">{item.organization}</p>
                   <p className="text-sm font-light mt-1">{item.year}</p>
-                  <button className="w-40 h-10 border-2 border-themeGreen text-themeGreen mt-2">View</button>
+                  <a href={item.link} target="_blank" rel="noreferrer">
+                    <button className="w-40 h-10 border-2 border-themeGreen text-themeGreen mt-2">View</button>
+                  </a>
               </div>
             ))}
           </div>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useRouter } from 'next/router'
-import verifyPayment from '../public/images/verifyPayment.svg';
+import Verify from '../public/images/verifypayment.svg';
 import Image from 'next/image';
 import { Spinner } from '@chakra-ui/react';
 import url from '../utils/url';
@@ -35,7 +35,7 @@ export default function VerifyPayment() {
   return (
     <div className='w-full h-screen flex items-center justify-center bg-white flex-col'>
         <div className="w-56 h-56">
-            <Image src={verifyPayment} alt="payment" className='w-full h-full' />
+            <Image src={Verify} alt="payment" className='w-full h-full' />
         </div>
         <p className='font-light text-xl mt-2 text-gray-600'>Verify Payment</p>
         <button onClick={verify} className="w-40 h-12 bg-green-400 text-white mt-3 font-semibold text-md">
