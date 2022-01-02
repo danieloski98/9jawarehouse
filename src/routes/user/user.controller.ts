@@ -11,12 +11,23 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { AnyFilesInterceptor } from '@nestjs/platform-express';
-import { ApiBody, ApiParam, ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiParam, ApiProperty, ApiTags } from '@nestjs/swagger';
 import { Response } from 'express';
+import { any } from 'joi';
 import { join } from 'path';
 import { User } from 'src/Schema/User.schema';
 import { IFile } from 'src/Types/file';
 import { CrudService } from './services/crud/crud.service';
+
+class ICert {
+  @ApiProperty()
+  certificates: Array<{
+    link: string;
+    year: string;
+    organization: string;
+    certificate: string;
+  }>;
+}
 
 @Controller('user')
 export class UserController {
@@ -71,6 +82,22 @@ export class UserController {
     @UploadedFiles() files: IFile[],
   ) {
     const result = await this.crudService.uploadImages(param['id'], files);
+    res.status(result.statusCode).send(result);
+  }
+
+  @ApiTags('User')
+  @ApiParam({ type: String, name: 'id' })
+  @ApiBody({ type: ICert })
+  @Put('certs/:id')
+  async updateCerts(
+    @Res() res: Response,
+    @Param() param: any,
+    @Body() body: ICert,
+  ) {
+    const result = await this.crudService.updateCert(
+      param['id'],
+      body.certificates,
+    );
     res.status(result.statusCode).send(result);
   }
 

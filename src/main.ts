@@ -6,8 +6,17 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { join } from 'path';
 import { json } from 'express';
 import * as morgan from 'morgan';
+import * as Pusher from 'pusher';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require('dotenv').config();
+
+export const pusher = new Pusher({
+  appId: process.env.PUSHER_APP_ID,
+  secret: process.env.PUSHER_SECRET,
+  cluster: process.env.PUSERHER_CLUSTER,
+  key: process.env.PUSHER_KEY,
+  useTLS: true,
+});
 
 async function bootstrap() {
   const port = process.env.PORT;

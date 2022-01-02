@@ -8,6 +8,7 @@ import { IReturnObject } from 'src/utils/ReturnObject';
 import { OtpGateway } from 'src/websockets/otp.gateway';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const randomNumber = require('random-number');
+import { pusher } from 'src/main';
 
 @Injectable()
 export class PinService {
@@ -77,7 +78,8 @@ export class PinService {
           integer: true,
         };
         const code = randomNumber(options);
-        this.SocketGateway.server.emit(`PINCHANGED:${user_id}`, code);
+        pusher.trigger('NOTIFICATION', `PINCHANGED:${user_id}`, code);
+        // this.SocketGateway.server.emit(, code);
         const pin = await this.pinModel.updateOne(
           { _id: piinn[0]._id },
           {

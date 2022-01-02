@@ -52,7 +52,7 @@ export class CrudService {
         });
       }
 
-      if (pinActive.use_count < 5) {
+      if (pinActive.use_count < 1) {
         const userExist = await this.userModel.findById(user_id);
         if (userExist === null) {
           return Return({

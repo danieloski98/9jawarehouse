@@ -22,6 +22,7 @@ export class PicsService {
 
   async uploadImgs(_id: string, images: Array<IFile>): Promise<IReturnObject> {
     try {
+      console.log(images);
       const user = await this.userModel.findById(_id);
       const record = await this.pictureModel.find({
         user_id: _id,
@@ -71,6 +72,7 @@ export class PicsService {
         successMessage: 'Record created and awaiting approval',
       });
     } catch (error) {
+      console.log(error);
       return Return({
         error: true,
         statusCode: 500,
@@ -82,6 +84,7 @@ export class PicsService {
 
   async uploadImg(_id: string, image: IFile): Promise<IReturnObject> {
     try {
+      console.log(image);
       const user = await this.userModel.findById(_id);
       const record = await this.profilepicModel.find({
         user_id: _id,
@@ -128,6 +131,7 @@ export class PicsService {
         successMessage: 'Record created and awaiting approval',
       });
     } catch (error) {
+      console.log(error);
       return Return({
         error: true,
         statusCode: 500,

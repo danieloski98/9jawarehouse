@@ -40,6 +40,39 @@ export class CrudService {
     }
   }
 
+  async updateCert(id: string, certs: any[]): Promise<IReturnObject> {
+    try {
+      const user = await this.userModel.findOne({ _id: id });
+      if (user === null) {
+        return Return({
+          error: true,
+          statusCode: 400,
+          errorMessage: 'User not found',
+        });
+      } else {
+        // updated certs
+        const update = await this.userModel.updateOne(
+          { _id: id },
+          { certificates: certs },
+        );
+        console.log(update);
+        return Return({
+          error: false,
+          statusCode: 200,
+          successMessage: 'updated Certificates',
+          data: user,
+        });
+      }
+    } catch (error) {
+      return Return({
+        error: true,
+        statusCode: 500,
+        trace: error,
+        errorMessage: 'Internal Server error.',
+      });
+    }
+  }
+
   async getUsers(query?: {
     service: string;
     state: string;
@@ -48,7 +81,7 @@ export class CrudService {
     try {
       const user = await this.userModel.find({
         verified: true,
-        disabled: false,
+        disabled: true,
         services: query.service || '',
         state: query.state || '',
         lga: query.lga || '',
@@ -150,10 +183,14 @@ export class CrudService {
 
       console.log(images);
       // update images
-      const imgUpdate = await this.userModel.updateOne(
-        { _id: id },
-        { pictures: images },
-      );
+      for (let i = 0; i < images.length; i++) {
+        const imgUpdate = await this.userModel.updateOne(
+          { _id: id },
+          { pictures: images },
+        );
+        console.log(imgUpdate);
+      }
+
       return Return({
         error: false,
         statusCode: 200,
