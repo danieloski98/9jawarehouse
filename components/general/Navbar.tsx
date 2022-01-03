@@ -137,6 +137,11 @@ export default function Navbar({page, setPage}: IProps) {
     }
   }
 
+  const navigate = (num: number) => {
+    setOpen(false);
+    setPage(num)
+  }
+
   return (
     <div className="w-full h-20 bg-white px-10 flex justify-between z-40">
         <div className="flex-1 flex items-center">
@@ -149,14 +154,18 @@ export default function Navbar({page, setPage}: IProps) {
               >
                 <p className="flex mr-6">
                   <FiSearch size={20} className="text-themeGreen" />
-                  <span className="ml-3 font-semibold text-sm cursor-pointer">Find Service</span>
+                  <span className="ml-3 font-Circular-std-book  text-sm cursor-pointer">Find Service</span>
                   <FiChevronDown size={20} color="grey" className="ml-1 mt-0" />
                 </p>
               </MenuButton>
               <MenuList w="1000px" maxH="500px" overflow="auto" className="grid grid-cols-4 font-light text-sm">
                 {serv.map((item, index) => (
                   <MenuItem key={index.toString()}>
-                    <Link prefetch={false} shallow={true} href={`/services/${item.name}`}>{item.name}</Link>
+                    <Link prefetch={false} shallow={true} passHref href={`/services/${item.name}`}>
+                      <p className='font-Circular-std-book '>
+                      {item.name}
+                      </p>
+                      </Link>
                   </MenuItem>
                 ))}
               </MenuList>
@@ -166,7 +175,7 @@ export default function Navbar({page, setPage}: IProps) {
             {loggedIn && <FiBell size={25} color="black" className='cursor-pointer' onClick={() => setShowNoti(true)} />}
 
             {!loggedIn && (
-              <div className="flex font-light text-sm cursor-pointer">
+              <div className="flex font-Circular-std-book text-sm cursor-pointer">
                 <p className="mr-3"><Link href="/auth/createaccount">Create Account</Link></p>
                 <p><Link href="/auth/login">Login</Link></p>
               </div>
@@ -186,7 +195,7 @@ export default function Navbar({page, setPage}: IProps) {
             <DrawerBody>
               <p>Notifications</p>
               {!notiLoading && !notiError && notifications.length < 1 && (
-                <div className="w-full h-64 mt-4">
+                <div className="w-full h-64 mt-4 font-Circular-std-book">
                   <p>You have no new Notification</p>
               </div>
               )}
@@ -200,12 +209,12 @@ export default function Navbar({page, setPage}: IProps) {
               {!notiLoading && !notiError && notifications.length > 0 && (
                 <div className="mt-8">
                   {notifications.map((item, index) => (
-                    <div className="w-full h-auto px-0 py-6 flex border-b-2 border-gray-300" key={index.toString()}>
+                    <div className="w-full h-auto px-0 py-6 flex" key={index.toString()}>
                       <div className="flex-1 flex flex-col justify-evenly pr-2">
-                        <p className='font-light text-sm text-black mb-3'>{item.message}</p>
+                        <p className='font-Circular-std-book text-sm text-black mb-3'>{item.message}</p>
                         <div className="flex flex-col">
                           <Divider />
-                          <p className='font-semibold text-xs text-gray-600 mt-3'>{new Date(item.created_at).toDateString()}</p>
+                          <p className='font-Circular-std-medium text-xs text-gray-600 mt-3'>{new Date(item.created_at).toDateString()}</p>
                         </div>
                       </div>
                       <div className="w-12  cursor-pointer h-full flex flex-col justify-center items-center">
@@ -259,7 +268,7 @@ export default function Navbar({page, setPage}: IProps) {
 
                       {
                           !user.pin && (
-                            <button onClick={generatePin} className="w-11/12 mt-5 flex items-center justify-center mx-3 h-12 bg-green-100 text-green-600">
+                            <button onClick={generatePin} className="w-11/12 mt-5 flex items-center justify-center mx-3 h-12 bg-green-100 text-green-600 font-Circular-std-book">
                                 {!loading && <span>Generate PIN</span>}
                                 {loading && <Spinner color="white" size="lg" />}
                             </button>
@@ -275,18 +284,18 @@ export default function Navbar({page, setPage}: IProps) {
                             <AccordionItem>
                                 <AccordionButton>
                                     <Box flex="1" textAlign="left">
-                                      <p className="text-xl font-light text-themeGreen">Dashboard</p>
+                                      <p className="text-xl font-Circular-std-book text-themeGreen">Dashboard</p>
                                     </Box>
                                     <AccordionIcon />
                                 </AccordionButton>
 
                                 <AccordionPanel>
-                                  <div className="w-full flex flex-col">
-                                    <p onClick={() => setPage(1)}>Profile</p>
-                                    <p className="mt-3" onClick={() => setPage(2)}>Customer Reviews</p>
-                                    <p className="mt-3" onClick={() => setPage(3)}>Subscriptions</p>
+                                  <div className="w-full flex flex-col font-Circular-std-book">
+                                    <p onClick={() => navigate(1)}>Profile</p>
+                                    <p className="mt-3" onClick={() => navigate(2)}>Customer Reviews</p>
+                                    <p className="mt-3" onClick={() => navigate(3)}>Subscriptions</p>
                                     <p className="mt-3">Notifications</p>
-                                    <p className="mt-3" onClick={() => setPage(4)}>Settings</p>
+                                    <p className="mt-3" onClick={() => navigate(4)}>Settings</p>
                                   </div>
                                 </AccordionPanel>
                             </AccordionItem>
@@ -296,7 +305,7 @@ export default function Navbar({page, setPage}: IProps) {
                         <AccordionItem>
                             <AccordionButton>
                                 <Box flex="1" textAlign="left">
-                                  <p className="text-xl font-light text-themeGreen">Find Services</p>
+                                  <p className="text-xl font-Circular-std-book text-themeGreen">Find Services</p>
                                 </Box>
                                 <AccordionIcon />
                             </AccordionButton>
@@ -306,7 +315,7 @@ export default function Navbar({page, setPage}: IProps) {
                                 {/* <p>Profile</p> */}
                                   {serv.map((item, index) => (
                                     <div key={index.toString()}>
-                                      <p className="mt-3 mb-3" key={index.toString()}>
+                                      <p className="mt-3 mb-3 font-Circular-std-book" key={index.toString()}>
                                         <Link href={`/services/${item.name}`}>{item.name}</Link>
                                       </p>
 
@@ -323,7 +332,7 @@ export default function Navbar({page, setPage}: IProps) {
                    
                   </div>
 
-                  <p className="text-red-500 mt-5 text-sm font-light">Logout</p>
+                  <p className="text-red-500 mt-5 text-sm font-Circular-std-book">Logout</p>
 
 
                 </div>

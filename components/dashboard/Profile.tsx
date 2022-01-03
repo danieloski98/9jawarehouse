@@ -83,7 +83,7 @@ export default function Profile({ setPage }: IProps) {
       <ConnectModal isOpen={openModal} close={close} value={modalValue} icon={icon} />
 
       <div className="w-full h-auto py-6 pb-10 flex flex-col bg-white">
-        <p className="text-2xl font-light text-gray-600 ml-5">Profile</p>
+        <p className="text-2xl font-Circular-std-medium text-gray-600 ml-5">Profile</p>
 
        <div className="w-full h-64 overflow-hidden mt-6">
         <Carousel showArrows showIndicators dynamicHeight={false} autoPlay interval={7000} infiniteLoop>
@@ -105,12 +105,12 @@ export default function Profile({ setPage }: IProps) {
               size="lg"
             />
             <div className="flex flex-col justify-center">
-              <p className="text-lg font-bold text-gray-600">
+              <p className="text-lg font-Circular-std-medium text-gray-600">
                 {userDetails.business_name}
               </p>
               <div className="flex w-auto h-auto flex-wrap mt-2">
                 {userDetails.services.map((item: string, index: number) => (
-                  <p key={index.toString()} className="text-xs text-themeGreen font-light">
+                  <p key={index.toString()} className="text-sm text-themeGreen font-Circular-std-book">
                     {item},
                   </p>
                 ))}
@@ -118,7 +118,7 @@ export default function Profile({ setPage }: IProps) {
             </div>
           </div>
           <div className="xl:mt-0 lg:mt-0 md:mt-6 sm:mt-6 ">
-            <button onClick={() => setPage(5)} className="xl:w-40 lg:w-40 md:w-full sm:w-full h-12 border-2 border-themeGreen text-themeGreen">
+            <button onClick={() => setPage(5)} className="xl:w-40 lg:w-40 md:w-full sm:w-full h-12 border-2 border-themeGreen text-themeGreen font-Circular-std-book">
               Edit
             </button>
           </div>
@@ -127,8 +127,8 @@ export default function Profile({ setPage }: IProps) {
         {/* description box */}
 
         <div className="w-full xl:px-10 lg:px-10 md:px-5 sm:px-5 mt-10 flex flex-col">
-          <p className="text-md font-semibold text-gray-600">Description</p>
-          <p className="text-sm font-light mt-4 text-gray-500 text-justify">
+          <p className="text-md font-Circular-std-medium text-gray-600">Description</p>
+          <p className="text-sm font-Circular-std-book mt-4 text-gray-500 text-justify">
            {userDetails.business_description}
           </p>
         </div>
@@ -136,22 +136,44 @@ export default function Profile({ setPage }: IProps) {
         {/* contacts */}
 
         <div className="w-full flex xl:flex-row lg:flex-row md:flex-col sm:flex-col justify-between xl:px-10 lg:px-10 md:px-5 sm:px-5 mt-10">
-          <div className="flex flex-col xl:mt-0 lg:mt-0 md:mt-4 sm:mt-4">
-            <p className="text-md font-semibold text-gray-600">Location</p>
-            <p className="text-sm text-gray-500 font-light">
+          <div className="flex flex-col items-start flex-1 xl:mt-0 lg:mt-0 md:mt-4 sm:mt-4">
+            <p className="text-md font-Circular-std-medium text-gray-600">Location</p>
+            <p className="text-sm text-gray-500 font-Circular-std-book">
               {userDetails.business_address}
             </p>
           </div>
 
-          <div className="flex flex-col xl:mt-0 lg:mt-0 md:mt-4 sm:mt-4">
-            <p className="text-md font-semibold text-gray-600">Phone</p>
-            <p className="text-sm text-gray-500 font-light">{userDetails.phone}</p>
+          <div className="flex flex-col items-start flex-1 xl:mt-0 lg:mt-0 md:mt-4 sm:mt-4">
+            <p className="text-md font-Circular-std-medium text-gray-600">Phone</p>
+            <p className="text-sm text-gray-500 font-Circular-std-book">{userDetails.phone}</p>
           </div>
 
-          <div className="flex flex-col xl:mt-0 lg:mt-0 md:mt-4 sm:mt-4">
-            <p className="text-md font-semibold text-gray-600">Email</p>
-            <p className="text-sm text-gray-500 font-light">
+          <div className="flex flex-col items-start flex-1 xl:mt-0 lg:mt-0 md:mt-4 sm:mt-4">
+            <p className="text-md font-Circular-std-medium text-gray-600">Email</p>
+            <p className="text-sm text-gray-500 font-Circular-std-book">
               {userDetails.email}
+            </p>
+          </div>
+        </div>
+
+
+        <div className="w-full flex xl:flex-row lg:flex-row md:flex-col sm:flex-col justify-between xl:px-10 lg:px-10 md:px-5 sm:px-5 mt-10">
+          <div className="flex flex-col items-start flex-1 xl:mt-0 lg:mt-0 md:mt-4 sm:mt-4">
+            <p className="text-md font-Circular-std-medium text-gray-600">Country</p>
+            <p className="text-sm text-gray-500 font-Circular-std-book">
+              {userDetails.country}
+            </p>
+          </div>
+
+          <div className="flex flex-col items-start flex-1 xl:mt-0 lg:mt-0 md:mt-4 sm:mt-4">
+            <p className="text-md font-Circular-std-medium text-gray-600">State</p>
+            <p className="text-sm text-gray-500 font-Circular-std-book">{userDetails.state}</p>
+          </div>
+
+          <div className="flex flex-col items-start flex-1 xl:mt-0 lg:mt-0 md:mt-4 sm:mt-4">
+            <p className="text-md font-Circular-std-medium text-gray-600">LGA</p>
+            <p className="text-sm text-gray-500 font-Circular-std-book">
+              {userDetails.lga}
             </p>
           </div>
         </div>
@@ -159,8 +181,8 @@ export default function Profile({ setPage }: IProps) {
         {/* social media links */}
 
         <div className="w-full flex xl:flex-row lg:flex-row md:flex-col sm:flex-col justify-between xl:px-10 lg:px-10 md:px-5 sm:px-5 mt-10">
-          <div className="flex flex-col flex-1 xl:mt-0 lg:mt-0 md:mt-0 sm:mt-0">
-            <p className="text-md font-semibold text-gray-600">
+          <div className="flex flex-col flex-1 items-start xl:mt-0 lg:mt-0 md:mt-0 sm:mt-0">
+            <p className="text-md font-Circular-std-medium text-gray-600">
               Social Media Links
             </p>
             <div className="flex w-full mt-2">
@@ -196,15 +218,15 @@ export default function Profile({ setPage }: IProps) {
             </div>
           </div>
 
-          <div className="flex flex-col xl:mt-0 lg:mt-0 md:mt-6 sm:mt-6 flex-1 ml-1">
-            <p className="text-md font-semibold text-gray-600">Certifications</p>
+          <div className="flex flex-col items-start xl:mt-0 lg:mt-0 md:mt-6 sm:mt-6 flex-1 ml-1">
+            <p className="text-md font-Circular-std-medium text-gray-600">Certifications</p>
             {userDetails.certificates.length > 0 && userDetails.certificates.map((item: ICertificate, index: number) => (
               <div key={index.toString()} className="mt-6 " >
-                  <p className="text-sm font-light">{item.certificate}</p>
-                  <p className="text-sm font-light mt-1">{item.organization}</p>
-                  <p className="text-sm font-light mt-1">{item.year}</p>
+                  <p className="text-sm font-Circular-std-book">{item.certificate}</p>
+                  <p className="text-sm font-Circular-std-book mt-1">{item.organization}</p>
+                  <p className="text-sm font-Circular-std-book mt-1">{item.year}</p>
                   <a href={item.link} target="_blank" rel="noreferrer">
-                    <button className="w-40 h-10 border-2 border-themeGreen text-themeGreen mt-2">View</button>
+                    <button className="w-40 h-10 border-2 border-themeGreen text-themeGreen mt-2 font-Circular-std-book">View</button>
                   </a>
               </div>
             ))}

@@ -13,13 +13,13 @@ export default function Footer() {
 
         <div className="xl:w-1/4 lg:w-1/4 md:w-full sm:w-full flex flex-col justify-center items-center">
             <Image src={Logo} alt="logo" className="w-24 h-24" />
-            <p className="text-white text-sm font-light">9jaWareHouse</p>
+            <p className="text-white text-sm font-Circular-std-medium">9jaWareHouse</p>
         </div>
 
         <div className="flex-1 flex xl:flex-row lg:flex-row md:flex-col sm:flex-col justify-between px-20 items-start pt-10 text-white font-semibold text-md">
             <div className="flex flex-col md:my-6 sm:my-6 xl:my-0 lg:my-0">
-                <p className="text-lg text-gray-400 font-semibold">COMPANY</p>
-                <div className="mt-6 text-sm font-light text-white flex flex-col">
+                <p className="text-lg text-gray-400 font-Circular-std-medium">COMPANY</p>
+                <div className="mt-6 text-sm font-Circular-std-book text-white flex flex-col">
                     <Link href="/aboutus">
                         <a className="cursor-pointer">About Us</a>
                     </Link>
@@ -33,8 +33,8 @@ export default function Footer() {
                 </div>
             </div>
             <div className="flex flex-col md:my-6 sm:my-6 xl:my-0 lg:my-0">
-                <p className="text-lg text-gray-400 font-semibold">RESOURCES</p>
-                <div className="mt-6 text-sm font-light text-white flex flex-col">
+                <p className="text-lg text-gray-400 font-Circular-std-medium">RESOURCES</p>
+                <div className="mt-6 text-sm font-Circular-std-book text-white flex flex-col">
                     <Link href="/contactus">
                         <a className="cursor-pointer">Contact Us</a>
                     </Link>
@@ -45,8 +45,8 @@ export default function Footer() {
                 </div>
             </div>
             <div className="flex flex-col md:my-6 sm:my-6 xl:my-0 lg:my-0">
-                <p className="text-lg text-gray-400 font-semibold">FOR VENDORS</p>
-                <div className="mt-6 text-sm font-light text-white flex flex-col">
+                <p className="text-lg text-gray-400 font-Circular-std-medium">FOR VENDORS</p>
+                <div className="mt-6 text-sm font-Circular-std-book text-white flex flex-col">
                     <Link href="/faqs">
                         <a className="cursor-pointer">How to change my plan</a>
                     </Link>

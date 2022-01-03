@@ -25,3 +25,18 @@ a {
   background-repeat: no-repeat;
   background-position: center;
 }
+
+@font-face {
+  font-family: Circular-Std;
+  src: url(../public/fonts/Circular\ Std\ Font.otf);
+}
+
+@font-face {
+  font-family: Circular-std-medium;
+  src: url(../public/fonts/circular-std-medium-500.ttf);
+}
+
+@font-face {
+  font-family: Circular-std-book;
+  src: url(../public/fonts/CircularStd-Book.otf);
+}

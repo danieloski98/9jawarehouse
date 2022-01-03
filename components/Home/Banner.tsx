@@ -41,8 +41,8 @@ export const LeftNavbar = () => {
                     <DrawerBody>
                         <div className="w-full flex flex-col items-center text-md font-light text-gray-600">
                             <Avatar src="https://bit.ly/broken-link" className="" size="sm" />
-                            <p onClick={() => router.push('/auth/login')} className="mt-6">Login</p>
-                            <p onClick={() => router.push('/auth/createaccount')} className="mt-2 mb-4">Register</p>
+                            <p onClick={() => router.push('/auth/login')} className="mt-6 text-md font-Circular-std-book">Login</p>
+                            <p onClick={() => router.push('/auth/createaccount')} className="mt-2 mb-4 text-md font-Circular-std-book">Register</p>
                         </div>
                     </DrawerBody>
                 </DrawerContent>
@@ -76,26 +76,26 @@ const RightNavBar = () => {
               >
                 <p className="flex mr-6">
                   <FiSearch size={20} className="text-white" />
-                  <span className="ml-3 font-semibold text-sm cursor-pointer">Find Service</span>
-                  <FiChevronDown size={20} color="white" className="ml-1 mt-0" />
+                  <span className="ml-3 font-Circular-std-book text-md cursor-pointer">Find Service</span>
+                  <FiChevronDown size={20} color="white" className="ml-1 mt-1" />
                 </p>
               </MenuButton>
               <MenuList w="1000px" size maxH="500px" overflow="auto" mr="200px" className="grid grid-cols-4 font-light text-sm">
                 {serv.map((item, index) => (
                   <MenuItem key={index.toString()}>
                     <a href={`/services/${item.name}`}>
-                        <p className="text-gray-600">{item.name}</p>
+                        <p className="text-gray-600 font-Circular-std-book">{item.name}</p>
                     </a>
                   </MenuItem>
                 ))}
               </MenuList>
             </Menu>
 
-            <p onClick={() => router.push('/auth/createaccount')} className="text-sm font-semibold mx-5 flex items-center cursor-pointer">
+            <p onClick={() => router.push('/auth/createaccount')} className="text-md font-Circular-std-book mx-5 flex items-center cursor-pointer">
                 <span>Become A Vendor</span>
             </p>
 
-            <p onClick={() => router.push('/auth/login')} className="text-sm font-semibold mx-5 flex items-center cursor-pointer">
+            <p onClick={() => router.push('/auth/login')} className="text-md font-Circular-std-book mx-5 flex items-center cursor-pointer">
                 <span>Login</span>
             </p>
     </div>
@@ -114,17 +114,17 @@ export default function Banner() {
         }
       }
   return (
-    <div className="w-full h-screen flex">
+    <div className="w-full xl:h-screen lg:h-screen md:h-auto sm:h-auto flex">
         <div className="flex-1 flex flex-col">
             <LeftNavbar />
-            <div className="flex-1 flex flex-col justify-center xl:px-10 lg:px-10 md:px-5 sm:px-5">
-                <h1 className="xl:text-6xl lg:text-6xl md:text-4xl sm:text-4xl font-regular text-themeGreen">
+            <div className="flex-1 flex flex-col justify-center xl:px-10 lg:px-10 md:px-5 sm:px-5  xl:py-0 lg:py-0 md:py-12 sm:py-12">
+                <h1 className="xl:text-6xl lg:text-6xl md:text-4xl sm:text-4xl font-Circular-std-medium text-themeGreen">
                     Discover Vendors <br/>
                 </h1>
-                <h1 className="xl:text-6xl lg:text-6xl md:text-4xl sm:text-4xl font-regular text-themeGreen mt-4">
+                <h1 className="xl:text-6xl lg:text-6xl md:text-4xl sm:text-4xl font-Circular-std-medium text-themeGreen mt-4">
                     Near You
                 </h1>
-                <p className="xl:w-4/5 lg:w-4/5 md:w-full sm:w-full mt-5 text-md font-semibold text-gray-400">
+                <p className="xl:w-4/5 lg:w-4/5 md:w-full sm:w-full mt-5 text-xl font-Circular-std-book text-gray-400">
                 Less hassle searching for who is best fit  for Photography, Catering, Event planning, make-up artists, DJs, decorators and more
                 </p>
 
@@ -135,7 +135,7 @@ export default function Banner() {
                             <FiSearch color="white" size={20} />
                         </div>
                         </InputLeftElement>
-                        <Input onKeyPress={handleKeydonw} onChange={(e) => setQuery(e.target.value)} placeholder="search for services or businesses" fontSize="xs" paddingLeft="50px" />
+                        <Input onKeyPress={handleKeydonw} onChange={(e) => setQuery(e.target.value)} placeholder="search for services or businesses" fontSize="md" paddingLeft="50px" className='font-Circular-std-book' />
                     </InputGroup>
                 </div>
             </div>

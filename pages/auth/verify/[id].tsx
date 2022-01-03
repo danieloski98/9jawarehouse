@@ -112,25 +112,25 @@ export default function VerifyAccount() {
         <div className="flex-1 flex flex-col">
             <LeftNavbar />
             <div className="flex-1 xl:pl-10 lg:pl-10 md:pl-5 sm:pl-5 xl:pr-0 lg:pr-0 md:pr-5 sm:pr-5 flex flex-col justify-center items-start">
-                <h3 className="text-3xl font-semibold text-gray-700">Verify Your Account</h3>
-                <p className="text-sm font-light mt-4 text-gray-500">We sent a 6 digit code to your email address</p>
+                <h3 className="text-3xl font-Circular-std-medium text-gray-700">Verify Your Account</h3>
+                <p className="text-sm font-Circular-std-book mt-4 text-gray-500">We sent a 6 digit code to your email address</p>
 
                 <div className="flex flex-col xl:w-4/6 lg:w-4/6 md:w-full sm:w-full mt-6">
-                    <label className="font-light text-sm">Verification Code</label>
+                    <label className="font-Circular-std-book text-sm">Verification Code</label>
                     <InputGroup bgColor="#F1EEEE" className="mt-2" size="lg">
                         <InputLeftElement>
                             <FiLock size={25} color="gray" />
                         </InputLeftElement>
-                        <Input name="code" onChange={(e) => setCode(e.target.value)} />
+                        <Input name="code" className="font-Circular-std-book" fontSize="md" onChange={(e) => setCode(e.target.value)} />
                     </InputGroup>
                 </div>
 
                 <div className="xl:w-4/6 lg:w-4/6 md:w-full sm:w-full mt-8 h-12 flex justify-between">
-                    <button onClick={startTimer} disabled={disabled} className="w-45/100 h-full bg-green-200 text-green-500 font-semibold text-xs">
+                    <button onClick={startTimer} disabled={disabled} className="w-45/100 h-full bg-green-200 text-green-500 font-Circular-std-book text-xs">
                         Resend Code {disabled && min} {disabled && ':'} {disabled && sec}
                     </button>
 
-                    <button onClick={verify} className="w-45/100 h-full bg-themeGreen text-white font-semibold text-xs">
+                    <button onClick={verify} className="w-45/100 h-full bg-themeGreen text-white font-Circular-std-book text-xs">
                         {loading && <Spinner color="white" />}
                         {!loading && <span>Verify</span>}
                     </button>

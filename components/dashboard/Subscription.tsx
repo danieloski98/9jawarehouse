@@ -151,27 +151,27 @@ export default function Subscription() {
         <SubModal open={open} onClose={() => setOpen(false)} user={user} />
 
         <div className="w-full h-auto flex flex-col bg-white p-5">
-        <p className="text-2xl font-light text-gray-600 ">Subscriptions</p>
+        <p className="text-2xl font-Circular-std-medium text-gray-600 ">Subscriptions</p>
         {
             user.disabled && (
-                <p className="text-sm font-semibold text-gray-500 mt-4">You are currently not on any subscription plan, To Access all features you will need to upgrade to a monthly plan</p>
+                <p className="text-sm font-Circular-std-book text-gray-500 mt-4">You are currently not on any subscription plan, To Access all features you will need to upgrade to a monthly plan</p>
             )
         }
 
         <div className="w-full flex xl:flex-row lg:flex-row md:flex-col sm:flex-col mt-6">
-            <button onClick={() => setOpen(true)} className="xl:w-64 lg:w-64 md:w-full sm:w-full h-10 bg-themeGreen text-white font-semibold text-sm mb-4">Choose Plan</button>
+            <button onClick={() => setOpen(true)} className="xl:w-64 lg:w-64 md:w-full sm:w-full h-10 bg-themeGreen text-white font-Circular-std-book text-sm mb-4">Choose Plan</button>
             {/* <button className="xl:w-64 lg:w-64 md:w-full sm:w-full h-10 border-2 border-themeGreen text-themeGreen xl:ml-4  lg:ml-4 md:ml-0 sm:ml-0 font-semibold text-sm">Enable Auto Renewal</button> */}
         </div>
 
         {!loading && !error && subs.length > 0 && (
-            <p className="text-2xl font-light text-gray-600 mt-6">History</p>
+            <p className="text-2xl font-Circular-std-medium text-gray-600 mt-6">History</p>
         )}
 
         {
             !loading && error && (
                 <div className="w-full h-40 flex flex-col justify-center items-center">
-                    <p className='font-light mt-2 text-md'>An Error Occured</p>
-                    <button onClick={retry} className='w-40 h-12 bg-themeGreen text-white text-sm font-semibold mt-2'>Retry</button>
+                    <p className='font-Circular-std-book mt-2 text-md'>An Error Occured</p>
+                    <button onClick={retry} className='w-40 h-12 bg-themeGreen text-white text-sm font-Circular-std-bookmt-2'>Retry</button>
                 </div>
             )
         }
@@ -180,14 +180,14 @@ export default function Subscription() {
             loading && (
                 <div className="w-full h-40 flex flex-col justify-center items-center">
                     <Spinner size="lg" color="green" />
-                    <p className='font-light mt-2 text-md'>Loading Your Subscriptions</p>
+                    <p className='font-Circular-std-book mt-2 text-md'>Loading Your Subscriptions</p>
                 </div>
             )
         }
 
         {
             !loading && !error && subs.length < 1 && (
-                <div className="w-full h-32 flex flex-col justify-center">
+                <div className="w-full h-32 flex flex-col font-Circular-std-book justify-center">
                     <p>You Currently do not have any subscription</p>
                 </div>
             )
@@ -196,7 +196,7 @@ export default function Subscription() {
         {
             !loading && !error && subs.length > 0 && (
                 <>
-                     <div className="xl:w-full lg:w-full md:w-auto sm:w-auto h-16 bg-gray-100 rounded-md flex justify-between items-center px-4 mt-6 text-md font-light text-left">
+                     <div className="xl:w-full lg:w-full md:w-auto sm:w-auto h-16 bg-gray-100 rounded-md flex justify-between items-center px-4 mt-6 text-md font-Circular-std-book text-left">
                             <p>Date</p>
                             <p>Period</p>
                             <p>Amount</p>

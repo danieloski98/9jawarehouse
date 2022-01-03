@@ -18,8 +18,6 @@ const validationSchema = yup.object({
 import Image from 'next/image';
 import Girl from '../../public/images/girl2.png';
 import Logo from '../../public/images/logo.svg';
-import Google from '../../public/images/google.svg';
-import Mail from '../../public/images/mail.png';
 import { FiSearch, FiMenu } from 'react-icons/fi'
 import url from '../../utils/url';
 
@@ -98,59 +96,59 @@ export default function Signup() {
         <div className="flex-1 flex flex-col">
             <LeftNavbar />
             <div className="flex-1 xl:pl-10 lg:pl-10 md:pl-5 sm:pl-5 xl:pr-0 lg:pr-0 md:pr-5 sm:pr-5 flex flex-col justify-center items-start">
-                <h3 className="text-3xl font-semibold text-gray-700">Create An Account</h3>
-                <p className="text-sm font-light mt-4 text-gray-500">you are one step away from joining 9ja warehouse</p>
+                <h3 className="text-3xl font-Circular-std-medium text-gray-700">Create An Account</h3>
+                <p className="text-sm font-Circular-std-book mt-4 text-gray-500">you are one step away from joining 9ja warehouse</p>
 
                 <div className="flex flex-col xl:w-4/6 lg:w-4/6 md:w-full sm:w-full mt-6">
-                    <label className="font-light text-sm">Email</label>
+                    <label className="font-Circular-std-book text-sm">Email</label>
                     <InputGroup bgColor="#F1EEEE" className="mt-2" size="lg">
                         <InputLeftElement>
                             <FiMail size={25} color="gray" />
                         </InputLeftElement>
-                        <Input type="text" name="email" value={formik.values.email} onChange={formik.handleChange} onBlur={formik.handleBlur} />
+                        <Input type="text" name="email" className="font-Circular-std-book" value={formik.values.email} onChange={formik.handleChange} onBlur={formik.handleBlur} />
                     </InputGroup>
                     {formik.touched.email && formik.errors.email && (
-                            <p className="mt-1 text-sm text-red-400 font-semibold">{formik.errors.email}</p>
+                            <p className="mt-1 text-sm text-red-400 font-Circular-std-book">{formik.errors.email}</p>
                     )}
                 </div>
 
                 <div className="flex flex-col xl:w-4/6 lg:w-4/6 md:w-full sm:w-full mt-6">
-                    <label className="font-light text-sm">Username</label>
+                    <label className="font-Circular-std-book text-sm">Username</label>
                     <InputGroup bgColor="#F1EEEE" className="mt-2" size="lg">
                         <InputLeftElement>
                             <FiUser size={25} color="gray" />
                         </InputLeftElement>
-                        <Input type="text" name="username" value={formik.values.username} onChange={formik.handleChange} onBlur={formik.handleBlur} />
+                        <Input type="text" name="username" className="font-Circular-std-book" value={formik.values.username} onChange={formik.handleChange} onBlur={formik.handleBlur} />
                     </InputGroup>
                     {formik.touched.username && formik.errors.username && (
-                            <p className="mt-1 text-sm text-red-400 font-semibold">{formik.errors.username}</p>
+                            <p className="mt-1 text-sm text-red-400 font-Circular-std-book">{formik.errors.username}</p>
                     )}
                 </div>
 
                 <div className="flex flex-col xl:w-4/6 lg:w-4/6 md:w-full sm:w-full mt-6">
-                    <label className="font-light text-sm">Password</label>
+                    <label className="font-Circular-std-book text-sm">Password</label>
                     <InputGroup bgColor="#F1EEEE" className="mt-2" size="lg">
                         <InputLeftElement>
                             <FiLock size={25} color="gray" />
                         </InputLeftElement>
-                        <Input type={show ? 'text':'password'}  name="password" onChange={formik.handleChange} onBlur={formik.handleBlur} />
+                        <Input type={show ? 'text':'password'}  name="password" className="font-Circular-std-book" onChange={formik.handleChange} onBlur={formik.handleBlur} />
                         <InputRightElement>
                             {!show && <FiEye size={25} color="gray" onClick={() => setShow(true)} />}
                             {show && <FiEyeOff size={25} color="gray" onClick={() => setShow(false)} />}
                         </InputRightElement>
                     </InputGroup>
                     {formik.touched.password && formik.errors.password && (
-                            <p className="mt-1 text-sm text-red-400 font-semibold">{formik.errors.password}</p>
+                            <p className="mt-1 text-sm text-red-400 font-Circular-std-book">{formik.errors.password}</p>
                     )}
                 </div>
 
                 <button disabled={loading}  onClick={submit} className="xl:w-4/6 lg:w-4/6 md:w-full sm:w-full mt-8 h-12 bg-themeGreen cursor-pointer flex justify-center items-center">
                     {loading && <Spinner color="white" />}
-                    {!loading && <span className="ml-4 text-sm font-semibold text-white">Create Account</span>}
+                    {!loading && <span className="ml-4 text-sm font-Circular-std-book text-white">Create Account</span>}
                 </button>
 
                 <div className="xl:w-4/6 lg:w-4/6 md:w-full sm:w-full text-center">
-                    <p onClick={() => router.push('/auth/login')} className="text-sm font-light mt-12 text-center text-gray-500">Already have an account? <span className="text-themeGreen">Log in</span></p>
+                    <p onClick={() => router.push('/auth/login')} className="text-sm font-Circular-std-book mt-12 text-center text-gray-500">Already have an account? <span className="text-themeGreen">Log in</span></p>
                 </div>
 
             </div>

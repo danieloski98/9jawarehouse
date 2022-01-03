@@ -121,7 +121,7 @@ export default function Dashboard() {
             <ModalContent>
                 <ModalContent className="w-full flex flex-col items-center justify-center h-56">
                     <Spinner colot="green.500" size="xl" />
-                    <p className="mt-4 font-light text-xl">Loading Details...</p>
+                    <p className="mt-4 font-Circular-std-book text-xl">Loading Details...</p>
                 </ModalContent>
             </ModalContent>
         </Modal>

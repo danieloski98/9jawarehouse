@@ -26,12 +26,12 @@ const Comments = ({ review }: {review: IComment}) => {
       };
     return (
         <div className="w-full p-5 flex flex-col h-auto border-2 border-themeGreen mb-4">
-            <p className="text-sm font-light text-gray-600">{new Date(review.created_at).toDateString()}</p>
+            <p className="text-sm font-Circular-std-book text-gray-600">{new Date(review.created_at).toDateString()}</p>
             
             <div className="mt-6 flex flex-col">
                 {/* <p className="font-semibold text-sm text-gray-500">Overall Rating</p> */}
                 <div className="flex h-12 items-center">
-                    <p className="text-xxl font-light text-themeGreen mr-4">{review.rating}</p>
+                    <p className="text-xxl font-Circular-std-book text-themeGreen mr-4">{review.rating}</p>
                     <ReactStars
                         count={5}
                         onChange={ratingChanged}
@@ -44,7 +44,7 @@ const Comments = ({ review }: {review: IComment}) => {
                 </div>
             </div>
 
-            <p className="mt-6 text-sm font-semibold text-gray-600">{review.comment}</p>
+            <p className="mt-6 text-sm font-Circular-std-book text-gray-600">{review.comment}</p>
         </div>
     )
 }
@@ -80,7 +80,7 @@ export default function Reviews() {
   return (
     <div className="w-full h-auto pb-10">
         <div className="w-full h-auto py-6 pb-10 flex flex-col bg-white p-5">
-            <p className="text-2xl font-light text-gray-600 ml-0">Customer Reviews for Limmer</p>
+            <p className="text-2xl font-Circular-std-medium text-gray-600 ml-0">Customer Reviews for Limmer</p>
 
             {
                 loading && !error && (
@@ -94,9 +94,9 @@ export default function Reviews() {
                 !error && !loading && reviews.length > 0 && (
                     <>
                             <div className="mt-6 flex flex-col">
-                                <p className="font-semibold text-sm text-gray-500">Overall Rating</p>
+                                <p className="font-Circular-std-book text-sm text-gray-500">Overall Rating</p>
                                 <div className="flex h-12 items-center">
-                                    <p className="text-3xl font-light text-themeGreen mr-4">4.7</p>
+                                    <p className="text-3xl font-Circular-std-medium text-themeGreen mr-4">4.7</p>
                                     <ReactStars
                                         count={5}
                                         onChange={ratingChanged}
@@ -105,11 +105,11 @@ export default function Reviews() {
                                         value={3}
                                         isHalf={true}
                                     />
-                                    <p className="text-sm font-semibold text-gray-600 ml-4">10 Reviews</p>
+                                    <p className="text-sm font-Circular-std-book text-gray-600 ml-4">{reviews.length} Reviews</p>
                                 </div>
                             </div>
 
-                            <p className="font-light text-xl mt-6 text-gray-500">Comments</p>
+                            <p className="font-Circular-std-medium text-xl mt-6 text-gray-500">Comments</p>
 
                             <div className="w-full flex flex-col mt-6">
                                 {reviews.map((item, index) => (

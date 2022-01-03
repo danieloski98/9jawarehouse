@@ -177,14 +177,14 @@ export default function EditProfile({ next }: IProps) {
             className="cursor-pointer"
             onClick={() => next(1)}
           />
-          <p className="text-2xl font-light text-gray-600 ml-4">Edit Profile</p>
+          <p className="text-2xl font-Circular-std-medium text-gray-600 ml-4">Edit Profile</p>
         </div>
 
         <div className="w-full h-auto bg-white flex flex-col justify-center py-6">
-          <p className="text-md font-light">
+          <p className="text-md font-Circular-std-book">
             Note: You wont be able to update the following fields from here
           </p>
-          <ol className="list-decimal list-inside text-sm font-semibold mt-3">
+          <ol className="list-decimal list-inside text-sm font-Circular-std-medium mt-3">
             <li>Business Name</li>
             <li>Business Description</li>
             <li>Services Rendered</li>
@@ -192,14 +192,14 @@ export default function EditProfile({ next }: IProps) {
             <li>Social Media Links</li>
           </ol>
           <Link href="/contactus" passHref>
-            <button className="w-32 h-10 border-2 border-themeGreen text-xs font-light mt-3">
+            <button className="w-32 h-10 border-2 border-themeGreen text-xs font-Circular-std-book mt-3">
               Contact Support
             </button>
           </Link>
         </div>
 
         <div className="flex flex-col mt-8">
-          <p className="text-sm font-semibold text-gray-500 mt-4">
+          <p className="text-sm font-Circular-std-medium text-gray-500 mt-4">
             Add featured images
           </p>
           <div className="w-auto h-24 overflow-x-auto overflow-y-hidden flex mt-6 flex-nowrap">
@@ -223,19 +223,19 @@ export default function EditProfile({ next }: IProps) {
 
         <div className="flex h-auto flex-col mt-12">
           <Avatar size="xl" src={profilePic} className="cursor-pointer" onClick={pickPP} />
-          <p className="font-semibold text-sm text-gray-500 mt-4">
+          <p className="font-Circular-std-medium text-sm text-gray-500 mt-4">
             Upload Profile Picture
           </p>
         </div>
 
-        <p className="mt-6 font-semibold text-sm text-gray-500">Certificate</p>
+        <p className="mt-6 font-Circular-std-medium text-sm text-gray-500">Certificate</p>
 
         {certificates.map((items, index) => (
           <div
             key={index.toString()}
             className="w-full flex xl:flex-row lg:flex-row md:flex-col sm:flex-col justify-between mt-6 font-semibold text-sm text-gray-500"
           >
-            <div className="w-full">
+            <div className="w-full font-Circular-std-book">
               <label>Certifcate</label>
               <div className="xl:w-11/12 lg:w-11/12 md:w-full sm:w-full">
                 <Input
@@ -307,14 +307,14 @@ export default function EditProfile({ next }: IProps) {
           <div className="w-full xl:mt-0 lg:mt-0 md:mt-4 sm:mt-4"></div>
         </div>
 
-        <p onClick={addCert} className="mt-6 font-semibold text-sm text-gray-500 cursor-pointer">
+        <p onClick={addCert} className="mt-6 font-Circular-std-medium text-sm text-gray-500 cursor-pointer">
           + Add Another Certification
         </p>
 
         <div className="w-full flex justify-end mt-6">
           <button
             onClick={submit}
-            className="w-32 bg-themeGreen h-12 text-sm font-semibold text-white"
+            className="w-32 bg-themeGreen h-12 text-sm font-Circular-std-book text-white"
           >
             {loading && <Spinner size="md" color="white" />}
             {!loading && <span>Continue</span>}

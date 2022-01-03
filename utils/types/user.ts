@@ -35,6 +35,12 @@ export interface IUser {
 
   services: string[];
 
+  state: string;
+
+  country: string;
+
+  lga: string;
+
   facebook: string;
 
   linkedin: string;

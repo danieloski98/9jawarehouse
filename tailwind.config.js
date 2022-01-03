@@ -268,6 +268,9 @@ module.exports = {
         '"Courier New"',
         'monospace',
       ],
+      'Circular-std': ['Circular-Std'],
+      'Circular-std-medium': ['Circular-std-medium'],
+      'Circular-std-book': ['Circular-std-book']
     },
     fontSize: {
       xs: ['0.75rem', { lineHeight: '1rem' }],

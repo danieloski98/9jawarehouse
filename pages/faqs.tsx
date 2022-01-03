@@ -19,9 +19,9 @@ export default function Faqs() {
             <div className="xl:w-4/5 lg:w-4/5 md:w-full sm:w-full h-auto flex flex-col py-6 xl:px-0 lg:px-0 md:px-5 sm:px-5">
 
                 <div className="w-full flex flex-col mt-8">
-                    <p className="text-4xl font-light text-themeGreen">Frequently asked questions (FAQ)</p>
+                    <p className="text-4xl font-Circular-std-medium text-themeGreen">Frequently asked questions (FAQ)</p>
                     
-                    <Accordion className="mt-12 mb-8">
+                    <Accordion className="mt-12 mb-8 font-Circular-std-book">
                         {
                             vals.map((item, index) => (
                                 <AccordionItem key={index.toString()}>

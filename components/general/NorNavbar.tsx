@@ -42,7 +42,7 @@ export default function NormNavbar() {
               >
                 <p className="flex mr-6">
                   <FiSearch size={20} className="text-themeGreen" />
-                  <span className="ml-3">Find Service</span>
+                  <span className="ml-3 font-Circular-std-book">Find Service</span>
                   <FiChevronDown size={20} color="grey" className="ml-1 mt-1" />
                 </p>
               </MenuButton>
@@ -59,9 +59,13 @@ export default function NormNavbar() {
             {loggedIn && <FiBell size={25} color="black" />}
 
             {!loggedIn && (
-              <div className="flex font-light text-sm cursor-pointer">
-                <p className="mr-3"><Link href="/auth/createaccount">Create Account</Link></p>
-                <p><Link href="/auth/login">Login</Link></p>
+              <div className="flex font-Circular-std-book text-md cursor-pointer">
+                <Link href="/auth/createaccount" passHref>
+                  <p className="mr-6 font-Circular-std-book text-md">
+                    Create Account
+                    </p>
+                </Link>
+                <p className='font-Circular-std-book'><Link href="/auth/login">Login</Link></p>
               </div>
             )}
         </div>
@@ -130,7 +134,7 @@ export default function NormNavbar() {
                         <AccordionItem>
                             <AccordionButton>
                                 <Box flex="1" textAlign="left">
-                                  <p className="text-xl font-light text-themeGreen">Find Services</p>
+                                  <p className="text-xl font-Circular-std-book text-themeGreen">Find Services</p>
                                 </Box>
                                 <AccordionIcon />
                             </AccordionButton>
@@ -140,7 +144,7 @@ export default function NormNavbar() {
                                 {/* <p>Profile</p> */}
                                   {serv.map((item, index) => (
                                     <>
-                                      <p className="mt-3 mb-3" key={index.toString()}>
+                                      <p className="mt-3 mb-3 font-Circular-std-book" key={index.toString()}>
                                         <Link href={`/services`}>{item.name}</Link>
                                       </p>
 
@@ -154,7 +158,7 @@ export default function NormNavbar() {
                         </AccordionItem>
                     </Accordion>
 
-                    <p className="text-red-500 mt-5 text-sm font-light">Logout</p>
+                    <p className="text-red-500 mt-5 text-sm font-Circular-std-book">Logout</p>
                   </div>
 
 
