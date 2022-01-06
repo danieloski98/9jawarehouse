@@ -81,7 +81,7 @@ export class CrudService {
     try {
       const user = await this.userModel.find({
         verified: true,
-        disabled: true,
+        disabled: false,
         services: query.service || '',
         state: query.state || '',
         lga: query.lga || '',
