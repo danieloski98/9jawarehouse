@@ -182,7 +182,7 @@ export default function EditProfile({ next }: IProps) {
 
         <div className="w-full h-auto bg-white flex flex-col justify-center py-6">
           <p className="text-md font-Circular-std-book">
-            Note: You wont be able to update the following fields from here
+          To make changes to
           </p>
           <ol className="list-decimal list-inside text-sm font-Circular-std-medium mt-3">
             <li>Business Name</li>

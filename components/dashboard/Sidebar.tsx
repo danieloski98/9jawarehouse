@@ -1,6 +1,7 @@
 import React from 'react';
 import { FiUser, FiStar, FiDollarSign, FiSettings, FiHelpCircle } from 'react-icons/fi'
 import { Spinner } from '@chakra-ui/react'
+import Link from 'next/link'
 
 // redux
 import { useSelector, useDispatch } from 'react-redux'
@@ -132,12 +133,19 @@ export default function Sidebar({page, setPage}: IProps) {
                 <p className="ml-4 text-md font-Circular-std-book ">Help Center</p>
             </div>
 
-            <p className="ml-4 text-sm font-Circular-std-book  mt-6">How do generate new pin?</p>
-            <p className="ml-4 text-sm font-Circular-std-book  mt-3">How do i renew my subscriptions? </p>
-            <p className="ml-4 text-sm font-Circular-std-book  mt-3">How much is the subscription fee? </p>
+                <Link href="/faqs" passHref >
+                    <p className="mt-3 p-3 h-12 cursor-pointer bg-themeGreen text-white text-sm font-Circular-std-book  flex justify-center items-center">
+                        FAQS
+                    </p>
+                </Link>
 
             <p className="ml-0 text-md font-Circular-std-book  mt-8">For further assistance </p>
-            <div className="mt-3 p-3 h-12 bg-themeGreen text-white text-sm font-Circular-std-book  flex justify-center items-center">Contact Support</div>
+
+            <Link href="/contactus" passHref>
+                <p className="mt-3 p-3 h-12 cursor-pointer bg-themeGreen text-white text-sm font-Circular-std-book  flex justify-center items-center">
+                    Contact Support
+                </p>
+            </Link>
 
             
 

@@ -100,7 +100,7 @@ export default function ServiceNavbar() {
                 <InputLeftElement>
                     <FiSearch size={25} color="grey" />
                 </InputLeftElement>
-                <Input onKeyPress={handleKeydonw} onChange={(e) => setQuery(e.target.value)} />
+                <Input onKeyPress={handleKeydonw} onChange={(e) => setQuery(e.target.value)} fontSize="sm" className="font-Circular-std-book" />
                 <InputRightElement>
                     <FiX size={20} color="grey" />
                 </InputRightElement>
@@ -113,7 +113,7 @@ export default function ServiceNavbar() {
                     <InputLeftElement>
                         <FiSearch size={25} color="grey" />
                     </InputLeftElement>
-                    <Input onKeyPress={handleKeydonw} onChange={(e) => setQuery(e.target.value)} />
+                    <Input onKeyPress={handleKeydonw} onChange={(e) => setQuery(e.target.value)} fontSize="sm" className="font-Circular-std-book" />
                     <InputRightElement>
                         <FiX size={20} color="grey" />
                     </InputRightElement>
@@ -123,10 +123,10 @@ export default function ServiceNavbar() {
               <MenuButton
                 righticon={<FiChevronDown size={20} color="grey" />}
               >
-                <p className="flex mr-6">
+                <p className="flex mr-6 font-Circular-std-book text-sm">
                   <FiSearch size={20} className="text-themeGreen" />
                   <span className="ml-3">Find Service</span>
-                  <FiChevronDown size={20} color="grey" className="ml-1 mt-1" />
+                  <FiChevronDown size={20} color="grey" className="ml-0 mt-0" />
                 </p>
               </MenuButton>
               <MenuList w="1000px" maxH="500px" overflow="auto" className="grid grid-cols-4 font-light text-sm">
@@ -142,7 +142,7 @@ export default function ServiceNavbar() {
             {loggedIn && <FiBell size={25} color="black" className='cursor-pointer' onClick={() => setShowNoti(true)} />}
 
             {!loggedIn && (
-              <div className="flex font-light text-sm cursor-pointer">
+              <div className="flex font-Circular-std-book text-sm cursor-pointer">
                 <p className="mr-3"><Link href="/auth/createaccount">Create Account</Link></p>
                 <p><Link href="/auth/login">Login</Link></p>
               </div>

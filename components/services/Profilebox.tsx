@@ -1,5 +1,5 @@
 import React from "react";
-import { Input, Avatar, Modal, ModalOverlay, ModalBody, ModalContent } from "@chakra-ui/react";
+import { Input, Avatar, Modal, ModalOverlay, ModalBody, ModalContent, Divider } from "@chakra-ui/react";
 import Image from 'next/image'
 import Banner from '../../public/images/banner.png';
 import { IUser } from "../../utils/types/user";
@@ -78,12 +78,12 @@ export default function ProfileBox({user}: IProps) {
               size="lg"
             />
             <div className="flex flex-col justify-center">
-              <p className="text-md font-light text-gray-600">
-                {user.business_name}
+              <p className="text-lg font-Circular-std-medium text-gray-600 cursor-pointer">
+                <a href="#comments">{user.business_name} (4.7)</a>
               </p>
               <div className="flex w-full flex-wrap">
               {user !== undefined && user.services.map((item, index) => (
-                <p key={index.toString()} className="text-sm text-themeGreen font-semibold mr-2">
+                <p key={index.toString()} className="text-sm text-themeGreen font-Circular-std-book mr-2">
                   {item}, 
                 </p>
               ))}
@@ -109,22 +109,43 @@ export default function ProfileBox({user}: IProps) {
         {/* contacts */}
 
         <div className="w-full flex xl:flex-row lg:flex-row md:flex-col sm:flex-col justify-between xl:px-10 lg:px-10 md:px-5 sm:px-5 mt-10">
-          <div className="flex flex-col xl:mt-0 lg:mt-0 md:mt-4 sm:mt-4">
+          <div className="flex flex-1 flex-col xl:mt-0 lg:mt-0 md:mt-4 sm:mt-4">
             <p className="text-md font-light text-gray-600">Location</p>
             <p className="text-sm text-gray-500 font-semibold">
              {user.business_address}
             </p>
           </div>
 
-          <div className="flex flex-col xl:mt-0 lg:mt-0 md:mt-4 sm:mt-4">
+          <div className="flex flex-1 flex-col xl:mt-0 lg:mt-0 md:mt-4 sm:mt-4">
             <p className="text-md font-light text-gray-600">Phone</p>
             <p className="text-sm text-gray-500 font-semibold">{user.phone}</p>
           </div>
 
-          <div className="flex flex-col xl:mt-0 lg:mt-0 md:mt-4 sm:mt-4">
+          <div className="flex flex-1 flex-col xl:mt-0 lg:mt-0 md:mt-4 sm:mt-4">
             <p className="text-md font-light text-gray-600">Email</p>
             <p className="text-sm text-gray-500 font-semibold">
               {user.email}
+            </p>
+          </div>
+        </div>
+
+        <div className="w-full flex xl:flex-row lg:flex-row md:flex-col sm:flex-col justify-between xl:px-10 lg:px-10 md:px-5 sm:px-5 mt-10">
+          <div className="flex flex-1 flex-col xl:mt-0 lg:mt-0 md:mt-4 sm:mt-4">
+            <p className="text-md font-light text-gray-600">Country</p>
+            <p className="text-sm text-gray-500 font-semibold">
+             {user.country}
+            </p>
+          </div>
+
+          <div className="flex flex-1 flex-col xl:mt-0 lg:mt-0 md:mt-4 sm:mt-4">
+            <p className="text-md font-light text-gray-600">State</p>
+            <p className="text-sm text-gray-500 font-semibold">{user.state}</p>
+          </div>
+
+          <div className="flex flex-1 flex-col xl:mt-0 lg:mt-0 md:mt-4 sm:mt-4">
+            <p className="text-md font-light text-gray-600">LGA</p>
+            <p className="text-sm text-gray-500 font-semibold">
+              {user.lga}
             </p>
           </div>
         </div>
@@ -138,41 +159,41 @@ export default function ProfileBox({user}: IProps) {
             </p>
             <div className="flex w-full mt-2">
               {user.facebook !== "" && (
-                <p className="cursor-pointer" title={user.facebook} onClick={() => open(1, user.facebook)}>
+                <a href={user.facebook} className="cursor-pointer" title={user.facebook}>
                   <FaFacebook size={25} color="#0085CC" />
-                </p>
+                </a>
               )}
 
               {user.instagram !== "" && (
-                <p title={user.instagram} className="ml-3 cursor-pointer" onClick={() => open(2, user.instagram)}>
+                <a href={user.instagram} title={user.instagram} className="ml-3 cursor-pointer">
                   <FaInstagram size={25} color="#A46599" />
-                </p>
+                </a>
               )}
 
               {user.twitter !== "" && (
-                <p title={user.twitter} className="ml-3 cursor-pointer" onClick={() => open(3, user.twitter)}>
+                <a href={user.twitter} title={user.twitter} className="ml-3 cursor-pointer">
                   <FaTwitter size={25} color="#0ACAFF" />
-                </p>
+                </a>
               )}
 
               {user.whatsapp !== "" && (
-                <p title={user.whatsapp} className="ml-3 cursor-pointer" onClick={() => open(4, user.whatsapp)}>
+                <a href={user.whatsapp} title={user.whatsapp} className="ml-3 cursor-pointer">
                   <FaWhatsapp size={25} color="green" />
-                </p>
+                </a>
               )}
 
               {user.website !== "" && (
-                <p title={user.website} className="ml-3 cursor-pointer" onClick={() => open(5, user.website)}>
+                <a href={user.website} title={user.website} className="ml-3 cursor-pointer">
                   <FaLink size={25} color="#0ACAFF" />
-                </p>
+                </a>
               )}        
             </div>
           </div>
 
-          <div className="flex flex-col xl:mt-0 lg:mt-0 md:mt-4 sm:mt-4">
+          {/* <div className="flex flex-col xl:mt-0 lg:mt-0 md:mt-4 sm:mt-4">
             <p className="text-md font-light text-gray-600">Phone</p>
             <p className="text-sm text-gray-500 font-semibold">08033783940</p>
-          </div>
+          </div> */}
 
           <div className="flex flex-col">
             {/* <p className="text-md font-light text-gray-600">Email</p>
@@ -182,14 +203,25 @@ export default function ProfileBox({user}: IProps) {
 
         <div className="flex flex-col xl:mt-10 lg:mt-10 md:mt-4 sm:mt-4 flex-1 xl:ml-10 lg:ml-10 md:ml-5 sm:ml-5">
             <p className="text-md font-semibold text-gray-600">Certifications</p>
-          <div className="flex flex-wrap">
+            <div className="flex mt-6 flex-wrap text-left">
+                <p className="text-sm flex-1">Certificate</p>
+                <p className="text-sm mt-1 flex-1">organization</p>
+                <p className="text-sm mt-1 flex-1">year Issued</p>
+                <p className="text-sm mt-1 flex-1">Action</p>
+            </div>
+
+            <div className="mt-5 pr-20">
+              <Divider />
+            </div>
+
+          <div className="flex flex-col flex-wrap">
           {user.certificates.length > 0 && user.certificates.map((item, index) => (
-              <div key={index.toString()} className="mt-2 mb-5 mr-6" >
-                  <p className="text-sm font-light">{item.certificate}</p>
-                  <p className="text-sm font-light mt-1">{item.organization}</p>
-                  <p className="text-sm font-light mt-1">{item.year}</p>
-                  <a href={item.link} target="_blank" rel="noreferrer">
-                    <button className="w-40 h-10 border-2 border-themeGreen text-themeGreen mt-2">View</button>
+              <div key={index.toString()} className="mt-2 mb-5 mr-6 flex items-center font-Circular-std-book" >
+                  <p className="text-sm flex-1">{item.certificate}</p>
+                  <p className="text-sm mt-1 flex-1">{item.organization}</p>
+                  <p className="text-sm mt-1 flex-1">{item.year}</p>
+                  <a href={item.link} target="_blank" rel="noreferrer" className="flex-1">
+                    <button className="w-20 h-8 rounded-full border-2 border-themeGreen text-themeGreen mt-0 font-Circular-std-book text-xs">View</button>
                   </a>
               </div>
             ))}

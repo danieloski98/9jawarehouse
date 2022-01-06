@@ -32,9 +32,9 @@ export default function BusinessCard({user}: {user: IUser}) {
         </div>
 
         <div className="w-full h-auto flex flex-col items-center px-4 text-center">
-            <p className="font-light text-md text-gray-600 mb-5">{user.business_name}</p>
+            <p className=" font-Circular-std-medium text-md text-gray-600 mb-5">{user.business_name}</p>
             {user.services.map((item, index) => (
-                <p key={index.toString()} className='text-sm font-semibold mb-2'>{item}, </p>
+                <p key={index.toString()} className='text-sm font-Circular-std-book mb-2'>{item}, </p>
             ))}
             {/* <p className="font-semibold text-sm text-gray-500">Business Type</p> */}
             <div className="mt-0 flex flex-col">

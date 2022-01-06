@@ -83,7 +83,7 @@ export default function LoginForm() {
                 alert(json.errorMessage);
                 return;
             } else if (json.statusCode === 200) {
-                alert(json.successMessage);
+                // alert(json.successMessage);
                 
                 // save to localstorage
                 const save = localStorage.setItem('9jauser', JSON.stringify(json.data.user));

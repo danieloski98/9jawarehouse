@@ -1,12 +1,16 @@
 import React from 'react';
 import { FiArrowDownRight, FiArrowRight } from 'react-icons/fi'
+import { useRouter } from 'next/router'
 
 // images
 import Female from '../../public/images/femal_smile.svg';
 import Male from '../../public/images/male_smile.svg';
 import Image from 'next/image';
 
-export default function componentName() {
+
+export default function Features() {
+    const router = useRouter();
+
   return (
     <div className="w-full xl:h-auto lg:h-auto md:h-auto sm:h-auto flex flex-col py-10 mb-10">
 
@@ -31,7 +35,7 @@ export default function componentName() {
                     <li className="mt-3">Control when, where, and how you work</li>
                 </ul>
 
-                <button className="w-40 h-10 bg-themeGreen text-white text-sm mt-6 font-Circular-std-book">
+                <button onClick={() => router.push('/auth/createaccount')} className="w-40 h-10 bg-themeGreen text-white text-sm mt-6 font-Circular-std-book">
                     Become a Vendor
                 </button>
 
@@ -60,7 +64,7 @@ export default function componentName() {
                     <li className="mt-3">Beauty and SPA</li>
                 </ul>
 
-                <p className="mt-6 text-sm font-Circular-std-book text-green-600 flex">See All Specialities <FiArrowRight size={20} className="ml-6 cursor-pointer" /> </p>
+                <p className="mt-6 text-sm font-Circular-std-book text-green-600 flex">See All Specialities <FiArrowRight size={20} className="ml-6 cursor-pointer" onClick={() => router.push('/services/dj')} /> </p>
 
             </div>
 

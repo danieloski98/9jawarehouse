@@ -33,7 +33,7 @@ export default function CreateAccount() {
                     <span className="ml-4 text-sm font-Circular-std-book text-white">Continue Using Your Email</span>
                 </div>
                 <div className="xl:w-4/6 lg:w-4/6 md:w-full sm:w-full text-center">
-                    <p className="text-sm font-Circular-std-book mt-12 text-center text-gray-500">Already have an account? <span className="text-themeGreen" onClick={() => router.push('/auth/login')}>Log in</span></p>
+                    <p className="text-sm font-Circular-std-book mt-12 text-center text-gray-500 cursor-pointer">Already have an account? <span className="text-themeGreen" onClick={() => router.push('/auth/login')}>Log in</span></p>
                 </div>
             </div>
         </div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, ModalOverlay, ModalContent, ModalBody, Input, Spinner } from '@chakra-ui/react'
+import { Modal, ModalOverlay, ModalContent, ModalBody, Input, Spinner, ModalCloseButton } from '@chakra-ui/react'
 import { FiChevronLeft } from 'react-icons/fi'
 import ReactStars from "react-rating-stars-component";
 import { FiCamera, FiX } from 'react-icons/fi'
@@ -12,6 +12,7 @@ interface ICommentProps {
     formik: FormikProps<{fullname: '', email: '', comment: '', rating: 0}>;
     images: Array<string>;
     picker: Function;
+    user: IUser;
 }
 
 // form
@@ -20,6 +21,7 @@ import { FormikProps, useFormik } from 'formik'
 import url from '../../utils/url';
 import { IServerReturnObject } from '../../utils/types/serverreturntype';
 import { IComment } from '../../utils/types/comments';
+import { IUser } from '../../utils/types/user';
 
 // validation
 const validationSchema = yup.object({
@@ -29,13 +31,13 @@ const validationSchema = yup.object({
     comment: yup.string().required(),
 })
 
-const CommentForm = ({formik, change, images, picker}: ICommentProps) => {
+const CommentForm = ({formik, change, images, picker, user}: ICommentProps) => {
     const ratingChanged = (newRating: any) => {
         formik.setFieldValue('rating', newRating, false);
       };
     return (
         <div className="w-full flex flex-col p-5">
-                    <p className="font-light text-xl text-themeGreen text-center">Write a Review for Limmer makeover</p>
+                    <p className="font-light text-xl text-themeGreen text-center">Write a Review for {user.business_name}</p>
                     <p className="font-light text-sm mt-3 text-center">You can only leave a review about this business if you have previously worked with them</p>
 
                     <div className="w-full h-auto flex xl:flex-row lg:flex-row md:flex-col sm:flex-col mt-6">
@@ -119,7 +121,7 @@ const CommentForm = ({formik, change, images, picker}: ICommentProps) => {
                     <div className="w-full h-10 flex justify-center mt-6">
                         <button onClick={() => change(2)} className="w-96 text-white text-sm bg-themeGreen">Send Review</button>
                     </div>
-                    <p className="font-light text-md mt-6 text-themeGreen text-center">Cancel</p>
+                    {/* <p className="font-light text-md mt-6 text-themeGreen text-center">Cancel</p> */}
                 </div>
     )
 }
@@ -133,7 +135,7 @@ const PinComponent = ({change, changePin, submit, loading, close}:{ change: Func
             </div>
 
             <p className="font-light text-xl text-themeGreen text-center mt-8">Verify Business/ vendor PIN</p>
-            <p className="font-light text-sm mt-3 text-center">Enter 6 digit PIN from Limmer Makeover to approve your comments</p>
+            <p className="font-light text-sm mt-3 text-center">Enter 4 digit PIN from Limmer Makeover to approve your comments</p>
 
             <div className="w-full flex justify-center h-auto mt-6">
                 <div className="xl:w-2/4 lg:w-2/4 md:w-full sm:w-full h-full">
@@ -164,9 +166,10 @@ interface IProps {
     open: boolean;
     setOpen: Function;
     id: string;
+    user: IUser;
 }
 
-export default function ReviewModal({ open, setOpen, id }: IProps) {
+export default function ReviewModal({ open, setOpen, id, user }: IProps) {
     const [stage, setStage] = React.useState(1);
     const [imgfiles, setFiles] = React.useState([] as Array<any>);
     const [images, setImages] = React.useState([] as Array<string>);
@@ -280,8 +283,9 @@ export default function ReviewModal({ open, setOpen, id }: IProps) {
         <input type="file" accept="image/*" id="picker" hidden onChange={(e) => fileProcessor(e.target.files as any)} />
         <ModalOverlay />
         <ModalContent>
+            <ModalCloseButton />
             <ModalBody>
-                {stage === 1 && <CommentForm change={setStage} formik={formik} images={images} picker={pickImages} />}
+                {stage === 1 && <CommentForm user={user} change={setStage} formik={formik} images={images} picker={pickImages} />}
                 {stage === 2 && <PinComponent change={setStage} changePin={changePin} submit={submit} loading={loading} close={close} />}
                 {stage === 3 && (
                         <div className="w-full h-auto py-20 flex flex-col justify-center items-center">

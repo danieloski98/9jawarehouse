@@ -8,11 +8,11 @@ const Comments = ({comment}: {comment: IComment}) => {
       };
     return (
         <div className="w-full p-5 flex flex-col h-auto border-b-2 border-gray-200 mb-4">
-            <p className="text-sm font-light text-gray-600">{new Date(comment.created_at).toDateString()}</p>
+            <p className="text-sm font-Circular-std-book text-gray-600">{new Date(comment.created_at).toDateString()}</p>
             
-            <div className="mt-6 flex flex-col">
+            <div className="mt-2 flex flex-col">
                 {/* <p className="font-semibold text-sm text-gray-500">Overall Rating</p> */}
-                <div className="flex h-12 items-center">
+                <div className="flex h-5 items-center">
                     <p className="text-xxl font-light text-themeGreen mr-4">{comment.rating}</p>
                     <ReactStars
                         count={5}
@@ -21,21 +21,22 @@ const Comments = ({comment}: {comment: IComment}) => {
                         activeColor="#ffd700"
                         value={comment.rating}
                         isHalf={true}
+                        edit={false}
                     />
                     {/* <p className="text-sm font-semibold text-gray-600 ml-4">10 Reviews</p> */}
                 </div>
             </div>
 
-            <p className="mt-6 text-sm font-semibold text-gray-600">{comment.comment}</p>
+            <p className="mt-3 text-sm font-Circular-std-book text-gray-600">{comment.comment}</p>
         </div>
     )
 }
 
 export default function RateBox({comments, name}: {comments: Array<IComment>, name: string}) {
   return (
-    <div className="w-full h-auto pb-10 border-2 border-gray-200">
+    <div id="comments" className="w-full h-auto pb-10 border-2 border-gray-200">
         <div className="w-full h-auto py-6 pb-10 flex flex-col bg-white p-5">
-            <p className="text-2xl font-light text-gray-600 ml-0">Customer Reviews for {name}</p>
+            <p className="text-2xl font-Circular-std-medium text-gray-600 ml-0">Customer Reviews for {name}</p>
 
            {comments.length > 0 && (
                 <div className="w-full flex flex-col mt-6">

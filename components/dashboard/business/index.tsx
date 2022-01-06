@@ -48,7 +48,7 @@ const ContactBox = ({user}: {user: IUser}) => {
 const ReviewBox = (props: { open: Function }) => {
 
     return (
-        <div className="w-full p-5 border-2 border-gray-200 flex flex-col">
+        <div  className="w-full p-5 border-2 border-gray-200 flex flex-col">
             <p className="font-light text-lg text-themeGreen">Review Business/Vendor</p>
             <p className="mt-2 text-sm font-semibold text-gray-500">Reach out to through phone or email vendor to start a conversation</p>
 
@@ -107,21 +107,21 @@ export default function Business() {
 
        {user !== null && (
            <>
-             <ReviewModal open={showModal} setOpen={setShowModal} id={user._id} />
+             <ReviewModal open={showModal} setOpen={setShowModal} id={user._id} user={user} />
              <LoadingModal open={loading} close={() => setLoading(false)} />
            </>
        )}
 
         <div className="w-full h-20 flex items-center xl:px-10 lg:px-10 md:px-5 sm:px-5 mt-16">
             <FiChevronLeft size={30} color="grey" className="cursor-pointer" onClick={() => router.back()} />
-            <div className="ml-6">
+            <div className="ml-6 font-Circular-std-book text-md">
                 <Breadcrumb className="text-sm font-light text-gray-400">
                     <BreadcrumbItem>
-                        <p>Home</p>
+                        <p onClick={() => router.push('/')} className='cursor-pointer hover:underline'>Home</p>
                     </BreadcrumbItem>
 
                     <BreadcrumbItem>
-                        <p>Services</p>
+                        <p onClick={() => router.back()} className='cursor-pointer hover:underline'>Services</p>
                     </BreadcrumbItem>
 
                     {!loading && <BreadcrumbItem>
