@@ -56,6 +56,20 @@ export class Subscription {
 
   @ApiProperty()
   @Prop({
+    type: String,
+    default: '',
+  })
+  expires: string;
+
+  @ApiProperty()
+  @Prop({
+    type: Boolean,
+    default: false,
+  })
+  expired: boolean;
+
+  @ApiProperty()
+  @Prop({
     type: Date,
     default: new Date().toISOString(),
   })

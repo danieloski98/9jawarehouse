@@ -271,6 +271,24 @@ export class User {
   })
   @Prop({
     type: String,
+    default: '',
+  })
+  nextPayment: string;
+
+  @ApiProperty({
+    type: String,
+  })
+  @Prop({
+    type: Number,
+    default: 0,
+  })
+  rating: number;
+
+  @ApiProperty({
+    type: String,
+  })
+  @Prop({
+    type: String,
     default: new Date().toISOString(),
   })
   createAt: string;

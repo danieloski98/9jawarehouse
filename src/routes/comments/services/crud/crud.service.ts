@@ -82,12 +82,25 @@ export class CrudService {
           { _id: pinActive._id },
           { use_count: pinActive.use_count + 1 },
         );
+
+        if (userExist.rating < 5) {
+          const userUpdate = await this.userModel.updateOne(
+            { _id: user_id },
+            {
+              rating:
+                payload.rating < 4
+                  ? userExist.rating + 0.01
+                  : userExist.rating + 0.1,
+            },
+          );
+          console.log(userUpdate);
+        }
         console.log(updatePin);
         this.logger.log(newComment);
-        this.userNotificationService.triggerNotification(
-          user_id,
-          `User with name ${payload.fullname} left a review for your business. The review is await approval.`,
-        );
+        // this.userNotificationService.triggerNotification(
+        //   user_id,
+        //   `User with name ${payload.fullname} left a review for your business. The review is await approval.`,
+        // );
         return Return({
           error: false,
           statusCode: 200,

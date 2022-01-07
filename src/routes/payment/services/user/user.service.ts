@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
-import { AxiosResponse } from 'axios';
 import { InjectModel } from '@nestjs/mongoose';
 import { User, UserDocument } from 'src/Schema/User.schema';
 import { Model } from 'mongoose';
@@ -11,6 +10,7 @@ import {
 import { IReturnObject } from 'src/utils/ReturnObject';
 import { Return } from 'src/utils/Returnfunctions';
 import { NotificationUserService as UserNotificationService } from 'src/routes/notifications/services/user/user.service';
+import * as moment from 'moment';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require('dotenv').config();
@@ -69,6 +69,7 @@ export class UserService {
         });
       }
       // create subscription
+      const currentDate = moment(new Date());
       const newSub = await this.subscriptionModel.create({
         reference_id: request.data.data.reference,
         access_code: request.data.data.access_code,
@@ -76,9 +77,15 @@ export class UserService {
         amount,
         fullname: `${user.first_name} ${user.last_name}`,
         email: user.email,
+        expires: currentDate.add(30, 'days').format('YYYY-MM-DD hh:mm'),
         status: 1,
       });
       console.log(newSub);
+      // update User
+      const userUpdate = await this.userModel.updateOne(
+        { _id: user._id },
+        { nextPayment: currentDate.add(30, 'days').format('YYYY-MM-DD hh:mm') },
+      );
       return Return({
         error: false,
         statusCode: 200,
