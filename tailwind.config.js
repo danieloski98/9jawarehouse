@@ -270,7 +270,8 @@ module.exports = {
       ],
       'Circular-std': ['Circular-Std'],
       'Circular-std-medium': ['Circular-std-medium'],
-      'Circular-std-book': ['Circular-std-book']
+      'Circular-std-book': ['Circular-std-book'],
+      'Cerebri-sans-book': ['Cerebri-sans-book'],
     },
     fontSize: {
       xs: ['0.75rem', { lineHeight: '1rem' }],

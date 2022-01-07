@@ -44,10 +44,10 @@ const SuccessModal = ({open, close}: {open: boolean, close: Function}) => (
                     <div className="w-40 h-20 mt-10">
                         <Image src={Envelope} alt="mail" className="w-full h-full" />
                     </div>
-                    <p className='font-Circular-std-book mt-5'>If an account exist with this email, a verification code has been sent to it.</p>
+                    <p className='font-Cerebri-sans-book mt-5'>If an account exist with this email, a verification code has been sent to it.</p>
                     <Link href="/auth/resetpassword" passHref >
                         <button className="xl:w-4/6 lg:w-4/6 md:w-full sm:w-full mt-8 h-12 bg-themeGreen cursor-pointer flex justify-center items-center mb-10">
-                            <span className="ml-4 text-sm font-Circular-std-book text-white">Reset Password</span>
+                            <span className="ml-4 text-sm font-Cerebri-sans-book text-white">Reset Password</span>
                         </button>
                     </Link>
             </ModalBody>
@@ -99,23 +99,23 @@ export default function Forgotpassword() {
             <LeftNavbar />
             <div className="flex-1 xl:pl-10 lg:pl-10 md:pl-5 sm:pl-5 xl:pr-0 lg:pr-0 md:pr-5 sm:pr-5 flex flex-col justify-center items-start">
                 <h3 className="text-3xl font-Circular-std-medium text-gray-700">Forgot Your Password</h3>
-                <p className="text-sm font-Circular-std-book mt-4 text-gray-500">Lets help you retrieve your password</p>
+                <p className="text-sm font-Cerebri-sans-book mt-4 text-gray-500">Lets help you retrieve your password</p>
 
                 <div className="flex flex-col xl:w-4/6 lg:w-4/6 md:w-full sm:w-full mt-6">
-                    <label className="font-Circular-std-book text-sm">Email</label>
+                    <label className="font-Cerebri-sans-book text-sm">Email</label>
                     <InputGroup bgColor="#F1EEEE" className="mt-2" size="lg">
                         <InputLeftElement>
                             <FiMail size={25} color="gray" />
                         </InputLeftElement>
-                        <Input name="email" fontSize="sm" className="font-Circular-std-book" value={formik.values.email} onChange={formik.handleChange} onBlur={formik.handleBlur} />
+                        <Input name="email" fontSize="sm" className="font-Cerebri-sans-book" value={formik.values.email} onChange={formik.handleChange} onBlur={formik.handleBlur} />
                     </InputGroup>
                     {formik.touched.email && formik.errors.email && (
-                        <p className="text-red-500 font-Circular-std-book text-xs mt-1">{formik.errors.email}</p>
+                        <p className="text-red-500 font-Cerebri-sans-book text-xs mt-1">{formik.errors.email}</p>
                     )}
                 </div>
 
                 <button onClick={submit} className="xl:w-4/6 lg:w-4/6 md:w-full sm:w-full mt-8 h-12 bg-themeGreen cursor-pointer flex justify-center items-center">
-                    {!loading && <span className="ml-4 text-sm font-Circular-std-book text-white">Submit</span>}
+                    {!loading && <span className="ml-4 text-sm font-Cerebri-sans-book text-white">Submit</span>}
                     {loading && <Spinner color="white" size="sm" />}
                 </button>
 

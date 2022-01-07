@@ -100,7 +100,7 @@ export default function ServiceNavbar() {
                 <InputLeftElement>
                     <FiSearch size={25} color="grey" />
                 </InputLeftElement>
-                <Input onKeyPress={handleKeydonw} onChange={(e) => setQuery(e.target.value)} fontSize="sm" className="font-Circular-std-book" />
+                <Input onKeyPress={handleKeydonw} onChange={(e) => setQuery(e.target.value)} fontSize="sm" className="font-Cerebri-sans-book" />
                 <InputRightElement>
                     <FiX size={20} color="grey" />
                 </InputRightElement>
@@ -113,7 +113,7 @@ export default function ServiceNavbar() {
                     <InputLeftElement>
                         <FiSearch size={25} color="grey" />
                     </InputLeftElement>
-                    <Input onKeyPress={handleKeydonw} onChange={(e) => setQuery(e.target.value)} fontSize="sm" className="font-Circular-std-book" />
+                    <Input onKeyPress={handleKeydonw} onChange={(e) => setQuery(e.target.value)} fontSize="sm" className="font-Cerebri-sans-book" />
                     <InputRightElement>
                         <FiX size={20} color="grey" />
                     </InputRightElement>
@@ -123,7 +123,7 @@ export default function ServiceNavbar() {
               <MenuButton
                 righticon={<FiChevronDown size={20} color="grey" />}
               >
-                <p className="flex mr-6 font-Circular-std-book text-sm">
+                <p className="flex mr-6 font-Cerebri-sans-book text-sm">
                   <FiSearch size={20} className="text-themeGreen" />
                   <span className="ml-3">Find Service</span>
                   <FiChevronDown size={20} color="grey" className="ml-0 mt-0" />
@@ -138,11 +138,11 @@ export default function ServiceNavbar() {
               </MenuList>
             </Menu>
             
-            {loggedIn && <Avatar src={user.profile_pic} className="mr-6" size="sm" />}
+            {loggedIn && <Avatar src={user.profile_pic} className="mr-6 cursor-pointer" size="sm" onClick={() => router.push('/dashboard')} />}
             {loggedIn && <FiBell size={25} color="black" className='cursor-pointer' onClick={() => setShowNoti(true)} />}
 
             {!loggedIn && (
-              <div className="flex font-Circular-std-book text-sm cursor-pointer">
+              <div className="flex font-Cerebri-sans-book text-sm cursor-pointer">
                 <p className="mr-3"><Link href="/auth/createaccount">Create Account</Link></p>
                 <p><Link href="/auth/login">Login</Link></p>
               </div>

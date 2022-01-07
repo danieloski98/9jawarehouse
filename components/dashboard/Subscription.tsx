@@ -6,6 +6,7 @@ import { useQuery } from 'react-query';
 import url from '../../utils/url';
 import { IServerReturnObject } from '../../utils/types/serverreturntype';
 import SubscriptionShip from './components/SubscriptionShips';
+import { FiEye, FiEyeOff } from 'react-icons/fi'
 
 // redux
 import { useSelector } from 'react-redux';
@@ -68,7 +69,7 @@ const SubModal = ({ open, onClose, user }: IProps) => {
                                 <p className="font-light text-xl text-themeGreen">Monthly Plan</p>
                                 <p className="font-semibold mt-4 text-sm text-gray-500">You will have all full access on this account to all features. Auto Renewal will be activated </p>
                                 <div className="flex justify-center items-center mt-6">
-                                    <span className="text-xl font-light text-gray-500">N2,000</span> <span className="font-semibold text-sm text-gray-500 ml-4">/ Month</span>
+                                    <span className="text-xl font-light text-gray-500">N2,000</span><span className="font-semibold text-sm text-gray-500 ml-4">Monthly</span>
                                 </div>
                             </div>
 
@@ -122,6 +123,7 @@ export default function Subscription() {
     const [subs, setSubs] = React.useState([] as Array<ISubscription>);
     const [error, setError] = React.useState(false);
     const user = useSelector((state: RootState) => state.UserReducer.user);
+    const [show, setShow] = React.useState(false);
 
     // request
     const { refetch } = useQuery(['getSubscriptions'], () => getSubs(user._id), {
@@ -154,28 +156,38 @@ export default function Subscription() {
         <p className="text-xl font-Circular-std-medium text-gray-600 ">Subscription Status</p>
         {
             user.disabled && (
-                <p className="text-sm font-Circular-std-book text-gray-500 mt-4">You are currently not on any subscription plan, To Access all features you will need to upgrade to a monthly plan</p>
+                <p className="text-sm font-Cerebri-sans-book text-gray-500 mt-4">You are currently not on any subscription plan, To Access all features you will need to upgrade to a monthly plan</p>
             )
         }
 
         {
             user.disabled && (
                 <div className="w-full flex xl:flex-row lg:flex-row md:flex-col sm:flex-col mt-6">
-                    <button onClick={() => setOpen(true)} className="xl:w-64 lg:w-64 md:w-full sm:w-full h-10 bg-themeGreen text-white font-Circular-std-book text-sm mb-4">Choose Plan</button>
+                    <button onClick={() => setOpen(true)} className="xl:w-64 lg:w-64 md:w-full sm:w-full h-10 bg-themeGreen text-white font-Cerebri-sans-book text-sm mb-4">Choose Plan</button>
                     {/* <button className="xl:w-64 lg:w-64 md:w-full sm:w-full h-10 border-2 border-themeGreen text-themeGreen xl:ml-4  lg:ml-4 md:ml-0 sm:ml-0 font-semibold text-sm">Enable Auto Renewal</button> */}
                 </div>
             )
         }
+        {
+            !user.disabled && (
+                <div className="w-full mt-4">
+                    <p className='font-Cerebri-sans-book'>Your subscription is active and will expire on <b>{new Date(user.nextPayment).toDateString()}</b></p>
+                </div>
+            )
+        }
 
-        {!loading && !error && subs.length > 0 && (
-            <p className="text-md font-Circular-std-medium text-gray-600 mt-6">Subscription History</p>
+        {!loading && !error && subs.length > 0  && (
+            <div className="w-full flex justify-between items-center mt-4">
+                <p className="text-md font-Circular-std-medium text-gray-600">Subscription History</p>
+                {show ? <FiEyeOff size={30} className='text-themeGreen cursor-pointer' onClick={() => setShow(prev => !prev)} /> : <FiEye size={30} className='text-themeGreen cursor-pointer' onClick={() => setShow(prev => !prev)} />}
+            </div>
         )}
 
         {
             !loading && error && (
                 <div className="w-full h-40 flex flex-col justify-center items-center">
-                    <p className='font-Circular-std-book mt-2 text-md'>An Error Occured</p>
-                    <button onClick={retry} className='w-40 h-12 bg-themeGreen text-white text-sm font-Circular-std-bookmt-2'>Retry</button>
+                    <p className='font-Cerebri-sans-book mt-2 text-md'>An Error Occured</p>
+                    <button onClick={retry} className='w-40 h-12 bg-themeGreen text-white text-sm font-Cerebri-sans-bookmt-2'>Retry</button>
                 </div>
             )
         }
@@ -184,23 +196,23 @@ export default function Subscription() {
             loading && (
                 <div className="w-full h-40 flex flex-col justify-center items-center">
                     <Spinner size="lg" color="green" />
-                    <p className='font-Circular-std-book mt-2 text-md'>Loading Your Subscriptions</p>
+                    <p className='font-Cerebri-sans-book mt-2 text-md'>Loading Your Subscriptions</p>
                 </div>
             )
         }
 
         {
             !loading && !error && subs.length < 1 && (
-                <div className="w-full h-32 flex flex-col font-Circular-std-book justify-center">
+                <div className="w-full h-32 flex flex-col font-Cerebri-sans-book justify-center">
                     <p>You Currently do not have any subscription</p>
                 </div>
             )
         }
 
         {
-            !loading && !error && subs.length > 0 && (
+            !loading && !error && subs.length > 0 && show && (
                 <>
-                     <div className="xl:w-full lg:w-full md:w-auto sm:w-auto h-16 bg-gray-100 rounded-md flex justify-between items-center px-4 mt-6 text-md font-Circular-std-book text-left">
+                     <div className="xl:w-full lg:w-full md:w-auto sm:w-auto h-16 bg-gray-100 rounded-md flex justify-between items-center px-4 mt-6 text-md font-Cerebri-sans-book text-left">
                             <p>Date</p>
                             <p>Period</p>
                             <p>Amount</p>

@@ -53,6 +53,10 @@ export interface IUser {
 
   website: string;
 
+  nextPayment: string;
+
+  rating: number;
+
   certificates: ICertificate[];
 
   createAt: string;

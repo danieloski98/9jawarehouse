@@ -53,7 +53,7 @@ export default function PersonalInfo({ next, states, formik }: IProps) {
 
   return (
     <div className="w-full h-auto flex flex-col">
-        <p className="text-2xl font-light text-gray-600">Personal Information</p>
+        <p className="text-2xl Cerebri-sans-book text-gray-600">Personal Information</p>
         <p className="text-sm font-semibold text-gray-500 mt-4">
         Fill out the following fields below with valid informations to enable customers to find you easily 
         </p>
@@ -64,14 +64,14 @@ export default function PersonalInfo({ next, states, formik }: IProps) {
                 <div className="xl:w-11/12 lg:w-11/12 md:w-full sm:w-full">
                     <Input border="none" bgColor="whitesmoke" borderRadius={0} className="bg-gray-100 mt-3" name="first_name" value={formik.values.first_name} onChange={formik.handleChange} onFocus={() => formik.setFieldTouched('first_name', true, true)} />
                 </div>
-                {formik.touched.first_name && formik.errors.first_name && <p className="text-xs mt-1 font-light text-red-400">{formik.errors.first_name}</p>}
+                {formik.touched.first_name && formik.errors.first_name && <p className="text-xs mt-1 Cerebri-sans-book text-red-400">{formik.errors.first_name}</p>}
             </div>
             <div className="w-full xl:mt-0 lg:mt-0 md:mt-2 sm:mt-2">
                 <label>Lastname</label>
                 <div className="xl:w-11/12 lg:w-11/12 md:w-full sm:w-full">
                     <Input border="none" bgColor="whitesmoke" borderRadius={0} className="bg-gray-100 mt-3" name="last_name" value={formik.values.last_name} onChange={formik.handleChange} onFocus={() => formik.setFieldTouched('last_name', true, true)} />
                 </div>
-                {formik.touched.last_name && formik.errors.last_name && <p className="text-xs mt-1 font-light text-red-400">{formik.errors.last_name}</p>}
+                {formik.touched.last_name && formik.errors.last_name && <p className="text-xs mt-1 Cerebri-sans-book text-red-400">{formik.errors.last_name}</p>}
             </div>
         </div>
 
@@ -81,7 +81,7 @@ export default function PersonalInfo({ next, states, formik }: IProps) {
                 <div className="xl:w-11/12 lg:w-11/12 md:w-full sm:w-full">
                     <Input border="none" bgColor="whitesmoke" borderRadius={0} className="bg-gray-100 mt-3" name="email" value={formik.values.email} onChange={formik.handleChange} onFocus={() => formik.setFieldTouched('email', true, true)} />
                 </div>
-                {formik.touched.email && formik.errors.email && <p className="text-xs mt-1 font-light text-red-400">{formik.errors.email}</p>}
+                {formik.touched.email && formik.errors.email && <p className="text-xs mt-1 Cerebri-sans-book text-red-400">{formik.errors.email}</p>}
             </div>
             <div className="w-full xl:mt-0 lg:mt-0 md:mt-2 sm:mt-2">
                 <label>Phone</label>
@@ -95,7 +95,7 @@ export default function PersonalInfo({ next, states, formik }: IProps) {
                         <Input border="none" bgColor="whitesmoke" borderRadius={0} fontSize="xs" className="bg-gray-100 mt-3 " name="phone" value={formik.values.phone} onChange={formik.handleChange} onFocus={() => formik.setFieldTouched('phone', true, true)} />
                     </InputGroup>
                 </div>
-                {formik.touched.phone && formik.errors.phone && <p className="text-xs mt-1 font-light text-red-400">{formik.errors.phone}</p>}
+                {formik.touched.phone && formik.errors.phone && <p className="text-xs mt-1 Cerebri-sans-book text-red-400">{formik.errors.phone}</p>}
             </div>
         </div>
 
@@ -105,14 +105,14 @@ export default function PersonalInfo({ next, states, formik }: IProps) {
                 <div className="xl:w-11/12 lg:w-11/12 md:w-full sm:w-full">
                     <Input border="none" bgColor="whitesmoke" borderRadius={0} className="bg-gray-100 mt-3" name="business_address" value={formik.values.business_address} onChange={formik.handleChange} onFocus={() => formik.setFieldTouched('address', true, true)} />
                 </div>
-                {formik.touched.business_address && formik.errors.business_address && <p className="text-xs mt-1 font-light text-red-400">{formik.errors.business_address}</p>}
+                {formik.touched.business_address && formik.errors.business_address && <p className="text-xs mt-1 Cerebri-sans-book text-red-400">{formik.errors.business_address}</p>}
             </div>
             <div className="w-full xl:mt-0 lg:mt-0 md:mt-2 sm:mt-2">
                 <label>Country</label>
                 <div className="xl:w-11/12 lg:w-11/12 md:w-full sm:w-full">
                     <Input disabled border="none" bgColor="whitesmoke" borderRadius={0} className="bg-gray-100 mt-3" name="country" value={formik.values.country} onChange={formik.handleChange} onFocus={() => formik.setFieldTouched('country', true, true)} />
                 </div>
-                {formik.touched.country && formik.errors.country && <p className="text-xs mt-1 font-light text-red-400">{formik.errors.country}</p>}
+                {formik.touched.country && formik.errors.country && <p className="text-xs mt-1 Cerebri-sans-book text-red-400">{formik.errors.country}</p>}
             </div>
         </div>
 
@@ -126,7 +126,7 @@ export default function PersonalInfo({ next, states, formik }: IProps) {
                         ))}
                     </Select>
                 </div>
-                {formik.touched.state && formik.errors.state && <p className="text-xs mt-1 font-light text-red-400">{formik.errors.state}</p>}
+                {formik.touched.state && formik.errors.state && <p className="text-xs mt-1 Cerebri-sans-book text-red-400">{formik.errors.state}</p>}
             </div>
 
             <div className="w-full">
@@ -138,7 +138,7 @@ export default function PersonalInfo({ next, states, formik }: IProps) {
                         ))}
                     </Select>
                 </div>
-                {formik.touched.lga && formik.errors.lga && <p className="text-xs mt-1 font-light text-red-400">{formik.errors.lga}</p>}
+                {formik.touched.lga && formik.errors.lga && <p className="text-xs mt-1 Cerebri-sans-book text-red-400">{formik.errors.lga}</p>}
             </div>
         </div>
 

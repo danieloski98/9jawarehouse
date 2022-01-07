@@ -183,7 +183,7 @@ export default function Services({states, services}: IProps) {
             <p className=' mb-2 cursor-pointer w-full h-auto p-3 gray-300 font-Circular-std-medium text-md'>Related Service</p>
             <Divider />
                 {services.map((item, index) => (
-                    <p key={index.toString()} onClick={() => setSr(item.name)} className=' mb-2 cursor-pointer w-full h-auto p-3 hover:bg-gray-200 border-gray-300 font-Circular-std-book text-sm'>{item.name}</p>
+                    <p key={index.toString()} onClick={() => setSr(item.name)} className=' mb-2 cursor-pointer w-full h-auto p-3 hover:bg-gray-200 border-gray-300 font-Cerebri-sans-book text-sm'>{item.name}</p>
                 ))}
             </div>
 
@@ -199,7 +199,7 @@ export default function Services({states, services}: IProps) {
            <div className="w-full h-12 xl:flex lg:flex md:hidden sm:hidden items-center">
                <p className="text-md font-light text-gray-500">Filter :</p>
                <div className="w-32 h-10 ml-6">
-                   <Select border="none" defaultValue={sr} bgColor="whitesmoke" fontSize="sm" className="font-Circular-std-book" onChange={(e) => setSr(e.target.value)}>
+                   <Select border="none" defaultValue={sr} bgColor="whitesmoke" fontSize="sm" className="font-Cerebri-sans-book" onChange={(e) => setSr(e.target.value)}>
                        <option value={sr} selected>{sr}</option>
                        {services.map((item, index) => (
                            <option key={index.toString()} value={item.name}>{item.name}</option>
@@ -207,7 +207,7 @@ export default function Services({states, services}: IProps) {
                    </Select>
                </div>
                <div className="w-32 h-10 ml-6">
-                    <Select border="none" bgColor="whitesmoke" borderRadius="0" fontSize="sm" className="font-Circular-std-book" onChange={(e) => SelectState(e.target.value)}>
+                    <Select border="none" bgColor="whitesmoke" borderRadius="0" fontSize="sm" className="font-Cerebri-sans-book" onChange={(e) => SelectState(e.target.value)}>
                        <option value="" selected>State</option>
                        {states.map((item, index) => (
                            <option key={index.toString()} value={item.officialName}>{item.officialName}</option>
@@ -215,14 +215,14 @@ export default function Services({states, services}: IProps) {
                    </Select>
                </div>
                <div className="w-32 h-10 ml-6">
-                    <Select border="none" bgColor="whitesmoke" fontSize="sm" className="font-Circular-std-book" onChange={(e) => setLa(e.target.value)}>
+                    <Select border="none" bgColor="whitesmoke" fontSize="sm" className="font-Cerebri-sans-book" onChange={(e) => setLa(e.target.value)}>
                        <option value="" selected>LGA</option>
                        {lgas !== undefined && lgas.length > 0 && lgas.map((item, index) => (
                            <option key={index.toString()} value={item.LGA}>{item.LGA}</option>
                        ))}
                    </Select>    
                </div>
-               <button onClick={getUsers} className="w-32 h-10 bg-themeGreen text-white font-Circular-std-book text-sm ml-6">Apply</button>
+               <button onClick={getUsers} className="w-32 h-10 bg-themeGreen text-white font-Cerebri-sans-book text-sm ml-6">Apply</button>
            </div>
 
            <div className="flex-1 h-full overflow-y-auto flex xl:flex-row lg:flex-row md:flex-col sm:flex-col xl:justify-between lg:justify-between md:justify-start sm:justify-start xl:pr-16 lg:pr-16 md:pr-0 sm:pr-0 pt-0 mt-6 xl:flex-wrap lg:flex-wrap sm:flex-nowrap md:flex-nowrap xl:pt-0 lg:pt-0 md:pt-5 sm:pt-5">
@@ -238,7 +238,7 @@ export default function Services({states, services}: IProps) {
                     ))}
 
                     {!loading && businesses !== undefined && businesses.length < 1 && (
-                        <div className="w-full h-20 flex font-Circular-std-book text-md mt-0 justify-center">
+                        <div className="w-full h-20 flex font-Cerebri-sans-book text-md mt-0 justify-center">
                           <p>No business found for search &quot;{sr}&quot;</p>
                         </div>
                     )}

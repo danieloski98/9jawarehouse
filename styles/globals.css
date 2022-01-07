@@ -41,3 +41,8 @@ a {
   font-family: Circular-std-book;
   src: url(../public/fonts/CircularStd-Book.otf);
 }
+
+@font-face {
+  font-family: Cerebri-sans-book;
+  src: url(../public/fonts/Cerebri\ Sans\ Book.ttf);
+}

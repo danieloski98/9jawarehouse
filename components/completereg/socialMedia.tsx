@@ -41,7 +41,7 @@ const sub = () => {
     <div className="w-full h-auto flex flex-col">
         <div className="flex items-center h-auto">
             <FiChevronLeft size={30} color="grey" onClick={() => next(2)} />
-            <p className="text-2xl font-light text-gray-600 ml-4">Connect Social Media account</p>
+            <p className="text-2xl Cerebri-sans-book text-gray-600 ml-4">Connect Social Media account</p>
         </div>
         <p className="text-sm font-semibold text-gray-500 mt-4">
         Link your profile to your social media, portfolio or website 
@@ -55,7 +55,7 @@ const sub = () => {
                 <div className="xl:w-11/12 lg:w-11/12 md:w-full sm:w-full">
                     <Input border="none" bgColor="whitesmoke" borderRadius={0} className="bg-gray-100 mt-3" name="instagram" value={formik.values.instagram} onChange={formik.handleChange} onFocus={() => formik.setFieldTouched('instagram', true, true)} />
                 </div>
-                {formik.touched.instagram && formik.errors.instagram && <p className="text-xs mt-1 font-light text-red-400">{formik.errors.instagram}</p>}
+                {formik.touched.instagram && formik.errors.instagram && <p className="text-xs mt-1 Cerebri-sans-book text-red-400">{formik.errors.instagram}</p>}
             </div>
             <div className="w-full xl:mt-0 lg:mt-0 md:mt-2 sm:mt-2">
                
@@ -68,7 +68,7 @@ const sub = () => {
                 <div className="xl:w-11/12 lg:w-11/12 md:w-full sm:w-full">
                     <Input border="none" bgColor="whitesmoke" borderRadius={0} className="bg-gray-100 mt-3" name="twitter" value={formik.values.twitter} onChange={formik.handleChange} onFocus={() => formik.setFieldTouched('twitter', true, true)} />
                 </div>
-                {formik.touched.twitter && formik.errors.twitter && <p className="text-xs mt-1 font-light text-red-400">{formik.errors.twitter}</p>}
+                {formik.touched.twitter && formik.errors.twitter && <p className="text-xs mt-1 Cerebri-sans-book text-red-400">{formik.errors.twitter}</p>}
             </div>
             <div className="w-full xl:mt-0 lg:mt-0 md:mt-2 sm:mt-2">
                 
@@ -81,7 +81,7 @@ const sub = () => {
                 <div className="xl:w-11/12 lg:w-11/12 md:w-full sm:w-full">
                     <Input border="none" bgColor="whitesmoke" borderRadius={0} className="bg-gray-100 mt-3" name="facebook" value={formik.values.facebook} onChange={formik.handleChange} onFocus={() => formik.setFieldTouched('facebook', true, true)} />
                 </div>
-                {formik.touched.facebook && formik.errors.facebook && <p className="text-xs mt-1 font-light text-red-400">{formik.errors.facebook}</p>}
+                {formik.touched.facebook && formik.errors.facebook && <p className="text-xs mt-1 Cerebri-sans-book text-red-400">{formik.errors.facebook}</p>}
             </div>
             <div className="w-full xl:mt-0 lg:mt-0 md:mt-2 sm:mt-2">
                 
@@ -94,7 +94,7 @@ const sub = () => {
                 <div className="xl:w-11/12 lg:w-11/12 md:w-full sm:w-full">
                     <Input border="none" bgColor="whitesmoke" borderRadius={0} className="bg-gray-100 mt-3" name="website" value={formik.values.website} onChange={formik.handleChange} onFocus={() => formik.setFieldTouched('website', true, true)} />
                 </div>
-                {formik.touched.website && formik.errors.website && <p className="text-xs mt-1 font-light text-red-400">{formik.errors.website}</p>}
+                {formik.touched.website && formik.errors.website && <p className="text-xs mt-1 Cerebri-sans-book text-red-400">{formik.errors.website}</p>}
             </div>
 
             <div className="w-full">
@@ -108,7 +108,7 @@ const sub = () => {
                 <div className="xl:w-11/12 lg:w-11/12 md:w-full sm:w-full">
                     <Input border="none" bgColor="whitesmoke" borderRadius={0} className="bg-gray-100 mt-3" name="whatsapp" value={formik.values.whatsapp} onChange={formik.handleChange} onFocus={() => formik.setFieldTouched('whatsapp', true, true)} />
                 </div>
-                {formik.touched.whatsapp && formik.errors.whatsapp && <p className="text-xs mt-1 font-light text-red-400">{formik.errors.whatsapp}</p>}
+                {formik.touched.whatsapp && formik.errors.whatsapp && <p className="text-xs mt-1 Cerebri-sans-book text-red-400">{formik.errors.whatsapp}</p>}
             </div>
 
             <div className="w-full">

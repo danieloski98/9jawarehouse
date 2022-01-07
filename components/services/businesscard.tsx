@@ -40,14 +40,15 @@ export default function BusinessCard({user}: {user: IUser}) {
             <div className="mt-0 flex flex-col">
                     {/* <p className="font-semibold text-sm text-gray-500">Overall Rating</p> */}
                     <div className="flex h-12 items-center">
-                        <p className="text-xxl font-light text-themeGreen mr-4">4.7</p>
+                        <p className="text-xxl font-light text-themeGreen mr-4">{Math.round(user.rating) || 0}</p>
                         <ReactStars
                             count={5}
                             onChange={ratingChanged}
                             size={20}
                             activeColor="#ffd700"
-                            value={3}
+                            value={user.rating}
                             isHalf={true}
+                            edit={false}
                         />
                         {/* <p className="text-sm font-semibold text-gray-600 ml-4">10 Reviews</p> */}
                     </div>

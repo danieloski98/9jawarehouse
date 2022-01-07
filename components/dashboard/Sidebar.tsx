@@ -81,34 +81,34 @@ export default function Sidebar({page, setPage}: IProps) {
             <div className={page === 1 ? ACTIVE:INACTIVE} onClick={() => setPage(1)}>
                 <div className="flex items-center pl-6">
                     <FiUser size={25} />
-                    <p className="ml-4 text-sm font-Circular-std-book ">Profile</p>
+                    <p className="ml-4 text-sm font-Cerebri-sans-book ">Profile</p>
                 </div>
             </div>
 
             <div className={page === 2 ? ACTIVE:INACTIVE} onClick={() => setPage(2)}>
                 <div className="flex items-center pl-6">
                     <FiStar size={25} />
-                    <p className="ml-4 text-sm font-Circular-std-book ">Customer Reviews</p>
+                    <p className="ml-4 text-sm font-Cerebri-sans-book ">Customer Reviews</p>
                 </div>
             </div>
 
             <div className={page === 3 ? ACTIVE:INACTIVE} onClick={() => setPage(3)}>
                 <div className="flex items-center pl-6">
                     <FiDollarSign size={25} />
-                    <p className="ml-4 text-sm font-Circular-std-book  ">Subscriptions</p>
+                    <p className="ml-4 text-sm font-Cerebri-sans-book  ">Subscriptions</p>
                 </div>
             </div>
 
             <div className={page === 4 ? ACTIVE:INACTIVE} onClick={() => setPage(4)}>
                 <div className="flex items-center pl-6">
                     <FiSettings size={25} />
-                    <p className="ml-4 text-sm font-Circular-std-book ">Settings</p>
+                    <p className="ml-4 text-sm font-Cerebri-sans-book ">Settings</p>
                 </div>
             </div>
 
             {
                 userDetails.pin && (
-                    <div className="w-11/12 mt-5 flex items-center font-Circular-std-book  justify-center mx-3 h-12 bg-green-100 text-green-600">
+                    <div className="w-11/12 mt-5 flex items-center font-Cerebri-sans-book  justify-center mx-3 h-12 bg-green-100 text-green-600">
                         {!loading && <span>PIN - {pin}</span>}
                         {loading && <Spinner color="white" size="lg" />}
                     </div>
@@ -118,7 +118,7 @@ export default function Sidebar({page, setPage}: IProps) {
 
             {
                 !userDetails.pin && (
-                    <button onClick={generatePin} className="w-11/12 mt-5 flex items-center justify-center mx-3 h-12 bg-green-100 font-Circular-std-book  text-green-600">
+                    <button onClick={generatePin} className="w-11/12 mt-5 flex items-center justify-center mx-3 h-12 bg-green-100 font-Cerebri-sans-book  text-green-600">
                        {!loading && <span>Generate PIN</span>}
                        {loading && <Spinner color="white" size="lg" />}
                     </button>
@@ -130,19 +130,19 @@ export default function Sidebar({page, setPage}: IProps) {
 
             <div className="w-full flex">
                 <FiHelpCircle size={20} color="grey" />
-                <p className="ml-4 text-md font-Circular-std-book ">Help Center</p>
+                <p className="ml-4 text-md font-Cerebri-sans-book ">Help Center</p>
             </div>
 
                 <Link href="/faqs" passHref >
-                    <p className="mt-3 p-3 h-12 cursor-pointer bg-themeGreen text-white text-sm font-Circular-std-book  flex justify-center items-center">
+                    <p className="mt-3 p-3 h-12 cursor-pointer bg-themeGreen text-white text-sm font-Cerebri-sans-book  flex justify-center items-center">
                         FAQS
                     </p>
                 </Link>
 
-            <p className="ml-0 text-md font-Circular-std-book  mt-8">For further assistance </p>
+            <p className="ml-0 text-md font-Cerebri-sans-book  mt-8">For further assistance </p>
 
             <Link href="/contactus" passHref>
-                <p className="mt-3 p-3 h-12 cursor-pointer bg-themeGreen text-white text-sm font-Circular-std-book  flex justify-center items-center">
+                <p className="mt-3 p-3 h-12 cursor-pointer bg-themeGreen text-white text-sm font-Cerebri-sans-book  flex justify-center items-center">
                     Contact Support
                 </p>
             </Link>

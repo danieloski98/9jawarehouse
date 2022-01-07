@@ -110,7 +110,7 @@ export default function Profile({ setPage }: IProps) {
               </p>
               <div className="flex w-auto h-auto flex-wrap mt-2">
                 {userDetails.services.map((item: string, index: number) => (
-                  <p key={index.toString()} className="text-sm text-themeGreen font-Circular-std-book">
+                  <p key={index.toString()} className="text-sm text-themeGreen font-Cerebri-sans-book">
                     {item},
                   </p>
                 ))}
@@ -118,7 +118,7 @@ export default function Profile({ setPage }: IProps) {
             </div>
           </div>
           <div className="xl:mt-0 lg:mt-0 md:mt-6 sm:mt-6 ">
-            <button onClick={() => setPage(5)} className="xl:w-40 lg:w-40 md:w-full sm:w-full h-12 border-2 border-themeGreen text-themeGreen font-Circular-std-book">
+            <button onClick={() => setPage(5)} className="xl:w-40 lg:w-40 md:w-full sm:w-full h-12 border-2 border-themeGreen text-themeGreen font-Cerebri-sans-book">
               Edit
             </button>
           </div>
@@ -128,7 +128,7 @@ export default function Profile({ setPage }: IProps) {
 
         <div className="w-full xl:px-10 lg:px-10 md:px-5 sm:px-5 mt-10 flex flex-col">
           <p className="text-md font-Circular-std-medium text-gray-600">Description</p>
-          <p className="text-sm font-Circular-std-book mt-4 text-gray-500 text-justify">
+          <p className="text-sm font-Cerebri-sans-book mt-4 text-gray-500 text-justify">
            {userDetails.business_description}
           </p>
         </div>
@@ -138,19 +138,19 @@ export default function Profile({ setPage }: IProps) {
         <div className="w-full flex xl:flex-row lg:flex-row md:flex-col sm:flex-col justify-between xl:px-10 lg:px-10 md:px-5 sm:px-5 mt-10">
           <div className="flex flex-col items-start flex-1 xl:mt-0 lg:mt-0 md:mt-4 sm:mt-4">
             <p className="text-md font-Circular-std-medium text-gray-600">Location</p>
-            <p className="text-sm text-gray-500 font-Circular-std-book">
+            <p className="text-sm text-gray-500 font-Cerebri-sans-book">
               {userDetails.business_address}
             </p>
           </div>
 
           <div className="flex flex-col items-start flex-1 xl:mt-0 lg:mt-0 md:mt-4 sm:mt-4">
             <p className="text-md font-Circular-std-medium text-gray-600">Phone</p>
-            <p className="text-sm text-gray-500 font-Circular-std-book">{userDetails.phone}</p>
+            <p className="text-sm text-gray-500 font-Cerebri-sans-book">{userDetails.phone}</p>
           </div>
 
           <div className="flex flex-col items-start flex-1 xl:mt-0 lg:mt-0 md:mt-4 sm:mt-4">
             <p className="text-md font-Circular-std-medium text-gray-600">Email</p>
-            <p className="text-sm text-gray-500 font-Circular-std-book">
+            <p className="text-sm text-gray-500 font-Cerebri-sans-book">
               {userDetails.email}
             </p>
           </div>
@@ -160,19 +160,19 @@ export default function Profile({ setPage }: IProps) {
         <div className="w-full flex xl:flex-row lg:flex-row md:flex-col sm:flex-col justify-between xl:px-10 lg:px-10 md:px-5 sm:px-5 mt-10">
           <div className="flex flex-col items-start flex-1 xl:mt-0 lg:mt-0 md:mt-4 sm:mt-4">
             <p className="text-md font-Circular-std-medium text-gray-600">Country</p>
-            <p className="text-sm text-gray-500 font-Circular-std-book">
+            <p className="text-sm text-gray-500 font-Cerebri-sans-book">
               {userDetails.country}
             </p>
           </div>
 
           <div className="flex flex-col items-start flex-1 xl:mt-0 lg:mt-0 md:mt-4 sm:mt-4">
             <p className="text-md font-Circular-std-medium text-gray-600">State</p>
-            <p className="text-sm text-gray-500 font-Circular-std-book">{userDetails.state}</p>
+            <p className="text-sm text-gray-500 font-Cerebri-sans-book">{userDetails.state}</p>
           </div>
 
           <div className="flex flex-col items-start flex-1 xl:mt-0 lg:mt-0 md:mt-4 sm:mt-4">
             <p className="text-md font-Circular-std-medium text-gray-600">LGA</p>
-            <p className="text-sm text-gray-500 font-Circular-std-book">
+            <p className="text-sm text-gray-500 font-Cerebri-sans-book">
               {userDetails.lga}
             </p>
           </div>
@@ -222,11 +222,11 @@ export default function Profile({ setPage }: IProps) {
             <p className="text-md font-Circular-std-medium text-gray-600">Certifications</p>
             {userDetails.certificates.length > 0 && userDetails.certificates.map((item: ICertificate, index: number) => (
               <div key={index.toString()} className="mt-6 " >
-                  <p className="text-sm font-Circular-std-book">{item.certificate}</p>
-                  <p className="text-sm font-Circular-std-book mt-1">{item.organization}</p>
-                  <p className="text-sm font-Circular-std-book mt-1">{item.year}</p>
+                  <p className="text-sm font-Cerebri-sans-book">{item.certificate}</p>
+                  <p className="text-sm font-Cerebri-sans-book mt-1">{item.organization}</p>
+                  <p className="text-sm font-Cerebri-sans-book mt-1">{item.year}</p>
                   <a href={item.link} target="_blank" rel="noreferrer">
-                    <button className="w-40 h-10 border-2 border-themeGreen text-themeGreen mt-2 font-Circular-std-book">View</button>
+                    <button className="w-40 h-10 border-2 border-themeGreen text-themeGreen mt-2 font-Cerebri-sans-book">View</button>
                   </a>
               </div>
             ))}

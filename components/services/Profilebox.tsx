@@ -79,7 +79,7 @@ export default function ProfileBox({user}: IProps) {
             />
             <div className="flex flex-col justify-center">
               <p className="text-lg font-Circular-std-medium text-gray-600 cursor-pointer">
-                <a href="#comments">{user.business_name} (4.7)</a>
+                <a href="#comments">{user.business_name} ({Math.round(user.rating) || 0})</a>
               </p>
               <div className="flex w-full flex-wrap">
               {user !== undefined && user.services.map((item, index) => (

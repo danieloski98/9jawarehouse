@@ -29,13 +29,13 @@ export default function AboutUs() {
 
                 <div className="w-full flex flex-col">
                     <p className="text-4xl font-Circular-std-medium text-themeGreen">About 9jaWarehouse</p>
-                    <p className="mt-2 font-Circular-std-book text-gray-500 text-justify">We are a business platform that helps link businesses services to potential clients, give businesses visibility, support, young and emerging entrepreneurs, invest, support, and promote small scale businesses. 
+                    <p className="mt-2 font-Cerebri-sans-book text-gray-500 text-justify">We are a business platform that helps link businesses services to potential clients, give businesses visibility, support, young and emerging entrepreneurs, invest, support, and promote small scale businesses. 
                     </p>
                 </div>
 
                 <div className="w-full flex flex-col mt-8">
                     <p className="text-4xl font-Circular-std-medium text-themeGreen">Mission</p>
-                    <p className="mt-2 font-Circular-std-book text-gray-500 text-justify"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Bibendum est ultricies integer quis. Iaculis urna id volutpat lacus laoreet. Mauris vitae ultricies leo integer malesuada. Ac odio tempor orci dapibus ultrices in. Egestas diam in arcu cursus euismod. Dictum fusce ut placerat orci nulla. Tincidunt ornare massa eget egestas purus viverra accumsan in nisl. Tempor id eu nisl nunc mi ipsum faucibus. Fusce id velit ut tortor pretium. Massa ultricies mi quis hendrerit dolor magna eget. Nullam eget felis eget nunc lobortis. Faucibus ornare suspendisse sed nisi. Sagittis eu volutpat odio facilisis mauris sit amet.
+                    <p className="mt-2 font-Cerebri-sans-book text-gray-500 text-justify"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Bibendum est ultricies integer quis. Iaculis urna id volutpat lacus laoreet. Mauris vitae ultricies leo integer malesuada. Ac odio tempor orci dapibus ultrices in. Egestas diam in arcu cursus euismod. Dictum fusce ut placerat orci nulla. Tincidunt ornare massa eget egestas purus viverra accumsan in nisl. Tempor id eu nisl nunc mi ipsum faucibus. Fusce id velit ut tortor pretium. Massa ultricies mi quis hendrerit dolor magna eget. Nullam eget felis eget nunc lobortis. Faucibus ornare suspendisse sed nisi. Sagittis eu volutpat odio facilisis mauris sit amet.
                     </p>
                 </div>
 
@@ -48,7 +48,7 @@ export default function AboutUs() {
                                 <Image src={Guy} alt="man" className="w-40 h-64" />
                            </div>
                            <p className="text-center font-Circular-std-medium text-lg mt-2">Mr. John Asiruwa</p>
-                           <p className="mt-0 text-center font-Circular-std-book text-sm">Founder / CEO</p>
+                           <p className="mt-0 text-center font-Cerebri-sans-book text-sm">Founder / CEO</p>
                         </div>
 
                         <div className="flex-col flex xl:w-64 lg:w-64 md:w-full sm:w-full items-center">
@@ -56,7 +56,7 @@ export default function AboutUs() {
                                 <Image src={Guy} alt="man" className="w-40 h-64" />
                            </div>
                            <p className="text-center font-Circular-std-medium text-lg mt-2">Mr. John Asiruwa</p>
-                           <p className="mt-0 text-center font-Circular-std-book text-sm">Founder / CEO</p>
+                           <p className="mt-0 text-center font-Cerebri-sans-book text-sm">Founder / CEO</p>
                         </div>
 
                         <div className="flex-col flex xl:w-64 lg:w-64 md:w-full sm:w-full items-center">
@@ -64,7 +64,7 @@ export default function AboutUs() {
                                 <Image src={Guy} alt="man" className="w-40 h-64" />
                            </div>
                            <p className="text-center font-Circular-std-medium text-lg mt-2">Mr. John Asiruwa</p>
-                           <p className="mt-0 text-center ffont-Circular-std-book text-sm">Founder / CEO</p>
+                           <p className="mt-0 text-center ffont-Cerebri-sans-book text-sm">Founder / CEO</p>
                         </div>
 
                        

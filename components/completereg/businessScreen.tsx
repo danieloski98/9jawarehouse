@@ -69,7 +69,7 @@ export default function BusinessInfo({ next, images, picker, profilePic, formik,
     <div className="w-full h-auto flex flex-col">
         <div className="flex items-center h-auto">
             <FiChevronLeft size={30} color="grey" onClick={() => next(1)} />
-            <p className="text-2xl font-light text-gray-600 ml-4">Business Information</p>
+            <p className="text-2xl Cerebri-sans-book text-gray-600 ml-4">Business Information</p>
         </div>
         <p className="text-sm font-semibold text-gray-500 mt-4">
         Provide more information of your business or services you render 
@@ -120,7 +120,7 @@ export default function BusinessInfo({ next, images, picker, profilePic, formik,
                 <div className="xl:w-11/12 lg:w-11/12 md:w-full sm:w-full">
                     <Input border="none" bgColor="whitesmoke" borderRadius={0} className="bg-gray-100 mt-3" name="business_name" value={formik.values.business_name} onChange={formik.handleChange} onFocus={() => formik.setFieldTouched('business_name', true, true)} />
                 </div>
-                {formik.touched.business_name && formik.errors.business_name && <p className="text-xs mt-1 font-light text-red-400">{formik.errors.business_name}</p>}
+                {formik.touched.business_name && formik.errors.business_name && <p className="text-xs mt-1 Cerebri-sans-book text-red-400">{formik.errors.business_name}</p>}
             </div>
             <div className="w-full xl:mt-0 lg:mt-0 md:mt-2 sm:mt-2">
             
@@ -133,7 +133,7 @@ export default function BusinessInfo({ next, images, picker, profilePic, formik,
                 <div className="w-full">
                     <Textarea  bgColor="whitesmoke" borderRadius={0} fontSize="xs" className="bg-gray-100 mt-3 w-full h-40 text-gray-500 font-semibold text-sm p-3" name="business_description" value={formik.values.business_description} onChange={formik.handleChange} onFocus={() => formik.setFieldTouched('business_description', true, true)}  />
                 </div>
-                {formik.touched.business_description && formik.errors.business_description && <p className="text-xs mt-1 font-light text-red-400">{formik.errors.business_description}</p>}
+                {formik.touched.business_description && formik.errors.business_description && <p className="text-xs mt-1 Cerebri-sans-book text-red-400">{formik.errors.business_description}</p>}
             </div>
         </div>
 
@@ -159,7 +159,7 @@ export default function BusinessInfo({ next, images, picker, profilePic, formik,
 
         <div className="w-full flex flex-wrap mt-4">
             {selectedSerices.length > 0 && selectedSerices.map((item, index) => (
-                        <div key={index.toString()} className="flex p-3 bg-green-100 text-green-600 text-sm font-light mr-1">{item} <FiX size={20} color="green" className="ml-3 cursor-pointer" onClick={() => deleteService(index)} /> </div>
+                        <div key={index.toString()} className="flex p-3 bg-green-100 text-green-600 text-sm Cerebri-sans-book mr-1">{item} <FiX size={20} color="green" className="ml-3 cursor-pointer" onClick={() => deleteService(index)} /> </div>
                     ))}
         </div>
 
@@ -213,7 +213,7 @@ export default function BusinessInfo({ next, images, picker, profilePic, formik,
 
         
 
-        <p className="mt-6 font-light text-md text-gray-500 cursor-pointer" onClick={() => addCerts()}>+ Add Another Certification</p>
+        <p className="mt-6 Cerebri-sans-book text-md text-gray-500 cursor-pointer" onClick={() => addCerts()}>+ Add Another Certification</p>
 
         <div className="w-full flex justify-end mt-6">
             <button onClick={() => nextPage(3)} className="w-32 bg-themeGreen h-12 text-sm font-semibold text-white">Continue</button>

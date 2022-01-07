@@ -181,7 +181,7 @@ export default function EditProfile({ next }: IProps) {
         </div>
 
         <div className="w-full h-auto bg-white flex flex-col justify-center py-6">
-          <p className="text-md font-Circular-std-book">
+          <p className="text-md font-Cerebri-sans-book">
           To make changes to
           </p>
           <ol className="list-decimal list-inside text-sm font-Circular-std-medium mt-3">
@@ -192,7 +192,7 @@ export default function EditProfile({ next }: IProps) {
             <li>Social Media Links</li>
           </ol>
           <Link href="/contactus" passHref>
-            <button className="w-32 h-10 border-2 border-themeGreen text-xs font-Circular-std-book mt-3">
+            <button className="w-32 h-10 border-2 border-themeGreen text-xs font-Cerebri-sans-book mt-3">
               Contact Support
             </button>
           </Link>
@@ -235,7 +235,7 @@ export default function EditProfile({ next }: IProps) {
             key={index.toString()}
             className="w-full flex xl:flex-row lg:flex-row md:flex-col sm:flex-col justify-between mt-6 font-semibold text-sm text-gray-500"
           >
-            <div className="w-full font-Circular-std-book">
+            <div className="w-full font-Cerebri-sans-book">
               <label>Certifcate</label>
               <div className="xl:w-11/12 lg:w-11/12 md:w-full sm:w-full">
                 <Input
@@ -292,11 +292,10 @@ export default function EditProfile({ next }: IProps) {
               </div>
             </div>
 
-            {certificates.length > 1 && (
               <div className="flex items-center">
                 <FiX size={25} color="red" onClick={() => deleteCert(index)} className="cursor-pointer mt-7" />
               </div>
-            )}
+
           </div>
         ))}
 
@@ -314,7 +313,7 @@ export default function EditProfile({ next }: IProps) {
         <div className="w-full flex justify-end mt-6">
           <button
             onClick={submit}
-            className="w-32 bg-themeGreen h-12 text-sm font-Circular-std-book text-white"
+            className="w-32 bg-themeGreen h-12 text-sm font-Cerebri-sans-book text-white"
           >
             {loading && <Spinner size="md" color="white" />}
             {!loading && <span>Continue</span>}

@@ -270,6 +270,10 @@ export default function ReviewModal({ open, setOpen, id, user }: IProps) {
                     setStage(3);
                     return
                 }
+            } else {
+                alert(json1.successMessage);
+                setLoading(false);
+                close();
             }
         }
     }

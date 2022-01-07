@@ -264,17 +264,17 @@ export default function BigScreen({ states, services}: {states: IState[], servic
 
             <div className="flex items-center">
                 <div className={step >= 1 ? ACTIVE:INACTIVE}>1</div>
-                <p className="ml-4 font-semibold text-sm text-gray-500">Personnal Information</p>
+                <p className="ml-4 font-Circular-std-medium text-sm text-gray-500">Personnal Information</p>
             </div>
 
             <div className="flex ml-6 items-center">
                 <div className={step >= 2 ? ACTIVE:INACTIVE}>2</div>
-                <p className="ml-4 font-semibold text-sm text-gray-500">Business Information</p>
+                <p className="ml-4 font-Circular-std-medium text-sm text-gray-500">Business Information</p>
             </div>
 
             <div className="flex ml-6 items-center">
                 <div className={step >= 3 ? ACTIVE:INACTIVE}>3</div>
-                <p className="ml-4 font-semibold text-sm text-gray-500">Social Media</p>
+                <p className="ml-4 font-Circular-std-medium text-sm text-gray-500">Social Media</p>
             </div>
 
         </div>
@@ -284,7 +284,7 @@ export default function BigScreen({ states, services}: {states: IState[], servic
          <div className="xl:hidden lg:hidden md:flex sm:flex justify-center">
              <div className="flex items-center">
                 <div className={ACTIVE}>{step}</div>
-                <p className="ml-4 font-semibold text-sm text-gray-500">{heading()}</p>
+                <p className="ml-4 font-Circular-std-medium text-sm text-gray-500">{heading()}</p>
             </div>
          </div>
 

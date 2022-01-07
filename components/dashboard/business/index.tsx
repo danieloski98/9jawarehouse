@@ -114,7 +114,7 @@ export default function Business() {
 
         <div className="w-full h-20 flex items-center xl:px-10 lg:px-10 md:px-5 sm:px-5 mt-16">
             <FiChevronLeft size={30} color="grey" className="cursor-pointer" onClick={() => router.back()} />
-            <div className="ml-6 font-Circular-std-book text-md">
+            <div className="ml-6 font-Cerebri-sans-book text-md">
                 <Breadcrumb className="text-sm font-light text-gray-400">
                     <BreadcrumbItem>
                         <p onClick={() => router.push('/')} className='cursor-pointer hover:underline'>Home</p>

@@ -18,15 +18,15 @@ export default function ContactUs() {
             <div className="xl:w-3/4 lg:w-3/4 md:w-full sm:w-full mr-10 flex">
                 <div className="xl:w-2/4 lg:w-2/4 md:w-full sm:w-full h-full ">
                     <p className="text-3xl text-themeGreen font-Circular-std-medium">Contact Us</p>
-                    <p className="text-sm font-Circular-std-book mt-3 text-gray-500">Create screens directly in Method or add your images from Sketch. You can even sync designs from your cloud storage!</p>
+                    <p className="text-sm font-Cerebri-sans-book mt-3 text-gray-500">Create screens directly in Method or add your images from Sketch. You can even sync designs from your cloud storage!</p>
 
                     <div className="flex flex-col xl:w-full lg:w-full md:w-full sm:w-full mt-6">
-                        <label className="font-Circular-std-book text-sm">Email</label>
+                        <label className="font-Cerebri-sans-book text-sm">Email</label>
                         <InputGroup bgColor="#F1EEEE" className="mt-2" size="lg">
                             <InputLeftElement>
                                 <FiMail size={25} color="gray" />
                             </InputLeftElement>
-                            <Input fontSize="xs" className="font-Circular-std-book" />
+                            <Input fontSize="xs" className="font-Cerebri-sans-book" />
                         </InputGroup>
                     </div>
 
@@ -36,29 +36,29 @@ export default function ContactUs() {
                             <InputLeftElement>
                                 <FiUser size={25} color="gray" />
                             </InputLeftElement>
-                            <Input fontSize="xs" className="font-Circular-std-book" />
+                            <Input fontSize="xs" className="font-Cerebri-sans-book" />
                         </InputGroup>
                     </div>
 
                     <div className="flex flex-col xl:w-full lg:w-full md:w-full sm:w-full mt-6">
-                        <label className="font-Circular-std-book text-sm">Message</label>
-                        <textarea className="w-full h-24 p-4 bg-gray-100 font-Circular-std-book"></textarea>
+                        <label className="font-Cerebri-sans-book text-sm">Message</label>
+                        <textarea className="w-full h-24 p-4 bg-gray-100 font-Cerebri-sans-book"></textarea>
                     </div>
 
-                    <button className="mt-5 w-full h-10 bg-themeGreen text-white text-sm font-Circular-std-book">Send Message</button>
+                    <button className="mt-5 w-full h-10 bg-themeGreen text-white text-sm font-Cerebri-sans-book">Send Message</button>
 
                 </div>
             </div>
 
             <div className="bg-gray-20 xl:w-72 lg:w-72 md:w-full sm:w-full xl:h-96 lg:h-96 md:h-auto sm:h-auto xl:mt-0 lg:mt-0 md:mb-6 sm:mb-6">
                 <div className="flex flex-col">
-                    <p className="text-xl font-Circular-std-book">Phone</p>
-                    <p className="mt-0 font-Circular-std-book text-themeGreen">+1 234 567 89 10</p>
+                    <p className="text-xl font-Cerebri-sans-book">Phone</p>
+                    <p className="mt-0 font-Cerebri-sans-book text-themeGreen">+1 234 567 89 10</p>
                 </div>
 
                 <div className="flex flex-col mt-5">
-                    <p className="text-xl font-Circular-std-book">Email</p>
-                    <p className="mt-0 font-Circular-std-book text-themeGreen">Support@9jawarehouse.com</p>
+                    <p className="text-xl font-Cerebri-sans-book">Email</p>
+                    <p className="mt-0 font-Cerebri-sans-book text-themeGreen">Support@9jawarehouse.com</p>
                 </div>
 
                 <div className="w-full flex"></div>
