@@ -163,7 +163,7 @@ export default function Navbar({page, setPage}: IProps) {
               <MenuList w="1000px" maxH="500px" overflow="auto" className="grid grid-cols-4 font-light text-sm">
                 {serv.map((item, index) => (
                   <MenuItem key={index.toString()}>
-                    <Link prefetch={false} shallow={true} passHref href={`/services/${item.name}`}>
+                    <Link prefetch={false} shallow={true} passHref href={`/services?service=${item.name}`}>
                       <p className='font-Cerebri-sans-book '>
                       {item.name}
                       </p>
@@ -178,8 +178,8 @@ export default function Navbar({page, setPage}: IProps) {
 
             {!loggedIn && (
               <div className="flex font-Cerebri-sans-book text-sm cursor-pointer">
-                <p className="mr-3"><Link href="/auth/createaccount">Create Account</Link></p>
-                <p><Link href="/auth/login">Login</Link></p>
+                <p className="mr-3"><Link href="/auth/signup">Create Account</Link></p>
+                <p><Link href="/auth/loginform">Login</Link></p>
               </div>
             )}
         </div>
@@ -318,7 +318,7 @@ export default function Navbar({page, setPage}: IProps) {
                                   {serv.map((item, index) => (
                                     <div key={index.toString()}>
                                       <p className="mt-3 mb-3 font-Cerebri-sans-book" key={index.toString()}>
-                                        <Link href={`/services/${item.name}`}>{item.name}</Link>
+                                        <Link href={`/services?service=${item.name}`}>{item.name}</Link>
                                       </p>
 
                                       {index !== serv.length - 1 && (

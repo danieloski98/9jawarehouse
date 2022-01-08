@@ -132,7 +132,7 @@ export default function ServiceNavbar() {
               <MenuList w="1000px" maxH="500px" overflow="auto" className="grid grid-cols-4 font-light text-sm">
                 {serv.map((item, index) => (
                   <MenuItem key={index.toString()}>
-                    <Link prefetch={false} shallow={true} href={`/services/${item.name}`}>{item.name}</Link>
+                    <Link prefetch={false} shallow={true} href={`/services?service=${item.name}`}>{item.name}</Link>
                   </MenuItem>
                 ))}             
               </MenuList>
@@ -143,8 +143,8 @@ export default function ServiceNavbar() {
 
             {!loggedIn && (
               <div className="flex font-Cerebri-sans-book text-sm cursor-pointer">
-                <p className="mr-3"><Link href="/auth/createaccount">Create Account</Link></p>
-                <p><Link href="/auth/login">Login</Link></p>
+                <p className="mr-3"><Link href="/auth/signup">Create Account</Link></p>
+                <p><Link href="/auth/loginform">Login</Link></p>
               </div>
             )}
         </div>
@@ -223,29 +223,17 @@ export default function ServiceNavbar() {
                         PIN: 9080998
                     </div> */}
 
-                    <Link href="/dashboard">
-                        <a className="text-themeGreen mt-5 text-lg font-light">Dashboard</a>
-                    </Link>
+                    {loggedIn && <Avatar src={user.profile_pic} className="mr-6 cursor-pointer" size="sm" onClick={() => router.push('/dashboard')} />}
+                    {/* {loggedIn && <FiBell size={25} color="black" className='cursor-pointer' onClick={() => setShowNoti(true)} />} */}
+
+                    {!loggedIn && (
+                      <div className="flex flex-col font-Cerebri-sans-book text-md text-themeGreen cursor-pointer">
+                        <p className="mr-3"><Link href="/auth/signup">Create Account</Link></p>
+                        <p className='mt-4'><Link href="/auth/loginform">Login</Link></p>
+                      </div>
+                    )}
 
                     <Accordion className="mt-5" allowToggle allowMultiple defaultIndex={[0]}>
-                        {/* <AccordionItem>
-                            <AccordionButton>
-                                <Box flex="1" textAlign="left">
-                                  <p className="text-xl font-light text-themeGreen">Dashboard</p>
-                                </Box>
-                                <AccordionIcon />
-                            </AccordionButton>
-
-                            <AccordionPanel>
-                              <div className="w-full flex flex-col">
-                                <p onClick={() => setPage(1)}>Profile</p>
-                                <p className="mt-3" onClick={() => setPage(2)}>Customer Reviews</p>
-                                <p className="mt-3" onClick={() => setPage(3)}>Subscriptions</p>
-                                <p className="mt-3">Notifications</p>
-                                <p className="mt-3" onClick={() => setPage(4)}>Settings</p>
-                              </div>
-                            </AccordionPanel>
-                        </AccordionItem> */}
 
                         <AccordionItem>
                             <AccordionButton>
@@ -256,22 +244,12 @@ export default function ServiceNavbar() {
                             </AccordionButton>
 
                             <AccordionPanel>
-                              <div className="w-full h-64 overflow-y-auto flex flex-col">
-                                <p>Profile</p>
-                                <p className="mt-3">Dry cleaner</p>
-                                <p className="mt-3">Laundary</p>
-                                <p className="mt-3">Cleaner</p>
-                                <p className="mt-3">Barber</p>
-                                {/* <p>Profile</p> */}
-                                <p className="mt-3">Dry cleaner</p>
-                                <p className="mt-3">Laundary</p>
-                                <p className="mt-3">Cleaner</p>
-                                <p className="mt-3">Barber</p>
-                                {/* <p>Profile</p> */}
-                                <p className="mt-3">Dry cleaner</p>
-                                <p className="mt-3">Laundary</p>
-                                <p className="mt-3">Cleaner</p>
-                                <p className="mt-3">Barber</p>
+                              <div className="w-full h-64 overflow-y-auto text-black font-Cerebri-sans-book flex flex-col">
+                              {serv.map((item, index) => (
+                                <p className='font-Cerebri-sans-book text-sm mb-4' key={index.toString()}>
+                                  <Link prefetch={false} shallow={true} href={`/services?service=${item.name}`}>{item.name}</Link>
+                                </p>
+                              ))}  
                               </div>
                             </AccordionPanel>
                         </AccordionItem>

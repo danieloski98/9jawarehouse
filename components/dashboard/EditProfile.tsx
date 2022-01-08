@@ -90,6 +90,15 @@ export default function EditProfile({ next }: IProps) {
      setCertificates(certs);
  }
 
+ const deleteImgs = (index: number) => {
+   const img = [...imgs];
+   const files = [...imgsFiles];
+   files.splice(imgsFiles.length - index, 1);
+   setImgsFiles(files);
+   img.splice(index, 1);
+   setImages(img);
+ }
+
   const pickImages = () => {
   picker?.click();
   }
@@ -141,6 +150,8 @@ export default function EditProfile({ next }: IProps) {
       if (json.statusCode !== 200) {
         alert(json.errorMessage);
       }
+
+      setLoading(false);
     }
 
     if (profilePic !== details.profile_pic) {
@@ -204,16 +215,16 @@ export default function EditProfile({ next }: IProps) {
           </p>
           <div className="w-auto h-24 overflow-x-auto overflow-y-hidden flex mt-6 flex-nowrap">
             {imgs.map((item, index) => (
-              <div className="w-24 min-w-lg max-w-md h-full overflow-hidden mr-4 rounded-md" key={index.toString()}>
+              <div title="double Click to delete" className="w-24 min-w-lg max-w-md h-full overflow-hidden mr-4 rounded-md cursor-pointer" onDoubleClick={() => deleteImgs(index)} key={index.toString()}>
                 <div
                 className="min-w-max h-full bg-gray-200 flex flex-col justify-center items-center mr-4 "
               >
-                <FiX size={20} color="red" className="z-30" />
-                <Image src={item} alt="picture" />
+                {/* <FiX size={20} color="red" className="z-30" /> */}
+                <Image src={item} alt="picture" className="w-24 h-full" />
               </div>
               </div>
             ))}
-            {details.pictures.length < 5 && (
+            {imgs.length < 5 && (
               <div onClick={pickImages} className="w-24 h-full bg-gray-200 flex justify-center items-center mr-4 cursor-pointer">
                 <FiCamera size={35} color="grey" />
               </div>

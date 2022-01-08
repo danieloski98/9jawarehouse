@@ -35,7 +35,7 @@ export default function Features() {
                     <li className="mt-3">Control when, where, and how you work</li>
                 </ul>
 
-                <button onClick={() => router.push('/auth/createaccount')} className="w-40 h-10 bg-themeGreen text-white text-sm mt-6 font-Circular-std-book">
+                <button onClick={() => router.push('/auth/signup')} className="w-40 h-10 bg-themeGreen text-white text-sm mt-6 font-Circular-std-book">
                     Become a Vendor
                 </button>
 
@@ -64,7 +64,7 @@ export default function Features() {
                     <li className="mt-3">Beauty and SPA</li>
                 </ul>
 
-                <p className="mt-6 text-sm font-Circular-std-book text-green-600 flex">See All Specialities <FiArrowRight size={20} className="ml-6 cursor-pointer" onClick={() => router.push('/services/dj')} /> </p>
+                <p className="mt-6 text-sm font-Circular-std-book text-green-600 flex">See All Specialities <FiArrowRight size={20} className="ml-6 cursor-pointer" onClick={() => router.push('/services?service=')} /> </p>
 
             </div>
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { FiSearch, FiMenu } from 'react-icons/fi'
-import { InputGroup, Input, InputLeftAddon, InputLeftElement, Drawer, DrawerOverlay, DrawerContent, DrawerBody, Avatar, Menu, MenuButton, MenuList, MenuItem, } from '@chakra-ui/react'
+import { InputGroup, Input, InputLeftAddon, InputLeftElement, Drawer, DrawerOverlay, DrawerContent, DrawerBody, Avatar, Menu, MenuButton, MenuList, MenuItem, Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Divider, } from '@chakra-ui/react'
 const colors = require('tailwindcss/colors')
 import { useRouter } from 'next/router'
 import { FiBell, FiChevronDown, FiX } from 'react-icons/fi'
@@ -12,6 +12,8 @@ import Link from 'next/link'
 import {useSelector, useDispatch} from 'react-redux';
 import { RootState } from '../../store/index';
 import { setServices as SetServ } from '../../reducers/services.reducer'
+import { updateUser } from '../../reducers/User.reducer'
+import { updatePin } from '../../reducers/pin.reducer'
 
 // images
 import Logo from '../../public/images/logo.svg';
@@ -22,6 +24,18 @@ import { IServerReturnObject } from '../../utils/types/serverreturntype';
 
 // other components
 export const LeftNavbar = () => {
+    const dispatch = useDispatch();
+    const serv = useSelector((state: RootState) => state.ServicesReducer.services);
+
+    React.useMemo(() => {
+        (async function() {
+          const request1 = await fetch(`${url}services`);
+          const json1 = await request1.json() as IServerReturnObject;
+          const ser = json1.data;
+    
+          dispatch(SetServ(ser))
+        })()
+      }, [dispatch]);
 
     const [open, setOpen] = React.useState(false);
     const router = useRouter();
@@ -29,20 +43,50 @@ export const LeftNavbar = () => {
     return (
         <div className="w-full h-24 flex justify-between items-center px-5">
             <Image src={Logo} alt="logo" className=" w-20 h-20" />
-            <div className=" xl:hidden lg:hidden md:flex sm:flex w-20 justify-between items-center">
-                <FiSearch size={25} color="grey" />
+            <div className=" xl:hidden lg:hidden md:flex sm:flex w-20 justify-end items-center">
+                {/* <FiSearch size={25} color="grey" /> */}
                 <FiMenu size={25} color="grey" onClick={() => setOpen(true)} />
             </div>
 
             {/* drawer */}
-            <Drawer isOpen={open} onClose={() => setOpen(false)} placement="top" >
+            <Drawer isOpen={open} onClose={() => setOpen(false)} placement="right" >
                 <DrawerOverlay />
                 <DrawerContent>
                     <DrawerBody>
-                        <div className="w-full flex flex-col items-center text-md font-light text-gray-600">
-                            <Avatar src="https://bit.ly/broken-link" className="" size="sm" />
-                            <p onClick={() => router.push('/auth/login')} className="mt-6 text-md font-Circular-std-book">Login</p>
-                            <p onClick={() => router.push('/auth/createaccount')} className="mt-2 mb-4 text-md font-Circular-std-book">Register</p>
+                        <div className="w-full flex flex-col items-start text-md font-light text-gray-600">
+                            {/* <Avatar src="https://bit.ly/broken-link" className="" size="sm" /> */}
+                            <p onClick={() => router.push('/auth/loginform')} className="mt-6 text-md font-Cerebri-sans-book text-themeGreen">Login</p>
+                            <p onClick={() => router.push('/auth/signup')} className="mt-4 mb-4 text-md font-Cerebri-sans-book text-themeGreen">Register</p>
+
+                    <Accordion className="mt-5" allowToggle allowMultiple defaultIndex={[0]}>
+
+
+                        <AccordionItem>
+                            <AccordionButton>
+                                <Box flex="1" textAlign="left">
+                                  <p className="text-xl font-Cerebri-sans-book text-themeGreen">Find Services</p>
+                                </Box>
+                                <AccordionIcon />
+                            </AccordionButton>
+
+                            <AccordionPanel>
+                              <div className="w-full h-64 overflow-y-auto flex flex-col">
+                                {/* <p>Profile</p> */}
+                                  {serv.map((item, index) => (
+                                    <div key={index.toString()}>
+                                      <p className="mt-3 mb-3 font-Cerebri-sans-book" key={index.toString()}>
+                                        <Link href={`/services/${item.name}`}>{item.name}</Link>
+                                      </p>
+
+                                      {index !== serv.length - 1 && (
+                                        <Divider />
+                                      )}
+                                    </div>
+                                  ))}
+                              </div>
+                            </AccordionPanel>
+                        </AccordionItem>
+                    </Accordion>
                         </div>
                     </DrawerBody>
                 </DrawerContent>
@@ -83,7 +127,7 @@ const RightNavBar = () => {
               <MenuList w="1000px" size maxH="500px" overflow="auto" mr="200px" className="grid grid-cols-4 font-light text-sm">
                 {serv.map((item, index) => (
                   <MenuItem key={index.toString()}>
-                    <a href={`/services/${item.name}`}>
+                    <a href={`/services?service=${item.name}`}>
                         <p className="text-gray-600 font-Circular-std-book">{item.name}</p>
                     </a>
                   </MenuItem>
@@ -91,11 +135,11 @@ const RightNavBar = () => {
               </MenuList>
             </Menu>
 
-            <p onClick={() => router.push('/auth/createaccount')} className="text-md font-Circular-std-book mx-5 flex items-center cursor-pointer">
+            <p onClick={() => router.push('/auth/signup')} className="text-md font-Circular-std-book mx-5 flex items-center cursor-pointer">
                 <span>Become A Vendor</span>
             </p>
 
-            <p onClick={() => router.push('/auth/login')} className="text-md font-Circular-std-book mx-5 flex items-center cursor-pointer">
+            <p onClick={() => router.push('/auth/loginform')} className="text-md font-Circular-std-book mx-5 flex items-center cursor-pointer">
                 <span>Login</span>
             </p>
     </div>
@@ -110,7 +154,7 @@ export default function Banner() {
 
     const handleKeydonw = (e: any) => {
         if (e.key === 'Enter') {
-          router.push(`/services/${query}`);
+          router.push(`/services?service=${query}`);
         }
       }
   return (
