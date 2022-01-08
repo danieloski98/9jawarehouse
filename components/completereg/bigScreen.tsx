@@ -125,12 +125,12 @@ export default function BigScreen({ states, services}: {states: IState[], servic
         if (val === 2) {
             setProgress(66)
             setStep(val);
-            window.scrollY = 0;
+            window.scrollTo({ top: 0, behavior: 'smooth' })
         }
         if (val === 3) {
             setProgress(100)
             setStep(val);
-            window.scrollY = 0;
+            window.scrollTo({ top: 0, behavior: 'smooth' })
         }
     }
 
