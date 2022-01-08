@@ -68,7 +68,7 @@ export default function BusinessInfo({ next, images, picker, profilePic, formik,
   return (
     <div className="w-full h-auto flex flex-col">
         <div className="flex items-center h-auto">
-            <FiChevronLeft size={30} color="grey" onClick={() => next(1)} />
+            <FiChevronLeft size={30} color="grey" className='cursor-pointer' onClick={() => next(1)} />
             <p className="text-2xl Cerebri-sans-book text-gray-600 ml-4">Business Information</p>
         </div>
         <p className="text-sm font-semibold text-gray-500 mt-4">

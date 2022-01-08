@@ -14,6 +14,7 @@ import { ICertificate } from '../../utils/types/certificate';
 import url from '../../utils/url';
 import { IServerReturnObject } from '../../utils/types/serverreturntype';
 import { IState } from '../../utils/types/Lga&State';
+import { clearTimeout } from 'timers';
 
 // validationSchema
 const validationSchema = yup.object({
@@ -81,6 +82,16 @@ export default function BigScreen({ states, services}: {states: IState[], servic
         ])
     }, []);
 
+    // React.useEffect(() => {
+    //     function preventBack() {window.history.forward();}  
+        
+    //     // window.history.forward();
+    //     const timer = setTimeout(() => preventBack(), 0);  
+    //     window.onunload = function () {null};
+
+    //     return () => clearTimeout(timer);
+    // }, []);
+
     React.useEffect(() => {
         fileReader.addEventListener('load', () => {
             console.log(caller);
@@ -109,14 +120,17 @@ export default function BigScreen({ states, services}: {states: IState[], servic
         if (val === 1) {
             setProgress(33)
             setStep(val);
+            window.scrollTo({ top: 0, behavior: 'smooth' })
         }
         if (val === 2) {
             setProgress(66)
             setStep(val);
+            window.scrollY = 0;
         }
         if (val === 3) {
             setProgress(100)
             setStep(val);
+            window.scrollY = 0;
         }
     }
 

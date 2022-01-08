@@ -180,10 +180,10 @@ export default function Services({states, services}: IProps) {
         <div className="w-1/5 h-full xl:block lg:block md:hidden sm:hidden pb-5 mx-5">
             {/* <Sidebar page={page} setPage={changePage} /> */}
             <div className="w-full h-full bg-white border-2 border-gray-200 p-0 overflow-auto">
-            <p className=' mb-2 cursor-pointer w-full h-auto p-3 gray-300 font-Circular-std-medium text-md'>Related Service</p>
+            <p className=' mb-0 cursor-pointer w-full h-auto p-3 gray-300 font-Circular-std-medium text-md'>Related Service</p>
             <Divider />
                 {services.map((item, index) => (
-                    <p key={index.toString()} onClick={() => setSr(item.name)} className=' mb-2 cursor-pointer w-full h-auto p-3 hover:bg-gray-200 border-gray-300 font-Cerebri-sans-book text-sm'>{item.name}</p>
+                    <p key={index.toString()} onClick={() => setSr(item.name)} className=' cursor-pointer w-full h-auto p-3 hover:bg-gray-200 border-gray-300 font-Cerebri-sans-book text-sm'>{item.name}</p>
                 ))}
             </div>
 

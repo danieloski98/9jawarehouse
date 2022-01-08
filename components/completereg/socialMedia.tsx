@@ -40,7 +40,7 @@ const sub = () => {
   return (
     <div className="w-full h-auto flex flex-col">
         <div className="flex items-center h-auto">
-            <FiChevronLeft size={30} color="grey" onClick={() => next(2)} />
+            <FiChevronLeft size={30} color="grey" className='cursor-pointer' onClick={() => next(2)} />
             <p className="text-2xl Cerebri-sans-book text-gray-600 ml-4">Connect Social Media account</p>
         </div>
         <p className="text-sm font-semibold text-gray-500 mt-4">

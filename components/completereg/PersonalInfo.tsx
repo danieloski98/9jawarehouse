@@ -120,7 +120,8 @@ export default function PersonalInfo({ next, states, formik }: IProps) {
             <div className="w-full">
                 <label>State</label>
                 <div className="xl:w-11/12 lg:w-11/12 md:w-full sm:w-full">
-                    <Select border="none" bgColor="whitesmoke" borderRadius={0} className="bg-gray-100 mt-3" name="state" value={formik.values.state} onChange={formik.handleChange} onFocus={() => formik.setFieldTouched('state', true, true)}>
+                    <Select border="none" bgColor="whitesmoke" borderRadius={0} fontSize="sm" className="bg-gray-100 mt-3" name="state" value={formik.values.state} onChange={formik.handleChange} onFocus={() => formik.setFieldTouched('state', true, true)}>
+                        <option selected value="1">Select Your State</option>
                         {states !== undefined && states.map((item, index) => (
                             <option value={item.officialName} key={index.toString()}>{item.officialName}</option>
                         ))}
@@ -132,7 +133,8 @@ export default function PersonalInfo({ next, states, formik }: IProps) {
             <div className="w-full">
             <label>LGA</label>
                 <div className="xl:w-11/12 lg:w-11/12 md:w-full sm:w-full">
-                    <Select border="none" bgColor="whitesmoke" borderRadius={0} className="bg-gray-100 mt-3" name="lga" value={formik.values.lga} onChange={formik.handleChange} onFocus={() => formik.setFieldTouched('lga', true, true)}>
+                    <Select border="none" bgColor="whitesmoke" borderRadius={0} fontSize="sm" className="bg-gray-100 mt-3" name="lga" value={formik.values.lga} onChange={formik.handleChange} onFocus={() => formik.setFieldTouched('lga', true, true)}>
+                    <option selected value="1">Select Your LGA</option>
                         {lgas !== undefined && lgas.length > 0 && lgas.map((item, index) => (
                             <option value={item.LGA} key={index.toString()}>{item.LGA}</option>
                         ))}

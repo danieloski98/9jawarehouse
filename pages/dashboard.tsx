@@ -129,7 +129,7 @@ export default function Dashboard() {
        {
            !loading && (
                <>
-                     <div className="w-full h-24 shadow-lg z-20">
+                        <div className="w-full h-16 shadow-lg z-20">
                             <Navbar page={page} setPage={changePage} />
                         </div>
                         <div className="z-10 flex-1 h-full overflow-auto bg-gray-100 xl:p-10 lg:p-10 md:p-5 sm:p-5 flex justify-between">

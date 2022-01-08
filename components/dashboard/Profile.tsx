@@ -1,5 +1,5 @@
 import React from "react";
-import { Input, Avatar, Image as Img, Modal, ModalOverlay, ModalBody, ModalContent } from "@chakra-ui/react";
+import { Input, Avatar, Image as Img, Modal, ModalOverlay, ModalBody, ModalContent, Divider } from "@chakra-ui/react";
 import Image from 'next/image'
 import Banner from '../../public/images/banner.png';
 import { FaFacebook, FaWhatsapp, FaInstagram, FaInternetExplorer, FaTwitter, FaLink, FaCopy } from 'react-icons/fa'
@@ -218,25 +218,41 @@ export default function Profile({ setPage }: IProps) {
             </div>
           </div>
 
-          <div className="flex flex-col items-start xl:mt-0 lg:mt-0 md:mt-6 sm:mt-6 flex-1 ml-1">
-            <p className="text-md font-Circular-std-medium text-gray-600">Certifications</p>
-            {userDetails.certificates.length > 0 && userDetails.certificates.map((item: ICertificate, index: number) => (
-              <div key={index.toString()} className="mt-6 " >
-                  <p className="text-sm font-Cerebri-sans-book">{item.certificate}</p>
-                  <p className="text-sm font-Cerebri-sans-book mt-1">{item.organization}</p>
-                  <p className="text-sm font-Cerebri-sans-book mt-1">{item.year}</p>
-                  <a href={item.link} target="_blank" rel="noreferrer">
-                    <button className="w-40 h-10 border-2 border-themeGreen text-themeGreen mt-2 font-Cerebri-sans-book">View</button>
-                  </a>
-              </div>
-            ))}
-          </div>
 
           <div className="flex flex-1 flex-col">
             {/* <p className="text-md font-light text-gray-600">Email</p>
         <p className="text-sm text-gray-500 font-semibold">9jawarehouse@9ja.com.fake</p> */}
           </div>
         </div>
+
+        {/* certificates */}
+        <div className="flex flex-col xl:mt-10 lg:mt-10 md:mt-4 sm:mt-4 flex-1 xl:ml-10 lg:ml-10 md:ml-5 sm:ml-5">
+            <p className="text-md font-semibold text-gray-600">Certifications</p>
+            <div className="xl:flex lg:flex md:hidden sm:hidden mt-6 flex-wrap text-left">
+                <p className="text-sm flex-1">Certificate</p>
+                <p className="text-sm mt-1 flex-1">organization</p>
+                <p className="text-sm mt-1 flex-1">year Issued</p>
+                <p className="text-sm mt-1 flex-1">Action</p>
+            </div>
+
+            <div className="mt-5 pr-20 xl:block lg:block md:hidden sm:hidden">
+              <Divider />
+            </div>
+
+          <div className="flex flex-col flex-wrap">
+          {userDetails.certificates.length > 0 && userDetails.certificates.map((item, index) => (
+              <div key={index.toString()} className="mt-2 mb-5 mr-6 flex xl:flex-row lg:flex-row md:flex-col sm:flex-col xl:items-center lg:items-center md:items-start sm:items-start font-Circular-std-book" >
+                  <p className="text-sm flex-1">{item.certificate}</p>
+                  <p className="text-sm mt-1 flex-1">{item.organization}</p>
+                  <p className="text-sm mt-1 flex-1">{item.year}</p>
+                  <a href={item.link} target="_blank" rel="noreferrer" className="flex-1">
+                    <button className="w-20 h-8 rounded-full border-2 border-themeGreen text-themeGreen mt-0 font-Circular-std-book text-xs">View</button>
+                  </a>
+              </div>
+            ))}
+          </div>
+          </div>
+
       </div>
     </div>
   );

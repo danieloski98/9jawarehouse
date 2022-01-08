@@ -143,9 +143,11 @@ export default function Navbar({page, setPage}: IProps) {
   }
 
   return (
-    <div className="w-full h-20 bg-white px-10 flex justify-between z-40">
-        <div className="flex-1 flex items-center">
-            <Image src={Logo} alt="logo" className="w-20 h-20" />
+    <div className="w-full h-24 py-0 bg-white px-10 flex justify-between items-center z-40">
+        <div className="flex-1 flex items-center h-auto w-auto overflow-hidden ">
+            <Link href="/" passHref>
+              <Image src={Logo} alt="logo" className="w-20 h-20 cursor-pointer" />
+            </Link>
         </div>
         <div className="flex-1 xl:flex lg:flex md:hidden sm:hidden justify-end items-center z-20">
             <Menu size="lg" >

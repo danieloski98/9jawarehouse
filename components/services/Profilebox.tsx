@@ -201,32 +201,7 @@ export default function ProfileBox({user}: IProps) {
           </div>
         </div>
 
-        <div className="flex flex-col xl:mt-10 lg:mt-10 md:mt-4 sm:mt-4 flex-1 xl:ml-10 lg:ml-10 md:ml-5 sm:ml-5">
-            <p className="text-md font-semibold text-gray-600">Certifications</p>
-            <div className="flex mt-6 flex-wrap text-left">
-                <p className="text-sm flex-1">Certificate</p>
-                <p className="text-sm mt-1 flex-1">organization</p>
-                <p className="text-sm mt-1 flex-1">year Issued</p>
-                <p className="text-sm mt-1 flex-1">Action</p>
-            </div>
-
-            <div className="mt-5 pr-20">
-              <Divider />
-            </div>
-
-          <div className="flex flex-col flex-wrap">
-          {user.certificates.length > 0 && user.certificates.map((item, index) => (
-              <div key={index.toString()} className="mt-2 mb-5 mr-6 flex items-center font-Circular-std-book" >
-                  <p className="text-sm flex-1">{item.certificate}</p>
-                  <p className="text-sm mt-1 flex-1">{item.organization}</p>
-                  <p className="text-sm mt-1 flex-1">{item.year}</p>
-                  <a href={item.link} target="_blank" rel="noreferrer" className="flex-1">
-                    <button className="w-20 h-8 rounded-full border-2 border-themeGreen text-themeGreen mt-0 font-Circular-std-book text-xs">View</button>
-                  </a>
-              </div>
-            ))}
-          </div>
-          </div>
+        
 
       </div>
     </div>
