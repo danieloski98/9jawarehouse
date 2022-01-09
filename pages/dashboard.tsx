@@ -80,7 +80,7 @@ export default function Dashboard() {
       const data = localStorage.getItem('9jauser');
 
       if (data === null || data === undefined) {
-          router.push('/auth/login');
+          router.push('/');
       } else {
           fetchUser();
       }

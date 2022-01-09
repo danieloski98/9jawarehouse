@@ -32,8 +32,8 @@ export default function CreateAccount() {
                     </div>
                     <span className="ml-4 text-sm font-Cerebri-sans-book text-white">Continue Using Your Email</span>
                 </div>
-                <div className="xl:w-4/6 lg:w-4/6 md:w-full sm:w-full text-center">
-                    <p className="text-sm font-Cerebri-sans-book mt-12 text-center text-gray-500 cursor-pointer">Already have an account? <span className="text-themeGreen" onClick={() => router.push('/auth/login')}>Log in</span></p>
+                <div className="xl:w-4/6 lg:w-4/6 md:w-full sm:w-full text-center cursor-pointer">
+                    <p className="text-sm font-Cerebri-sans-book mt-12 text-center text-gray-500 cursor-pointer">Already have an account? <span className="text-themeGreen cursor-pointer" onClick={() => router.push('/auth/loginform')}>Log in</span></p>
                 </div>
             </div>
         </div>

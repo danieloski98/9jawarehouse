@@ -128,6 +128,10 @@ export default function Forgotpassword() {
 
         <div className="w-2/5 h-full xl:block lg:block md:hidden sm:hidden">
             <Image src={Girl} alt="girl" className="w-full h-full" />
+            <div className="z-20 absolute flex flex-col top-96 px-8 bottom-0 ">
+                <p className='font-Circular-std-medium text-2xl text-white'>Join 9ja Warehouse!</p>
+                <p className='mt-4 font-Cerebri-sans-book text-sm  text-white'> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Bibendum est ultricies integer quis. Iaculis urna id volutpat lacus laoreet. Mauris vitae ultricies leo integer malesuada. Ac odio tempor orci dapibus ultrices in. Egestas diam in arcu cursus euismod. Dictum fusce ut placerat orci nulla.</p>
+            </div>
         </div>
         
     </div>

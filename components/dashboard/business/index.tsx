@@ -150,7 +150,7 @@ export default function Business() {
                 {loading && <Skeleton height={200} />}
                 {!loading && (
                     <>
-                        <ProfileBox user={user} />
+                        <ProfileBox user={user} reviews={reviews.length} />
                         <div className="w-full xl:hidden lg:hidden md:block sm:block mb-10">
                             <ContactBox user={user} />
                             <ReviewBox open={setShowModal} />

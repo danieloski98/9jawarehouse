@@ -7,8 +7,12 @@ import {
   Image,
   Avatar,
   Spinner,
+  Tooltip,
+  Textarea,
 } from "@chakra-ui/react";
-import { FiChevronLeft, FiCamera, FiX } from "react-icons/fi";
+import { FiChevronLeft, FiCamera, FiX, FiHelpCircle } from "react-icons/fi";
+import { FaCamera } from 'react-icons/fa'
+import { IoMdHelpCircle } from 'react-icons/io'
 import Link from "next/link";
 
 // redux
@@ -174,6 +178,7 @@ export default function EditProfile({ next }: IProps) {
     }
 
     setLoading(false);
+    next(1);
    }
 
   return (
@@ -182,16 +187,18 @@ export default function EditProfile({ next }: IProps) {
       <input hidden type="file" id="picker2" accept="image/*" onChange={(e) => profileProcessor(e.target.files as any)} />
       <div className="w-full h-auto bg-white flex flex-col p-6">
         <div className="flex items-center h-auto">
-          <FiChevronLeft
-            size={30}
-            color="grey"
-            className="cursor-pointer"
-            onClick={() => next(1)}
-          />
+          <div className="w-6 h-6 rounded-full bg-black flex justify-center items-center">
+            <FiChevronLeft
+              size={20}
+              color="white"
+              className="cursor-pointer"
+              onClick={() => next(1)}
+            />
+          </div>
           <p className="text-2xl font-Circular-std-medium text-gray-600 ml-4">Edit Profile</p>
         </div>
 
-        <div className="w-full h-auto bg-white flex flex-col justify-center py-6">
+        {/* <div className="w-full h-auto bg-white flex flex-col justify-center py-6">
           <p className="text-md font-Cerebri-sans-book">
           To make changes to
           </p>
@@ -207,37 +214,289 @@ export default function EditProfile({ next }: IProps) {
               Contact Support
             </button>
           </Link>
-        </div>
+        </div> */}
 
         <div className="flex flex-col mt-8">
           <p className="text-sm font-Circular-std-medium text-gray-500 mt-4">
             Add featured images
           </p>
-          <div className="w-auto h-24 overflow-x-auto overflow-y-hidden flex mt-6 flex-nowrap">
+
+          {/* featured images */}
+
+          <div className="w-auto h-32 overflow-x-auto overflow-y-hidden flex mt-6 flex-nowrap">
             {imgs.map((item, index) => (
-              <div title="double Click to delete" className="w-24 min-w-lg max-w-md h-full overflow-hidden mr-4 rounded-md cursor-pointer" onDoubleClick={() => deleteImgs(index)} key={index.toString()}>
+              <div title="double Click to delete" className="w-32 min-w-lg max-w-md h-full overflow-hidden mr-4 " key={index.toString()}>
+
                 <div
-                className="min-w-max h-full bg-gray-200 flex flex-col justify-center items-center mr-4 "
+                className="min-w-max w-32 h-full bg-gray-200 flex flex-col justify-center items-center mr-4 z-0 overflow-hidden"
               >
                 {/* <FiX size={20} color="red" className="z-30" /> */}
-                <Image src={item} alt="picture" className="w-24 h-full" />
+                <Image src={item} alt="picture" className="w-24 h-full z-0" />
               </div>
+
+              <div style={{ backgroundColor: 'rgba(0, 0, 0, 0.345)' }} className="relative w-32 h-32 z-20 flex flex-col bottom-32">
+                  <div className="w-full h-8 flex justify-end p-1">
+                    <div onClick={() => deleteImgs(index)} key={index.toString()} className="w-4 h-4 rounded bg-black cursor-pointer">
+                      <FiX size={15} color="white" />
+                    </div>
+                  </div>
+                  <div className="flex-1 flex justify-center pt-4">
+                      <FaCamera color="white" size={35} />
+                    </div>
+                </div>
+              
               </div>
             ))}
             {imgs.length < 5 && (
-              <div onClick={pickImages} className="w-24 h-full bg-gray-200 flex justify-center items-center mr-4 cursor-pointer">
-                <FiCamera size={35} color="grey" />
+              <div onClick={pickImages} className="w-32 h-32 bg-gray-200 flex justify-center items-center mr-4 cursor-pointer">
+                <FaCamera size={35} color="grey" />
               </div>
             )}
           </div>
+
         </div>
 
         <div className="flex h-auto flex-col mt-12">
-          <Avatar size="xl" src={profilePic} className="cursor-pointer" onClick={pickPP} />
-          <p className="font-Circular-std-medium text-sm text-gray-500 mt-4">
+          <div className="w-24 h-24 rounded-full bg-gray-200 overflow-hidden">
+            <Image src={profilePic} alt="img" className="w-full h-full object-contain" />
+            <div style={{ backgroundColor: 'rgba(0, 0, 0, 0.345)' }} className="relative w-24 h-24 z-20 flex flex-col bottom-24">
+                <div className="flex-1 flex justify-center items-center">
+                  <FaCamera color="white" size={35} className="cursor-pointer" onClick={pickPP} />
+                </div>
+            </div>
+          </div>
+          {/* <Avatar size="xl" src={profilePic} className="cursor-pointer" onClick={pickPP} /> */}
+          <p className="font-Circular-std-book text-sm text-gray-500 mt-4">
             Upload Profile Picture
           </p>
         </div>
+
+        {/* business name */}
+
+        <div className="flex flex-col w-full mt-8">
+          <label className="font-Circular-std-book text-sm text-gray-600">Business Name</label>
+          <div className="flex xl:w-3/5 lg:w-3/4 md:w-full sm:w-full h-12 items-center">
+              <Input
+                  disabled
+                  value={details.business_name}
+                  border="none"
+                  bgColor="#F1EEEE"
+                  borderRadius={0}
+                  fontSize="sm"
+                  className="bg-gray-100 mt-3 font-Cerebri-sans-book"
+                />
+                <Tooltip hasArrow size="lg" fontSize="xs" className="font-Cerebri-sans-book" label="Sorry, you can't update this information at the moment. Reach out to our support for further assistance" placement="top">
+                  <span>
+                    <FiHelpCircle color="green" size={20} className="cursor-pointer ml-2" />
+                  </span>
+                </Tooltip>
+          </div>
+        </div>
+
+        {/* business Description */}
+
+        <div className="flex flex-col w-full mt-8">
+          <label className="font-Circular-std-book text-sm text-gray-600">Business Description</label>
+          <div className="flex w-full h-20 items-center">
+              <Textarea
+                  value={details.business_description}
+                  disabled
+                  border="none"
+                  bgColor="#F1EEEE"
+                  borderRadius={0}
+                  fontSize="sm"
+                  className="bg-gray-100 mt-3 font-Cerebri-sans-book"
+                />
+                <Tooltip hasArrow size="lg" fontSize="xs" className="font-Cerebri-sans-book" label="Sorry, you can't update this information at the moment. Reach out to our support for further assistance" placement="top">
+                  <span>
+                    <FiHelpCircle color="green" size={20} className="cursor-pointer ml-2" />
+                  </span>
+                </Tooltip>
+          </div>
+        </div>
+
+        {/* location details */}
+
+        <div className="flex xl:flex-row lg:flex-row md:flex-col sm:flex-col w-full mt-6">
+
+        <div className="flex flex-1 flex-col w-full xl:pr-5 md:mb-3 sm:mb-3">
+          <label className="font-Circular-std-book text-sm text-gray-600">Email Address</label>
+          <div className="flex w-full h-12 md:mt-3 sm:mt-3 items-center">
+              <Input
+                  value={details.email}
+                  disabled
+                  border="none"
+                  bgColor="#F1EEEE"
+                  borderRadius={0}
+                  fontSize="sm"
+                  className="bg-gray-100 mt-3 font-Cerebri-sans-book"
+                />
+                <Tooltip hasArrow size="lg" fontSize="xs" className="font-Cerebri-sans-book" label="Sorry, you can't update this information at the moment. Reach out to our support for further assistance" placement="top">
+                  <span>
+                    <FiHelpCircle color="green" size={20} className="cursor-pointer ml-2" />
+                  </span>
+                </Tooltip>
+          </div>
+        </div>
+
+        <div className="flex flex-1 flex-col w-full md:mb-3 sm:mb-3">
+          <label className="font-Circular-std-book text-sm text-gray-600">Phone Number</label>
+          <div className="flex w-full h-12 md:mt-3 sm:mt-3 items-center">
+              <Input
+                  value={details.phone}
+                  disabled
+                  border="none"
+                  bgColor="#F1EEEE"
+                  borderRadius={0}
+                  fontSize="sm"
+                  className="bg-gray-100 mt-3 font-Cerebri-sans-book"
+                />
+                <Tooltip hasArrow size="lg" fontSize="xs" className="font-Cerebri-sans-book" label="Sorry, you can't update this information at the moment. Reach out to our support for further assistance" placement="top">
+                  <span>
+                    <FiHelpCircle color="green" size={20} className="cursor-pointer ml-2" />
+                  </span>
+                </Tooltip>
+          </div>
+        </div>
+
+        </div>
+
+        <div className="flex xl:flex-row lg:flex-row md:flex-col sm:flex-col w-full mt-6">
+
+            <div className="flex flex-1 flex-col w-full xl:pr-5 md:mb-3 sm:mb-3">
+              <label className="font-Circular-std-book text-sm text-gray-600">House/business address</label>
+              <div className="flex w-full h-12 items-center">
+                  <Input
+                      value={details.business_address}
+                      disabled
+                      border="none"
+                      bgColor="#F1EEEE"
+                      borderRadius={0}
+                      fontSize="sm"
+                      className="bg-gray-100 mt-3 font-Cerebri-sans-book"
+                    />
+                    <Tooltip hasArrow size="lg" fontSize="xs" className="font-Cerebri-sans-book" label="Sorry, you can't update this information at the moment. Reach out to our support for further assistance" placement="top">
+                      <span>
+                        <FiHelpCircle color="green" size={20} className="cursor-pointer ml-2" />
+                      </span>
+                    </Tooltip>
+              </div>
+            </div>
+
+            <div className="flex flex-1 flex-col w-full md:mb-3 sm:mb-3">
+              <label className="font-Circular-std-book text-sm text-gray-600">State</label>
+              <div className="flex w-full h-12 items-center">
+                  <Select
+                      value={details.state}
+                      disabled
+                      border="none"
+                      bgColor="#F1EEEE"
+                      borderRadius={0}
+                      fontSize="sm"
+                      className="bg-gray-100 mt-3 font-Cerebri-sans-book"
+                    >
+                      <option value={details.state} selected>{details.state}</option>
+                    </Select>
+                    <Tooltip hasArrow size="lg" fontSize="xs" className="font-Cerebri-sans-book" label="Sorry, you can't update this information at the moment. Reach out to our support for further assistance" placement="top">
+                      <span>
+                        <FiHelpCircle color="green" size={20} className="cursor-pointer ml-2" />
+                      </span>
+                    </Tooltip>
+              </div>
+            </div>
+
+            </div>
+
+
+            <div className="flex xl:flex-row lg:flex-row md:flex-col sm:flex-col w-full mt-6">
+
+              <div className="flex flex-1 flex-col w-full xl:pr-5 md:mb-3 sm:mb-3">
+                <label className="font-Circular-std-book text-sm text-gray-600">LGA</label>
+                <div className="flex w-full h-12 items-center">
+                    <Select
+                        value={details.lga}
+                        disabled
+                        border="none"
+                        bgColor="#F1EEEE"
+                        borderRadius={0}
+                        fontSize="sm"
+                        className="bg-gray-100 mt-3 font-Cerebri-sans-book"
+                      >
+                        <option value={details.lga} selected>{details.lga}</option>
+                      </Select>
+                      <Tooltip hasArrow size="lg" fontSize="xs" className="font-Cerebri-sans-book" label="Sorry, you can't update this information at the moment. Reach out to our support for further assistance" placement="top">
+                        <span>
+                          <FiHelpCircle color="green" size={20} className="cursor-pointer ml-2" />
+                        </span>
+                      </Tooltip>
+                </div>
+              </div>
+
+              <div className="flex flex-1 flex-col w-full md:mb-3 sm:mb-3">
+                <label className="font-Circular-std-book text-sm text-gray-600">Country</label>
+                <div className="flex w-full h-12 items-center">
+                    <Select
+                        value={details.country}
+                        disabled
+                        border="none"
+                        bgColor="#F1EEEE"
+                        borderRadius={0}
+                        fontSize="sm"
+                        className="bg-gray-100 mt-3 font-Cerebri-sans-book"
+                      >
+                        <option value={details.country} selected>{details.country}</option>
+                      </Select>
+                      <Tooltip hasArrow size="lg" fontSize="xs" className="font-Cerebri-sans-book" label="Sorry, you can't update this information at the moment. Reach out to our support for further assistance" placement="top">
+                        <span>
+                          <FiHelpCircle color="green" size={20} className="cursor-pointer ml-2" />
+                        </span>
+                      </Tooltip>
+                </div>
+              </div>
+
+              </div>
+
+              {/* services */}
+
+              <div className="w-full flex flex-col">
+
+                <div className="flex flex-1 flex-col xl:w-2/4 lg:w-2/4 md:w-full sm:w-full mt-6 xl:pr-2 lg:pr-2 md:mb-3 sm:mb-3">
+                  <label className="font-Circular-std-book text-sm text-gray-600">Services</label>
+                  <div className="flex w-full h-12 items-center">
+                      <Select
+                          value={details.country}
+                          disabled
+                          border="none"
+                          bgColor="#F1EEEE"
+                          borderRadius={0}
+                          fontSize="sm"
+                          className="bg-gray-100 mt-3 font-Cerebri-sans-book"
+                        >
+                          <option value={details.country} selected>{details.country}</option>
+                        </Select>
+                        <Tooltip hasArrow size="lg" fontSize="xs" className="font-Cerebri-sans-book" label="Sorry, you can't update this information at the moment. Reach out to our support for further assistance" placement="top">
+                          <span>
+                            <FiHelpCircle color="green" size={20} className="cursor-pointer ml-2" />
+                          </span>
+                        </Tooltip>
+                        
+                  </div>
+                </div>
+
+                <div className="flex-1 flex w-full">
+                  {details.services.map((item, index) => (
+                    <div key={index.toString()} className="h-auto p-2 text-xs bg-green-100 text-themeGreen font-Cerebri-sans-book xl:mr-3 flex- items-center">
+                      {item}
+                    </div>
+                  ))}
+                </div>
+
+              </div>
+
+
+            
+
+
 
         <p className="mt-6 font-Circular-std-medium text-sm text-gray-500">Certificate</p>
 
@@ -249,13 +508,13 @@ export default function EditProfile({ next }: IProps) {
             <div className="w-full font-Cerebri-sans-book">
               <label>Certifcate</label>
               <div className="xl:w-11/12 lg:w-11/12 md:w-full sm:w-full">
-                <Input
+              <Input
                   value={items.certificate}
-                  onChange={(e) => changeCert(index, 'certificate', e.target.value)}
+                  onChange={(e) => changeCert(index, 'organization', e.target.value)}
                   border="none"
-                  bgColor="whitesmoke"
+                  bgColor="#F1EEEE"
                   borderRadius={0}
-                  className="bg-gray-100 mt-3"
+                  className="bg-gray-100 mt-3 text-sm font-Cerebri-sans-book"
                 />
               </div>
             </div>
@@ -267,9 +526,9 @@ export default function EditProfile({ next }: IProps) {
                   value={items.organization}
                   onChange={(e) => changeCert(index, 'organization', e.target.value)}
                   border="none"
-                  bgColor="whitesmoke"
+                  bgColor="#F1EEEE"
                   borderRadius={0}
-                  className="bg-gray-100 mt-3"
+                  className="bg-gray-100 mt-3 text-sm font-Cerebri-sans-book"
                 />
               </div>
             </div>
@@ -282,9 +541,9 @@ export default function EditProfile({ next }: IProps) {
                   onChange={(e) => changeCert(index, 'year', e.target.value)}
                   type="date"
                   border="none"
-                  bgColor="whitesmoke"
+                  bgColor="#F1EEEE"
                   borderRadius={0}
-                  className="bg-gray-100 mt-3"
+                  className="bg-gray-100 mt-3 text-sm font-Cerebri-sans-book"
                 />
               </div>
             </div>
@@ -296,9 +555,9 @@ export default function EditProfile({ next }: IProps) {
                   value={items.link}
                   onChange={(e) => changeCert(index, 'link', e.target.value)}
                   border="none"
-                  bgColor="whitesmoke"
+                  bgColor="#F1EEEE"
                   borderRadius={0}
-                  className="bg-gray-100 mt-3"
+                  className="bg-gray-100 mt-3 text-sm font-Cerebri-sans-book"
                 />
               </div>
             </div>
@@ -321,15 +580,168 @@ export default function EditProfile({ next }: IProps) {
           + Add Another Certification
         </p>
 
-        <div className="w-full flex justify-end mt-6">
-          <button
-            onClick={submit}
-            className="w-32 bg-themeGreen h-12 text-sm font-Cerebri-sans-book text-white"
-          >
-            {loading && <Spinner size="md" color="white" />}
-            {!loading && <span>Continue</span>}
-          </button>
-        </div>
+        {/* social media */}
+
+        <p className="text-md font-Circular-std-medium mt-8 text-gray-600">Connected Accounts</p>
+
+        <div className="w-full flex flex-col">
+
+            <div className="flex flex-1 flex-col xl:w-2/4 lg:w-2/4 md:w-full sm:w-full mt-6 xl:pr-2 lg:pr-2 md:mb-3 sm:mb-3">
+              <label className="font-Circular-std-book text-sm text-gray-600">Instagram</label>
+              <div className="flex w-full h-12 items-center">
+                  <Input
+                      value={details.instagram}
+                      disabled
+                      border="none"
+                      bgColor="#F1EEEE"
+                      borderRadius={0}
+                      fontSize="sm"
+                      className="bg-gray-100 mt-3 font-Cerebri-sans-book"
+                    />
+                    <Tooltip hasArrow size="lg" fontSize="xs" className="font-Cerebri-sans-book" label="Sorry, you can't update this information at the moment. Reach out to our support for further assistance" placement="top">
+                      <span>
+                        <FiHelpCircle color="green" size={20} className="cursor-pointer ml-2" />
+                      </span>
+                    </Tooltip>
+                    
+              </div>
+            </div>
+
+            <div className="flex-1 flex w-full">
+             
+            </div>
+
+            </div>
+
+            <div className="w-full flex flex-col">
+
+            <div className="flex flex-1 flex-col xl:w-2/4 lg:w-2/4 md:w-full sm:w-full mt-6 xl:pr-2 lg:pr-2 md:mb-3 sm:mb-3">
+              <label className="font-Circular-std-book text-sm text-gray-600">Twitter</label>
+              <div className="flex w-full h-12 items-center">
+                  <Input
+                      value={details.twitter}
+                      disabled
+                      border="none"
+                      bgColor="#F1EEEE"
+                      borderRadius={0}
+                      fontSize="sm"
+                      className="bg-gray-100 mt-3 font-Cerebri-sans-book"
+                    />
+                    <Tooltip hasArrow size="lg" fontSize="xs" className="font-Cerebri-sans-book" label="Sorry, you can't update this information at the moment. Reach out to our support for further assistance" placement="top">
+                      <span>
+                        <FiHelpCircle color="green" size={20} className="cursor-pointer ml-2" />
+                      </span>
+                    </Tooltip>
+                    
+              </div>
+            </div>
+
+            <div className="flex-1 flex w-full">
+             
+            </div>
+
+            </div>
+
+            <div className="w-full flex flex-col">
+
+            <div className="flex flex-1 flex-col xl:w-2/4 lg:w-2/4 md:w-full sm:w-full mt-6 xl:pr-2 lg:pr-2 md:mb-3 sm:mb-3">
+              <label className="font-Circular-std-book text-sm text-gray-600">Facebook</label>
+              <div className="flex w-full h-12 items-center">
+                  <Input
+                      value={details.facebook}
+                      disabled
+                      border="none"
+                      bgColor="#F1EEEE"
+                      borderRadius={0}
+                      fontSize="sm"
+                      className="bg-gray-100 mt-3 font-Cerebri-sans-book"
+                    />
+                    <Tooltip hasArrow size="lg" fontSize="xs" className="font-Cerebri-sans-book" label="Sorry, you can't update this information at the moment. Reach out to our support for further assistance" placement="top">
+                      <span>
+                        <FiHelpCircle color="green" size={20} className="cursor-pointer ml-2" />
+                      </span>
+                    </Tooltip>
+                    
+              </div>
+            </div>
+
+            
+
+            <div className="flex-1 flex w-full">
+             
+            </div>
+
+            </div>
+
+            <div className="w-full flex flex-col">
+
+            <div className="flex flex-1 flex-col xl:w-2/4 lg:w-2/4 md:w-full sm:w-full mt-6 xl:pr-2 lg:pr-2 md:mb-3 sm:mb-3">
+              <label className="font-Circular-std-book text-sm text-gray-600">Whatsapp</label>
+              <div className="flex w-full h-12 items-center">
+                  <Input
+                      value={details.whatsapp}
+                      disabled
+                      border="none"
+                      bgColor="#F1EEEE"
+                      borderRadius={0}
+                      fontSize="sm"
+                      className="bg-gray-100 mt-3 font-Cerebri-sans-book"
+                    />
+                    <Tooltip hasArrow size="lg" fontSize="xs" className="font-Cerebri-sans-book" label="Sorry, you can't update this information at the moment. Reach out to our support for further assistance" placement="top">
+                      <span>
+                        <FiHelpCircle color="green" size={20} className="cursor-pointer ml-2" />
+                      </span>
+                    </Tooltip>
+                    
+              </div>
+            </div>
+
+            <div className="flex-1 flex w-full">
+             
+            </div>
+
+            </div>
+
+            <div className="w-full flex flex-col">
+
+            <div className="flex flex-1 flex-col xl:w-2/4 lg:w-2/4 md:w-full sm:w-full mt-6 xl:pr-2 lg:pr-2 md:mb-3 sm:mb-3">
+              <label className="font-Circular-std-book text-sm text-gray-600">Website</label>
+              <div className="flex w-full h-12 items-center">
+                  <Input
+                      value={details.website}
+                      disabled
+                      border="none"
+                      bgColor="#F1EEEE"
+                      borderRadius={0}
+                      fontSize="sm"
+                      className="bg-gray-100 mt-3 font-Cerebri-sans-book"
+                    />
+                    <Tooltip hasArrow size="lg" fontSize="xs" className="font-Cerebri-sans-book" label="Sorry, you can't update this information at the moment. Reach out to our support for further assistance" placement="top">
+                      <span>
+                        <FiHelpCircle color="green" size={20} className="cursor-pointer ml-2" />
+                      </span>
+                    </Tooltip>
+                    
+              </div>
+            </div>
+
+            <div className="flex-1 flex w-full">
+             
+            </div>
+
+            </div>
+
+            <div className="w-full flex justify-end mt-6">
+              <button
+                onClick={submit}
+                className="w-32 bg-themeGreen h-12 text-sm font-Cerebri-sans-book text-white"
+              >
+                {loading && <Spinner size="md" color="white" />}
+                {!loading && <span>Update</span>}
+              </button>
+            </div>
+
+
       </div>
     </div>
   );

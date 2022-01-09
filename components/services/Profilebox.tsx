@@ -3,10 +3,12 @@ import { Input, Avatar, Modal, ModalOverlay, ModalBody, ModalContent, Divider } 
 import Image from 'next/image'
 import Banner from '../../public/images/banner.png';
 import { IUser } from "../../utils/types/user";
+import ReactStars from "react-rating-stars-component";
 import { FaFacebook, FaWhatsapp, FaInstagram, FaInternetExplorer, FaTwitter, FaLink, FaCopy } from 'react-icons/fa'
 
 interface IProps {
   user: IUser;
+  reviews: number;
 }
 
 const ConnectModal = ({icon, isOpen, close, value}: {icon: number; isOpen: boolean; close: Function, value: string}) => {
@@ -44,7 +46,7 @@ const ConnectModal = ({icon, isOpen, close, value}: {icon: number; isOpen: boole
  )
 }
 
-export default function ProfileBox({user}: IProps) {
+export default function ProfileBox({user, reviews}: IProps) {
    // states
    const [icon, setIcon] = React.useState(0);
    const [modalValue, setModalValue] = React.useState("");
@@ -79,7 +81,7 @@ export default function ProfileBox({user}: IProps) {
             />
             <div className="flex flex-col justify-center">
               <p className="text-lg font-Circular-std-medium text-gray-600 cursor-pointer">
-                <a href="#comments">{user.business_name} ({Math.round(user.rating) || 0})</a>
+                <a href="#comments">{user.business_name}</a>
               </p>
               <div className="flex w-full flex-wrap">
               {user !== undefined && user.services.map((item, index) => (
@@ -87,6 +89,18 @@ export default function ProfileBox({user}: IProps) {
                   {item}, 
                 </p>
               ))}
+              </div>
+              <div className="flex items-center text-sm font-Cerebri-sans-book text-gray-600 mt-4">
+                <span className="mr-4">{Math.ceil(user.rating)}</span>
+                <ReactStars
+                        count={5}
+                        size={10}
+                        activeColor="#ffd700"
+                        value={Math.ceil(user.rating)}
+                        isHalf={true}
+                        edit={false}
+                />
+                <span className="ml-4">({reviews})</span>
               </div>
             </div>
           </div>
@@ -200,6 +214,34 @@ export default function ProfileBox({user}: IProps) {
         <p className="text-sm text-gray-500 font-semibold">9jawarehouse@9ja.com.fake</p> */}
           </div>
         </div>
+
+         {/* certificates */}
+         <div className="flex flex-col xl:mt-10 lg:mt-10 md:mt-4 sm:mt-4 flex-1 xl:ml-10 lg:ml-10 md:ml-5 sm:ml-5">
+            <p className="text-md font-semibold text-gray-600">Certifications</p>
+            <div className="xl:flex lg:flex md:hidden sm:hidden mt-6 flex-wrap text-left">
+                <p className="text-sm flex-1">Certificate</p>
+                <p className="text-sm mt-1 flex-1">organization</p>
+                <p className="text-sm mt-1 flex-1">year Issued</p>
+                <p className="text-sm mt-1 flex-1">Action</p>
+            </div>
+
+            <div className="mt-5 pr-20 xl:block lg:block md:hidden sm:hidden">
+              <Divider />
+            </div>
+
+          <div className="flex flex-col flex-wrap">
+          {user.certificates.length > 0 && user.certificates.map((item, index) => (
+              <div key={index.toString()} className="mt-2 mb-5 mr-6 flex xl:flex-row lg:flex-row md:flex-col sm:flex-col xl:items-center lg:items-center md:items-start sm:items-start font-Circular-std-book" >
+                  <p className="text-sm flex-1">{item.certificate}</p>
+                  <p className="text-sm mt-1 flex-1">{item.organization}</p>
+                  <p className="text-sm mt-1 flex-1">{item.year}</p>
+                  <a href={item.link} target="_blank" rel="noreferrer" className="flex-1">
+                    <button className="w-20 h-8 rounded-full border-2 border-themeGreen text-themeGreen mt-0 font-Circular-std-book text-xs">View</button>
+                  </a>
+              </div>
+            ))}
+          </div>
+          </div>
 
         
 

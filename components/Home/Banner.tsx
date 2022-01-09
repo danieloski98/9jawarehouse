@@ -1,11 +1,12 @@
 import React from 'react';
 import Image from 'next/image';
-import { FiSearch, FiMenu } from 'react-icons/fi'
-import { InputGroup, Input, InputLeftAddon, InputLeftElement, Drawer, DrawerOverlay, DrawerContent, DrawerBody, Avatar, Menu, MenuButton, MenuList, MenuItem, Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Divider, } from '@chakra-ui/react'
+import { FiSearch, FiMenu, FiTrash2 } from 'react-icons/fi'
+import { InputGroup, Input, InputLeftAddon, InputLeftElement, Drawer, DrawerOverlay, DrawerContent, DrawerBody, Avatar, Menu, MenuButton, MenuList, MenuItem, Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Divider, Modal, ModalContent, Popover, PopoverTrigger, PopoverContent, PopoverArrow, PopoverBody, ModalOverlay, Spinner, PopoverHeader, } from '@chakra-ui/react'
 const colors = require('tailwindcss/colors')
 import { useRouter } from 'next/router'
-import { FiBell, FiChevronDown, FiX } from 'react-icons/fi'
+import { FiBell, FiChevronDown, FiX, FiChevronUp, FiChevronsDown } from 'react-icons/fi'
 import Link from 'next/link'
+import * as moment from 'moment';
 
 // redux
 // redux
@@ -14,12 +15,15 @@ import { RootState } from '../../store/index';
 import { setServices as SetServ } from '../../reducers/services.reducer'
 import { updateUser } from '../../reducers/User.reducer'
 import { updatePin } from '../../reducers/pin.reducer'
+import { login, logout } from '../../reducers/logged';
 
 // images
 import Logo from '../../public/images/logo.svg';
 import Woman from '../../public/images/woman.svg';
 import url from '../../utils/url';
 import { IServerReturnObject } from '../../utils/types/serverreturntype';
+import { useQuery } from 'react-query';
+import { INotification } from '../../utils/types/Notification';
 
 
 // other components
@@ -96,24 +100,131 @@ export const LeftNavbar = () => {
     )
 }
 
+// query frunction
+const getNotifications = async (user_id: string) => {
+  console.log(user_id);
+  const request = await fetch(`${url}notifications/${user_id}`);
+  const json = await request.json() as IServerReturnObject;
+  if (!request.ok || json.statusCode !== 200) {
+    throw new Error(json.errorMessage)
+  }
+  return json;
+}
+
 const RightNavBar = () => {
     const router = useRouter();
-
+    const [loading, setLoading] = React.useState(true);
     const dispatch = useDispatch();
-    const serv = useSelector((state: RootState) => state.ServicesReducer.services)
+    const serv = useSelector((state: RootState) => state.ServicesReducer.services);
+    const loggedIn = useSelector((state: RootState) => state.LoggedInReducer.loggedIn);
+    const user = useSelector((state: RootState) => state.UserReducer.user);
+    const [userMenuOpen, setUserMenuOpen] = React.useState(false);
+    const [notificationOpen, setNotificationOpen] = React.useState(false);
+    const [notiLoading, setNotiLoading] = React.useState(true);
+    const [notiError, setNotiError] = React.useState(false);
+    const [notifications, setNotifications] = React.useState([] as Array<INotification>);
 
-    React.useMemo(() => {
-    (async function() {
-      const request1 = await fetch(`${url}services`);
-      const json1 = await request1.json() as IServerReturnObject;
-      const ser = json1.data;
+    const fetchUser = React.useCallback( async() => {
+      setLoading(true);
+      // dispatch(updateUser(JSON.parse(localStorage.getItem('9jauser') as string)))
+      const _id = JSON.parse(localStorage.getItem('9jauser') as string)._id;
+      const request = await fetch(`${url}user/${_id}`);
+      const json = await request.json() as IServerReturnObject;
+  
+      if (json.statusCode !== 200) {
+          router.push('/');
+          alert(json.errorMessage);
+          dispatch(logout());
+          setLoading(false);
+          return
+      } else {
+          dispatch(updateUser(json.data));
+          dispatch(login());
+          setLoading(false);
+      }
+      }, [dispatch, router]);
 
-      dispatch(SetServ(ser))
-    })()
-  }, [dispatch]);
+    React.useEffect(() => {
+      const data = localStorage.getItem('9jauser');
+
+      if (data === null || data === undefined) {
+          dispatch(logout());
+          setLoading(false);
+          router.push('/');
+      } else {
+          fetchUser();
+      }
+    }, []);
+
+     // query
+    const getNotificationQuery = useQuery(['getNotifications', user._id], () => getNotifications(user._id), {
+      onSuccess: (data) => {
+        const dt = data.data as Array<INotification>;
+        setNotifications(data.data);
+        console.log(data.data);
+        setNotiLoading(false);
+        setNotiError(false)
+      },
+      onError: (error) => {
+        console.log(error);
+        setNotiLoading(false);
+        setNotiError(true);
+      }
+    })
+
+
+      React.useMemo(() => {
+      (async function() {
+        const request1 = await fetch(`${url}services`);
+        const json1 = await request1.json() as IServerReturnObject;
+        const ser = json1.data;
+
+        dispatch(SetServ(ser))
+      })()
+      }, [dispatch]);
+
+      const deleteNoti = async (id: string) => {
+        setNotiLoading(true);
+        const request = await fetch(`${url}notifications/${id}`, {
+          method: 'delete',
+        });
+        const json = await request.json() as IServerReturnObject;
+        setNotiLoading(false);
+        if (json.statusCode !== 200) {
+          alert(json.errorMessage);
+          return;
+        }else {
+          alert(json.successMessage);
+          return;
+        }
+      }
+
+      const getDate = (date: any) => {
+        const dt = moment.default(date);
+        return dt.startOf('hours').fromNow();
+      }
+
+      const handleLogout = () => {
+        localStorage.removeItem('9jauser');
+        localStorage.removeItem('9jatoken');
+
+        dispatch(logout())
+      }
 
     return (
-        <div className="w-full h-24 flex justify-center items-center text-white">
+        <div className="w-full h-24 flex justify-end pr-12 items-center text-white">
+
+            {/* modal */}
+            <Modal isOpen={loading} onClose={() => setLoading(false)} isCentered={true}>
+                <ModalOverlay />
+                <ModalContent>
+                    <ModalContent className="w-full flex flex-col items-center justify-center h-56">
+                        <Spinner colot="green.500" size="xl" />
+                        <p className="mt-4 font-Cerebri-sans-book text-xl">Loading Details...</p>
+                    </ModalContent>
+                </ModalContent>
+            </Modal>
+
              <Menu size="lg" preventOverflow={true}>
               <MenuButton
                 rightIcon={<FiChevronDown size={20} color="grey" />}
@@ -135,13 +246,102 @@ const RightNavBar = () => {
               </MenuList>
             </Menu>
 
-            <p onClick={() => router.push('/auth/signup')} className="text-md font-Circular-std-book mx-5 flex items-center cursor-pointer">
-                <span>Become A Vendor</span>
-            </p>
+            
 
-            <p onClick={() => router.push('/auth/loginform')} className="text-md font-Circular-std-book mx-5 flex items-center cursor-pointer">
-                <span>Login</span>
-            </p>
+            {loggedIn && (
+              <Popover placement='bottom' size="xs" isOpen={userMenuOpen} closeOnBlur closeOnEsc onClose={() => setUserMenuOpen(false)}> 
+              <PopoverTrigger>
+                <div className=" flex items-center  ml-6 cursor-pointer" onClick={() => setUserMenuOpen(prev => !prev)}>
+                  <Avatar src={user.profile_pic} size="sm" />
+                  {userMenuOpen && (
+                    <FiChevronUp size={25} className="ml-0 " color="white" />
+                  )}
+                  {!userMenuOpen && (
+                    <FiChevronDown color="white" size={25} className="ml-0" />
+                  )}
+                </div>
+              </PopoverTrigger>
+              <PopoverContent>
+                {/* <PopoverArrow /> */}
+                <PopoverBody className='w-16'>
+                  <div className="">
+                        <p onClick={() => router.push('/dashboard')} className="text-md text-themeGreen font-Circular-std-book mx-0 flex items-center cursor-pointer">
+                      <span>Dashboard</span>
+                      </p>
+
+                      <p onClick={handleLogout} className="text-md text-themeGreen font-Circular-std-book mx-0 mt-3 flex items-center cursor-pointer">
+                      <span>Logout</span>
+                  </p>
+                  </div>
+                </PopoverBody>
+              </PopoverContent>
+            </Popover>
+            )}
+
+            {loggedIn && (
+              <Popover placement='bottom' size="xs" isOpen={notificationOpen} closeOnBlur={true} closeOnEsc={true} onClose={() => setNotificationOpen(false)}>
+              <PopoverTrigger>
+                <div className="w-12 h-12 flex items-center justify-center ml-6"  onClick={() => setNotificationOpen(prev => !prev)}>
+                  <FiBell size={25} color="white" className='cursor-pointer' />
+                </div>
+              </PopoverTrigger>
+              <PopoverContent borderRadius={0}>
+                <PopoverHeader>
+                  <div className="w-full flex justify-between text-themeGreen text-sm py-2">
+                    <p className='font-Circular-std-medium'>Notifications</p>
+                    <p className="font-Circular-std-book cursor-pointer">Mark All As Read</p>
+                  </div>
+                </PopoverHeader>
+                {/* <PopoverArrow /> */}
+                <PopoverBody className='p-0'>
+                  <div className="w-full h-64 overflow-y-auto">
+                        { notiLoading && (
+                          <div className='w-full flex mt-6 justify-center'>
+                            <Spinner size="md" color="green" />
+                          </div>
+                        )}
+
+                        {!notiLoading && !notiError && notifications.length < 1 && (
+                          <div className="w-full h-64 mt-4 font-Cerebri-sans-book text-gray-700">
+                            <p>You have no new Notification</p>
+                        </div>
+                        )}
+
+                        {!notiLoading && !notiError && notifications.length > 0 && (
+                          <div className="mt-0 w-full ">
+                            {notifications.map((item, index) => (
+                                <div className="w-full h-auto px-0 py-2 flex flex-col" key={index.toString()}>
+                                   <div className="w-full  cursor-pointer h-full flex justify-end items-center">
+                                    <p className='font-Circular-std-medium text-xs text-gray-400 mt-3'>{getDate(item.created_at)}</p>
+                                  </div>
+                                  <div className="flex-1 flex flex-col justify-evenly mt-3">
+                                    <p className='font-Cerebri-sans-book text-sm text-black mb-3 mr-6'>{item.message}</p>
+                                    <div className="flex flex-col">
+                                      <Divider />
+                                     
+                                    </div>
+                                  </div>
+                                </div>
+                              ))}
+                          </div>
+                        )}
+                  </div>
+                </PopoverBody>
+              </PopoverContent>
+            </Popover>
+            )}
+
+            {!loggedIn && (
+              <p onClick={() => router.push('/auth/signup')} className="text-md font-Circular-std-book mx-5 flex items-center cursor-pointer">
+                  <span>Become A Vendor</span>
+              </p>
+            )}
+
+            {!loggedIn && (
+              <p onClick={() => router.push('/auth/loginform')} className="text-md font-Circular-std-book mx-5 flex items-center cursor-pointer">
+                  <span>Login</span>
+              </p>
+            )}
     </div>
     )
 }
@@ -174,8 +374,8 @@ export default function Banner() {
 
                 <div className="xl:w-9/12 lg:w-9/12 md:w-full sm:w-full mt-6">
                     <InputGroup>
-                        <InputLeftElement bgColor="#1A8F85">
-                        <div className=" w-full flex items-center justify-center">
+                        <InputLeftElement bgColor="#1A8F85" borderLeftRadius={10}>
+                        <div className=" w-full flex items-center justify-center rounded-l-md">
                             <FiSearch color="white" size={20} />
                         </div>
                         </InputLeftElement>

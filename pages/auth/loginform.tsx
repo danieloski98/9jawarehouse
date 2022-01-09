@@ -20,7 +20,7 @@ const validationSchema = yup.object({
 
 // image
 import Image from 'next/image';
-import Girl from '../../public/images/girl2.png';
+import Girl from '../../public/images/bg.png';
 import Logo from '../../public/images/logo.svg';
 import Google from '../../public/images/google.svg';
 import Mail from '../../public/images/mail.png';
@@ -147,14 +147,18 @@ export default function LoginForm() {
                 </div>
 
                 <div className="xl:w-4/6 lg:w-4/6 md:w-full sm:w-full text-center">
-                    <p onClick={() => router.push('/auth/createaccount')} className="text-sm font-Cerebri-sans-book mt-12 text-center text-gray-500 cursor-pointer">Dont Have An Account? <span className="text-themeGreen cursor-pointer">Create Account</span></p>
+                    <p onClick={() => router.push('/auth/signup')} className="text-sm font-Cerebri-sans-book mt-12 text-center text-gray-500 cursor-pointer">Dont Have An Account? <span className="text-themeGreen cursor-pointer">Create Account</span></p>
                 </div>
 
             </div>
         </div>
 
-        <div className="w-2/5 h-full xl:block lg:block md:hidden sm:hidden">
-            <Image src={Girl} alt="girl" className="w-full h-full" />
+        <div className="w-2/5 h-full  xl:block lg:block md:hidden sm:hidden">
+            <Image src={Girl} alt="girl" className="w-full h-full object-cover" />
+            <div className="z-20 absolute flex flex-col top-96 px-8 bottom-0 ">
+                <p className='font-Circular-std-medium text-2xl text-white'>Join 9ja Warehouse!</p>
+                <p className='mt-4 font-Cerebri-sans-book text-sm  text-white'> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Bibendum est ultricies integer quis. Iaculis urna id volutpat lacus laoreet. Mauris vitae ultricies leo integer malesuada. Ac odio tempor orci dapibus ultrices in. Egestas diam in arcu cursus euismod. Dictum fusce ut placerat orci nulla.</p>
+            </div>
         </div>
         
     </div>

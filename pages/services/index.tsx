@@ -12,6 +12,14 @@ import { IUser } from '../../utils/types/user';
 import { useRouter } from 'next/router'
 import { ILga, IState } from '../../utils/types/Lga&State';
 
+// redux
+import { RootState } from '../../store/index'
+import { updateUser } from '../../reducers/User.reducer';
+import { updatetoken } from '../../reducers/Token.reducer';
+import { updatePin } from '../../reducers/pin.reducer'
+import { login, logout } from '../../reducers/logged'
+import { useDispatch, useSelector } from 'react-redux'
+
 
 
 interface IProps {
@@ -43,6 +51,8 @@ export default function Services({states, services}: IProps) {
     const [lgas, setLgas] = React.useState([] as Array<ILga>);
     const [businesses, setBusinesses] = React.useState([2] as Array<IUser | any>);
     const [loading, setLoading] = React.useState(true);
+
+    const dispatch = useDispatch();
 
     // router
     const router = useRouter();
@@ -86,6 +96,37 @@ export default function Services({states, services}: IProps) {
             })()
         })()
     }, [router.query]);
+
+
+    const fetchUser = React.useCallback( async() => {
+        setLoading(true);
+        const _id = JSON.parse(localStorage.getItem('9jauser') as string)._id;
+        const request = await fetch(`${url}user/${_id}`);
+        const json = await request.json() as IServerReturnObject;
+    
+        if (json.statusCode !== 200) {
+            router.push('/');
+            alert(json.errorMessage);
+            setLoading(false);
+            return
+        } else {
+            dispatch(updateUser(json.data));
+            dispatch(login());
+            setLoading(false);
+        }
+      }, [dispatch, router])
+    
+    
+      React.useEffect(() => {
+          const data = localStorage.getItem('9jauser');
+    
+          if (data === null || data === undefined) {
+              dispatch(logout());
+            //   router.push('/');
+          } else {
+              fetchUser();
+          }
+      }, []);
 
     const SelectState = (newstate: string) => {
         setState(newstate);

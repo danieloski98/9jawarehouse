@@ -8,6 +8,9 @@ import { updatetoken } from '../reducers/Token.reducer'
 import { updateUser } from '../reducers/User.reducer'
 import { login } from '../reducers/logged';
 
+// queries
+const getUser = () => {}
+
 const SyncData = () => {
     
     return (

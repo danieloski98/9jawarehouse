@@ -1,9 +1,10 @@
 import React from 'react';
-import { FiSearch, FiBell, FiMenu, FiChevronDown, FiX, FiTrash2 } from 'react-icons/fi'
-import { Avatar, Drawer, DrawerOverlay, DrawerContent, DrawerBody, Menu, MenuButton, MenuList, MenuItem, Button, Accordion, AccordionButton, AccordionItem, AccordionPanel, AccordionIcon, Box, Divider, DrawerCloseButton, Spinner } from '@chakra-ui/react'
+import { FiSearch, FiBell, FiMenu, FiChevronDown, FiChevronUp, FiX, FiTrash2 } from 'react-icons/fi'
+import { Avatar, Drawer, DrawerOverlay, DrawerContent, DrawerBody, Menu, MenuButton, MenuList, MenuItem, Button, Accordion, AccordionButton, AccordionItem, AccordionPanel, AccordionIcon, Box, Divider, DrawerCloseButton, Spinner,  Popover, PopoverTrigger, PopoverContent, PopoverArrow, PopoverBody, ModalOverlay, PopoverHeader } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import { useQuery } from 'react-query'
+import * as moment from 'moment'
 
 // redux
 import {useSelector, useDispatch} from 'react-redux';
@@ -11,6 +12,7 @@ import { RootState } from '../../store/index';
 import { setServices as SetServ } from '../../reducers/services.reducer'
 import { updateUser } from '../../reducers/User.reducer'
 import { updatePin } from '../../reducers/pin.reducer'
+import { logout } from '../../reducers/logged'
 
 // images
 import Image from 'next/image';
@@ -45,6 +47,7 @@ export default function Navbar({page, setPage}: IProps) {
   const [notiError, setNotiError] = React.useState(false);
   const [notifications, setNotifications] = React.useState([] as Array<INotification>);
   const [showNoti, setShowNoti] = React.useState(false);
+  const [userMenuOpen, setUserMenuOpen] = React.useState(false);
   const user = useSelector((state:RootState) => state.UserReducer.user);
   const pin = useSelector((state: RootState) => state.PinReducer.pin);
   const loggedIn = useSelector((state: RootState) => state.LoggedInReducer.loggedIn);
@@ -142,6 +145,18 @@ export default function Navbar({page, setPage}: IProps) {
     setPage(num)
   }
 
+  const getDate = (date: any) => {
+    const dt = moment.default(date);
+    return dt.startOf('hours').fromNow();
+  }
+
+  const handleLogout = () => {
+    localStorage.removeItem('9jauser');
+    localStorage.removeItem('9jatoken');
+
+    dispatch(logout())
+  }
+
   return (
     <div className="w-full h-24 py-0 bg-white px-10 flex justify-between items-center z-40">
         <div className="flex-1 flex items-center h-auto w-auto overflow-hidden ">
@@ -173,8 +188,32 @@ export default function Navbar({page, setPage}: IProps) {
               </MenuList>
             </Menu>
             
-            {loggedIn && <Avatar src={user.profile_pic} className="mr-6" size="sm" />}
-            {loggedIn && <FiBell size={25} color="black" className='cursor-pointer' onClick={() => setShowNoti(true)} />}
+            {loggedIn && (
+              <Popover placement='bottom' size="xs" isOpen={userMenuOpen} closeOnBlur closeOnEsc onClose={() => setUserMenuOpen(false)}> 
+              <PopoverTrigger>
+                <div className=" flex items-center  ml-6 cursor-pointer w-auto h-auto" onClick={() => setUserMenuOpen(prev => !prev)}>
+                  <Avatar src={user.profile_pic} size="sm" />
+                  {userMenuOpen && (
+                    <FiChevronUp size={15} className="ml-0 " color="black" />
+                  )}
+                  {!userMenuOpen && (
+                    <FiChevronDown color="black" size={15} className="ml-0" />
+                  )}
+                </div>
+              </PopoverTrigger>
+              <PopoverContent>
+                {/* <PopoverArrow /> */}
+                <PopoverBody className='w-16'>
+                  <div className="">
+                      <p onClick={handleLogout} className="text-sm text-red-400 font-Circular-std-book mx-0 mt-3 flex items-center cursor-pointer">
+                        <span>Logout</span>
+                      </p>
+                  </div>
+                </PopoverBody>
+              </PopoverContent>
+            </Popover>
+            )}
+            {loggedIn && <FiBell size={25} color="black" className='cursor-pointer ml-6' onClick={() => setShowNoti(true)} />}
 
             {!loggedIn && (
               <div className="flex font-Cerebri-sans-book text-sm cursor-pointer">
@@ -188,6 +227,7 @@ export default function Navbar({page, setPage}: IProps) {
           <FiMenu size={30} color="grey" onClick={() => setOpen(true)} />
           {loggedIn && <FiBell size={25} color="black" className='ml-5 cursor-pointer' onClick={() => setShowNoti(true)} />}
         </div>
+
 
         {/* Notofication Drawer */}
         <Drawer isOpen={showNoti} onClose={() => setShowNoti(false)}>
@@ -209,21 +249,27 @@ export default function Navbar({page, setPage}: IProps) {
               )}
 
               {!notiLoading && !notiError && notifications.length > 0 && (
-                <div className="mt-8">
-                  {notifications.map((item, index) => (
-                    <div className="w-full h-auto px-0 py-6 flex" key={index.toString()}>
-                      <div className="flex-1 flex flex-col justify-evenly pr-2">
-                        <p className='font-Cerebri-sans-book text-sm text-black mb-3'>{item.message}</p>
-                        <div className="flex flex-col">
-                          <Divider />
-                          <p className='font-Circular-std-medium text-xs text-gray-600 mt-3'>{new Date(item.created_at).toDateString()}</p>
-                        </div>
-                      </div>
-                      <div className="w-12  cursor-pointer h-full flex flex-col justify-center items-center">
-                        <FiTrash2 size={25} color="red" onClick={() => deleteNoti(item._id)} />
-                      </div>
-                    </div>
-                  ))}
+                <div className="mt-0 w-full ">
+                            {notifications.sort((a, b) => {
+                              if (new Date(a.created_at) > new Date(b.created_at)) {
+                                return -1;
+                              }else {
+                                return 1;
+                              }
+                            }).map((item, index) => (
+                                <div className="w-full h-auto px-0 py-2 flex flex-col" key={index.toString()}>
+                                   <div className="w-full  cursor-pointer h-full flex justify-end items-center">
+                                    <p className='font-Circular-std-medium text-xs text-gray-400 mt-3'>{getDate(item.created_at)}</p>
+                                  </div>
+                                  <div className="flex-1 flex flex-col justify-evenly mt-3">
+                                    <p className='font-Cerebri-sans-book text-sm text-black mb-3 mr-6'>{item.message}</p>
+                                    <div className="flex flex-col">
+                                      <Divider />
+                                     
+                                    </div>
+                                  </div>
+                                </div>
+                              ))}
                 </div>
               )}
             </DrawerBody>

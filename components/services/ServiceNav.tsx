@@ -1,9 +1,10 @@
 import React from 'react';
-import { FiSearch, FiBell, FiMenu, FiChevronDown, FiX, FiTrash2 } from 'react-icons/fi'
-import { Avatar, Drawer, DrawerOverlay, DrawerContent, DrawerBody, Menu, MenuButton, MenuList, MenuItem, Button, InputGroup, Input, InputLeftElement, InputRightElement, Accordion, AccordionItem, AccordionButton, AccordionPanel, AccordionIcon, Box, Divider, DrawerCloseButton, Spinner } from '@chakra-ui/react'
+import { FiSearch, FiBell, FiMenu, FiChevronDown, FiChevronUp, FiX, FiTrash2 } from 'react-icons/fi'
+import { Avatar, Drawer, DrawerOverlay, DrawerContent, DrawerBody, Menu, MenuButton, MenuList, MenuItem, Button, InputGroup, Input, InputLeftElement, InputRightElement, Accordion, AccordionItem, AccordionButton, AccordionPanel, AccordionIcon, Box, Divider, DrawerCloseButton, Spinner, Popover, PopoverTrigger, PopoverContent, PopoverArrow, PopoverBody, ModalOverlay, PopoverHeader } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import { useQuery } from 'react-query'
+import * as moment from 'moment'
 
 // images
 import Image from 'next/image';
@@ -17,6 +18,7 @@ import { setServices as SetServ } from '../../reducers/services.reducer'
 import { updateUser } from '../../reducers/User.reducer'
 import { updatePin } from '../../reducers/pin.reducer'
 import { IServerReturnObject } from '../../utils/types/serverreturntype';
+import { logout } from '../../reducers/logged'
 import url from '../../utils/url';
 import { INotification } from '../../utils/types/Notification';
 
@@ -35,6 +37,8 @@ interface IProps {
   setPage: Function;
 }
 
+
+
 export default function ServiceNavbar() {
   const [open, setOpen] = React.useState(false);
   const [query, setQuery] = React.useState('');
@@ -45,7 +49,9 @@ export default function ServiceNavbar() {
   const router = useRouter();
   const user = useSelector((state:RootState) => state.UserReducer.user);
   const loggedIn = useSelector((state: RootState) => state.LoggedInReducer.loggedIn);
-  const serv = useSelector((state: RootState) => state.ServicesReducer.services)
+  const serv = useSelector((state: RootState) => state.ServicesReducer.services);
+  const [userMenuOpen, setUserMenuOpen] = React.useState(false);
+  const dispatch = useDispatch();
 
   // query
   const getNotificationQuery = useQuery('getNotifications', () => getNotifications(user._id), {
@@ -82,6 +88,18 @@ export default function ServiceNavbar() {
       alert(json.successMessage);
       return;
     }
+  }
+
+  const getDate = (date: any) => {
+    const dt = moment.default(date);
+    return dt.startOf('hours').fromNow();
+  }
+
+  const handleLogout = () => {
+    localStorage.removeItem('9jauser');
+    localStorage.removeItem('9jatoken');
+
+    dispatch(logout())
   }
 
   return (
@@ -138,8 +156,35 @@ export default function ServiceNavbar() {
               </MenuList>
             </Menu>
             
-            {loggedIn && <Avatar src={user.profile_pic} className="mr-6 cursor-pointer" size="sm" onClick={() => router.push('/dashboard')} />}
-            {loggedIn && <FiBell size={25} color="black" className='cursor-pointer' onClick={() => setShowNoti(true)} />}
+            {loggedIn && (
+              <Popover placement='bottom' size="xs" isOpen={userMenuOpen} closeOnBlur closeOnEsc onClose={() => setUserMenuOpen(false)}> 
+              <PopoverTrigger>
+                <div className=" flex items-center  ml-6 cursor-pointer w-auto h-auto" onClick={() => setUserMenuOpen(prev => !prev)}>
+                  <Avatar src={user.profile_pic} size="sm" />
+                  {userMenuOpen && (
+                    <FiChevronUp size={15} className="ml-0 " color="black" />
+                  )}
+                  {!userMenuOpen && (
+                    <FiChevronDown color="black" size={15} className="ml-0" />
+                  )}
+                </div>
+              </PopoverTrigger>
+              <PopoverContent>
+                {/* <PopoverArrow /> */}
+                <PopoverBody className='w-16'>
+                  <div className="">
+                  <p onClick={() => router.push('/dashboard')} className="text-sm text-themeGreen font-Circular-std-book mx-0 mt-3 flex items-center cursor-pointer">
+                        <span>Dashboard</span>
+                      </p>
+                      <p onClick={handleLogout} className="text-sm text-red-400 font-Circular-std-book mx-0 mt-3 flex items-center cursor-pointer">
+                        <span>Logout</span>
+                      </p>
+                  </div>
+                </PopoverBody>
+              </PopoverContent>
+            </Popover>
+            )}
+            {loggedIn && <FiBell size={25} color="black" className='cursor-pointer ml-6' onClick={() => setShowNoti(true)} />}
 
             {!loggedIn && (
               <div className="flex font-Cerebri-sans-book text-sm cursor-pointer">
@@ -173,18 +218,24 @@ export default function ServiceNavbar() {
               )}
 
               {!notiLoading && !notiError && notifications.length > 0 && (
-                <div className="mt-8">
-                  {notifications.map((item, index) => (
-                    <div className="w-full h-auto px-0 py-6 flex border-b-2 border-gray-300" key={index.toString()}>
-                      <div className="flex-1 flex flex-col justify-evenly pr-2">
-                        <p className='font-light text-sm text-black mb-3'>{item.message}</p>
+                <div className="mt-0 w-full ">
+                {notifications.sort((a, b) => {
+                  if (new Date(a.created_at) > new Date(b.created_at)) {
+                    return -1;
+                  }else {
+                    return 1;
+                  }
+                }).map((item, index) => (
+                    <div className="w-full h-auto px-0 py-2 flex flex-col" key={index.toString()}>
+                       <div className="w-full  cursor-pointer h-full flex justify-end items-center">
+                        <p className='font-Circular-std-medium text-xs text-gray-400 mt-3'>{getDate(item.created_at)}</p>
+                      </div>
+                      <div className="flex-1 flex flex-col justify-evenly mt-3">
+                        <p className='font-Cerebri-sans-book text-sm text-black mb-3 mr-6'>{item.message}</p>
                         <div className="flex flex-col">
                           <Divider />
-                          <p className='font-semibold text-xs text-gray-600 mt-3'>{new Date(item.created_at).toDateString()}</p>
+                         
                         </div>
-                      </div>
-                      <div className="w-12  cursor-pointer h-full flex flex-col justify-center items-center">
-                        <FiTrash2 size={25} color="red" onClick={() => deleteNoti(item._id)} />
                       </div>
                     </div>
                   ))}
