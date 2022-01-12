@@ -35,6 +35,7 @@ export default function EditProfile({ next }: IProps) {
   const [imgs, setImages] = React.useState([] as Array<string>);
   const [imgsFiles, setImgsFiles] = React.useState([] as Array<any>);
   const [loading, setLoading] = React.useState(false);
+  const [picked, setPicked] = React.useState(false);
   const dispatch = useDispatch();
   const details = useSelector((state: RootState) => state.UserReducer.user);
   let fileReader = React.useRef(new FileReader).current;
@@ -45,22 +46,26 @@ export default function EditProfile({ next }: IProps) {
   React.useEffect(() => {
     const certs = [] as Array<ICertificate>;
     const im = [] as string[];
+    const files: any[] = [];
     details.certificates.map((item) => {
       const obj = Object.assign({}, item);
       certs.push(obj);
     })
     details.pictures.map((item) => {
       im.push(item);
+      files.push(item);
     })
     setProfilePic(details.profile_pic);
     setCertificates(certs);
     setImages(im);
+    setImgsFiles(files);
   }, [setCertificates, details.certificates, details.pictures, details.profile_pic]);
 
     React.useEffect(() => {
     fileReader.addEventListener('load', () => {
         const im = [...imgs, fileReader.result as string];
         setImages(im);
+        setPicked(true);
     });
 
     return () => {
@@ -97,10 +102,12 @@ export default function EditProfile({ next }: IProps) {
  const deleteImgs = (index: number) => {
    const img = [...imgs];
    const files = [...imgsFiles];
-   files.splice(imgsFiles.length - index, 1);
+   files.splice(index, 1);
    setImgsFiles(files);
    img.splice(index, 1);
    setImages(img);
+   console.log(imgsFiles);
+   console.log(imgs);
  }
 
   const pickImages = () => {
@@ -124,7 +131,6 @@ export default function EditProfile({ next }: IProps) {
 
    const submit = async () => {
      setLoading(true);
-    if (certificates.length !== details.certificates.length) {
       // submit
       const request = await fetch(`${url}user/certs/${details._id}`, {
         method: 'put',
@@ -137,10 +143,13 @@ export default function EditProfile({ next }: IProps) {
       if (json.statusCode !== 200) {
         alert(json.errorMessage);
       }
-    } 
-    if (imgsFiles.length > 0) {
+
+    if (picked) {
       const formData = new FormData();
       imgsFiles.map((item: File) => {
+        if (typeof(item) === 'string') {
+          return;
+        }
         formData.append('img', item);
       });
 
@@ -176,7 +185,6 @@ export default function EditProfile({ next }: IProps) {
       }
 
     }
-
     setLoading(false);
     next(1);
    }
@@ -510,7 +518,7 @@ export default function EditProfile({ next }: IProps) {
               <div className="xl:w-11/12 lg:w-11/12 md:w-full sm:w-full">
               <Input
                   value={items.certificate}
-                  onChange={(e) => changeCert(index, 'organization', e.target.value)}
+                  onChange={(e) => changeCert(index, 'certificate', e.target.value)}
                   border="none"
                   bgColor="#F1EEEE"
                   borderRadius={0}

@@ -52,6 +52,8 @@ const ConnectModal = ({icon, isOpen, close, value}: {icon: number; isOpen: boole
 
 export default function Profile({ setPage }: IProps) {
 
+  window.scroll({ top: -1 })
+
   // states
   const [icon, setIcon] = React.useState(0);
   const [modalValue, setModalValue] = React.useState("");
@@ -77,15 +79,21 @@ export default function Profile({ setPage }: IProps) {
   }
 
   return (
-    <div className="w-full h-auto pb-10">
+    <div className="w-full h-full pb-0 flex flex-col z-10">
 
       {/* modal */}
       <ConnectModal isOpen={openModal} close={close} value={modalValue} icon={icon} />
 
-      <div className="w-full h-auto py-6 pb-10 flex flex-col bg-white">
+      <div className="w-full h-20 flex items-center bg-white">
         <p className="text-2xl font-Circular-std-medium text-gray-600 ml-5">Profile</p>
+      </div>
 
-       <div className="w-full h-64 overflow-hidden mt-6">
+      
+
+      <div className="flex-1 overflow-y-auto flex flex-col bg-white">
+        
+
+       <div className="w-full h-64 z-30">
         <Carousel showArrows showIndicators dynamicHeight={false} autoPlay interval={7000} infiniteLoop>
             {userDetails.pictures.map((item, index) => (
               <div key={index.toString()} className="w-full h-64">
@@ -94,6 +102,8 @@ export default function Profile({ setPage }: IProps) {
             ))}
           </Carousel>
        </div>
+
+      
 
         {/* details */}
 
@@ -245,7 +255,7 @@ export default function Profile({ setPage }: IProps) {
                   <p className="text-sm flex-1">{item.certificate}</p>
                   <p className="text-sm mt-1 flex-1">{item.organization}</p>
                   <p className="text-sm mt-1 flex-1">{item.year}</p>
-                  <a href={item.link} target="_blank" rel="noreferrer" className="flex-1">
+                  <a href={item.link} target="_blank" rel="noreferrer" className="flex-1 md:mt-3 sm:mt-3">
                     <button className="w-20 h-8 rounded-full border-2 border-themeGreen text-themeGreen mt-0 font-Circular-std-book text-xs">View</button>
                   </a>
               </div>

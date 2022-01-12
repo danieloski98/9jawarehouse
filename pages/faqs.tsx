@@ -27,12 +27,12 @@ export default function Faqs() {
                                 <AccordionItem key={index.toString()}>
                                     <AccordionButton>
                                         <Box flex="1" textAlign="left">
-                                            <p>Section {item}</p>
+                                            <p className='font-Circular-std-medium'>Section {item}</p>
                                         </Box>
                                         <AccordionIcon />
                                     </AccordionButton>
                                     <AccordionPanel>
-                                        <p className="text-justify">
+                                        <p className="text-justify font-Cerebri-sans-book">
                                             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid veritatis tempore aspernatur est eveniet! Quae odit quisquam repudiandae atque veniam velit ipsum eveniet dignissimos in aut? Cumque libero omnis nostrum cupiditate aperiam ex placeat? Perspiciatis repellat ipsum dolores quod numquam maxime magni, odio necessitatibus quo ipsam rerum quam temporibus ad veritatis placeat corrupti sapiente nesciunt in. Laboriosam, consequuntur officiis! Obcaecati laboriosam vel reiciendis perspiciatis nostrum a! Impedit facilis magnam at repellendus veniam excepturi aspernatur, minus quo. At deserunt consequatur harum doloremque a, delectus qui alias corporis unde suscipit ullam repellat libero debitis in voluptatem officiis molestias ipsum ducimus repudiandae asperiores?
                                         </p>
                                     </AccordionPanel>

@@ -111,9 +111,13 @@ export default function VerifyAccount() {
 
         <div className="flex-1 flex flex-col">
             <LeftNavbar />
-            <div className="flex-1 xl:pl-10 lg:pl-10 md:pl-5 sm:pl-5 xl:pr-0 lg:pr-0 md:pr-5 sm:pr-5 flex flex-col justify-center items-start">
-                <h3 className="text-3xl font-Circular-std-medium text-gray-700">Verify Your Account</h3>
-                <p className="text-sm font-Cerebri-sans-book mt-4 text-gray-500">We sent a 6 digit code to your email address</p>
+            <div className="flex-1 xl:pl-10 lg:pl-10 md:pl-5 sm:pl-5 xl:pr-0 lg:pr-0 md:pr-5 sm:pr-5 flex flex-col justify-center items-center ">
+                
+
+                <div className="flex flex-col xl:w-4/6 lg:w-4/6 md:w-full sm:w-full">
+                    <h3 className="text-3xl font-Circular-std-medium text-gray-700">Verify Your Account</h3>
+                    <p className="text-sm font-Cerebri-sans-book mt-4 text-gray-500">We sent a 6 digit code to your email address</p>
+                </div>
 
                 <div className="flex flex-col xl:w-4/6 lg:w-4/6 md:w-full sm:w-full mt-6">
                     <label className="font-Cerebri-sans-book text-sm">Verification Code</label>
@@ -127,7 +131,7 @@ export default function VerifyAccount() {
 
                 <div className="xl:w-4/6 lg:w-4/6 md:w-full sm:w-full mt-8 h-12 flex justify-between">
                     <button onClick={startTimer} disabled={disabled} className="w-45/100 h-full bg-green-200 text-green-500 font-Cerebri-sans-book text-xs">
-                        Resend Code {disabled && min} {disabled && ':'} {disabled && sec}
+                        Resend Code 
                     </button>
 
                     <button onClick={verify} className="w-45/100 h-full bg-themeGreen text-white font-Cerebri-sans-book text-xs">
@@ -141,6 +145,10 @@ export default function VerifyAccount() {
 
         <div className="w-2/5 h-full xl:block lg:block md:hidden sm:hidden">
             <Image src={Girl} alt="girl" className="w-full h-full" />
+            <div className="z-20 absolute flex flex-col top-96 pt-24 px-8 bottom-0 ">
+                <p className='font-Circular-std-medium text-2xl text-white'>Join 9ja Warehouse!</p>
+                <p className='mt-4 font-Cerebri-sans-book text-sm  text-white'> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Bibendum est ultricies integer quis. Iaculis urna id volutpat lacus laoreet. Mauris vitae ultricies leo integer malesuada. Ac odio tempor orci dapibus ultrices in. Egestas diam in arcu cursus euismod. Dictum fusce ut placerat orci nulla.</p>
+            </div>
         </div>
     </div>
   );

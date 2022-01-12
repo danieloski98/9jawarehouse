@@ -5,7 +5,7 @@ import { useRouter } from 'next/router'
 import Link from 'next/link'
 import { useQuery } from 'react-query'
 import * as moment from 'moment'
-
+import { Notification, Search } from 'react-iconly';
 // redux
 import {useSelector, useDispatch} from 'react-redux';
 import { RootState } from '../../store/index';
@@ -158,24 +158,26 @@ export default function Navbar({page, setPage}: IProps) {
   }
 
   return (
-    <div className="w-full h-24 py-0 bg-white px-10 flex justify-between items-center z-40">
+    <div className="w-full h-16 py-0 bg-white px-10 flex justify-between items-center">
         <div className="flex-1 flex items-center h-auto w-auto overflow-hidden ">
             <Link href="/" passHref>
               <Image src={Logo} alt="logo" className="w-20 h-20 cursor-pointer" />
             </Link>
         </div>
         <div className="flex-1 xl:flex lg:flex md:hidden sm:hidden justify-end items-center z-20">
-            <Menu size="lg" >
+
+            <Menu>
               <MenuButton
                 righticon={<FiChevronDown size={20} color="grey" />}
+                
               >
-                <p className="flex mr-6">
-                  <FiSearch size={20} className="text-themeGreen" />
+                <p className="flex mr-4">
+                  <Search  size={20} primaryColor='grey' />
                   <span className="ml-3 font-Cerebri-sans-book  text-sm cursor-pointer">Find Service</span>
                   <FiChevronDown size={20} color="grey" className="ml-1 mt-0" />
                 </p>
               </MenuButton>
-              <MenuList w="1000px" maxH="500px" overflow="auto" className="grid grid-cols-4 font-light text-sm">
+              <MenuList w="100vw" maxH="500px" overflow="auto" className="grid grid-cols-4 font-light text-sm pl-10">
                 {serv.map((item, index) => (
                   <MenuItem key={index.toString()}>
                     <Link prefetch={false} shallow={true} passHref href={`/services?service=${item.name}`}>
@@ -187,33 +189,45 @@ export default function Navbar({page, setPage}: IProps) {
                 ))}
               </MenuList>
             </Menu>
+
             
-            {loggedIn && (
-              <Popover placement='bottom' size="xs" isOpen={userMenuOpen} closeOnBlur closeOnEsc onClose={() => setUserMenuOpen(false)}> 
-              <PopoverTrigger>
-                <div className=" flex items-center  ml-6 cursor-pointer w-auto h-auto" onClick={() => setUserMenuOpen(prev => !prev)}>
-                  <Avatar src={user.profile_pic} size="sm" />
-                  {userMenuOpen && (
-                    <FiChevronUp size={15} className="ml-0 " color="black" />
-                  )}
-                  {!userMenuOpen && (
-                    <FiChevronDown color="black" size={15} className="ml-0" />
-                  )}
-                </div>
-              </PopoverTrigger>
-              <PopoverContent>
-                {/* <PopoverArrow /> */}
-                <PopoverBody className='w-16'>
-                  <div className="">
-                      <p onClick={handleLogout} className="text-sm text-red-400 font-Circular-std-book mx-0 mt-3 flex items-center cursor-pointer">
-                        <span>Logout</span>
-                      </p>
+
+            {
+              loggedIn && (
+                <Menu>
+                  <MenuButton
+                    righticon={<FiChevronDown size={20} color="grey" />}
+                    className='hover:bg-green-200 rounded-md'
+                  >
+                  <div className="z-30 w-16 h-12 rounded-md hover:bg-green-200 flex justify-center items-center cursor-pointer" onClick={() => setUserMenuOpen(prev => !prev)}>
+                    <Avatar src={user.profile_pic} size="sm" />
+                    {userMenuOpen && (
+                      <FiChevronUp size={15} className="ml-0 " color="black" />
+                    )}
+                    {!userMenuOpen && (
+                      <FiChevronDown color="black" size={15} className="ml-0" />
+                    )}
                   </div>
-                </PopoverBody>
-              </PopoverContent>
-            </Popover>
+                  </MenuButton>
+                  <MenuList w="100px" minW="10px" maxH="200px" overflow="auto" className="flex flex-col font-light text-sm p-0">
+                      <MenuItem className='h-6'>
+                        <p onClick={handleLogout} className="text-sm text-red-400 h-auto font-Circular-std-book mx-0 mt-0 flex items-center cursor-pointer">
+                          <span>Logout</span>
+                        </p>
+                      </MenuItem>          
+                  </MenuList>
+                </Menu>
+              )
+            }
+            
+
+            {loggedIn && (
+              <div className="p-1 cursor-pointer rounded-md hover:bg-green-200 ml-2">
+                <span onClick={() => setShowNoti(true)}>
+                  <Notification size={25} primaryColor='grey' filled style={{ color: 'grey' }}  />
+                </span>
+              </div>
             )}
-            {loggedIn && <FiBell size={25} color="black" className='cursor-pointer ml-6' onClick={() => setShowNoti(true)} />}
 
             {!loggedIn && (
               <div className="flex font-Cerebri-sans-book text-sm cursor-pointer">

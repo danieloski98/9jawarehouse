@@ -5,6 +5,8 @@ import { useRouter } from 'next/router'
 import Link from 'next/link'
 import { useQuery } from 'react-query'
 import * as moment from 'moment'
+import { AnimatePresence, motion } from 'framer-motion'
+import { Notification, Search } from 'react-iconly';
 
 // images
 import Image from 'next/image';
@@ -18,13 +20,22 @@ import { setServices as SetServ } from '../../reducers/services.reducer'
 import { updateUser } from '../../reducers/User.reducer'
 import { updatePin } from '../../reducers/pin.reducer'
 import { IServerReturnObject } from '../../utils/types/serverreturntype';
-import { logout } from '../../reducers/logged'
+import { logout,login } from '../../reducers/logged'
 import url from '../../utils/url';
 import { INotification } from '../../utils/types/Notification';
 
 // query frunction
 const getNotifications = async (user_id: string) => {
   const request = await fetch(`${url}notifications/${user_id}`);
+  const json = await request.json() as IServerReturnObject;
+  if (!request.ok) {
+    throw new Error('An Error Occured')
+  }
+  return json;
+}
+
+const getServices = async () => {
+  const request = await fetch(`${url}services`);
   const json = await request.json() as IServerReturnObject;
   if (!request.ok) {
     throw new Error('An Error Occured')
@@ -46,6 +57,7 @@ export default function ServiceNavbar() {
   const [notiError, setNotiError] = React.useState(false);
   const [notifications, setNotifications] = React.useState([] as Array<INotification>);
   const [showNoti, setShowNoti] = React.useState(false);
+  const [showSearchbar, setShowSearchbar] = React.useState(false);
   const router = useRouter();
   const user = useSelector((state:RootState) => state.UserReducer.user);
   const loggedIn = useSelector((state: RootState) => state.LoggedInReducer.loggedIn);
@@ -53,8 +65,13 @@ export default function ServiceNavbar() {
   const [userMenuOpen, setUserMenuOpen] = React.useState(false);
   const dispatch = useDispatch();
 
-  // query
-  const getNotificationQuery = useQuery('getNotifications', () => getNotifications(user._id), {
+  const services = useQuery(['getServices'], getServices, {
+    onSuccess: (data) => {
+      dispatch(SetServ(data.data));
+    }
+  });
+
+  const getNotificationQuery = useQuery(['getNotifications', user._id], () => getNotifications(user._id), {
     onSuccess: (data) => {
       const dt = data.data as Array<INotification>;
       setNotifications(dt);
@@ -66,7 +83,38 @@ export default function ServiceNavbar() {
       setNotiLoading(false);
       setNotiError(true);
     }
-  })
+  });
+
+  const fetchUser = React.useCallback( async() => {
+    // setLoading(true);
+    const _id = JSON.parse(localStorage.getItem('9jauser') as string)._id;
+    const request = await fetch(`${url}user/${_id}`);
+    const json = await request.json() as IServerReturnObject;
+
+    if (json.statusCode !== 200) {
+        dispatch(logout())
+        alert(json.errorMessage);
+        // setLoading(false);
+        return
+    } else {
+        dispatch(updateUser(json.data));
+        dispatch(login());
+        // setLoading(false);
+    }
+  }, [dispatch]);
+
+  React.useEffect(() => {
+      const data = localStorage.getItem('9jauser');
+
+      if (data === null || data === undefined) {
+          dispatch(logout())
+      } else {
+          fetchUser();
+      }
+  }, [fetchUser, router, dispatch]);
+
+  // query
+ 
 
   const handleKeydonw = (e: any) => {
     if (e.key === 'Enter') {
@@ -113,41 +161,63 @@ export default function ServiceNavbar() {
             </Link>
         </div>
 
-        <div className="flex-1 h-full xl:hidden lg:hidden md:flex sm:flex items-center px-3">
-            <InputGroup>
-                <InputLeftElement>
-                    <FiSearch size={25} color="grey" />
-                </InputLeftElement>
-                <Input onKeyPress={handleKeydonw} onChange={(e) => setQuery(e.target.value)} fontSize="sm" className="font-Cerebri-sans-book" />
-                <InputRightElement>
-                    <FiX size={20} color="grey" />
-                </InputRightElement>
-            </InputGroup>
-        </div>
+       {
+         showSearchbar && (
+          <div className="flex-1 h-full xl:hidden lg:hidden md:flex sm:flex items-center px-3">
+              <InputGroup>
+                  <InputLeftElement>
+                      <FiSearch size={25} color="grey" />
+                  </InputLeftElement>
+                  <Input onKeyPress={handleKeydonw} onChange={(e) => setQuery(e.target.value)} fontSize="sm" className="font-Cerebri-sans-book" />
+                  <InputRightElement>
+                      <FiX size={20} color="grey" />
+                  </InputRightElement>
+              </InputGroup>
+          </div>
+         )
+       }
 
         <div className="flex-1 xl:flex lg:flex md:hidden sm:hidden justify-end items-center">
-            <div className="w-2/4 h-full xl:flex lg:flex md:hidden sm:hidden mr-8 items-center">
-                <InputGroup>
-                    <InputLeftElement>
-                        <FiSearch size={25} color="grey" />
-                    </InputLeftElement>
-                    <Input onKeyPress={handleKeydonw} onChange={(e) => setQuery(e.target.value)} fontSize="sm" className="font-Cerebri-sans-book" />
-                    <InputRightElement>
-                        <FiX size={20} color="grey" />
-                    </InputRightElement>
-                </InputGroup>
-            </div>
+           
+           <AnimatePresence> 
+           {
+             showSearchbar && (
+              <motion.div 
+              initial={{ opacity: 0, width: 0 }}
+              animate={{  opacity: 1, width: 500 }}
+              exit={{ opacity: 0, width: 0 }}
+              className="w-2/4 h-full xl:flex lg:flex md:hidden sm:hidden mr-8 items-center">
+                  <InputGroup>
+                      <InputLeftElement>
+                          <Search  size={20} primaryColor='grey' />
+                      </InputLeftElement>
+                      <Input onKeyPress={handleKeydonw} value={query} onChange={(e) => setQuery(e.target.value)} fontSize="sm" className="font-Cerebri-sans-book" />
+                      <InputRightElement>
+                          <FiX size={20} color="grey" onClick={() => setQuery('')} className='cursor-pointer' />
+                      </InputRightElement>
+                  </InputGroup>
+              </motion.div>
+             )
+           }
+           </AnimatePresence>
+
+           <span  onClick={() => setShowSearchbar(prev => !prev)} className='cursor-pointer'>
+                <Search  size={20} primaryColor='grey' />
+            </span>
+
             <Menu preventOverflow={true}>
               <MenuButton
                 righticon={<FiChevronDown size={20} color="grey" />}
               >
-                <p className="flex mr-6 font-Cerebri-sans-book text-sm">
-                  <FiSearch size={20} className="text-themeGreen" />
-                  <span className="ml-3">Find Service</span>
-                  <FiChevronDown size={20} color="grey" className="ml-0 mt-0" />
-                </p>
+               <div className="flex items-center">
+                
+                  <p className="flex mr-6 font-Cerebri-sans-book text-sm">
+                    <span className="ml-3">Find Service</span>
+                    <FiChevronDown size={20} color="grey" className="ml-0 mt-0" />
+                  </p>
+               </div>
               </MenuButton>
-              <MenuList w="1000px" maxH="500px" overflow="auto" className="grid grid-cols-4 font-light text-sm">
+              <MenuList w="100vw" maxH="500px" overflow="auto" className="grid grid-cols-4 font-light text-sm pl-10">
                 {serv.map((item, index) => (
                   <MenuItem key={index.toString()}>
                     <Link prefetch={false} shallow={true} href={`/services?service=${item.name}`}>{item.name}</Link>
@@ -155,11 +225,15 @@ export default function ServiceNavbar() {
                 ))}             
               </MenuList>
             </Menu>
-            
-            {loggedIn && (
-              <Popover placement='bottom' size="xs" isOpen={userMenuOpen} closeOnBlur closeOnEsc onClose={() => setUserMenuOpen(false)}> 
-              <PopoverTrigger>
-                <div className=" flex items-center  ml-6 cursor-pointer w-auto h-auto" onClick={() => setUserMenuOpen(prev => !prev)}>
+
+            {
+              loggedIn && (
+                <Menu preventOverflow={true}>
+                  <MenuButton
+                    righticon={<FiChevronDown size={20} color="grey" />}
+                    className='hover:bg-green-200 rounded-md'
+                  >
+                  <div className="p-3 rounded-md hover:bg-green-200 flex items-center  ml-2 cursor-pointer w-auto h-auto" onClick={() => setUserMenuOpen(prev => !prev)}>
                   <Avatar src={user.profile_pic} size="sm" />
                   {userMenuOpen && (
                     <FiChevronUp size={15} className="ml-0 " color="black" />
@@ -168,23 +242,32 @@ export default function ServiceNavbar() {
                     <FiChevronDown color="black" size={15} className="ml-0" />
                   )}
                 </div>
-              </PopoverTrigger>
-              <PopoverContent>
-                {/* <PopoverArrow /> */}
-                <PopoverBody className='w-16'>
-                  <div className="">
-                  <p onClick={() => router.push('/dashboard')} className="text-sm text-themeGreen font-Circular-std-book mx-0 mt-3 flex items-center cursor-pointer">
-                        <span>Dashboard</span>
-                      </p>
-                      <p onClick={handleLogout} className="text-sm text-red-400 font-Circular-std-book mx-0 mt-3 flex items-center cursor-pointer">
-                        <span>Logout</span>
-                      </p>
-                  </div>
-                </PopoverBody>
-              </PopoverContent>
-            </Popover>
+                  </MenuButton>
+                  <MenuList w="100px" minW="10px" maxH="200px" overflow="auto" className="flex flex-col font-light text-sm pl-0">
+                      <MenuItem className='h-6'>
+                        <p onClick={() => router.push('/dashboard')} className="text-sm text-themeGreen font-Circular-std-book mx-0 flex items-center cursor-pointer">
+                          <span>Dashboard</span>
+                        </p>
+                      </MenuItem> 
+                      <MenuItem className='h-6'>
+                        <p onClick={handleLogout} className="text-sm text-red-400 font-Circular-std-book mx-0 flex items-center cursor-pointer">
+                          <span>Logout</span>
+                        </p>
+                      </MenuItem>          
+                  </MenuList>
+                </Menu>
+              )
+            }
+            
+ 
+            {loggedIn && (
+              <div className="p-1 cursor-pointer rounded-md hover:bg-green-200">
+                <span  onClick={() => setShowNoti(true)} >
+                  <Notification size={25} filled primaryColor="grey" />
+                </span>
+                {/* <FiBell size={25} color="black" className='cursor-pointer'/> */}
+              </div>
             )}
-            {loggedIn && <FiBell size={25} color="black" className='cursor-pointer ml-6' onClick={() => setShowNoti(true)} />}
 
             {!loggedIn && (
               <div className="flex font-Cerebri-sans-book text-sm cursor-pointer">
@@ -198,7 +281,7 @@ export default function ServiceNavbar() {
           <FiMenu size={30} color="grey" onClick={() => setOpen(true)} />
         </div>
 
-         {/* Notofication Drawer */}
+         {/* Notification Drawer */}
          <Drawer isOpen={showNoti} onClose={() => setShowNoti(false)}>
           <DrawerOverlay />
           <DrawerContent>

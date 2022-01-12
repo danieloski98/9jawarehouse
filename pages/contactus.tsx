@@ -7,16 +7,18 @@ import { FiMail, FiLock, FiEye, FiEyeOff, FiUser } from 'react-icons/fi'
 import Footer from '../components/Home/Footer';
 import NormNavbar from '../components/general/NorNavbar';
 
+import { FaInstagram, FaTwitter, FaLinkedin } from 'react-icons/fa'
+
 export default function ContactUs() {
   return (
     <div className="w-full h-auto flex flex-col">
 
         <NormNavbar />
 
-        <div className="flex-1 px-12 flex xl:flex-row lg:flex-row md:flex-col-reverse sm:flex-col-reverse pt-24 pb-10">
+        <div className="flex-1 px-24 flex xl:flex-row lg:flex-row md:flex-col-reverse sm:flex-col-reverse pt-24 pb-10">
 
-            <div className="xl:w-3/4 lg:w-3/4 md:w-full sm:w-full mr-10 flex">
-                <div className="xl:w-2/4 lg:w-2/4 md:w-full sm:w-full h-full ">
+            <div className="flex-1 xl:w-full lg:w-full md:w-full sm:w-full mr-10 flex ">
+                <div className="xl:w-4/5 lg:w-4/5 md:w-full sm:w-full h-full ">
                     <p className="text-3xl text-themeGreen font-Circular-std-medium">Contact Us</p>
                     <p className="text-sm font-Cerebri-sans-book mt-3 text-gray-500">Create screens directly in Method or add your images from Sketch. You can even sync designs from your cloud storage!</p>
 
@@ -26,7 +28,7 @@ export default function ContactUs() {
                             <InputLeftElement>
                                 <FiMail size={25} color="gray" />
                             </InputLeftElement>
-                            <Input fontSize="xs" className="font-Cerebri-sans-book" />
+                            <Input fontSize="xs" bgColor="#F1EEEE" className="font-Cerebri-sans-book" />
                         </InputGroup>
                     </div>
 
@@ -36,7 +38,7 @@ export default function ContactUs() {
                             <InputLeftElement>
                                 <FiUser size={25} color="gray" />
                             </InputLeftElement>
-                            <Input fontSize="xs" className="font-Cerebri-sans-book" />
+                            <Input fontSize="xs" bgColor="#F1EEEE" className="font-Cerebri-sans-book" />
                         </InputGroup>
                     </div>
 
@@ -50,18 +52,28 @@ export default function ContactUs() {
                 </div>
             </div>
 
-            <div className="bg-gray-20 xl:w-72 lg:w-72 md:w-full sm:w-full xl:h-96 lg:h-96 md:h-auto sm:h-auto xl:mt-0 lg:mt-0 md:mb-6 sm:mb-6">
+            <div className=" flex-1 xl:w-72 lg:w-72 md:w-full sm:w-full xl:h-96 lg:h-96 md:h-auto sm:h-auto xl:mt-0 lg:mt-0 md:mb-6 sm:mb-6">
                 <div className="flex flex-col">
-                    <p className="text-xl font-Cerebri-sans-book">Phone</p>
+                    <p className="text-md font-Cerebri-sans-book">Phone</p>
                     <p className="mt-0 font-Cerebri-sans-book text-themeGreen">+1 234 567 89 10</p>
                 </div>
 
                 <div className="flex flex-col mt-5">
-                    <p className="text-xl font-Cerebri-sans-book">Email</p>
+                    <p className="text-md font-Cerebri-sans-book">Email</p>
                     <p className="mt-0 font-Cerebri-sans-book text-themeGreen">Support@9jawarehouse.com</p>
                 </div>
 
-                <div className="w-full flex"></div>
+                <div className="w-full flex mt-6">
+                    <div className="w-10 h-10 rounded-full bg-gray-200 flex justify-center items-center mr-6 cursor-pointer">
+                        <FaInstagram size={20} className='text-themeGreen ' />
+                    </div>
+                    <div className="w-10 h-10 rounded-full bg-gray-200 flex justify-center items-center mr-6 cursor-pointer">
+                        <FaTwitter size={20} className='text-themeGreen ' />
+                    </div>
+                    <div className="w-10 h-10 rounded-full bg-gray-200 flex justify-center items-center mr-6 cursor-pointer">
+                        <FaLinkedin size={20} className='text-themeGreen ' />
+                    </div>
+                </div>
             </div>
 
         </div>

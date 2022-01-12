@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactStars from "react-rating-stars-component";
 import { IComment } from '../../utils/types/comments';
+import { Image } from '@chakra-ui/react'
 
 const Comments = ({comment}: {comment: IComment}) => {
     const ratingChanged = (newRating: any) => {
@@ -28,6 +29,18 @@ const Comments = ({comment}: {comment: IComment}) => {
             </div>
 
             <p className="mt-3 text-sm font-Circular-std-book text-gray-600">{comment.comment}</p>
+
+           {
+               comment.pictures.length > 0 && (
+                <div className="w-full h-12 flex mt-4">
+                {comment.pictures.map((item, index) => (
+                    <div className="w-12 h-full rounded-md overflow-hidden mr-4" key={index.toString()}>
+                        <Image src={item} alt="img" className="w-full h-full object-cover" />
+                    </div>
+                ))}
+            </div>
+               )
+           }
         </div>
     )
 }

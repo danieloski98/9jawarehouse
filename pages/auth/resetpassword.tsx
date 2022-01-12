@@ -104,9 +104,15 @@ export default function Resetpassword() {
 
         <div className="flex-1 flex flex-col">
             <LeftNavbar />
-            <div className="flex-1 xl:pl-10 lg:pl-10 md:pl-5 sm:pl-5 xl:pr-0 lg:pr-0 md:pr-5 sm:pr-5 flex flex-col justify-center items-start">
-                <h3 className="text-3xl font-Circular-std-medium text-gray-700">Reset Your Password</h3>
-                <p className="text-sm font-Cerebri-sans-book mt-4 text-gray-500">Lets help you create a new secure password</p>
+            <div className="flex-1 xl:pl-10 lg:pl-10 md:pl-5 sm:pl-5 xl:pr-0 lg:pr-0 md:pr-5 sm:pr-5 flex flex-col justify-center items-center">
+
+                {/* <h3 className="text-3xl font-Circular-std-medium text-gray-700">Reset Your Password</h3>
+                <p className="text-sm font-Cerebri-sans-book mt-4 text-gray-500">Lets help you create a new secure password</p> */}
+
+                <div className="flex flex-col xl:w-4/6 lg:w-4/6 md:w-full sm:w-full">
+                    <h3 className="text-3xl font-Circular-std-medium text-gray-700">Reset Your Password</h3>
+                    <p className="text-sm font-Cerebri-sans-book mt-4 text-gray-500">Lets help you create a new secure password</p>
+                </div>
 
                 <div className="flex flex-col xl:w-4/6 lg:w-4/6 md:w-full sm:w-full mt-6">
                     <label className="font-Cerebri-sans-book text-sm">New Password</label>
@@ -161,7 +167,7 @@ export default function Resetpassword() {
 
         <div className="w-2/5 h-full xl:block lg:block md:hidden sm:hidden">
             <Image src={Girl} alt="girl" className="w-full h-full" />
-            <div className="z-20 absolute flex flex-col top-96 px-8 bottom-0 ">
+            <div className="z-20 absolute flex flex-col top-96 pt-24 px-8 bottom-0 ">
                 <p className='font-Circular-std-medium text-2xl text-white'>Join 9ja Warehouse!</p>
                 <p className='mt-4 font-Cerebri-sans-book text-sm  text-white'> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Bibendum est ultricies integer quis. Iaculis urna id volutpat lacus laoreet. Mauris vitae ultricies leo integer malesuada. Ac odio tempor orci dapibus ultrices in. Egestas diam in arcu cursus euismod. Dictum fusce ut placerat orci nulla.</p>
             </div>

@@ -1,30 +1,78 @@
 import React from 'react';
-import { FiSearch, FiBell, FiMenu, FiChevronDown, FiX } from 'react-icons/fi'
-import { Avatar, Drawer, DrawerOverlay, DrawerContent, DrawerBody, Menu, MenuButton, MenuList, MenuItem, Button, Accordion, AccordionItem, AccordionButton, AccordionPanel, AccordionIcon, Box, Divider  } from '@chakra-ui/react'
+import { FiSearch, FiBell, FiMenu, FiChevronDown, FiX, FiChevronUp } from 'react-icons/fi'
+import { Avatar, Drawer, DrawerOverlay, DrawerContent, DrawerBody, Menu, MenuButton, MenuList, MenuItem, Button, Accordion, AccordionItem, AccordionButton, AccordionPanel, AccordionIcon, Box, Divider, Spinner, DrawerCloseButton  } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
+import * as moment from 'moment'
+import { Notification, Search } from 'react-iconly';
 
 // redux
 import {useSelector, useDispatch} from 'react-redux';
 import { RootState } from '../../store/index';
 import { setServices as SetServ } from '../../reducers/services.reducer'
 import { updateUser } from '../../reducers/User.reducer';
-import { login } from '../../reducers/logged'
+import { login, logout } from '../../reducers/logged'
 
 // images
 import Image from 'next/image';
 import Logo from '../../public/images/logo.svg';
 import Sidebar from '../dashboard/Sidebar';
+import { INotification } from '../../utils/types/Notification';
+import { IServerReturnObject } from '../../utils/types/serverreturntype';
+import url from '../../utils/url';
+import { useQuery } from 'react-query';
+
+// query frunction
+const getNotifications = async (user_id: string) => {
+  const request = await fetch(`${url}notifications/${user_id}`);
+  const json = await request.json() as IServerReturnObject;
+  if (!request.ok) {
+    throw new Error('An Error Occured')
+  }
+  return json;
+}
 
 
 export default function NormNavbar() {
   const [open, setOpen] = React.useState(false);
+  const [userMenuOpen, setUserMenuOpen] = React.useState(false);
+  const [notiLoading, setNotiLoading] = React.useState(true);
+  const [notiError, setNotiError] = React.useState(false);
+  const [notifications, setNotifications] = React.useState([] as Array<INotification>);
+  const [showNoti, setShowNoti] = React.useState(false);
   const user = useSelector((state:RootState) => state.UserReducer.user);
   const loggedIn = useSelector((state: RootState) => state.LoggedInReducer.loggedIn);
   const serv = useSelector((state: RootState) => state.ServicesReducer.services)
   const dispatch = useDispatch();
   console.log(user);
   const router = useRouter();
+
+   // query
+   const getNotificationQuery = useQuery('getNotifications', () => getNotifications(user._id), {
+    onSuccess: (data) => {
+      const dt = data.data as Array<INotification>;
+      setNotifications(dt);
+      setNotiLoading(false);
+      setNotiError(false)
+    },
+    onError: (error) => {
+      console.log(error);
+      setNotiLoading(false);
+      setNotiError(true);
+    }
+  })
+
+  const handleLogout = () => {
+    localStorage.removeItem('9jauser');
+    localStorage.removeItem('9jatoken');
+
+    dispatch(logout())
+  }
+
+  const getDate = (date: any) => {
+    const dt = moment.default(date);
+    return dt.startOf('hours').fromNow();
+  }
 
   return (
     <div className="w-full h-20 bg-white px-10 flex justify-between fixed z-50">
@@ -41,12 +89,14 @@ export default function NormNavbar() {
                 rightIcon={<FiChevronDown size={20} color="grey" />}
               >
                 <p className="flex mr-6">
-                  <FiSearch size={20} className="text-themeGreen" />
+                {/* <span  onClick={() => setShowSearchbar(prev => !prev)}>
+                    <Search  size={20} primaryColor='grey' />
+                </span> */}
                   <span className="ml-3 font-Cerebri-sans-book">Find Service</span>
                   <FiChevronDown size={20} color="grey" className="ml-1 mt-1" />
                 </p>
               </MenuButton>
-              <MenuList w="1000px" size maxH="500px" overflow="auto" className="grid grid-cols-4 font-Cerebri-sans-book text-sm">
+              <MenuList w="100vw" size maxH="500px" overflow="auto" className="grid grid-cols-4 font-Cerebri-sans-book text-sm pl-10">
                 {serv.map((item, index) => (
                   <MenuItem key={index.toString()}>
                     <Link href={`/services`}>{item.name}</Link>
@@ -55,17 +105,56 @@ export default function NormNavbar() {
               </MenuList>
             </Menu>
             
-            {loggedIn && <Avatar src={user.profile_pic} className="mr-6" size="sm" />}
-            {loggedIn && <FiBell size={25} color="black" />}
+            {
+              loggedIn && (
+                <Menu>
+                  <MenuButton
+                    righticon={<FiChevronDown size={20} color="grey" />}
+                    className='hover:bg-green-200 rounded-md'
+                  >
+                  <div className="z-30 w-16 h-12 rounded-md hover:bg-green-200 flex justify-center items-center cursor-pointer" onClick={() => setUserMenuOpen(prev => !prev)}>
+                    <Avatar src={user.profile_pic} size="sm" />
+                    {userMenuOpen && (
+                      <FiChevronUp size={15} className="ml-0 " color="black" />
+                    )}
+                    {!userMenuOpen && (
+                      <FiChevronDown color="black" size={15} className="ml-0" />
+                    )}
+                  </div>
+                  </MenuButton>
+                  <MenuList w="100px" minW="10px" maxH="200px" overflow="auto" className="flex flex-col font-light text-sm p-0">
+                      <MenuItem className='h-6'>
+                        <p onClick={() => router.push('/dashboard')} className="text-sm text-themeGreen font-Circular-std-book mx-0 flex items-center cursor-pointer">
+                          <span>Dashboard</span>
+                        </p>
+                      </MenuItem> 
+                      <MenuItem className='h-6'>
+                        <p onClick={handleLogout} className="text-sm text-red-400 h-auto font-Circular-std-book mx-0 mt-0 flex items-center cursor-pointer">
+                          <span>Logout</span>
+                        </p>
+                      </MenuItem>          
+                  </MenuList>
+                </Menu>
+              )
+            }
+
+            {loggedIn && (
+              <div className="p-1 cursor-pointer rounded-md hover:bg-green-200">
+                <span  onClick={() => setShowNoti(true)} >
+                  <Notification size={25} filled primaryColor="grey" />
+                </span>
+                {/* <FiBell size={25} color="black" className='cursor-pointer'/> */}
+              </div>
+            )}
 
             {!loggedIn && (
               <div className="flex font-Cerebri-sans-book text-md cursor-pointer">
-                <Link href="/auth/createaccount" passHref>
+                <Link href="/auth/signup" passHref>
                   <p className="mr-6 font-Cerebri-sans-book text-md">
                     Create Account
                     </p>
                 </Link>
-                <p className='font-Cerebri-sans-book'><Link href="/auth/login">Login</Link></p>
+                <p className='font-Cerebri-sans-book'><Link href="/auth/loginform">Login</Link></p>
               </div>
             )}
         </div>
@@ -73,6 +162,53 @@ export default function NormNavbar() {
         <div className="xl:hidden lg:hidden md:flex sm:flex items-center">
           <FiMenu size={30} color="grey" onClick={() => setOpen(true)} />
         </div>
+
+        {/* Notification Drawer */}
+        <Drawer isOpen={showNoti} onClose={() => setShowNoti(false)}>
+          <DrawerOverlay />
+          <DrawerContent>
+            <DrawerCloseButton />
+            <DrawerBody>
+              <p>Notifications</p>
+              {!notiLoading && !notiError && notifications.length < 1 && (
+                <div className="w-full h-64 mt-4">
+                  <p>You have no new Notification</p>
+              </div>
+              )}
+
+              {notiLoading && (
+                <div className="w-full h-40 flex justify-center items-center mt-4">
+                  <Spinner size="lg" color="green" />
+                </div>
+              )}
+
+              {!notiLoading && !notiError && notifications.length > 0 && (
+                <div className="mt-0 w-full ">
+                {notifications.sort((a, b) => {
+                  if (new Date(a.created_at) > new Date(b.created_at)) {
+                    return -1;
+                  }else {
+                    return 1;
+                  }
+                }).map((item, index) => (
+                    <div className="w-full h-auto px-0 py-2 flex flex-col" key={index.toString()}>
+                       <div className="w-full  cursor-pointer h-full flex justify-end items-center">
+                        <p className='font-Circular-std-medium text-xs text-gray-400 mt-3'>{getDate(item.created_at)}</p>
+                      </div>
+                      <div className="flex-1 flex flex-col justify-evenly mt-3">
+                        <p className='font-Cerebri-sans-book text-sm text-black mb-3 mr-6'>{item.message}</p>
+                        <div className="flex flex-col">
+                          <Divider />
+                         
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </DrawerBody>
+          </DrawerContent>
+        </Drawer>
 
          {/* navigation drawer for small screens and medium screens */}
 

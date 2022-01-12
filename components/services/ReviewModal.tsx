@@ -126,7 +126,7 @@ const CommentForm = ({formik, change, images, picker, user}: ICommentProps) => {
     )
 }
 
-const PinComponent = ({change, changePin, submit, loading, close}:{ change: Function, changePin: Function, submit: Function, loading: boolean, close: Function }) => {
+const PinComponent = ({change, changePin, submit, loading, close, user}:{ change: Function, changePin: Function, submit: Function, loading: boolean, close: Function, user: IUser }) => {
     return (
         <div className="w-full flex flex-col py-6">
             <div className="w-full flex cursor-pointer" onClick={() => change(1)}>
@@ -135,7 +135,7 @@ const PinComponent = ({change, changePin, submit, loading, close}:{ change: Func
             </div>
 
             <p className="font-light text-xl text-themeGreen text-center mt-8">Verify Business/ vendor PIN</p>
-            <p className="font-light text-sm mt-3 text-center">Enter 4 digit PIN from Limmer Makeover to approve your comments</p>
+            <p className="font-light text-sm mt-3 text-center">Enter 4 digit PIN from {user.business_name} to approve your comments</p>
 
             <div className="w-full flex justify-center h-auto mt-6">
                 <div className="xl:w-2/4 lg:w-2/4 md:w-full sm:w-full h-full">
@@ -189,6 +189,18 @@ export default function ReviewModal({ open, setOpen, id, user }: IProps) {
     //         formik.resetForm();
     //     }
     // });
+
+    const changeStage = (sta: number) => {
+        if (!formik.dirty) {
+            alert('Please fill in the form to continue');
+            return;
+        }
+        if (!formik.isValid) {
+            alert('Please fillin the form properly');
+            return;
+        }
+        setStage(sta);
+    }
 
     React.useEffect(() => {
         fileReader.addEventListener('load', () => {
@@ -277,6 +289,7 @@ export default function ReviewModal({ open, setOpen, id, user }: IProps) {
             }
         }
     }
+
     const close = () => {
         setOpen(false);
     }
@@ -289,8 +302,8 @@ export default function ReviewModal({ open, setOpen, id, user }: IProps) {
         <ModalContent>
             <ModalCloseButton />
             <ModalBody>
-                {stage === 1 && <CommentForm user={user} change={setStage} formik={formik} images={images} picker={pickImages} />}
-                {stage === 2 && <PinComponent change={setStage} changePin={changePin} submit={submit} loading={loading} close={close} />}
+                {stage === 1 && <CommentForm user={user} change={changeStage} formik={formik} images={images} picker={pickImages} />}
+                {stage === 2 && <PinComponent user={user} change={setStage} changePin={changePin} submit={submit} loading={loading} close={close} />}
                 {stage === 3 && (
                         <div className="w-full h-auto py-20 flex flex-col justify-center items-center">
                             <Image src={Good} alt="good" className="w-24 h-24" />

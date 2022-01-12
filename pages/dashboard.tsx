@@ -8,6 +8,7 @@ import Subscription from '../components/dashboard/Subscription';
 import Navbar from '../components/general/Navbar';
 import { Modal, ModalOverlay, ModalContent, ModalBody, Spinner, useToast } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
+import { queryClient } from './_app'
 
 // redux
 import { RootState } from '../store/index'
@@ -20,7 +21,17 @@ import url from '../utils/url';
 import { IServerReturnObject } from '../utils/types/serverreturntype';
 // import { socket } from '../utils/WebSocket';
 import { pusher } from '../utils/Pusher';
+import Footer from '../components/Home/Footer';
+import { useQuery } from 'react-query';
 // import Footer from '../components/Home/Footer';
+const getUser = async (_id: string) => {
+    const request = await fetch(`${url}user/${_id}`);
+    const json = await request.json() as IServerReturnObject;
+    if (!request.ok) {
+        throw new Error('An Error occured');
+    }
+    return json;
+}
 
 export default function Dashboard() {
 
@@ -30,6 +41,26 @@ export default function Dashboard() {
   const Toast = useToast();
   const router = useRouter();
   const dispatch = useDispatch();
+
+  const query = useQuery(['getUserDetails', user._id], () => getUser(user._id), {
+      refetchOnMount: true,
+      onSuccess: (data) => {
+          if (data.statusCode !== 200) {
+            setLoading(false);
+            router.push('/');
+            alert(data.errorMessage);
+            setLoading(false);
+            return
+          }
+            dispatch(updateUser(data.data));
+            dispatch(login());
+            setLoading(false);
+      },
+      onError: (error) => {
+          setLoading(false);
+          router.push('/');
+      }
+  })
 
 
   pusher.bind(`PINCHANGED:${user._id}`, (data: number) => {
@@ -43,18 +74,6 @@ export default function Dashboard() {
     });
     dispatch(updatePin(data));
   });
-
-//   socket.on(`PINCHANGED:${user._id}`, (data: number) => {
-//     Toast({
-//             position: 'top-right',
-//             title: 'PIN changed',
-//             description: data,
-//             duration: 10000,
-//             status: 'success',
-//             isClosable: true,
-//     });
-//     dispatch(updatePin(data));
-//   });
 
 
   const fetchUser = React.useCallback( async() => {
@@ -113,7 +132,7 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="w-full h-screen flex flex-col ">
+    <div className="w-full h-auto flex flex-col ">
 
         {/* modal */}
         <Modal isOpen={loading} onClose={() => setLoading(false)} isCentered={true}>
@@ -129,20 +148,21 @@ export default function Dashboard() {
        {
            !loading && (
                <>
-                        <div className="w-full h-16 shadow-lg z-20">
+                        <div className="w-full h-16 fixed shadow-md z-50">
                             <Navbar page={page} setPage={changePage} />
                         </div>
-                        <div className="z-10 flex-1 h-full overflow-auto bg-gray-100 xl:p-10 lg:p-10 md:p-5 sm:p-5 flex justify-between">
+                        <div className="z-10 h-auto xl:mt-10 lg:mt-10 md:mt-16 sm:mt-16 overflow-auto bg-gray-100 xl:py-10 lg:p-10 md:p-5 sm:p-5 flex justify-between">
 
-                            <div className="w-1/3 h-full xl:block lg:block md:hidden sm:hidden pb-10">
+                            <div className="w-1/3 h-full xl:block lg:block md:hidden sm:hidden pb-10 z-0">
                                 <Sidebar page={page} setPage={changePage} />
                             </div>
 
-                            <div className="xl:w-9/12 lg:w-9/12 md:w-full sm:w-full h-auto  xl:ml-10 lg:ml-10 md:ml-0 sm:ml-0 p-0">
+                            <div className="xl:w-9/12 lg:w-9/12 md:w-full sm:w-full h-auto  xl:ml-10 lg:ml-10 md:ml-0 sm:ml-0 p-0 z-0 ">
                                 {switcher()}
                             </div>
 
-                    </div>
+                        </div>
+                        <Footer />
                </>
            )
        }

@@ -19,6 +19,7 @@ import { updatetoken } from '../../reducers/Token.reducer';
 import { updatePin } from '../../reducers/pin.reducer'
 import { login, logout } from '../../reducers/logged'
 import { useDispatch, useSelector } from 'react-redux'
+import Footer from '../../components/Home/Footer';
 
 
 
@@ -145,7 +146,7 @@ export default function Services({states, services}: IProps) {
     }
     
   return (
-    <div className="w-full h-screen flex flex-col ">
+    <div className="w-full h-full flex flex-col ">
 
         {/* small screen filter  */}
     
@@ -191,24 +192,24 @@ export default function Services({states, services}: IProps) {
         </DrawerContent>
     </Drawer>
 
-    <div className="w-full h-24 z-20">
+    <div className="w-full h-20 z-50">
         <ServiceNavbar />
     </div>
 
     {/* {businesses.length} */}
 
-    <div className="w-full xl:px-6 lg:px-5 sm:px-6 md:px-5 flex h-auto py-4 items-center justify-between">
+    <div className="w-full xl:px-6 lg:px-5 sm:px-6 md:px-5 flex h-auto py-4 items-center justify-between  z-20">
         <p className=" font-Circular-std-medium text-md"> results for  {sr}</p>
         <FiFilter size={25} color="grey" className="xl:hidden lg:hidden md:block sm:block" onClick={() => setDrawer(true)} />
     </div>
 
-    <div className="w-full h-16 py-4 overflow-x-auto px-5 xl:hidden lg:hidden md:flex sm:flex">
+    <div className="w-full h-16 py-4 overflow-x-auto px-5 xl:hidden lg:hidden md:flex sm:flex  z-20">
             {services.map((item, index) => (
                 <div className='mr-5 h-8 min-w-max p-2 text-sm font-Cerebri-sans-book rounded-full bg-gray-400 text-white flex items-center ' onClick={() => setSr(item.name)} key={index.toString()} >{item.name}</div>
             ))}
     </div>
 
-    <div className="z-10 flex-1 h-auto xl:p-0 lg:p-0 md:p-5 sm:p-5 flex justify-between">
+    <div className="z-20 flex-1 h-auto xl:p-0 lg:p-0 md:p-5 sm:p-5 flex justify-between">
 
         <div className="w-1/5 h-full xl:block lg:block md:hidden sm:hidden pb-5 mx-5">
             {/* <Sidebar page={page} setPage={changePage} /> */}
@@ -281,7 +282,7 @@ export default function Services({states, services}: IProps) {
         </div>
 
     </div>
-    {/* <Footer /> */}
+    <Footer />
 </div>
   );
 }
