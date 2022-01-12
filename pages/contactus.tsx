@@ -15,7 +15,7 @@ export default function ContactUs() {
 
         <NormNavbar />
 
-        <div className="flex-1 px-24 flex xl:flex-row lg:flex-row md:flex-col-reverse sm:flex-col-reverse pt-24 pb-10">
+        <div className="flex-1 xl:px-24 lg:px-24 md:px-10 sm:px-10 flex xl:flex-row lg:flex-row md:flex-col-reverse sm:flex-col-reverse pt-24 pb-10">
 
             <div className="flex-1 xl:w-full lg:w-full md:w-full sm:w-full mr-10 flex ">
                 <div className="xl:w-4/5 lg:w-4/5 md:w-full sm:w-full h-full ">
