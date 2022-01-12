@@ -64,12 +64,19 @@ export default function Services({states, services}: IProps) {
     const [la, setLa] = React.useState("");
 
     React.useMemo(() => {
-        (async function() {
-                const request = await fetch(`${url}states/lgas/${state}`);
-                const json = await request.json() as IServerReturnObject;
-                const lga = json.data as Array<ILga>;
-                setLgas(lga);
-        })()
+        if (state !== "") {
+            (async function() {
+                try {
+                    const request = await fetch(`${url}states/lgas/${state}`);
+                    const json = await request.json() as IServerReturnObject;
+                    const lga = json.data as Array<ILga>;
+                    setLgas(lga);
+                } catch (error) {
+                    alert("An error occured");
+                    return
+                }
+            })()
+        }
     }, [state]);
     
 

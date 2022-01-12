@@ -66,6 +66,7 @@ export default function BigScreen({ states, services}: {states: IState[], servic
     const [service, setServices] = React.useState([] as Array<string>);
     const [certificates, setCertificates] = React.useState([] as Array<ICertificate>);
     let fileReader = React.useRef(new FileReader).current;
+    let fileReader2 = React.useRef(new FileReader).current;
     const picker = document.getElementById('picker');
     const router = useRouter();
     const [caller, setCaller] = React.useState(1);
@@ -94,21 +95,26 @@ export default function BigScreen({ states, services}: {states: IState[], servic
 
     React.useEffect(() => {
         fileReader.addEventListener('load', () => {
-            console.log(caller);
-            if (caller === 1) {
-                const imgs = [...images, fileReader.result];
-                setImages(imgs);
-                return;
-            } else {
-                setProfile(fileReader.result as string);
-                return;
-            }
+            const imgs = [...images, fileReader.result];
+            setImages(imgs);
+            return;
         });
 
         return () => {
             fileReader.removeEventListener('load', () => {});
         }
     }, [fileReader, caller, images])
+
+    React.useEffect(() => {
+        fileReader2.addEventListener('load', () => {
+            setProfile(fileReader2.result as string);
+            return;
+        });
+
+        return () => {
+            fileReader2.removeEventListener('load', () => {});
+        }
+    }, [fileReader2])
 
     const formik: any = useFormik({
         initialValues,
@@ -120,17 +126,20 @@ export default function BigScreen({ states, services}: {states: IState[], servic
         if (val === 1) {
             setProgress(33)
             setStep(val);
-            window.scrollTo({ top: 0, behavior: 'smooth' })
+            window.scroll({ top: 0, behavior: 'smooth' });
+            return;
         }
         if (val === 2) {
             setProgress(66)
             setStep(val);
-            window.scrollTo({ top: 0, behavior: 'smooth' })
+            window.scroll({ top: 0, behavior: 'smooth' });
+            return;
         }
         if (val === 3) {
             setProgress(100)
             setStep(val);
-            window.scrollTo({ top: 0, behavior: 'smooth' })
+            window.scroll({ top: 0, behavior: 'smooth' });
+            return;
         }
     }
 
@@ -140,7 +149,7 @@ export default function BigScreen({ states, services}: {states: IState[], servic
                 return <PersonalInfo next={move} states={states} formik={formik} />
             }
             case 2: {
-                return <BusinessInfo next={move} images={images} profilePic={profile} picker={pickImages} formik={formik} services={services} selectService={selectService} selectedSerices={service} deleteService={deleteService} certificates={certificates} addCerts={addCert} changeCert={changeCertValue} deleteCert={deleteCert}  />
+                return <BusinessInfo next={move} images={images} profilePic={profile} picker={pickImages} formik={formik} services={services} selectService={selectService} selectedSerices={service} deleteService={deleteService} certificates={certificates} addCerts={addCert} changeCert={changeCertValue} deleteCert={deleteCert} deleteImage={deleteImgs}  />
             }
             case 3: {
                 return <SocialMediaInfo next={move} formik={formik} submit={submit} loading={loading} />
@@ -162,6 +171,15 @@ export default function BigScreen({ states, services}: {states: IState[], servic
         }
     }
 
+    const deleteImgs = (index: number) => {
+        const img = [...images];
+        const files = [...imagesFiles];
+        files.splice(index, 1);
+        setImagesFiles(files);
+        img.splice(index, 1);
+        setImages(img);
+      }
+
     const pickImages = (call: number) => {
         setCaller(call);
         picker?.click();
@@ -171,10 +189,15 @@ export default function BigScreen({ states, services}: {states: IState[], servic
         if (caller === 1) {
             const imgs = [...imagesFiles, files[0]];
             setImagesFiles(imgs);
-        } else if (caller === 2) {
+            fileReader.readAsDataURL(files[0]);
+            return;
+        } 
+        if (caller === 2) {
             setProfilePic(files[0]);
+            fileReader2.readAsDataURL(files[0]);
+            return;
         }
-        fileReader.readAsDataURL(files[0]);
+        
     }
 
     const selectService = (servi: string) => {

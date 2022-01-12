@@ -47,7 +47,7 @@ export async function getStaticProps() {
 
 export default function Services({states, services}: IProps) {
     const [drawer, setDrawer] = React.useState(false);
-    const [state, setState] = React.useState("");
+    const [state, setState] = React.useState("Rivers");
     const [lgas, setLgas] = React.useState([] as Array<ILga>);
     const [businesses, setBusinesses] = React.useState([2] as Array<IUser | any>);
     const [loading, setLoading] = React.useState(true);
@@ -60,18 +60,26 @@ export default function Services({states, services}: IProps) {
     const [sr, setSr] = React.useState(router.query['service']);
     const [la, setLa] = React.useState("");
 
-    React.useMemo(() => {
-        (async function() {
-                const request = await fetch(`${url}states/lgas/${state}`);
-                const json = await request.json() as IServerReturnObject;
-                const lga = json.data as Array<ILga>;
-                setLgas(lga);
-        })()
+    React.useEffect(() => {
+        if (state !== "") {
+            (async function() {
+                try {
+                    const request = await fetch(`${url}states/lgas/${state}`);
+                    const json = await request.json() as IServerReturnObject;
+                    const lga = json.data as Array<ILga>;
+                    setLgas(lga);
+                } catch (error) {
+                    alert("An error occured");
+                    return
+                }
+            })()
+        }
     }, [state]);
     
 
     React.useEffect(() => {
         (async function() {
+            // setState(sr);
             setLoading(true);
             const request = await fetch(`${url}user?service=${sr}&state=${st}&lga=${la}`);
             const json = await request.json() as IServerReturnObject;

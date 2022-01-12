@@ -365,7 +365,13 @@ export default function ServiceNavbar() {
                         PIN: 9080998
                     </div> */}
 
-                    {loggedIn && <Avatar src={user.profile_pic} className="mr-6 cursor-pointer" size="sm" onClick={() => router.push('/dashboard')} />}
+                    {loggedIn && (
+                      <div className="w-full h-16 flex items-center" onClick={() => router.push('/dashboard')}>
+                        <Avatar src={user.profile_pic} className="mr-0 cursor-pointer" size="sm"  />
+                        <p className='font-Cerebri-sans-book ml-2 text-themeGreen'>Dashboard</p>
+                      </div>
+                    )
+                    }
                     {/* {loggedIn && <FiBell size={25} color="black" className='cursor-pointer' onClick={() => setShowNoti(true)} />} */}
 
                     {!loggedIn && (
@@ -397,7 +403,7 @@ export default function ServiceNavbar() {
                         </AccordionItem>
                     </Accordion>
 
-                    <p className="text-red-500 mt-5 text-sm font-light">Logout</p>
+                    <p className="text-red-500 mt-5 text-sm font-light" onClick={handleLogout}>Logout</p>
                   </div>
 
 
