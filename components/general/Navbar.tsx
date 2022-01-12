@@ -153,8 +153,8 @@ export default function Navbar({page, setPage}: IProps) {
   const handleLogout = () => {
     localStorage.removeItem('9jauser');
     localStorage.removeItem('9jatoken');
-
-    dispatch(logout())
+    dispatch(logout());
+    router.push('/');
   }
 
   return (
@@ -194,12 +194,13 @@ export default function Navbar({page, setPage}: IProps) {
 
             {
               loggedIn && (
-                <Menu>
+                <Menu isOpen={userMenuOpen} onClose={() => setUserMenuOpen(false)}>
                   <MenuButton
                     righticon={<FiChevronDown size={20} color="grey" />}
                     className='hover:bg-green-200 rounded-md'
+                    onClick={() => setUserMenuOpen(prev => !prev)}
                   >
-                  <div className="z-30 w-16 h-12 rounded-md hover:bg-green-200 flex justify-center items-center cursor-pointer" onClick={() => setUserMenuOpen(prev => !prev)}>
+                  <div className="z-30 w-16 h-12 rounded-md hover:bg-green-200 flex justify-center items-center cursor-pointer">
                     <Avatar src={user.profile_pic} size="sm" />
                     {userMenuOpen && (
                       <FiChevronUp size={15} className="ml-0 " color="black" />

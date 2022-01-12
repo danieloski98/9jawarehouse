@@ -104,7 +104,7 @@ const sub = () => {
 
         <div className="w-full flex xl:flex-row lg:flex-row md:flex-col sm:flex-col justify-between mt-6 font-semibold text-sm text-gray-500">
             <div className="w-full">
-                <label>whatsapp</label>
+                <label>whatsapp (Note: this should be your whatsapp business account link not your phone number)</label>
                 <div className="xl:w-11/12 lg:w-11/12 md:w-full sm:w-full">
                     <Input border="none" bgColor="whitesmoke" borderRadius={0} className="bg-gray-100 mt-3" name="whatsapp" value={formik.values.whatsapp} onChange={formik.handleChange} onFocus={() => formik.setFieldTouched('whatsapp', true, true)} />
                 </div>

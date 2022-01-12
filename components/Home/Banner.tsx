@@ -30,6 +30,8 @@ import { INotification } from '../../utils/types/Notification';
 export const LeftNavbar = () => {
     const dispatch = useDispatch();
     const serv = useSelector((state: RootState) => state.ServicesReducer.services);
+    const loggedIn = useSelector((state: RootState) => state.LoggedInReducer.loggedIn);
+    const user = useSelector((state: RootState) => state.UserReducer.user);
 
     React.useMemo(() => {
         (async function() {
@@ -43,6 +45,13 @@ export const LeftNavbar = () => {
 
     const [open, setOpen] = React.useState(false);
     const router = useRouter();
+
+    const handleLogout = () => {
+      localStorage.removeItem('9jauser');
+      localStorage.removeItem('9jatoken');
+  
+      dispatch(logout())
+    }
 
     return (
         <div className="w-full h-24 flex justify-between items-center px-5">
@@ -59,8 +68,19 @@ export const LeftNavbar = () => {
                     <DrawerBody>
                         <div className="w-full flex flex-col items-start text-md font-light text-gray-600">
                             {/* <Avatar src="https://bit.ly/broken-link" className="" size="sm" /> */}
-                            <p onClick={() => router.push('/auth/loginform')} className="mt-6 text-md font-Cerebri-sans-book text-themeGreen">Login</p>
-                            <p onClick={() => router.push('/auth/signup')} className="mt-4 mb-4 text-md font-Cerebri-sans-book text-themeGreen">Register</p>
+                            {!loggedIn && (
+                              <>
+                                <p onClick={() => router.push('/auth/loginform')} className="mt-6 text-md font-Cerebri-sans-book text-themeGreen">Login</p>
+                                <p onClick={() => router.push('/auth/signup')} className="mt-4 mb-4 text-md font-Cerebri-sans-book text-themeGreen">Register</p>
+                              </>
+                            )}
+
+                          {loggedIn && (
+                            <div className="w-full h-16 flex items-center" onClick={() => router.push('/dashboard')}>
+                              <Avatar src={user.profile_pic} className="mr-0 cursor-pointer" size="sm"  />
+                              <p className='font-Cerebri-sans-book ml-2 text-themeGreen'>Dashboard</p>
+                            </div>
+                          )}
 
                     <Accordion className="mt-5" allowToggle allowMultiple defaultIndex={[0]}>
 
@@ -91,6 +111,7 @@ export const LeftNavbar = () => {
                             </AccordionPanel>
                         </AccordionItem>
                     </Accordion>
+                    <p className="text-red-500 mt-5 text-sm font-light" onClick={handleLogout}>Logout</p>
                         </div>
                     </DrawerBody>
                 </DrawerContent>
@@ -247,36 +268,40 @@ const RightNavBar = () => {
             </Menu>
 
             
-
-            {loggedIn && (
-              <Popover placement='bottom' size="xs" isOpen={userMenuOpen} closeOnBlur closeOnEsc onClose={() => setUserMenuOpen(false)}> 
-              <PopoverTrigger>
-                <div className=" flex items-center  ml-6 cursor-pointer" onClick={() => setUserMenuOpen(prev => !prev)}>
-                  <Avatar src={user.profile_pic} size="sm" />
-                  {userMenuOpen && (
-                    <FiChevronUp size={25} className="ml-0 " color="white" />
-                  )}
-                  {!userMenuOpen && (
-                    <FiChevronDown color="white" size={25} className="ml-0" />
-                  )}
-                </div>
-              </PopoverTrigger>
-              <PopoverContent>
-                {/* <PopoverArrow /> */}
-                <PopoverBody className='w-16'>
-                  <div className="">
-                        <p onClick={() => router.push('/dashboard')} className="text-md text-themeGreen font-Circular-std-book mx-0 flex items-center cursor-pointer">
-                      <span>Dashboard</span>
-                      </p>
-
-                      <p onClick={handleLogout} className="text-md text-themeGreen font-Circular-std-book mx-0 mt-3 flex items-center cursor-pointer">
-                      <span>Logout</span>
-                  </p>
+            {
+              loggedIn && (
+                <Menu isOpen={userMenuOpen} onClose={() => setUserMenuOpen(false)}>
+                  <MenuButton
+                    // righticon={<FiChevronDown size={20} color="grey" />}
+                    className='hover:bg-green-200 rounded-md'
+                    onClick={() => setUserMenuOpen(prev => !prev)}
+                  >
+                  <div className="z-30 w-16 h-12 rounded-md hover:bg-green-200 flex justify-center items-center cursor-pointer" >
+                    <Avatar src={user.profile_pic} size="sm" />
+                    {userMenuOpen && (
+                      <FiChevronUp size={15} className="ml-0 " color="white" />
+                    )}
+                    {!userMenuOpen && (
+                      <FiChevronDown color="white" size={15} className="ml-0" />
+                    )}
                   </div>
-                </PopoverBody>
-              </PopoverContent>
-            </Popover>
-            )}
+                  </MenuButton>
+                  <MenuList w="100px" minW="10px" maxH="200px" overflow="auto" className="flex flex-col font-light text-sm p-0">
+                    <MenuItem className='h-6'>
+                        <p onClick={() => router.push('/dashboard')}  className="text-sm text-themeGreen h-auto font-Circular-std-book mx-0 mt-0 flex items-center cursor-pointer">
+                          <span>Dashboard</span>
+                        </p>
+                      </MenuItem> 
+                      <MenuItem className='h-6'>
+                        <p onClick={handleLogout} className="text-sm text-red-400 h-auto font-Circular-std-book mx-0 mt-0 flex items-center cursor-pointer">
+                          <span>Logout</span>
+                        </p>
+                      </MenuItem>          
+                  </MenuList>
+                </Menu>
+              )
+            }
+            
 
             {loggedIn && (
               <Popover placement='bottom' size="xs" isOpen={notificationOpen} closeOnBlur={true} closeOnEsc={true} onClose={() => setNotificationOpen(false)}>

@@ -109,10 +109,10 @@ export default function NormNavbar() {
               loggedIn && (
                 <Menu>
                   <MenuButton
-                    righticon={<FiChevronDown size={20} color="grey" />}
                     className='hover:bg-green-200 rounded-md'
+                    onClick={() => setUserMenuOpen(prev => !prev)}
                   >
-                  <div className="z-30 w-16 h-12 rounded-md hover:bg-green-200 flex justify-center items-center cursor-pointer" onClick={() => setUserMenuOpen(prev => !prev)}>
+                  <div className="z-30 w-16 h-12 rounded-md hover:bg-green-200 flex justify-center items-center cursor-pointer" >
                     <Avatar src={user.profile_pic} size="sm" />
                     {userMenuOpen && (
                       <FiChevronUp size={15} className="ml-0 " color="black" />
@@ -235,37 +235,23 @@ export default function NormNavbar() {
                   {/* menu */}
 
                   <div className="w-full flex flex-col">
-                  {
-                      loggedIn && (
-                        <div className="w-full h-10 text-white flex justify-center items-center bg-themeGreen">
-                            PIN: 9080998
-                        </div>
-                      )
+                  {loggedIn && (
+                      <div className="w-full h-16 flex items-center" onClick={() => router.push('/dashboard')}>
+                        <Avatar src={user.profile_pic} className="mr-0 cursor-pointer" size="sm"  />
+                        <p className='font-Cerebri-sans-book ml-2 text-themeGreen'>Dashboard</p>
+                      </div>
+                    )
                     }
 
-                    <Link href="/dashboard">
-                        <a className="text-themeGreen mt-5 text-lg font-light">Dashboard</a>
-                    </Link>
+                    {!loggedIn && (
+                      <div className="flex flex-col font-Cerebri-sans-book text-md text-themeGreen cursor-pointer">
+                        <p className="mr-3"><Link href="/auth/signup">Create Account</Link></p>
+                        <p className='mt-4'><Link href="/auth/loginform">Login</Link></p>
+                      </div>
+                    )}
+
 
                     <Accordion className="mt-5" allowToggle allowMultiple defaultIndex={[0]}>
-                        {/* <AccordionItem>
-                            <AccordionButton>
-                                <Box flex="1" textAlign="left">
-                                  <p className="text-xl font-light text-themeGreen">Dashboard</p>
-                                </Box>
-                                <AccordionIcon />
-                            </AccordionButton>
-
-                            <AccordionPanel>
-                              <div className="w-full flex flex-col">
-                                <p onClick={() => setPage(1)}>Profile</p>
-                                <p className="mt-3" onClick={() => setPage(2)}>Customer Reviews</p>
-                                <p className="mt-3" onClick={() => setPage(3)}>Subscriptions</p>
-                                <p className="mt-3">Notifications</p>
-                                <p className="mt-3" onClick={() => setPage(4)}>Settings</p>
-                              </div>
-                            </AccordionPanel>
-                        </AccordionItem> */}
 
                         <AccordionItem>
                             <AccordionButton>
@@ -294,7 +280,7 @@ export default function NormNavbar() {
                         </AccordionItem>
                     </Accordion>
 
-                    <p className="text-red-500 mt-5 text-sm font-Cerebri-sans-book">Logout</p>
+                    <p onClick={handleLogout} className="text-red-500 mt-5 text-sm font-Cerebri-sans-book">Logout</p>
                   </div>
 
 

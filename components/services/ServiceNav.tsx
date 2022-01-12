@@ -82,22 +82,6 @@ export default function ServiceNavbar() {
     }
   });
 
-  const getNotificationQuery = useQuery(['getNotifications', user._id], () => getNotifications(user._id), {
-    onSuccess: (data) => {
-      if (data === undefined) {
-        return;
-      }
-      const dt = data.data as Array<INotification>;
-      setNotifications(dt);
-      setNotiLoading(false);
-      setNotiError(false)
-    },
-    onError: (error) => {
-      console.log(error);
-      setNotiLoading(false);
-      setNotiError(true);
-    }
-  });
 
   const fetchUser = React.useCallback( async() => {
     // setLoading(true);
@@ -128,6 +112,22 @@ export default function ServiceNavbar() {
   }, [fetchUser, router, dispatch]);
 
   // query
+  const getNotificationQuery = useQuery(['getNotifications', user._id], () => getNotifications(user._id), {
+    onSuccess: (data) => {
+      if (data === undefined) {
+        return;
+      }
+      const dt = data.data as Array<INotification>;
+      setNotifications(dt);
+      setNotiLoading(false);
+      setNotiError(false)
+    },
+    onError: (error) => {
+      console.log(error);
+      setNotiLoading(false);
+      setNotiError(true);
+    }
+  });
  
 
   const handleKeydonw = (e: any) => {
@@ -246,8 +246,9 @@ export default function ServiceNavbar() {
                   <MenuButton
                     righticon={<FiChevronDown size={20} color="grey" />}
                     className='hover:bg-green-200 rounded-md'
+                    onClick={() => setUserMenuOpen(prev => !prev)}
                   >
-                  <div className="p-3 rounded-md hover:bg-green-200 flex items-center  ml-2 cursor-pointer w-auto h-auto" onClick={() => setUserMenuOpen(prev => !prev)}>
+                  <div className="p-3 rounded-md hover:bg-green-200 flex items-center  ml-2 cursor-pointer w-auto h-auto" >
                   <Avatar src={user.profile_pic} size="sm" />
                   {userMenuOpen && (
                     <FiChevronUp size={15} className="ml-0 " color="black" />
