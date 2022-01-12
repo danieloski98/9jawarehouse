@@ -27,12 +27,15 @@ import { INotification } from '../../utils/types/Notification';
 // query frunction
 const getNotifications = async (user_id: string) => {
   try {
-    const request = await fetch(`${url}notifications/${user_id}`);
-    const json = await request.json() as IServerReturnObject;
-    if (!request.ok) {
-      throw new Error('An Error Occured')
-    }
-    return json;
+    if (user_id !== undefined) {
+      const request = await fetch(`${url}notifications/${user_id}`);
+      const json = await request.json() as IServerReturnObject;
+      if (!request.ok) {
+        throw new Error('An Error Occured')
+      }
+      return json;
+      }
+
   } catch (error) {
     throw new Error('An Error Occured')
   }
@@ -81,6 +84,9 @@ export default function ServiceNavbar() {
 
   const getNotificationQuery = useQuery(['getNotifications', user._id], () => getNotifications(user._id), {
     onSuccess: (data) => {
+      if (data === undefined) {
+        return;
+      }
       const dt = data.data as Array<INotification>;
       setNotifications(dt);
       setNotiLoading(false);
