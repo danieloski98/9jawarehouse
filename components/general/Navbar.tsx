@@ -172,7 +172,7 @@ export default function Navbar({page, setPage}: IProps) {
                 
               >
                 <p className="flex mr-4">
-                  <Search  size={20} primaryColor='grey' />
+                  {/* <Search  size={20} primaryColor='grey' /> */}
                   <span className="ml-3 font-Cerebri-sans-book  text-sm cursor-pointer">Find Service</span>
                   <FiChevronDown size={20} color="grey" className="ml-1 mt-0" />
                 </p>

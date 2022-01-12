@@ -43,7 +43,7 @@ export default function AboutUs() {
                     <p className="text-4xl font-Circular-std-medium text-themeGreen">Meet the Team</p>
                     <div className="w-full grid xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-1 sm:grid-cols-1 mt-6">
 
-                        <div className="flex-col flex xl:w-64 lg:w-64 md:w-full sm:w-full items-center">
+                        <div className="flex-col flex xl:w-64 lg:w-64 md:w-full sm:w-full items-center mb-4">
                            <div className="w-64 h-64 overflow-hidden">
                                 <Image src={Guy} alt="man" className="w-40 h-64" />
                            </div>
@@ -51,7 +51,7 @@ export default function AboutUs() {
                            <p className="mt-0 text-center font-Cerebri-sans-book text-sm">Founder / CEO</p>
                         </div>
 
-                        <div className="flex-col flex xl:w-64 lg:w-64 md:w-full sm:w-full items-center">
+                        <div className="flex-col flex xl:w-64 lg:w-64 md:w-full sm:w-full items-center mb-4">
                            <div className="w-64 h-64 overflow-hidden">
                                 <Image src={Guy} alt="man" className="w-40 h-64" />
                            </div>
@@ -59,7 +59,7 @@ export default function AboutUs() {
                            <p className="mt-0 text-center font-Cerebri-sans-book text-sm">Founder / CEO</p>
                         </div>
 
-                        <div className="flex-col flex xl:w-64 lg:w-64 md:w-full sm:w-full items-center">
+                        <div className="flex-col flex xl:w-64 lg:w-64 md:w-full sm:w-full items-center mb-4">
                            <div className="w-64 h-64 overflow-hidden">
                                 <Image src={Guy} alt="man" className="w-40 h-64" />
                            </div>
