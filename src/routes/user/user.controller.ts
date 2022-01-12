@@ -13,7 +13,6 @@ import {
 import { AnyFilesInterceptor } from '@nestjs/platform-express';
 import { ApiBody, ApiParam, ApiProperty, ApiTags } from '@nestjs/swagger';
 import { Response } from 'express';
-import { any } from 'joi';
 import { join } from 'path';
 import { User } from 'src/Schema/User.schema';
 import { IFile } from 'src/Types/file';

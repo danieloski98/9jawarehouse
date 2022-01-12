@@ -74,7 +74,7 @@ export class PicsService {
         return Return({
           error: true,
           statusCode: 400,
-          errorMessage: 'You already have an unapproved',
+          errorMessage: 'You already have an unapproved record',
         });
       }
 
