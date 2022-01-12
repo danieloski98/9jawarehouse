@@ -34,7 +34,7 @@ export class PinService {
       const piinn = await this.pinModel.find({ business_id: user_id });
       this.logger.error(piinn);
 
-      if (piinn.length < 1) {
+      if (piinn.length < 5) {
         // generate PIN
         const options = {
           min: 1000,
