@@ -62,6 +62,34 @@ export default function NormNavbar() {
     }
   })
 
+  const fetchUser = React.useCallback( async() => {
+    // setLoading(true);
+    const _id = JSON.parse(localStorage.getItem('9jauser') as string)._id;
+    const request = await fetch(`${url}user/${_id}`);
+    const json = await request.json() as IServerReturnObject;
+
+    if (json.statusCode !== 200) {
+        dispatch(logout())
+        alert(json.errorMessage);
+        // setLoading(false);
+        return
+    } else {
+        dispatch(updateUser(json.data));
+        dispatch(login());
+        // setLoading(false);
+    }
+  }, [dispatch]);
+
+   React.useEffect(() => {
+      const data = localStorage.getItem('9jauser');
+
+      if (data === null || data === undefined) {
+          dispatch(logout())
+      } else {
+          fetchUser();
+      }
+  }, [fetchUser, router, dispatch]);
+
   const handleLogout = () => {
     localStorage.removeItem('9jauser');
     localStorage.removeItem('9jatoken');
