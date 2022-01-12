@@ -45,6 +45,7 @@ export default function ContactUs() {
             body: JSON.stringify(formik.values)
         });
         const json = await request.json() as IServerReturnObject;
+        formik.resetForm();
         setLoading(false);
         if (json.statusCode !== 200) {
             alert(json.errorMessage);
