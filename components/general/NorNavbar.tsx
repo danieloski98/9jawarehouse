@@ -21,10 +21,20 @@ import { INotification } from '../../utils/types/Notification';
 import { IServerReturnObject } from '../../utils/types/serverreturntype';
 import url from '../../utils/url';
 import { useQuery } from 'react-query';
+import { IServices } from '../../utils/types/services';
 
 // query frunction
 const getNotifications = async (user_id: string) => {
   const request = await fetch(`${url}notifications/${user_id}`);
+  const json = await request.json() as IServerReturnObject;
+  if (!request.ok) {
+    throw new Error('An Error Occured')
+  }
+  return json;
+}
+
+const getServices = async () => {
+  const request = await fetch(`${url}services`);
   const json = await request.json() as IServerReturnObject;
   if (!request.ok) {
     throw new Error('An Error Occured')
@@ -48,7 +58,7 @@ export default function NormNavbar() {
   const router = useRouter();
 
    // query
-   const getNotificationQuery = useQuery('getNotifications', () => getNotifications(user._id), {
+   const getNotificationQuery = useQuery(['getNotifications', user._id], () => getNotifications(user._id), {
     onSuccess: (data) => {
       const dt = data.data as Array<INotification>;
       setNotifications(dt);
@@ -59,6 +69,16 @@ export default function NormNavbar() {
       console.log(error);
       setNotiLoading(false);
       setNotiError(true);
+    }
+  })
+
+  const geServicesQuery = useQuery('getServices', () => getServices(), {
+    onSuccess: (data) => {
+      const dt = data.data as Array<IServices>;
+      dispatch(SetServ(dt));
+    },
+    onError: (error) => {
+      console.log(error);
     }
   })
 
