@@ -26,21 +26,29 @@ import { INotification } from '../../utils/types/Notification';
 
 // query frunction
 const getNotifications = async (user_id: string) => {
-  const request = await fetch(`${url}notifications/${user_id}`);
-  const json = await request.json() as IServerReturnObject;
-  if (!request.ok) {
+  try {
+    const request = await fetch(`${url}notifications/${user_id}`);
+    const json = await request.json() as IServerReturnObject;
+    if (!request.ok) {
+      throw new Error('An Error Occured')
+    }
+    return json;
+  } catch (error) {
     throw new Error('An Error Occured')
   }
-  return json;
 }
 
 const getServices = async () => {
-  const request = await fetch(`${url}services`);
-  const json = await request.json() as IServerReturnObject;
-  if (!request.ok) {
+  try {
+    const request = await fetch(`${url}services`);
+    const json = await request.json() as IServerReturnObject;
+    if (!request.ok) {
+      throw new Error('An Error Occured')
+    }
+    return json;
+  } catch (error) {
     throw new Error('An Error Occured')
   }
-  return json;
 }
 
 interface IProps {
