@@ -238,9 +238,9 @@ export default function Navbar({page, setPage}: IProps) {
             )}
         </div>
 
-        <div className="xl:hidden lg:hidden md:flex sm:flex items-center">
+        <div className="xl:hidden lg:hidden md:flex sm:flex items-center justify-end">
+          {loggedIn && <FiBell size={25} color="black" className='mr-5 cursor-pointer' onClick={() => setShowNoti(true)} />}
           <FiMenu size={30} color="grey" onClick={() => setOpen(true)} />
-          {loggedIn && <FiBell size={25} color="black" className='ml-5 cursor-pointer' onClick={() => setShowNoti(true)} />}
         </div>
 
 
