@@ -553,6 +553,7 @@ module.exports = {
       '24': '24rem',
       min: 'min-content',
       max: 'max-content',
+      '32': '8rem',
     },
     objectPosition: {
       bottom: 'bottom',

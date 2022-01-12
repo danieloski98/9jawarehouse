@@ -233,7 +233,7 @@ export default function EditProfile({ next }: IProps) {
 
           <div className="w-auto h-32 overflow-x-auto overflow-y-hidden flex mt-6 flex-nowrap">
             {imgs.map((item, index) => (
-              <div title="double Click to delete" className="w-32 min-w-lg max-w-md h-full overflow-hidden mr-4 " key={index.toString()}>
+              <div className="w-32 min-w-max max-w-md h-full overflow-hidden mr-4 " key={index.toString()}>
 
                 <div
                 className="min-w-max w-32 h-full bg-gray-200 flex flex-col justify-center items-center mr-4 z-0 overflow-hidden"
@@ -256,7 +256,7 @@ export default function EditProfile({ next }: IProps) {
               </div>
             ))}
             {imgs.length < 5 && (
-              <div onClick={pickImages} className="w-32 h-32 bg-gray-200 flex justify-center items-center mr-4 cursor-pointer">
+              <div onClick={pickImages} className="w-32 min-w-32 max-w-md h-full overflow-hidden mr-4 bg-gray-200 flex justify-center items-center cursor-pointer">
                 <FaCamera size={35} color="grey" />
               </div>
             )}
@@ -325,7 +325,7 @@ export default function EditProfile({ next }: IProps) {
 
         {/* location details */}
 
-        <div className="flex xl:flex-row lg:flex-row md:flex-col sm:flex-col w-full mt-6">
+        <div className="flex xl:flex-row lg:flex-row md:flex-col sm:flex-col w-full mt-3">
 
         <div className="flex flex-1 flex-col w-full xl:pr-5 md:mb-3 sm:mb-3">
           <label className="font-Circular-std-book text-sm text-gray-600">Email Address</label>
@@ -369,7 +369,7 @@ export default function EditProfile({ next }: IProps) {
 
         </div>
 
-        <div className="flex xl:flex-row lg:flex-row md:flex-col sm:flex-col w-full mt-6">
+        <div className="flex xl:flex-row lg:flex-row md:flex-col sm:flex-col w-full mt-3">
 
             <div className="flex flex-1 flex-col w-full xl:pr-5 md:mb-3 sm:mb-3">
               <label className="font-Circular-std-book text-sm text-gray-600">House/business address</label>
@@ -416,7 +416,7 @@ export default function EditProfile({ next }: IProps) {
             </div>
 
 
-            <div className="flex xl:flex-row lg:flex-row md:flex-col sm:flex-col w-full mt-6">
+            <div className="flex xl:flex-row lg:flex-row md:flex-col sm:flex-col w-full mt-3">
 
               <div className="flex flex-1 flex-col w-full xl:pr-5 md:mb-3 sm:mb-3">
                 <label className="font-Circular-std-book text-sm text-gray-600">LGA</label>
@@ -491,9 +491,9 @@ export default function EditProfile({ next }: IProps) {
                   </div>
                 </div>
 
-                <div className="flex-1 flex w-full">
+                <div className="flex-1 flex w-full xl:flex-row lg:flex-row md:flex-col sm:flex-col">
                   {details.services.map((item, index) => (
-                    <div key={index.toString()} className="h-auto p-2 text-xs bg-green-100 text-themeGreen font-Cerebri-sans-book xl:mr-3 flex- items-center">
+                    <div key={index.toString()} className="h-auto p-2 text-xs bg-green-100 text-themeGreen font-Cerebri-sans-book xl:mr-3 flex- items-center md:mb-2 sm:mb-2">
                       {item}
                     </div>
                   ))}

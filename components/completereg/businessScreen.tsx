@@ -86,7 +86,7 @@ export default function BusinessInfo({ next, images, picker, profilePic, formik,
                     </div>
                 )}     
                 {images.length > 0 && images.map((item, index) => (
-                     <div title="double Click to delete" className="w-32 min-w-lg max-w-md h-full overflow-hidden mr-4 " key={index.toString()}>
+                     <div title="double Click to delete" className="w-32 min-w-max h-full overflow-hidden mr-4 " key={index.toString()}>
 
                      <div
                      className="min-w-max w-32 h-full bg-gray-200 flex flex-col justify-center items-center mr-4 z-0 overflow-hidden"
@@ -109,7 +109,7 @@ export default function BusinessInfo({ next, images, picker, profilePic, formik,
                    </div>
                 ))}    
                 {images.length > 0 && images.length < 5 && (
-                     <div onClick={() => picker(1)} className=" w-32 h-32 bg-gray-200 flex justify-center items-center mr-4 cursor-pointer">
+                     <div onClick={() => picker(1)} className=" w-32 h-32 min-w-32 max-w-md bg-gray-200 flex justify-center items-center mr-4 cursor-pointer">
                         <FiCamera size={35} color="grey" />
                     </div>
                 )}       
