@@ -10,6 +10,7 @@ import { IReturnObject } from 'src/utils/ReturnObject';
 import { join } from 'path';
 import { existsSync, rmSync } from 'fs';
 import Cloudinary from 'src/utils/cloudinary';
+import { Record, RecordDocument } from 'src/Schema/Record.Schema';
 
 @Injectable()
 export class PicsService {
@@ -18,24 +19,17 @@ export class PicsService {
     @InjectModel(ProfilePic.name)
     private profilepicModel: Model<ProfilePicDocument>,
     @InjectModel(User.name) private userModel: Model<UserDocument>,
+    @InjectModel(Record.name) private recordModel: Model<RecordDocument>,
   ) {}
 
   async uploadImgs(_id: string, images: Array<IFile>): Promise<IReturnObject> {
     try {
       console.log(images);
       const user = await this.userModel.findById(_id);
-      const record = await this.pictureModel.find({
+      const record = await this.recordModel.findOne({
         user_id: _id,
         approved: false,
       });
-
-      if (record.length > 0) {
-        return Return({
-          error: true,
-          statusCode: 400,
-          errorMessage: 'You already have an unapproved',
-        });
-      }
 
       if (user === null) {
         return Return({
@@ -44,33 +38,74 @@ export class PicsService {
           errorMessage: 'User not found',
         });
       }
-      const imgs: string[] = [];
-      for (let i = 0; i < images.length; i++) {
-        const upload = await Cloudinary.uploader.upload(
-          join(process.cwd(), `/pictures/${images[i].filename}`),
-        );
-        imgs.push(upload.secure_url);
-        // delete file
-        const fileExist = existsSync(
-          join(process.cwd(), `/pictures/${images[i].filename}`),
-        );
 
-        if (fileExist) {
-          // delete the file
-          rmSync(join(process.cwd(), `/pictures/${images[i].filename}`));
+      if (record === null || record === undefined) {
+        const imgs: string[] = [];
+        for (let i = 0; i < images.length; i++) {
+          const upload = await Cloudinary.uploader.upload(
+            join(process.cwd(), `/pictures/${images[i].filename}`),
+          );
+          imgs.push(upload.secure_url);
+          // delete file
+          const fileExist = existsSync(
+            join(process.cwd(), `/pictures/${images[i].filename}`),
+          );
+
+          if (fileExist) {
+            // delete the file
+            rmSync(join(process.cwd(), `/pictures/${images[i].filename}`));
+          }
         }
-      }
-      const recordRec = await this.pictureModel.create({
-        user_id: _id,
-        pictures: imgs,
-      });
+        const rec = {
+          images: imgs,
+          user_id: _id,
+        };
+        const recordRec = await this.recordModel.create(rec);
 
-      return Return({
-        error: false,
-        statusCode: 200,
-        data: recordRec,
-        successMessage: 'Record created and awaiting approval',
-      });
+        return Return({
+          error: false,
+          statusCode: 200,
+          data: recordRec,
+          successMessage: 'Record created and awaiting approval',
+        });
+      }
+
+      if (record.images.length > 0) {
+        return Return({
+          error: true,
+          statusCode: 400,
+          errorMessage: 'You already have an unapproved',
+        });
+      }
+
+      if (record.images.length < 1) {
+        const imgs: string[] = [];
+        for (let i = 0; i < images.length; i++) {
+          const upload = await Cloudinary.uploader.upload(
+            join(process.cwd(), `/pictures/${images[i].filename}`),
+          );
+          imgs.push(upload.secure_url);
+          // delete file
+          const fileExist = existsSync(
+            join(process.cwd(), `/pictures/${images[i].filename}`),
+          );
+
+          if (fileExist) {
+            // delete the file
+            rmSync(join(process.cwd(), `/pictures/${images[i].filename}`));
+          }
+        }
+        const update = await this.recordModel.updateOne(
+          { _id: record._id },
+          { images: imgs },
+        );
+
+        return Return({
+          error: false,
+          statusCode: 200,
+          successMessage: 'Record created and awaiting approval',
+        });
+      }
     } catch (error) {
       console.log(error);
       return Return({
@@ -84,20 +119,11 @@ export class PicsService {
 
   async uploadImg(_id: string, image: IFile): Promise<IReturnObject> {
     try {
-      console.log(image);
       const user = await this.userModel.findById(_id);
-      const record = await this.profilepicModel.find({
+      const record = await this.recordModel.findOne({
         user_id: _id,
         approved: false,
       });
-
-      if (record.length > 0) {
-        return Return({
-          error: true,
-          statusCode: 400,
-          errorMessage: 'You already have an unapproved record',
-        });
-      }
 
       if (user === null) {
         return Return({
@@ -106,30 +132,61 @@ export class PicsService {
           errorMessage: 'User not found',
         });
       }
-      const upload = await Cloudinary.uploader.upload(
-        join(process.cwd(), `/pictures/${image.filename}`),
-      );
-      // delete file
-      const fileExist = existsSync(
-        join(process.cwd(), `/pictures/${image.filename}`),
-      );
 
-      if (fileExist) {
-        // delete the file
-        rmSync(join(process.cwd(), `/pictures/${image.filename}`));
+      if (record === null || record === undefined) {
+        const upload = await Cloudinary.uploader.upload(
+          join(process.cwd(), `/pictures/${image.filename}`),
+        );
+        // delete file
+        const fileExist = existsSync(
+          join(process.cwd(), `/pictures/${image.filename}`),
+        );
+        if (fileExist) {
+          // delete the file
+          rmSync(join(process.cwd(), `/pictures/${image.filename}`));
+        }
+        const recordRec = await this.recordModel.create({
+          profilePic: upload.secure_url,
+        });
+
+        return Return({
+          error: false,
+          statusCode: 200,
+          successMessage: 'Record created and awaiting approval',
+        });
       }
+      if (record.profilePic === '') {
+        const upload = await Cloudinary.uploader.upload(
+          join(process.cwd(), `/pictures/${image.filename}`),
+        );
+        // delete file
+        const fileExist = existsSync(
+          join(process.cwd(), `/pictures/${image.filename}`),
+        );
+        if (fileExist) {
+          // delete the file
+          rmSync(join(process.cwd(), `/pictures/${image.filename}`));
+        }
+        const recordRec = await this.recordModel.updateOne(
+          { _id: record._id },
+          {
+            profilePic: upload.secure_url,
+          },
+        );
 
-      const recordRec = await this.profilepicModel.create({
-        user_id: _id,
-        picture: upload.secure_url,
-      });
-
-      return Return({
-        error: false,
-        statusCode: 200,
-        data: recordRec,
-        successMessage: 'Record created and awaiting approval',
-      });
+        return Return({
+          error: false,
+          statusCode: 200,
+          successMessage: 'Record created and awaiting approval',
+        });
+      }
+      if (record.profilePic !== '') {
+        return Return({
+          error: true,
+          statusCode: 400,
+          errorMessage: 'You already have an unapproved record',
+        });
+      }
     } catch (error) {
       console.log(error);
       return Return({

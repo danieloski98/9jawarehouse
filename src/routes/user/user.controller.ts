@@ -18,6 +18,7 @@ import { join } from 'path';
 import { User } from 'src/Schema/User.schema';
 import { IFile } from 'src/Types/file';
 import { CrudService } from './services/crud/crud.service';
+import { PicsService } from './services/pics/pics.service';
 
 class ICert {
   @ApiProperty()
@@ -31,7 +32,10 @@ class ICert {
 
 @Controller('user')
 export class UserController {
-  constructor(private crudService: CrudService) {}
+  constructor(
+    private crudService: CrudService,
+    private picService: PicsService,
+  ) {}
 
   @ApiTags('User')
   @ApiParam({ type: String, name: 'id' })
@@ -81,7 +85,7 @@ export class UserController {
     @Param() param: any,
     @UploadedFiles() files: IFile[],
   ) {
-    const result = await this.crudService.uploadImages(param['id'], files);
+    const result = await this.picService.uploadImgs(param['id'], files);
     res.status(result.statusCode).send(result);
   }
 
@@ -117,7 +121,7 @@ export class UserController {
     @Body() body: Partial<User>,
   ) {
     console.log(body);
-    const result = await this.crudService.uploadDp(param['id'], files[0]);
+    const result = await this.picService.uploadImg(param['id'], files[0]);
     res.status(result.statusCode).send(result);
   }
 }

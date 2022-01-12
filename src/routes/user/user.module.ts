@@ -8,6 +8,7 @@ import { PIN, PINSchema } from 'src/Schema/PIN.Schema';
 import { Picture, PictureSchema } from 'src/Schema/Pictures.Schema';
 import { ProfilePic, ProfilePicSchema } from 'src/Schema/ProfilePic.Schema';
 import { PicsService } from './services/pics/pics.service';
+import { Record, RecordSchema } from 'src/Schema/Record.Schema';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { PicsService } from './services/pics/pics.service';
       { name: PIN.name, schema: PINSchema },
       { name: Picture.name, schema: PictureSchema },
       { name: ProfilePic.name, schema: ProfilePicSchema },
+      { name: Record.name, schema: RecordSchema },
     ]),
   ],
   controllers: [UserController],
