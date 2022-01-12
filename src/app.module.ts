@@ -17,6 +17,7 @@ import { PaymentModule } from './routes/payment/payment.module';
 import { StatesModule } from './routes/states/states.module';
 import { NotificationsModule } from './routes/notifications/notifications.module';
 import { WebhooksModule } from './routes/webhooks/webhooks.module';
+import { MessagesModule } from './routes/messages/messages.module';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require('dotenv').config();
 
@@ -42,6 +43,7 @@ const URL =
     StatesModule,
     NotificationsModule,
     WebhooksModule,
+    MessagesModule,
     // AdminModule,
     // NotificationsModule,
   ],
