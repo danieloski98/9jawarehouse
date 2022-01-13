@@ -181,7 +181,7 @@ export default function Business() {
                     </>
                 )}
             </div>
-            <div className="w-64 h-80 xl:flex lg:flex md:hidden sm:hidden flex-col">
+            <div className="w-72 h-80 xl:flex lg:flex md:hidden sm:hidden flex-col">
                 <ContactBox user={user} />
                 <ReviewBox open={setShowModal} />
             </div>

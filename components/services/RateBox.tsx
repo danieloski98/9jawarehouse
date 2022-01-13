@@ -9,13 +9,13 @@ const Comments = ({comment}: {comment: IComment}) => {
       };
     return (
         <div className="w-full p-5 flex flex-col h-auto border-b-2 border-gray-200 mb-4">
-            <p className="text-sm font-Circular-std-book text-gray-600">{new Date(comment.created_at).toDateString()}</p>
-            
+            <p className="text-sm font-Circular-std-book text-gray-400">{new Date(comment.created_at).toDateString()}</p>
 
-            <div className="flex mt-8">
-            <p className='text-md text-gray-600 font-Circular-std-medium'>{comment.fullname}</p>
+            <p className='text-lg text-themeGreen font-Circular-std-medium mt-6'>{comment.fullname}</p>
 
-            <div className=" flex flex-col ml-4 pt-1">
+            <p className="mt-2 text-md font-Circular-std-book text-gray-400">{comment.comment}</p>
+
+            <div className=" flex flex-col pt-4">
                 {/* <p className="font-semibold text-sm text-gray-500">Overall Rating</p> */}
                 <div className="flex h-5 items-center">
                     <p className="text-md font-light text-themeGreen mr-1">{comment.rating}/5</p>
@@ -32,9 +32,6 @@ const Comments = ({comment}: {comment: IComment}) => {
                     {/* <p className="text-sm font-semibold text-gray-600 ml-4">10 Reviews</p> */}
                 </div>
             </div>
-            </div>
-
-            <p className="mt-4 text-md font-Circular-std-book text-gray-600">{comment.comment}</p>
 
            {
                comment.pictures.length > 0 && (
