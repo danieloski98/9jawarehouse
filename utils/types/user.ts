@@ -60,6 +60,8 @@ export interface IUser {
   certificates: ICertificate[];
 
   createAt: string;
+
+  commentLength?: number;
 }
 
 export interface ICertificate {

@@ -12,6 +12,7 @@ import {RootState} from '../../store/index'
 import { updateUser } from '../../reducers/Activeuser.reducer'
 
 export default function BusinessCard({user}: {user: IUser}) {
+    console.log(user);
     const router = useRouter();
     // redux
     const dispatch = useDispatch();
@@ -50,7 +51,9 @@ export default function BusinessCard({user}: {user: IUser}) {
                             edit={false}
                             color="lightgrey"
                         />
-                        <p className="text-sm font-semibold text-gray-600 ml-2">(10)</p>
+                        {user.commentLength && (
+                            <p className="text-sm font-semibold text-gray-600 ml-2">({user.commentLength})</p>
+                        )}
                     </div>
                 </div>
                 <button onClick={move} className="w-40 bg-themeGreen text-white text-sm font-Cerebri-sans-book h-10">View Profile</button>
