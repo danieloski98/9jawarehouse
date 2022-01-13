@@ -77,7 +77,9 @@ export default function ProfileBox({user, reviews}: IProps) {
             <Avatar
               src={user.profile_pic}
               className="mr-6"
-              size="lg"
+              // size="lg"
+              w="124px"
+              h="124px"
             />
             <div className="flex flex-col justify-center">
               <p className="text-xl font-Circular-std-medium text-gray-700 cursor-pointer">
@@ -94,7 +96,7 @@ export default function ProfileBox({user, reviews}: IProps) {
                 <span className="mr-4">{Math.ceil(user.rating)}/5</span>
                 <ReactStars
                         count={5}
-                        size={15}
+                        size={18}
                         activeColor="#ffd700"
                         value={Math.ceil(user.rating)}
                         isHalf={true}

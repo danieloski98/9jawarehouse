@@ -32,7 +32,7 @@ export default function BusinessCard({user}: {user: IUser}) {
             <Avatar src={user.profile_pic} size="xl" />
         </div>
 
-        <div className="w-full h-auto flex flex-col items-center px-4 text-center">
+        <div className="w-full h-auto flex flex-col items-center px-4 text-center mt-2">
             <p className=" font-Circular-std-medium text-lg text-gray-600 mb-0">{user.business_name}</p>
             <p className='text-xl text-themeGreen font-Circular-std-book'>{user.services[0]}</p>
 
