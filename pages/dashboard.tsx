@@ -153,7 +153,7 @@ export default function Dashboard() {
                         </div>
                         <div className="z-10 h-auto xl:mt-20 lg:mt-20 md:mt-16 sm:mt-16 overflow-auto bg-gray-100 xl:py-10 lg:p-10 md:p-5 sm:p-5 flex justify-between">
 
-                            <div className="w-1/3 h-full xl:block lg:block md:hidden sm:hidden pb-10 z-0">
+                            <div className="w-1/4 h-full xl:block lg:block md:hidden sm:hidden pb-10 z-0">
                                 <Sidebar page={page} setPage={changePage} />
                             </div>
 

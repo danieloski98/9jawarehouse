@@ -205,8 +205,8 @@ export default function Services({states, services}: IProps) {
 
     {/* {businesses.length} */}
 
-    <div className="w-full xl:px-6 lg:px-5 sm:px-6 md:px-5 flex h-auto py-4 items-center justify-between  z-20">
-        <p className=" font-Circular-std-medium text-md"> results for  {sr}</p>
+    <div className="w-full xl:px-6 lg:px-5 sm:px-6 md:px-5 flex h-auto py-4 items-center justify-between  z-20 mt-10">
+        <p className=" font-Circular-std-medium text-md text-themeGreen">{businesses.length} <span className=" font-Cerebri-sans-book"> results for  {sr}</span> </p>
         <FiFilter size={25} color="grey" className="xl:hidden lg:hidden md:block sm:block" onClick={() => setDrawer(true)} />
     </div>
 
@@ -218,7 +218,7 @@ export default function Services({states, services}: IProps) {
 
     <div className="z-20 flex-1 h-auto xl:p-0 lg:p-0 md:p-5 sm:p-5 flex justify-between">
 
-        <div className="w-1/5 h-full xl:block lg:block md:hidden sm:hidden pb-5 mx-5">
+        <div className="w-1/5 h-full xl:block lg:block md:hidden sm:hidden pb-5 mx-5 mt-4">
             {/* <Sidebar page={page} setPage={changePage} /> */}
             <div className="w-full h-full bg-white border-2 border-gray-200 p-0 overflow-auto">
             <p className=' mb-0 cursor-pointer w-full h-auto p-3 gray-300 font-Circular-std-medium text-md'>Related Service</p>

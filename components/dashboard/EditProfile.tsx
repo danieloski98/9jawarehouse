@@ -193,7 +193,7 @@ export default function EditProfile({ next }: IProps) {
     <div className="w-full h-auto pb-10">
       <input hidden type="file" id="picker1" accept="image/*" onChange={(e) => filesProcessor(e.target.files as any)} />
       <input hidden type="file" id="picker2" accept="image/*" onChange={(e) => profileProcessor(e.target.files as any)} />
-      <div className="w-full h-auto bg-white flex flex-col p-6">
+      <div className="w-full h-auto bg-white flex flex-col px-10 py-10">
         <div className="flex items-center h-auto">
           <div className="w-6 h-6 rounded-full bg-black flex justify-center items-center">
             <FiChevronLeft

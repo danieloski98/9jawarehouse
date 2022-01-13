@@ -15,7 +15,7 @@ export default function Faqs() {
 
         <NormNavbar />
 
-        <div className="w-full flex flex-col items-center mt-20">
+        <div className="w-full flex flex-col items-center mt-20 mb-12">
             <div className="xl:w-4/5 lg:w-4/5 md:w-full sm:w-full h-auto flex flex-col py-6 xl:px-0 lg:px-0 md:px-5 sm:px-5">
 
                 <div className="w-full flex flex-col mt-8">
@@ -32,7 +32,7 @@ export default function Faqs() {
                                         <AccordionIcon />
                                     </AccordionButton>
                                     <AccordionPanel>
-                                        <p className="text-justify font-Cerebri-sans-book">
+                                        <p className="text-justify text-gray-500 font-Cerebri-sans-book">
                                             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid veritatis tempore aspernatur est eveniet! Quae odit quisquam repudiandae atque veniam velit ipsum eveniet dignissimos in aut? Cumque libero omnis nostrum cupiditate aperiam ex placeat? Perspiciatis repellat ipsum dolores quod numquam maxime magni, odio necessitatibus quo ipsam rerum quam temporibus ad veritatis placeat corrupti sapiente nesciunt in. Laboriosam, consequuntur officiis! Obcaecati laboriosam vel reiciendis perspiciatis nostrum a! Impedit facilis magnam at repellendus veniam excepturi aspernatur, minus quo. At deserunt consequatur harum doloremque a, delectus qui alias corporis unde suscipit ullam repellat libero debitis in voluptatem officiis molestias ipsum ducimus repudiandae asperiores?
                                         </p>
                                     </AccordionPanel>

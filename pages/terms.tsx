@@ -18,7 +18,7 @@ export default function Terms() {
 
         <NormNavbar />
 
-        <div className="w-full flex flex-col items-center mt-20">
+        <div className="w-full flex flex-col items-center mt-20 mb-12">
             <div className="xl:w-4/5 lg:w-4/5 md:w-full sm:w-full h-auto flex flex-col py-6 xl:px-0 lg:px-0 md:px-5 sm:px-5">
 
                 <div className="w-full flex flex-col mt-8">

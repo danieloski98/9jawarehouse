@@ -176,7 +176,7 @@ export default function Navbar({page, setPage}: IProps) {
                       <FiChevronDown size={20} color="black" className="ml-1 mt-1" />
                     </p>
                   </MenuButton>
-                  <MenuList w="100vw" size maxH="500px" borderRadius={0} overflow="auto" mr="200px" className="grid grid-cols-4 font-light text-sm px-12">
+                  <MenuList w="100vw" size maxH="500px" marginTop="20px" borderRadius={0} overflow="auto" mr="200px" className="grid grid-cols-4 font-light text-sm px-12">
                     {serv.map((item, index) => (
                       // <MenuItem key={index.toString()} >
                         <a href={`/services?service=${item.name}`} key={index}>
@@ -208,12 +208,12 @@ export default function Navbar({page, setPage}: IProps) {
                       </div>
                       </MenuButton>
                       <MenuList w="100px" minW="173px" maxH="200px" marginRight="12px" overflow="auto" padding="0px" className="flex flex-col font-light text-sm p-0">
-                            <p onClick={() => router.push('/dashboard')}  className="text-md text-themeGreen font-Circular-std-book mx-0 mt-0 flex items-center cursor-pointer h-12 hover:bg-gray-100 p-2">
-                              <span>Dashboard</span>
+                            <p onClick={() => router.push('/dashboard')}  className="text-lg text-themeGreen font-Circular-std-book mx-0 mt-0 flex items-center cursor-pointer h-12 hover:bg-gray-100 p-3">
+                              <span className="ml-2">Dashboard</span>
                             </p>
 
-                            <p onClick={handleLogout} className="text-md text-red-400 font-Circular-std-book mx-0 mt-0 flex items-center cursor-pointer h-12 hover:bg-gray-100 p-2">
-                              <span>Logout</span>
+                            <p onClick={handleLogout} className="text-lg text-red-400 font-Circular-std-book mx-0 mt-0 flex items-center cursor-pointer h-12 hover:bg-gray-100 p-3">
+                              <span className="ml-2">Logout</span>
                             </p>
                       </MenuList>
                     </Menu>

@@ -24,22 +24,22 @@ export default function AboutUs() {
             <Image src={Banner} alt="banner" className="w-full h-full object-cover" />
         </div>
 
-        <div className="w-full flex flex-col items-center">
+        <div className="w-full flex flex-col items-center mt-6">
             <div className="xl:w-4/5 lg:w-4/5 md:w-full sm:w-full h-auto flex flex-col py-6 xl:px-0 lg:px-0 md:px-5 sm:px-5">
 
                 <div className="w-full flex flex-col">
                     <p className="text-4xl font-Circular-std-medium text-themeGreen">About 9jaWarehouse</p>
-                    <p className="mt-2 font-Cerebri-sans-book text-gray-500 text-justify">We are a business platform that helps link businesses services to potential clients, give businesses visibility, support, young and emerging entrepreneurs, invest, support, and promote small scale businesses. 
+                    <p className="mt-6 font-Cerebri-sans-book text-gray-500 text-justify">We are a business platform that helps link businesses services to potential clients, give businesses visibility, support, young and emerging entrepreneurs, invest, support, and promote small scale businesses. 
                     </p>
                 </div>
 
                 <div className="w-full flex flex-col mt-8">
                     <p className="text-4xl font-Circular-std-medium text-themeGreen">Mission</p>
-                    <p className="mt-2 font-Cerebri-sans-book text-gray-500 text-justify"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Bibendum est ultricies integer quis. Iaculis urna id volutpat lacus laoreet. Mauris vitae ultricies leo integer malesuada. Ac odio tempor orci dapibus ultrices in. Egestas diam in arcu cursus euismod. Dictum fusce ut placerat orci nulla. Tincidunt ornare massa eget egestas purus viverra accumsan in nisl. Tempor id eu nisl nunc mi ipsum faucibus. Fusce id velit ut tortor pretium. Massa ultricies mi quis hendrerit dolor magna eget. Nullam eget felis eget nunc lobortis. Faucibus ornare suspendisse sed nisi. Sagittis eu volutpat odio facilisis mauris sit amet.
+                    <p className="mt-6 font-Cerebri-sans-book text-gray-500 text-justify"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Bibendum est ultricies integer quis. Iaculis urna id volutpat lacus laoreet. Mauris vitae ultricies leo integer malesuada. Ac odio tempor orci dapibus ultrices in. Egestas diam in arcu cursus euismod. Dictum fusce ut placerat orci nulla. Tincidunt ornare massa eget egestas purus viverra accumsan in nisl. Tempor id eu nisl nunc mi ipsum faucibus. Fusce id velit ut tortor pretium. Massa ultricies mi quis hendrerit dolor magna eget. Nullam eget felis eget nunc lobortis. Faucibus ornare suspendisse sed nisi. Sagittis eu volutpat odio facilisis mauris sit amet.
                     </p>
                 </div>
 
-                <div className="w-full flex flex-col mt-8 xl:items-start lg:items-start md:items-center sm:items-center ">
+                <div className="w-full flex flex-col mt-12 mb-12 xl:items-start lg:items-start md:items-center sm:items-center ">
                     <p className="text-4xl font-Circular-std-medium text-themeGreen">Meet the Team</p>
                     <div className="w-full grid xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-1 sm:grid-cols-1 mt-6">
 

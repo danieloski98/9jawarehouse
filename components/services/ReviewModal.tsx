@@ -1,12 +1,11 @@
 import React from 'react';
-import { Modal, ModalOverlay, ModalContent, ModalBody, Input, Spinner, ModalCloseButton } from '@chakra-ui/react'
+import { Modal, ModalOverlay, ModalContent, ModalBody, Input, Spinner, ModalCloseButton, Image } from '@chakra-ui/react'
 import { FiChevronLeft } from 'react-icons/fi'
 import ReactStars from "react-rating-stars-component";
 import { FiCamera, FiX } from 'react-icons/fi'
 import { queryClient } from '../../pages/_app'
 import { AnimatePresence, motion } from 'framer-motion'
 
-import Image from 'next/image';
 import Good from '../../public/images/good.svg';
 
 interface ICommentProps {
@@ -41,13 +40,13 @@ const CommentForm = ({formik, change, images, picker, user, deleteImage}: IComme
     
     return (
         <div className="w-full flex flex-col p-5">
-                    <p className="font-light text-xl text-themeGreen text-center">Write a Review for {user.business_name}</p>
+                    <p className=" font-Circular-std-medium text-xl text-themeGreen text-center">Write a Review for {user.business_name}</p>
                     <p className="font-light text-sm mt-3 text-center">You can only leave a review about this business if you have previously worked with them</p>
 
                     <div className="w-full h-auto flex xl:flex-row lg:flex-row md:flex-col sm:flex-col mt-6">
                         <div className="flex-1">
                             <div className="flex flex-col">
-                                <label>Email</label>
+                                <label className=' font-Cerebri-sans-book text-md'>Email</label>
                                 <Input border="none" name="email" value={formik.values.email} onChange={formik.handleChange} onBlur={formik.handleBlur} onFocus={() => formik.setFieldTouched('email', true, true)} bgColor="whitesmoke" borderRadius="0" />
                                 {formik.touched.email && formik.errors.email && (
                                     <p className="text-sm font-semibold text-red-500 mt-2">{formik.errors.email}</p>
@@ -55,7 +54,7 @@ const CommentForm = ({formik, change, images, picker, user, deleteImage}: IComme
                             </div>
 
                             <div className="flex flex-col mt-4">
-                                <label>Full name</label>
+                                <label className=' font-Cerebri-sans-book text-md'>Full name</label>
                                 <Input border="none" bgColor="whitesmoke" borderRadius="0" name="fullname" value={formik.values.fullname} onChange={formik.handleChange} onBlur={formik.handleBlur} onFocus={() => formik.setFieldTouched('fullname', true, true)} />
                                 {formik.touched.fullname && formik.errors.fullname && (
                                     <p className="text-sm font-semibold text-red-500 mt-2">{formik.errors.fullname}</p>
@@ -63,7 +62,7 @@ const CommentForm = ({formik, change, images, picker, user, deleteImage}: IComme
                             </div>
 
                             <div className="flex flex-col mt-4">
-                                <label>Comment</label>
+                                <label className=' font-Cerebri-sans-book text-md'>Comment</label>
                                 <textarea className="w-full h-20 bg-gray-100 p-2" name="comment" value={formik.values.comment} onChange={formik.handleChange} onBlur={formik.handleBlur} onFocus={() => formik.setFieldTouched('comment', true, true)}></textarea>
                                 {formik.touched.comment && formik.errors.comment && (
                                     <p className="text-sm font-semibold text-red-500 mt-2">{formik.errors.comment}</p>
@@ -114,7 +113,7 @@ const CommentForm = ({formik, change, images, picker, user, deleteImage}: IComme
                                 {images.length > 0 && images.map((item, index) => (
                                     <div key={index.toString()} className='w-24 h-20 flex  mr-4'>
                                         <div className=" w-20 h-full bg-gray-200 flex justify-center items-center">
-                                            <Image src={item} alt="img" width="100" height="100" className="object-contain" />
+                                            <Image src={item} alt="img" className="object-contain" />
                                         </div>
                                         <div className="flex w-4 cursor-pointer">
                                             <FiX size={20} color="grey" onClick={() => deleteImage(index)} />
@@ -128,7 +127,7 @@ const CommentForm = ({formik, change, images, picker, user, deleteImage}: IComme
 
                     </div>
 
-                    <div className="w-full h-10 flex justify-center mt-6">
+                    <div className="w-full h-12 mb-10 flex justify-center mt-6">
                         <button onClick={() => change(2)} className="w-96 text-white text-sm bg-themeGreen">Send Review</button>
                     </div>
                     {/* <p className="font-light text-md mt-6 text-themeGreen text-center">Cancel</p> */}

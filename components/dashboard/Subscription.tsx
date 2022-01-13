@@ -152,7 +152,7 @@ export default function Subscription() {
 
         <SubModal open={open} onClose={() => setOpen(false)} user={user} />
 
-        <div className="w-full h-auto flex flex-col bg-white p-5">
+        <div className="w-full h-auto flex flex-col bg-white px-10 py-10">
         <p className="text-xl font-Circular-std-medium text-gray-600 ">Subscription Status</p>
         {
             user.disabled && (

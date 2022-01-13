@@ -59,7 +59,7 @@ export default function Settings() {
   }
 
   return (
-    <div className="w-full h-auto flex flex-col bg-white p-5">
+    <div className="w-full h-auto flex flex-col bg-white px-10 py-10">
         <p className="text-2xl font-Circular-std-medium text-gray-600 ml-0">Settings</p>
 
         <div className="xl:w-5/6 lg:w-5/6 md:w-full sm:w-full xl:ml-5 lg:ml-5 md:ml-0 sm:ml-0 mt-6 py-8 border-b-2 border-gray-200 flex-col">

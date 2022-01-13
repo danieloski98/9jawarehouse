@@ -97,7 +97,7 @@ export default function Reviews() {
       };
   return (
     <div className="w-full h-auto pb-10">
-        <div className="w-full h-auto py-6 pb-10 flex flex-col bg-white p-5">
+        <div className="w-full h-auto py-6 pb-10 flex flex-col bg-white px-10">
             <p className="text-2xl font-Circular-std-medium text-gray-600 ml-0">Customer Reviews for {user.business_name}</p>
 
             {
