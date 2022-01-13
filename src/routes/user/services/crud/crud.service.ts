@@ -8,10 +8,14 @@ import { IReturnObject } from 'src/utils/ReturnObject';
 import { join } from 'path';
 import { existsSync, rmSync } from 'fs';
 import cloudinary from 'src/utils/cloudinary';
+import { CommentDocument, Comment } from 'src/Schema/Comment.Schema';
 
 @Injectable()
 export class CrudService {
-  constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
+  constructor(
+    @InjectModel(User.name) private userModel: Model<UserDocument>,
+    @InjectModel(Comment.name) private commentModel: Model<CommentDocument>,
+  ) {}
 
   async getUserByID(id: string): Promise<IReturnObject> {
     try {
@@ -87,12 +91,24 @@ export class CrudService {
           state: query.state || '',
           lga: query.lga || '',
         });
-        console.log(user);
+        const users = [];
+        for (let i = 0; i < user.length; i++) {
+          const commentCount = await this.commentModel.find({
+            business_id: user[i]._id,
+          });
+          const newObj = {
+            ...user[i]['_doc'],
+            commentLength: commentCount.length,
+          };
+          users.push(newObj);
+          console.log(commentCount.length);
+          // user[i]['commentLenght'] = commentCount.length;
+        }
         return Return({
           error: false,
           statusCode: 200,
           successMessage: 'User found',
-          data: user,
+          data: users,
         });
       } else {
         const user = await this.userModel.find({
@@ -101,12 +117,24 @@ export class CrudService {
           services: query.service || '',
           state: query.state || '',
         });
-        console.log(user);
+        const users = [];
+        for (let i = 0; i < user.length; i++) {
+          const commentCount = await this.commentModel.find({
+            business_id: user[i]._id,
+          });
+          const newObj = {
+            ...user[i]['_doc'],
+            commentLength: commentCount.length,
+          };
+          users.push(newObj);
+          console.log(commentCount.length);
+          // user[i]['commentLenght'] = commentCount.length;
+        }
         return Return({
           error: false,
           statusCode: 200,
           successMessage: 'User found',
-          data: user,
+          data: users,
         });
       }
     } catch (error) {

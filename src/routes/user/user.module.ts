@@ -9,6 +9,7 @@ import { Picture, PictureSchema } from 'src/Schema/Pictures.Schema';
 import { ProfilePic, ProfilePicSchema } from 'src/Schema/ProfilePic.Schema';
 import { PicsService } from './services/pics/pics.service';
 import { Record, RecordSchema } from 'src/Schema/Record.Schema';
+import { CommentSchema, Comment } from 'src/Schema/Comment.Schema';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { Record, RecordSchema } from 'src/Schema/Record.Schema';
       { name: Picture.name, schema: PictureSchema },
       { name: ProfilePic.name, schema: ProfilePicSchema },
       { name: Record.name, schema: RecordSchema },
+      { name: Comment.name, schema: CommentSchema },
     ]),
   ],
   controllers: [UserController],
