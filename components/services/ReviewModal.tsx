@@ -3,6 +3,8 @@ import { Modal, ModalOverlay, ModalContent, ModalBody, Input, Spinner, ModalClos
 import { FiChevronLeft } from 'react-icons/fi'
 import ReactStars from "react-rating-stars-component";
 import { FiCamera, FiX } from 'react-icons/fi'
+import { queryClient } from '../../pages/_app'
+import { AnimatePresence, motion } from 'framer-motion'
 
 import Image from 'next/image';
 import Good from '../../public/images/good.svg';
@@ -13,6 +15,7 @@ interface ICommentProps {
     images: Array<string>;
     picker: Function;
     user: IUser;
+    deleteImage: Function;
 }
 
 // form
@@ -31,10 +34,11 @@ const validationSchema = yup.object({
     comment: yup.string().required(),
 })
 
-const CommentForm = ({formik, change, images, picker, user}: ICommentProps) => {
+const CommentForm = ({formik, change, images, picker, user, deleteImage}: ICommentProps) => {
     const ratingChanged = (newRating: any) => {
         formik.setFieldValue('rating', newRating, false);
       };
+    
     return (
         <div className="w-full flex flex-col p-5">
                     <p className="font-light text-xl text-themeGreen text-center">Write a Review for {user.business_name}</p>
@@ -70,7 +74,7 @@ const CommentForm = ({formik, change, images, picker, user}: ICommentProps) => {
                         {/* rating component */}
 
                         <div className="flex-1  xl:pl-16 lg:pl-16 md:pl-0 sm:pl-0 flex flex-col md:mt-8 sm:mt-8">
-                            <p className="font-light text-md text-themeGreen">Give some stars</p>
+                            <p className=" font-Circular-std-medium text-md text-themeGreen">Give some stars</p>
                             <div>
                             <ReactStars
                                 count={5}
@@ -78,40 +82,46 @@ const CommentForm = ({formik, change, images, picker, user}: ICommentProps) => {
                                 onChange={ratingChanged}
                                 size={20}
                                 activeColor="#ffd700"
-                                value={3}
+                                value={0}
                                 isHalf={true}
+                                color="lightgrey"
                                 />
                                 </div>
 
+                                <AnimatePresence>
                                 {
-                                    images.length < 1 && (
-                                        <div className="mt-8">
+                                    images.length < 3 && (
+                                        <motion.div 
+                                            initial={{y: -100, opacity: 0 }}
+                                            animate={{ y: 0, opacity: 1 }}
+                                            exit={{ y: -100, opacity: 0 }}
+                                        className="mt-8">
                                             <p className="text-md text-gray-500 font-light">Upload Pictures (Optional)</p>
                                             <button onClick={() => picker()} className="w-full h-12 bg-green-100 text-themeGreen mt-2">Tap To Upload Picture</button>
-                                        </div>
+                                        </motion.div>
                                     )   
                                 }
+                                </AnimatePresence>
 
 
-                                <div className="w-auto h-16 overflow-x-scroll overflow-y-hidden flex mt-6 ">
+                                <div className="w-auto h-20 overflow-x-scroll overflow-y-hidden flex mt-6 ">
 
                                 {/* {images.length < 1 && (
                                     <div onClick={() => picker(1)} className=" w-16 h-full bg-gray-200 flex justify-center items-center mr-4 cursor-pointer">
                                         <FiCamera size={35} color="grey" />
                                     </div>
-                                )}      */}
+                                )}      */} 
                                 {images.length > 0 && images.map((item, index) => (
-                                    <>
-                                        <div key={index.toString()} className=" w-16 h-full bg-gray-200 flex justify-center items-center mr-4 cursor-pointer">
+                                    <div key={index.toString()} className='w-24 h-20 flex  mr-4'>
+                                        <div className=" w-20 h-full bg-gray-200 flex justify-center items-center">
                                             <Image src={item} alt="img" width="100" height="100" className="object-contain" />
                                         </div>
-                                    </>
-                                ))}    
-                                {images.length > 0 && images.length < 3 && (
-                                    <div onClick={() => picker()} className=" w-16 h-full bg-gray-200 flex justify-center items-center mr-4 cursor-pointer">
-                                        <FiCamera size={35} color="grey" />
+                                        <div className="flex w-4 cursor-pointer">
+                                            <FiX size={20} color="grey" onClick={() => deleteImage(index)} />
+                                        </div>
                                     </div>
-                                )}       
+                                ))}    
+                                     
 
                                 </div>
                         </div>
@@ -189,6 +199,15 @@ export default function ReviewModal({ open, setOpen, id, user }: IProps) {
     //         formik.resetForm();
     //     }
     // });
+
+    const deleteImgs = (index: number) => {
+        const imgs = [...images];
+        const imgFiles = [...imgfiles];
+        imgs.splice(index, 1);
+        imgFiles.splice(index, 1);
+        setImages(imgs);
+        setFiles(imgFiles);
+    }
 
     const changeStage = (sta: number) => {
         if (!formik.dirty) {
@@ -277,12 +296,14 @@ export default function ReviewModal({ open, setOpen, id, user }: IProps) {
                     setLoading(false);
                     return
                 }else {
+                    queryClient.invalidateQueries();
                     alert(jj.successMessage);
                     setLoading(false);
                     setStage(3);
                     return
                 }
             } else {
+                queryClient.invalidateQueries();
                 alert(json1.successMessage);
                 setLoading(false);
                 close();
@@ -296,13 +317,13 @@ export default function ReviewModal({ open, setOpen, id, user }: IProps) {
 
 
   return (
-    <Modal isOpen={open} onClose={() => {setOpen(false); setStage(1)}} size={stage === 3 ? 'xl':"3xl"} >
+    <Modal isOpen={open} onClose={() => {setOpen(false); setStage(1); setImages([]); setFiles([]);  formik.resetForm(); }} size={stage === 3 ? 'xl':"3xl"} >
         <input type="file" accept="image/*" id="picker" hidden onChange={(e) => fileProcessor(e.target.files as any)} />
         <ModalOverlay />
         <ModalContent>
             <ModalCloseButton />
             <ModalBody>
-                {stage === 1 && <CommentForm user={user} change={changeStage} formik={formik} images={images} picker={pickImages} />}
+                {stage === 1 && <CommentForm deleteImage={deleteImgs} user={user} change={changeStage} formik={formik} images={images} picker={pickImages} />}
                 {stage === 2 && <PinComponent user={user} change={setStage} changePin={changePin} submit={submit} loading={loading} close={close} />}
                 {stage === 3 && (
                         <div className="w-full h-auto py-20 flex flex-col justify-center items-center">

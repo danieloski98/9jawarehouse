@@ -26,21 +26,20 @@ export default function BusinessCard({user}: {user: IUser}) {
       }
       
   return (
-    <div className="xl:w-30/100 lg:30/100 md:w-full sm:w-full h-auto flex flex-col border-2 border-gray-300 mb-6 py-4">
-        <div className="w-full h-auto py-4 flex items-center justify-center">
+    <div className="xl:w-30/100 lg:30/100 md:w-full sm:w-full h-auto flex flex-col border-1 border-lightGrey mb-6 py-8">
+        <div className="w-full h-auto flex items-center justify-center">
             <Avatar src={user.profile_pic} size="xl" />
         </div>
 
         <div className="w-full h-auto flex flex-col items-center px-4 text-center">
-            <p className=" font-Circular-std-medium text-md text-gray-600 mb-5">{user.business_name}</p>
-            {user.services.map((item, index) => (
-                <p key={index.toString()} className='text-sm font-Circular-std-book mb-2'>{item}, </p>
-            ))}
+            <p className=" font-Circular-std-medium text-lg text-gray-600 mb-0">{user.business_name}</p>
+            <p className='text-xl text-themeGreen font-Circular-std-book'>{user.services[0]}</p>
+
             {/* <p className="font-semibold text-sm text-gray-500">Business Type</p> */}
             <div className="mt-0 flex flex-col">
                     {/* <p className="font-semibold text-sm text-gray-500">Overall Rating</p> */}
                     <div className="flex h-12 items-center">
-                        <p className="text-xxl font-light text-themeGreen mr-4">{Math.round(user.rating) || 0}</p>
+                        <p className="text-xl font-Cerebri-sans-book text-themeGreen mr-2">{Math.round(user.rating) || 0}</p>
                         <ReactStars
                             count={5}
                             onChange={ratingChanged}
@@ -49,11 +48,12 @@ export default function BusinessCard({user}: {user: IUser}) {
                             value={user.rating}
                             isHalf={true}
                             edit={false}
+                            color="lightgrey"
                         />
-                        {/* <p className="text-sm font-semibold text-gray-600 ml-4">10 Reviews</p> */}
+                        <p className="text-sm font-semibold text-gray-600 ml-2">(10)</p>
                     </div>
                 </div>
-                <button onClick={move} className="w-24 bg-themeGreen text-white text-sm font-semibold h-10">View</button>
+                <button onClick={move} className="w-40 bg-themeGreen text-white text-sm font-Cerebri-sans-book h-10">View Profile</button>
         </div>
 
     </div>

@@ -1,9 +1,10 @@
 import React from 'react';
 import ServiceNavbar from '../../../components/services/ServiceNav';
-import { FiChevronLeft, FiChevronsLeft, FiPhone, FiMail } from 'react-icons/fi'
+import { FiChevronLeft, FiChevronRight, FiPhone, FiMail } from 'react-icons/fi'
 import { Breadcrumb, BreadcrumbItem, Image as Img, Modal, ModalOverlay, ModalContent, ModalBody, Spinner, Skeleton } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import { Carousel } from 'react-responsive-carousel';
+import { useQuery } from 'react-query'
 
 // redux
 import { useDispatch, useSelector } from 'react-redux'
@@ -21,6 +22,7 @@ import { IServerReturnObject } from '../../../utils/types/serverreturntype';
 import url from '../../../utils/url';
 import { IUser } from '../../../utils/types/user';
 import { IComment } from '../../../utils/types/comments';
+import Footer from '../../Home/Footer';
 
 
 const ContactBox = ({user}: {user: IUser}) => {
@@ -70,6 +72,16 @@ const LoadingModal = ({ open, close}: {open: boolean, close: Function}) => (
     </Modal>
 )
 
+// query functions
+const getUsercomments = async (user_id: string) => {
+    const request2 = await fetch(`${url}comments/${user_id}`);
+    const json2 = await request2.json() as IServerReturnObject;
+    if (!request2.ok) {
+        throw new Error("An error occured");
+    }
+    return json2;
+}
+
 export default function Business() {
 
     const [showModal, setShowModal] = React.useState(false);
@@ -80,15 +92,25 @@ export default function Business() {
     const [commentsLoading, setCommentsLoading] = React.useState(true);
     const router = useRouter();
 
+    const getCommentsQuery = useQuery(['getComments', router.query['id']], () => getUsercomments(router.query['id'] as string), {
+        onSuccess: (data) => {
+            setReviews(data.data);
+            setCommentsLoading(false);
+        },
+        onError: (error) => {
+            alert('An error occured while fetching comments');
+        }
+    })
+
     React.useEffect(() => {
         (async function() {
             const request = await fetch(`${url}user/${router.query['id']}`);
-            const request2 = await fetch(`${url}comments/${router.query['id']}`);
+            
             const json = await request.json() as IServerReturnObject;
-            const json2 = await request2.json() as IServerReturnObject;
+            
             // console.log(json);
             setUser(json.data);
-            setReviews(json2.data);
+            // setReviews(json2.data);
             setCommentsLoading(false);
             setLoading(false);
             // console.log(user);
@@ -135,7 +157,7 @@ export default function Business() {
 
         {!loading && (
             <div className="w-full h-64 overflow-hidden mt-6">
-            <Carousel showArrows showIndicators dynamicHeight={false} autoPlay interval={7000} infiniteLoop>
+            <Carousel showArrows showIndicators showStatus={false} dynamicHeight={false} autoPlay interval={7000} infiniteLoop >
                 {user.pictures.map((item, index) => (
                   <div key={index.toString()} className="w-full h-64">
                     <Img src={item} alt="img" className="w-full h-64" />
@@ -164,6 +186,8 @@ export default function Business() {
                 <ReviewBox open={setShowModal} />
             </div>
         </div>
+
+        <Footer />
 
     </div>
   );

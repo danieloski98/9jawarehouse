@@ -148,10 +148,10 @@ export default function Dashboard() {
        {
            !loading && (
                <>
-                        <div className="w-full h-16 fixed shadow-md z-50">
+                        <div className="w-full h-20 fixed shadow-md z-50">
                             <Navbar page={page} setPage={changePage} />
                         </div>
-                        <div className="z-10 h-auto xl:mt-10 lg:mt-10 md:mt-16 sm:mt-16 overflow-auto bg-gray-100 xl:py-10 lg:p-10 md:p-5 sm:p-5 flex justify-between">
+                        <div className="z-10 h-auto xl:mt-20 lg:mt-20 md:mt-16 sm:mt-16 overflow-auto bg-gray-100 xl:py-10 lg:p-10 md:p-5 sm:p-5 flex justify-between">
 
                             <div className="w-1/3 h-full xl:block lg:block md:hidden sm:hidden pb-10 z-0">
                                 <Sidebar page={page} setPage={changePage} />

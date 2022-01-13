@@ -14,7 +14,7 @@ const Comments = ({comment}: {comment: IComment}) => {
             <div className="mt-2 flex flex-col">
                 {/* <p className="font-semibold text-sm text-gray-500">Overall Rating</p> */}
                 <div className="flex h-5 items-center">
-                    <p className="text-xxl font-light text-themeGreen mr-4">{comment.rating}</p>
+                    <p className="text-xxl font-light text-themeGreen mr-4">{comment.rating}/5</p>
                     <ReactStars
                         count={5}
                         onChange={ratingChanged}
@@ -23,6 +23,7 @@ const Comments = ({comment}: {comment: IComment}) => {
                         value={comment.rating}
                         isHalf={true}
                         edit={false}
+                        color="lightgrey"
                     />
                     {/* <p className="text-sm font-semibold text-gray-600 ml-4">10 Reviews</p> */}
                 </div>

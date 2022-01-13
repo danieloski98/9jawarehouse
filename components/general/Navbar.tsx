@@ -158,7 +158,7 @@ export default function Navbar({page, setPage}: IProps) {
   }
 
   return (
-    <div className="w-full h-16 py-0 bg-white px-10 flex justify-between items-center">
+    <div className="w-full h-20 py-0 bg-white px-10 flex justify-between items-center">
         <div className="flex-1 flex items-center h-auto w-auto overflow-hidden ">
             <Link href="/" passHref>
               <Image src={Logo} alt="logo" className="w-20 h-20 cursor-pointer" />
@@ -166,60 +166,59 @@ export default function Navbar({page, setPage}: IProps) {
         </div>
         <div className="flex-1 xl:flex lg:flex md:hidden sm:hidden justify-end items-center z-20">
 
-            <Menu>
-              <MenuButton
-                righticon={<FiChevronDown size={20} color="grey" />}
-                
-              >
-                <p className="flex mr-4">
-                  {/* <Search  size={20} primaryColor='grey' /> */}
-                  <span className="ml-3 font-Cerebri-sans-book  text-sm cursor-pointer">Find Service</span>
-                  <FiChevronDown size={20} color="grey" className="ml-1 mt-0" />
-                </p>
-              </MenuButton>
-              <MenuList w="100vw" maxH="500px" overflow="auto" className="grid grid-cols-4 font-light text-sm pl-10">
-                {serv.map((item, index) => (
-                  <MenuItem key={index.toString()}>
-                    <Link prefetch={false} shallow={true} passHref href={`/services?service=${item.name}`}>
-                      <p className='font-Cerebri-sans-book '>
-                      {item.name}
-                      </p>
-                      </Link>
-                  </MenuItem>
-                ))}
-              </MenuList>
-            </Menu>
+            <Menu size="lg" preventOverflow={true}>
+                  <MenuButton
+                    rightIcon={<FiChevronDown size={20} color="grey" />}
+                  >
+                    <p className="flex mr-6">
+                      {/* <FiSearch size={20} className="text-white" /> */}
+                      <span className="ml-3 font-Circular-std-book text-md cursor-pointer">Find Service</span>
+                      <FiChevronDown size={20} color="black" className="ml-1 mt-1" />
+                    </p>
+                  </MenuButton>
+                  <MenuList w="100vw" size maxH="500px" borderRadius={0} overflow="auto" mr="200px" className="grid grid-cols-4 font-light text-sm px-12">
+                    {serv.map((item, index) => (
+                      // <MenuItem key={index.toString()} >
+                        <a href={`/services?service=${item.name}`} key={index}>
+                            <p className="text-gray-600 font-Cerebri-sans-book text-md mb-4 mt-4">{item.name}</p>
+                        </a>
+                      // </MenuItem>
+                    ))}
+                  </MenuList>
+                </Menu>
 
             
 
-            {
-              loggedIn && (
-                <Menu isOpen={userMenuOpen} onClose={() => setUserMenuOpen(false)}>
-                  <MenuButton
-                    righticon={<FiChevronDown size={20} color="grey" />}
-                    className='hover:bg-green-200 rounded-md'
-                    onClick={() => setUserMenuOpen(prev => !prev)}
-                  >
-                  <div className="z-30 w-16 h-12 rounded-md hover:bg-green-200 flex justify-center items-center cursor-pointer">
-                    <Avatar src={user.profile_pic} size="sm" />
-                    {userMenuOpen && (
-                      <FiChevronUp size={15} className="ml-0 " color="black" />
-                    )}
-                    {!userMenuOpen && (
-                      <FiChevronDown color="black" size={15} className="ml-0" />
-                    )}
-                  </div>
-                  </MenuButton>
-                  <MenuList w="100px" minW="10px" maxH="200px" overflow="auto" className="flex flex-col font-light text-sm p-0">
-                      <MenuItem className='h-6'>
-                        <p onClick={handleLogout} className="text-sm text-red-400 h-auto font-Circular-std-book mx-0 mt-0 flex items-center cursor-pointer">
-                          <span>Logout</span>
-                        </p>
-                      </MenuItem>          
-                  </MenuList>
-                </Menu>
-              )
-            }
+                {
+                  loggedIn && (
+                    <Menu isOpen={userMenuOpen} onClose={() => setUserMenuOpen(false)}>
+                      <MenuButton
+                        // righticon={<FiChevronDown size={20} color="grey" />}
+                        className='hover:bg-green-100 rounded-md'
+                        onClick={() => setUserMenuOpen(prev => !prev)}
+                      >
+                      <div className="z-30 w-24 py-2 h-16 rounded-md hover:bg-green-200 flex justify-center items-center cursor-pointer" >
+                        <Avatar src={user.profile_pic} size="md" />
+                        {userMenuOpen && (
+                          <FiChevronUp size={25} className="ml-2 " color="black" />
+                        )}
+                        {!userMenuOpen && (
+                          <FiChevronDown color="black" size={25} className="ml-2" />
+                        )}
+                      </div>
+                      </MenuButton>
+                      <MenuList w="100px" minW="173px" maxH="200px" marginRight="12px" overflow="auto" padding="0px" className="flex flex-col font-light text-sm p-0">
+                            <p onClick={() => router.push('/dashboard')}  className="text-md text-themeGreen font-Circular-std-book mx-0 mt-0 flex items-center cursor-pointer h-12 hover:bg-gray-100 p-2">
+                              <span>Dashboard</span>
+                            </p>
+
+                            <p onClick={handleLogout} className="text-md text-red-400 font-Circular-std-book mx-0 mt-0 flex items-center cursor-pointer h-12 hover:bg-gray-100 p-2">
+                              <span>Logout</span>
+                            </p>
+                      </MenuList>
+                    </Menu>
+                  )
+                }
             
 
             {loggedIn && (

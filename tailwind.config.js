@@ -27,6 +27,8 @@ module.exports = {
       purple: colors.violet,
       pink: colors.pink,
       themeGreen: '#1A8F85',
+      darkGreen: '#004143',
+      lightGrey: '#CFCFCF',
     },
     spacing: {
       px: '1px',
@@ -153,6 +155,7 @@ module.exports = {
     },
     borderWidth: {
       DEFAULT: '1px',
+      1: '1px',
       0: '0px',
       2: '2px',
       4: '4px',

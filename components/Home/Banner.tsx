@@ -7,6 +7,7 @@ import { useRouter } from 'next/router'
 import { FiBell, FiChevronDown, FiX, FiChevronUp, FiChevronsDown } from 'react-icons/fi'
 import Link from 'next/link'
 import * as moment from 'moment';
+import { Notification, Search } from 'react-iconly';
 
 // redux
 // redux
@@ -46,12 +47,12 @@ export const LeftNavbar = () => {
     const [open, setOpen] = React.useState(false);
     const router = useRouter();
 
-    const handleLogout = () => {
-      localStorage.removeItem('9jauser');
-      localStorage.removeItem('9jatoken');
-  
-      dispatch(logout())
-    }
+     const handleLogout = () => {
+    localStorage.removeItem('9jauser');
+    localStorage.removeItem('9jatoken');
+
+    dispatch(logout())
+  }
 
     return (
         <div className="w-full h-24 flex justify-between items-center px-5">
@@ -251,18 +252,18 @@ const RightNavBar = () => {
                 rightIcon={<FiChevronDown size={20} color="grey" />}
               >
                 <p className="flex mr-6">
-                  <FiSearch size={20} className="text-white" />
+                  {/* <FiSearch size={20} className="text-white" /> */}
                   <span className="ml-3 font-Circular-std-book text-md cursor-pointer">Find Service</span>
                   <FiChevronDown size={20} color="white" className="ml-1 mt-1" />
                 </p>
               </MenuButton>
-              <MenuList w="1000px" size maxH="500px" overflow="auto" mr="200px" className="grid grid-cols-4 font-light text-sm">
+              <MenuList w="100vw" size maxH="500px" borderRadius={0} overflow="auto" mr="200px" className="grid grid-cols-4 font-light text-sm px-12">
                 {serv.map((item, index) => (
-                  <MenuItem key={index.toString()}>
-                    <a href={`/services?service=${item.name}`}>
-                        <p className="text-gray-600 font-Circular-std-book">{item.name}</p>
+                  // <MenuItem key={index.toString()} >
+                    <a href={`/services?service=${item.name}`} key={index}>
+                        <p className="text-gray-600 font-Cerebri-sans-book text-md mb-4 mt-4">{item.name}</p>
                     </a>
-                  </MenuItem>
+                  // </MenuItem>
                 ))}
               </MenuList>
             </Menu>
@@ -276,27 +277,25 @@ const RightNavBar = () => {
                     className='hover:bg-green-200 rounded-md'
                     onClick={() => setUserMenuOpen(prev => !prev)}
                   >
-                  <div className="z-30 w-16 h-12 rounded-md hover:bg-green-200 flex justify-center items-center cursor-pointer" >
-                    <Avatar src={user.profile_pic} size="sm" />
+                  <div className="z-30 w-24 py-2 h-16 rounded-md hover:bg-green-200 flex justify-center items-center cursor-pointer" >
+                    <Avatar src={user.profile_pic} size="md" />
                     {userMenuOpen && (
-                      <FiChevronUp size={15} className="ml-0 " color="white" />
+                      <FiChevronUp size={25} className="ml-2 " color="white" />
                     )}
                     {!userMenuOpen && (
-                      <FiChevronDown color="white" size={15} className="ml-0" />
+                      <FiChevronDown color="white" size={25} className="ml-2" />
                     )}
                   </div>
                   </MenuButton>
-                  <MenuList w="100px" minW="10px" maxH="200px" overflow="auto" className="flex flex-col font-light text-sm p-0">
-                    <MenuItem className='h-6'>
-                        <p onClick={() => router.push('/dashboard')}  className="text-sm text-themeGreen h-auto font-Circular-std-book mx-0 mt-0 flex items-center cursor-pointer">
+                  <MenuList w="100px" minW="173px" maxH="200px" marginRight="12px" overflow="auto" padding="0px" className="flex flex-col font-light text-sm p-0">
+                        <p onClick={() => router.push('/dashboard')}  className="text-md text-themeGreen font-Circular-std-book mx-0 mt-0 flex items-center cursor-pointer h-12 hover:bg-gray-100 p-2">
                           <span>Dashboard</span>
                         </p>
-                      </MenuItem> 
-                      <MenuItem className='h-6'>
-                        <p onClick={handleLogout} className="text-sm text-red-400 h-auto font-Circular-std-book mx-0 mt-0 flex items-center cursor-pointer">
+
+                        <p onClick={handleLogout} className="text-md text-red-400 font-Circular-std-book mx-0 mt-0 flex items-center cursor-pointer h-12 hover:bg-gray-100 p-2">
                           <span>Logout</span>
                         </p>
-                      </MenuItem>          
+         
                   </MenuList>
                 </Menu>
               )
@@ -306,8 +305,8 @@ const RightNavBar = () => {
             {loggedIn && (
               <Popover placement='bottom' size="xs" isOpen={notificationOpen} closeOnBlur={true} closeOnEsc={true} onClose={() => setNotificationOpen(false)}>
               <PopoverTrigger>
-                <div className="w-12 h-12 flex items-center justify-center ml-6"  onClick={() => setNotificationOpen(prev => !prev)}>
-                  <FiBell size={25} color="white" className='cursor-pointer' />
+                <div className="w-12 h-12 flex items-center justify-center ml-0 hover:bg-green-200 rounded-md"  onClick={() => setNotificationOpen(prev => !prev)}>
+                  <Notification size={25} primaryColor='white' filled style={{ color: 'grey' }}  />
                 </div>
               </PopoverTrigger>
               <PopoverContent borderRadius={0}>
@@ -318,8 +317,8 @@ const RightNavBar = () => {
                   </div>
                 </PopoverHeader>
                 {/* <PopoverArrow /> */}
-                <PopoverBody className='p-0'>
-                  <div className="w-full h-64 overflow-y-auto">
+                <PopoverBody className='' borderWidth={0}>
+                  <div className="w-full h-64 overflow-y-auto p-2">
                         { notiLoading && (
                           <div className='w-full flex mt-6 justify-center'>
                             <Spinner size="md" color="green" />
@@ -341,7 +340,7 @@ const RightNavBar = () => {
                                   </div>
                                   <div className="flex-1 flex flex-col justify-evenly mt-3">
                                     <p className='font-Cerebri-sans-book text-sm text-black mb-3 mr-6'>{item.message}</p>
-                                    <div className="flex flex-col">
+                                    <div className="flex flex-col mt-3">
                                       <Divider />
                                      
                                     </div>
@@ -387,31 +386,31 @@ export default function Banner() {
         <div className="flex-1 flex flex-col">
             <LeftNavbar />
             <div className="flex-1 flex flex-col justify-center xl:px-10 lg:px-10 md:px-5 sm:px-5  xl:py-0 lg:py-0 md:py-12 sm:py-12">
-                <h1 className="xl:text-6xl lg:text-6xl md:text-4xl sm:text-4xl font-Circular-std-medium text-themeGreen">
-                    Discover Vendors <br/>
+                <h1 className="xl:text-6xl lg:text-6xl md:text-4xl sm:text-4xl font-Circular-std-medium text-darkGreen">
+                    Discover <span className="text-themeGreen">Vendors</span> <br/>
                 </h1>
-                <h1 className="xl:text-6xl lg:text-6xl md:text-4xl sm:text-4xl font-Circular-std-medium text-themeGreen mt-4">
+                <h1 className="xl:text-6xl lg:text-6xl md:text-4xl sm:text-4xl font-Circular-std-medium text-darkGreen mt-4">
                     Near You
                 </h1>
-                <p className="xl:w-4/5 lg:w-4/5 md:w-full sm:w-full mt-5 text-xl font-Circular-std-book text-gray-400">
+                <p className="xl:w-full lg:w-full md:w-full sm:w-full mt-5 text-lg font-Cerebri-sans-book text-gray-400">
                 Less hassle searching for who is best fit  for Photography, Catering, Event planning, make-up artists, DJs, decorators and more
                 </p>
 
-                <div className="xl:w-9/12 lg:w-9/12 md:w-full sm:w-full mt-6">
+                <div className="xl:w-9/12 lg:w-9/12 h-auto md:w-full sm:w-full mt-6">
                     <InputGroup>
-                        <InputLeftElement bgColor="#1A8F85" borderLeftRadius={10}>
+                        <InputLeftElement  height="60px" width="72px" bgColor="#1A8F85" borderLeftRadius={10}>
                         <div className=" w-full flex items-center justify-center rounded-l-md">
                             <FiSearch color="white" size={20} />
                         </div>
                         </InputLeftElement>
-                        <Input onKeyPress={handleKeydonw} onChange={(e) => setQuery(e.target.value)} placeholder="search for services or businesses" fontSize="md" paddingLeft="50px" className='font-Circular-std-book' />
+                        <Input  height="60px" onKeyPress={handleKeydonw} bgColor="#F1EEEE" onChange={(e) => setQuery(e.target.value)} placeholder="search for services or businesses" fontSize="lg" paddingLeft="100px" className=' font-Cerebri-sans-book' />
                     </InputGroup>
                 </div>
             </div>
         </div>
         <div className="flex-1 bg-themeGreen xl:flex lg:flex md:hidden sm:hidden flex flex-col">
             <RightNavBar />
-            <div className="flex-1 overflow-hidden">
+            <div className="flex-1  overflow-hidden">
                 <Image src={Woman} alt="logo" className=" w-full h-full object-contain" />
             </div>
         </div>
