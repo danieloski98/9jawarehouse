@@ -208,11 +208,8 @@ export default function Navbar({page, setPage}: IProps) {
                       </div>
                       </MenuButton>
                       <MenuList w="100px" minW="173px" maxH="200px" marginRight="12px" overflow="auto" padding="0px" className="flex flex-col font-light text-sm p-0">
-                            <p onClick={() => router.push('/dashboard')}  className="text-lg text-themeGreen font-Circular-std-book mx-0 mt-0 flex items-center cursor-pointer h-12 hover:bg-gray-100 p-3">
-                              <span className="ml-2">Dashboard</span>
-                            </p>
-
-                            <p onClick={handleLogout} className="text-lg text-red-400 font-Circular-std-book mx-0 mt-0 flex items-center cursor-pointer h-12 hover:bg-gray-100 p-3">
+                         
+                           <p onClick={handleLogout} className="text-lg text-red-400 font-Circular-std-book mx-0 mt-0 flex items-center cursor-pointer h-12 hover:bg-gray-100 p-3">
                               <span className="ml-2">Logout</span>
                             </p>
                       </MenuList>
