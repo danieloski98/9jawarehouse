@@ -165,7 +165,7 @@ export default function ServiceNavbar() {
   }
 
   return (
-    <div className="w-full h-24 bg-white xl:px-10 lg:px-10 md:px-5 sm:px-5 flex justify-between fixed z-50">
+    <div className="w-full h-24 bg-white xl:px-10 lg:px-10 md:px-5 sm:px-5 flex justify-between fixed z-50 shadow-sm">
 
         <div className="flex items-center">
             <Link href="/">
@@ -195,10 +195,10 @@ export default function ServiceNavbar() {
               <div 
               className="w-auto h-full xl:flex lg:flex md:hidden sm:hidden mr-8 items-center">
                   <InputGroup>
-                      <InputLeftElement h="60px" paddingLeft="20px">
+                      <InputLeftElement h="55px" paddingLeft="20px">
                           <Search  size={20} primaryColor='grey' />
                       </InputLeftElement>
-                      <Input bgColor="#F1EEEE" w="559px" h="60px" paddingLeft="60px" onKeyPress={handleKeydonw} value={query} onChange={(e) => setQuery(e.target.value)} fontSize="sm" className="font-Cerebri-sans-book" />
+                      <Input bgColor="#F1EEEE" w="559px" h="55px" paddingLeft="60px" onKeyPress={handleKeydonw} value={query} onChange={(e) => setQuery(e.target.value)} fontSize="sm" className="font-Cerebri-sans-book" />
                       <InputRightElement h="60px">
                           {query !== '' && <FiX size={20} color="grey" onClick={() => setQuery('')} className='cursor-pointer' />}
                       </InputRightElement>

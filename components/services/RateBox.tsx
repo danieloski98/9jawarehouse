@@ -8,34 +8,36 @@ const Comments = ({comment}: {comment: IComment}) => {
         console.log(newRating);
       };
     return (
-        <div className="w-full p-5 flex flex-col h-auto border-b-2 border-gray-200 mb-4">
+        <div className="w-full p-5 flex flex-col h-auto border-b-1 border-gray-200 mb-4">
             <p className="text-sm font-Circular-std-book text-gray-400">{new Date(comment.created_at).toDateString()}</p>
 
-            <p className='text-lg text-themeGreen font-Circular-std-medium mt-6'>{comment.fullname}</p>
+            <div className="flex mt-4">
+                <p className='text-lg text-themeGreen font-Circular-std-medium '>{comment.fullname}</p>
 
-            <p className="mt-2 text-md font-Circular-std-book text-gray-400">{comment.comment}</p>
-
-            <div className=" flex flex-col pt-4">
+                <div className=" flex flex-col mt-1 ml-3">
                 {/* <p className="font-semibold text-sm text-gray-500">Overall Rating</p> */}
                 <div className="flex h-5 items-center">
-                    <p className="text-md font-light text-themeGreen mr-1">{comment.rating}/5</p>
-                    <ReactStars
-                        count={5}
-                        onChange={ratingChanged}
-                        size={20}
-                        activeColor="#ffd700"
-                        value={comment.rating}
-                        isHalf={true}
-                        edit={false}
-                        color="lightgrey"
-                    />
-                    {/* <p className="text-sm font-semibold text-gray-600 ml-4">10 Reviews</p> */}
+                        <p className="text-md font-light text-themeGreen mr-1">{comment.rating}/5</p>
+                        <ReactStars
+                            count={5}
+                            onChange={ratingChanged}
+                            size={20}
+                            activeColor="#ffd700"
+                            value={comment.rating}
+                            isHalf={true}
+                            edit={false}
+                            color="lightgrey"
+                        />
+                        {/* <p className="text-sm font-semibold text-gray-600 ml-4">10 Reviews</p> */}
+                    </div>
                 </div>
             </div>
 
+            <p className="mt-2 text-md font-Circular-std-book text-gray-400">{comment.comment}</p>
+
            {
                comment.pictures.length > 0 && (
-                <div className="w-full h-auto flex mt-6">
+                <div className="w-full h-auto flex mt-6 mb-4">
                 {comment.pictures.map((item, index) => (
                     <div className="w-20 h-20 rounded-md overflow-hidden mr-4" key={index.toString()}>
                         <Image src={item} alt="img" className="w-full h-full object-cover" />

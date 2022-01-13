@@ -5,6 +5,7 @@ import { Breadcrumb, BreadcrumbItem, Image as Img, Modal, ModalOverlay, ModalCon
 import { useRouter } from 'next/router'
 import { Carousel } from 'react-responsive-carousel';
 import { useQuery } from 'react-query'
+import { Call, Message } from 'react-iconly'
 
 // redux
 import { useDispatch, useSelector } from 'react-redux'
@@ -28,18 +29,20 @@ import Footer from '../../Home/Footer';
 const ContactBox = ({user}: {user: IUser}) => {
     return (
         <div className="w-full p-5 border-2 border-gray-200 flex flex-col mb-8">
-            <p className="font-light text-lg text-themeGreen">Contact</p>
-            <p className="mt-2 text-sm font-semibold text-gray-500">You can only leave a review about this business if you have previously worked with them</p>
+            <p className=" font-Circular-std-medium text-lg text-themeGreen">Contact</p>
+            <p className="mt-2 text-sm font-Circular-std-book text-gray-500">You can only leave a review about this business if you have previously worked with them</p>
             {user === null && (
                 <Skeleton className='w-full h-32' />
             )}
             {user !== null && (
                  <div className="flex mt-4">
                     <a href={`tel:${user.phone}`}>
-                        <FiPhone size={25} color="gray" className="cursor-pointer"  />
+                        <Call size={35} primaryColor="#004143" filled />
+                        {/* <FiPhone size={25} color="gray" className="cursor-pointer"  /> */}
                     </a>
-                    <a href={`mailto:${user.email}`}>
-                        <FiMail size={25} color="gray" className="ml-4 cursor-pointer" />
+                    <a href={`mailto:${user.email}`} className='ml-3'>
+                        <Message size={35} primaryColor="#004143" filled />
+                        {/* <FiMail size={25} color="gray" className="ml-4 cursor-pointer" /> */}
                     </a>
                 </div>
             )}
@@ -51,10 +54,10 @@ const ReviewBox = (props: { open: Function }) => {
 
     return (
         <div  className="w-full p-5 border-2 border-gray-200 flex flex-col">
-            <p className="font-light text-lg text-themeGreen">Review Business/Vendor</p>
-            <p className="mt-2 text-sm font-semibold text-gray-500">Reach out to through phone or email vendor to start a conversation</p>
+            <p className="font-Circular-std-medium text-lg text-themeGreen">Review Business/Vendor</p>
+            <p className="mt-2 text-sm font-Circular-std-book text-gray-500">Reach out to through phone or email vendor to start a conversation</p>
 
-            <button onClick={() => props.open(true)} className="mt-3 w-32 bg-themeGreen h-10 text-sm text-white">Write a review</button>
+            <button onClick={() => props.open(true)} className="mt-3 w-32 bg-themeGreen h-10 text-sm text-white font-Cerebri-sans-book">Write a review</button>
             
         </div>
     )
@@ -134,7 +137,7 @@ export default function Business() {
            </>
        )}
 
-        <div className="w-full h-20 flex items-center xl:px-10 lg:px-10 md:px-5 sm:px-5 mt-16">
+        <div className="w-full h-20 flex items-center xl:px-10 lg:px-10 md:px-5 sm:px-5 mt-32">
             <FiChevronLeft size={30} color="grey" className="cursor-pointer" onClick={() => router.back()} />
             <div className="ml-6 font-Cerebri-sans-book text-md">
                 <Breadcrumb className="text-sm font-light text-gray-400">
