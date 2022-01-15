@@ -1,7 +1,11 @@
 import React from 'react'
+import Activity from '../components/DashboardTabs/Activity'
 import Overview from '../components/DashboardTabs/Overview'
+import Vendors from '../components/DashboardTabs/Vendors'
 import Menu from '../components/Menu'
 import Navbar from '../components/Navbar'
+import ArchivedVendors from '../components/VendorComponent.tsx/ArchivedVendors'
+import VendorProfile from '../components/VendorComponent.tsx/VendorProfile'
 
 export default function Dashboard() {
 
@@ -17,6 +21,10 @@ export default function Dashboard() {
                     <Navbar />
                     {tab === 'Overview' ? 
                         <Overview />
+                        :tab === 'Activity' ? 
+                            <Activity />
+                            :tab === 'Vendors' ? 
+                                <ArchivedVendors />
                     :null}
                 </div>
             </div>
