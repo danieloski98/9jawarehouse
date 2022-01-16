@@ -5,14 +5,16 @@ import Link from 'next/link'
 
 // images
 import Logo from '../../public/images/logo.svg';
-import Image from 'next/image';
+import { Image } from '@chakra-ui/react';
 
 export default function Footer() {
   return (
     <div className="w-full xl:h-64 lg:h-64 md:h-auto sm:h-auto xl:py-0 lg:py-0 md:py-6 sm:py-6 bg-green-800 flex xl:flex-row lg:flex-row md:flex-col sm:flex-col">
 
         <div className="xl:w-1/4 lg:w-1/4 md:w-full sm:w-full flex flex-col justify-center items-center">
-            <Image src={Logo} alt="logo" className="w-24 h-24" />
+            <Link href="/" passHref>
+              <Image src="/images/nlogo.png" alt="logo" className="w-16 h-12 object-contain cursor-pointer" />
+            </Link>
             <p className="text-white text-sm font-Circular-std-medium">9jaWareHouse</p>
             <div className="flex mt-5 w-full md:justify-center sm:justify-center">
                     <div className="w-10 h-10 rounded-full bg-white flex justify-center items-center mr-6 cursor-pointer">

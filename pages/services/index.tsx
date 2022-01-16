@@ -20,6 +20,7 @@ import { updatePin } from '../../reducers/pin.reducer'
 import { login, logout } from '../../reducers/logged'
 import { useDispatch, useSelector } from 'react-redux'
 import Footer from '../../components/Home/Footer';
+import { setService, setLga } from '../../reducers/Search.reducer';
 
 
 
@@ -52,6 +53,7 @@ export default function Services({states, services}: IProps) {
     const [lgas, setLgas] = React.useState([] as Array<ILga>);
     const [businesses, setBusinesses] = React.useState([2] as Array<IUser | any>);
     const [loading, setLoading] = React.useState(true);
+    const serviceState = useSelector(( state: RootState ) => state.SearchReduer);
 
     const dispatch = useDispatch();
 
@@ -81,9 +83,10 @@ export default function Services({states, services}: IProps) {
     
 
     React.useEffect(() => {
+        localStorage.setItem('activeService', sr as string);
         (async function() {
             setLoading(true);
-            const request = await fetch(`${url}user?service=${sr}&state=${st}&lga=${la}`);
+            const request = await fetch(`${url}user?service=${sr}&state=${st}`);
             const json = await request.json() as IServerReturnObject;
             const data = json.data as IUser[];
             setBusinesses(data);
@@ -93,10 +96,17 @@ export default function Services({states, services}: IProps) {
 
     React.useEffect(() => {
         setSr(router.query['service']);
+        setSt(router.query['state'] as string)
+        setState(router.query['state'] as string);
+
+        if (router.query['lga'] !== '') {
+            setLa(router.query['lga'] as string);
+        }
+        
         setLoading(true);
         (async function() {
             (async function() {
-                const request = await fetch(`${url}user?service=${router.query['service']}`);
+                const request = await fetch(`${url}user?service=${router.query['service']}&state=${router.query['state']}`);
                 const json = await request.json() as IServerReturnObject;
                 const data = json.data as IUser[];
                 setBusinesses(data);
@@ -104,6 +114,10 @@ export default function Services({states, services}: IProps) {
             })()
         })()
     }, [router.query]);
+
+    const setValues = () => {
+        
+    }
 
 
     const fetchUser = React.useCallback( async() => {
@@ -143,13 +157,30 @@ export default function Services({states, services}: IProps) {
 
     async function getUsers() {
 
+        if (state === "") {
+            alert("Please select a state");
+            return;
+        }
+
         setLoading(true);
-        const request = await fetch(`${url}user?service=${sr}&state=${st}&lga=${la}`);
-        const json = await request.json() as IServerReturnObject;
-        const data = json.data as IUser[];
-        setBusinesses(data);
-        setLoading(false);
-        setDrawer(false);
+        if (la === "") {
+            const request = await fetch(`${url}user?service=${sr}&state=${st}`)
+            const json = await request.json() as IServerReturnObject;
+            const data = json.data as IUser[];
+            setBusinesses(data);
+            setLoading(false);
+            setDrawer(false);
+            return
+        } else if (la !== "" || la !== undefined) {
+            const request = await fetch(`${url}user?service=${sr}&state=${st}&lga=${la}`);
+            const json = await request.json() as IServerReturnObject;
+            const data = json.data as IUser[];
+            setBusinesses(data);
+            setLoading(false);
+            setDrawer(false);
+            return
+        }
+       
     }
     
   return (
@@ -174,7 +205,7 @@ export default function Services({states, services}: IProps) {
                    </Select>
                </div>
                <div className="w-full h-10 mb-5">
-                   <Select border="none" bgColor="whitesmoke" borderRadius="0" onChange={(e) => SelectState(e.target.value)}>
+                   <Select border="none" bgColor="whitesmoke" value={st} borderRadius="0" onChange={(e) => SelectState(e.target.value)}>
                        <option value="" selected>State</option>
                        {states.map((item, index) => (
                            <option key={index.toString()} value={item.officialName}>{item.officialName}</option>
@@ -182,8 +213,8 @@ export default function Services({states, services}: IProps) {
                    </Select>
                </div>
                <div className="w-full h-10 mb-5">
-                   <Select border="none" bgColor="whitesmoke" onChange={(e) => setLa(e.target.value)}>
-                       <option value="" selected>LGA</option>
+                   <Select border="none" bgColor="whitesmoke"  onChange={(e) => setLa(e.target.value)}>
+                       <option value="" selected>LGA (optional)</option>
                        {lgas !== undefined && lgas.length > 0 && lgas.map((item, index) => (
                            <option key={index.toString()} value={item.LGA}>{item.LGA}</option>
                        ))}
@@ -248,7 +279,7 @@ export default function Services({states, services}: IProps) {
                    </Select>
                </div>
                <div className="w-32 h-10 ml-6">
-                    <Select border="none" bgColor="whitesmoke" borderRadius="0" fontSize="sm" className="font-Cerebri-sans-book" onChange={(e) => SelectState(e.target.value)}>
+                    <Select border="none" bgColor="whitesmoke" value={st} borderRadius="0" fontSize="sm" className="font-Cerebri-sans-book" onChange={(e) => SelectState(e.target.value)}>
                        <option value="" selected>State</option>
                        {states.map((item, index) => (
                            <option key={index.toString()} value={item.officialName}>{item.officialName}</option>
@@ -256,8 +287,8 @@ export default function Services({states, services}: IProps) {
                    </Select>
                </div>
                <div className="w-32 h-10 ml-6">
-                    <Select border="none" bgColor="whitesmoke" fontSize="sm" className="font-Cerebri-sans-book" onChange={(e) => setLa(e.target.value)}>
-                       <option value="" selected>LGA</option>
+                    <Select border="none" bgColor="whitesmoke" fontSize="sm" className="font-Cerebri-sans-book text-xs" onChange={(e) => setLa(e.target.value)}>
+                       <option value="" selected className='text-xs font-gray-500'>LGA (optional)</option>
                        {lgas !== undefined && lgas.length > 0 && lgas.map((item, index) => (
                            <option key={index.toString()} value={item.LGA}>{item.LGA}</option>
                        ))}
@@ -275,7 +306,7 @@ export default function Services({states, services}: IProps) {
                     )}
 
                     {!loading && businesses !== undefined && businesses.length > 0 && businesses.map((item, index) => (
-                        <BusinessCard user={item} key={index.toString()} />
+                        <BusinessCard navigate={setValues} user={item} key={index.toString()} />
                     ))}
 
                     {!loading && businesses !== undefined && businesses.length < 1 && (

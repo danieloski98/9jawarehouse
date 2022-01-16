@@ -1,5 +1,6 @@
 import React from 'react';
-import Image from 'next/image';
+import { Image as Img } from '@chakra-ui/react';
+import Image from 'next/image'
 import { FiSearch, FiMenu, FiTrash2 } from 'react-icons/fi'
 import { InputGroup, Input, InputLeftAddon, InputLeftElement, Drawer, DrawerOverlay, DrawerContent, DrawerBody, Avatar, Menu, MenuButton, MenuList, MenuItem, Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Divider, Modal, ModalContent, Popover, PopoverTrigger, PopoverContent, PopoverArrow, PopoverBody, ModalOverlay, Spinner, PopoverHeader, } from '@chakra-ui/react'
 const colors = require('tailwindcss/colors')
@@ -56,7 +57,7 @@ export const LeftNavbar = () => {
 
     return (
         <div className="w-full h-24 flex justify-between items-center px-5">
-            <Image src={Logo} alt="logo" className=" w-20 h-20" />
+            <Img src="/images/nlogo.png" alt="logo" className=" w-20 h-16" />
             <div className=" xl:hidden lg:hidden md:flex sm:flex w-20 justify-end items-center">
                 {/* <FiSearch size={25} color="grey" /> */}
                 <FiMenu size={25} color="grey" onClick={() => setOpen(true)} />

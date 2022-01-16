@@ -9,8 +9,8 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { Notification, Search } from 'react-iconly';
 
 // images
-import Image from 'next/image';
-import Logo from '../../public/images/logo.svg';
+import { Image } from '@chakra-ui/react';
+import Logo from '../../public/images/nlogo.png';
 import Sidebar from '../dashboard/Sidebar';
 
 // redux
@@ -168,11 +168,9 @@ export default function ServiceNavbar() {
     <div className="w-full h-24 bg-white xl:px-10 lg:px-10 md:px-5 sm:px-5 flex justify-between fixed z-50 shadow-sm">
 
         <div className="flex items-center">
-            <Link href="/">
-              <a>
-                <Image src={Logo} alt="logo" className="w-20 h-20" />
-              </a>
-            </Link>
+          <Link href="/" passHref>
+            <Image src="/images/nlogo.png" alt="logo" className="w-full h-12 object-contain cursor-pointer" />
+          </Link>
         </div>
 
       

@@ -14,8 +14,8 @@ import { updateUser } from '../../reducers/User.reducer';
 import { login, logout } from '../../reducers/logged'
 
 // images
-import Image from 'next/image';
-import Logo from '../../public/images/logo.svg';
+import { Image } from '@chakra-ui/react';
+import Logo from '../../public/images/nlogo.png';
 import Sidebar from '../dashboard/Sidebar';
 import { INotification } from '../../utils/types/Notification';
 import { IServerReturnObject } from '../../utils/types/serverreturntype';
@@ -124,11 +124,9 @@ export default function NormNavbar() {
 
   return (
     <div className="w-full h-20 bg-white px-10 flex justify-between fixed z-50">
-        <div className="flex-1 flex items-center">
-            <Link href="/">
-                <a>
-                    <Image src={Logo} alt="logo" className="w-20 h-20" />
-                </a>
+        <div className="flex items-center justify-center w-16 h-full overflow-hidden">
+            <Link href="/" passHref>
+                <Image src="/images/nlogo.png" fallbackSrc='https://via.placeholder.com/150' alt="logo" className="w-full h-full object-contain" />
             </Link>
         </div>
         <div className="flex-1 xl:flex lg:flex md:hidden sm:hidden justify-end items-center">

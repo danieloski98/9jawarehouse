@@ -1,6 +1,6 @@
 import React from 'react';
-import { Input, Spinner, InputGroup, InputRightElement } from '@chakra-ui/react'
-import { FiEye, FiEyeOff } from 'react-icons/fi'
+import { Input, Spinner, InputGroup, InputRightElement, Tooltip } from '@chakra-ui/react'
+import { FiEye, FiEyeOff, FiHelpCircle } from 'react-icons/fi'
 import * as yup from 'yup'
 import { useFormik } from 'formik'
 
@@ -66,9 +66,26 @@ export default function Settings() {
             <p className="text-lg font-Cerebri-sans-book text-gray-600">Account</p>
 
             <div className="xl:w-2/4 lg:w-2/4 md:w-full sm:w-full flex flex-col mt-4">
-                <p className="text-sm font-Cerebri-sans-book text-gray-600">Email</p>
+                <div className="flex flex-1 flex-col w-full xl:pr-5 md:mb-3 sm:mb-3">
+                    <label className="font-Circular-std-book text-sm text-gray-600">Email Address</label>
+                    <div className="flex w-full h-12 md:mt-3 sm:mt-3 items-center">
+                        <Input
+                            value={user.email}
+                            disabled
+                            border="none"
+                            bgColor="#F1EEEE"
+                            borderRadius={0}
+                            fontSize="sm"
+                            className="bg-gray-100 mt-3 font-Cerebri-sans-book"
+                            />
+                            <Tooltip hasArrow size="lg" fontSize="xs" className="font-Cerebri-sans-book" label="Sorry, you can't update this information at the moment. Reach out to our support for further assistance" placement="top">
+                            <span>
+                                <FiHelpCircle color="green" size={20} className="cursor-pointer ml-2" />
+                            </span>
+                            </Tooltip>
+                    </div>
+                </div>
 
-                <Input border="none" bgColor="whitesmoke" fontSize="sm" borderRadius={0} disabled className="bg-gray-100 mt-3 font-Cerebri-sans-book" value={user.email} />
             </div>
         </div>
 

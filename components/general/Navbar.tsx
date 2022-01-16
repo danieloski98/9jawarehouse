@@ -15,8 +15,8 @@ import { updatePin } from '../../reducers/pin.reducer'
 import { logout } from '../../reducers/logged'
 
 // images
-import Image from 'next/image';
-import Logo from '../../public/images/logo.svg';
+import { Image } from '@chakra-ui/react';
+import Logo from '../../public/images/nlogo.png';
 import Sidebar from '../dashboard/Sidebar';
 import { IServices } from '../../utils/types/services';
 import { IServerReturnObject } from '../../utils/types/serverreturntype';
@@ -159,9 +159,9 @@ export default function Navbar({page, setPage}: IProps) {
 
   return (
     <div className="w-full h-20 py-0 bg-white px-10 flex justify-between items-center">
-        <div className="flex-1 flex items-center h-auto w-auto overflow-hidden ">
+        <div className="w-16 h-full flex items-center overflow-hidden ">
             <Link href="/" passHref>
-              <Image src={Logo} alt="logo" className="w-20 h-20 cursor-pointer" />
+              <Image src="/images/nlogo.png" alt="logo" className="w-full h-12 object-contain cursor-pointer" />
             </Link>
         </div>
         <div className="flex-1 xl:flex lg:flex md:hidden sm:hidden justify-end items-center z-20">

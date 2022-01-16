@@ -118,7 +118,19 @@ export default function Business() {
             setLoading(false);
             // console.log(user);
         })()
-    }, [router.query])
+    }, [router.query]);
+
+    React.useEffect(() => {
+        window.onpopstate = () => {
+            const service = localStorage.getItem('activeService') as string;
+            if (service === null || service === undefined) {
+                router.push(`/services?service=${user.services[0]}&state=${user.state}&lga=${user.lga}`);
+            } else {
+                router.push(`/services?service=${service}&state=${user.state}`);
+            }
+            
+        }
+    })
 
     console.log(user);
 
