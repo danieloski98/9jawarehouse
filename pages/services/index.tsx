@@ -306,7 +306,7 @@ export default function Services({states, services}: IProps) {
                     )}
 
                     {!loading && businesses !== undefined && businesses.length > 0 && businesses.map((item, index) => (
-                        <BusinessCard navigate={setValues} user={item} key={index.toString()} />
+                        <BusinessCard user={item} key={index.toString()} />
                     ))}
 
                     {!loading && businesses !== undefined && businesses.length < 1 && (

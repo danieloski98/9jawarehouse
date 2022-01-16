@@ -11,7 +11,7 @@ import { useDispatch } from 'react-redux';
 import {RootState} from '../../store/index'
 import { updateUser } from '../../reducers/Activeuser.reducer'
 
-export default function BusinessCard({user, navigate}: {user: IUser, navigate: Function}) {
+export default function BusinessCard({user}: {user: IUser}) {
     console.log(user);
     const router = useRouter();
     // redux
@@ -22,7 +22,6 @@ export default function BusinessCard({user, navigate}: {user: IUser, navigate: F
       };
 
       const move = () => {
-          navigate();
           dispatch(updateUser(user));
           router.push(`/services/business/${user._id}`)
       }
