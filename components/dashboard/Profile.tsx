@@ -113,6 +113,8 @@ export default function Profile({ setPage }: IProps) {
               src={userDetails.profile_pic}
               className="mr-6"
               size="lg"
+              w="124px"
+              h="124px"
             />
             <div className="flex flex-col justify-center">
               <p className="text-lg font-Circular-std-medium text-gray-600">
@@ -137,8 +139,8 @@ export default function Profile({ setPage }: IProps) {
         {/* description box */}
 
         <div className="w-full xl:px-10 lg:px-10 md:px-5 sm:px-5 mt-10 flex flex-col">
-          <p className="text-md font-Circular-std-medium text-gray-600">Description</p>
-          <p className="text-sm font-Cerebri-sans-book mt-4 text-gray-500 text-justify">
+          <p className="text-md font-Circular-std-medium text-gray-600 md:text-center sm:text-center">Description</p>
+          <p className="text-sm font-Cerebri-sans-book mt-4 text-gray-500 xl:text-justify lg:text-justify md:text-center sm:text-center">
            {userDetails.business_description}
           </p>
         </div>

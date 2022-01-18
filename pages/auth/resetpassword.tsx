@@ -1,5 +1,5 @@
 import React from 'react'
-import { InputGroup, InputLeftElement, InputRightElement, Input, Spinner, Modal, ModalOverlay, ModalContent, ModalBody } from '@chakra-ui/react'
+import { InputGroup, InputLeftElement, InputRightElement, Input, Spinner, Modal, ModalOverlay, ModalContent, ModalBody, Image as Img } from '@chakra-ui/react'
 import { FiMail, FiLock, FiEye, FiEyeOff, FiCode } from 'react-icons/fi'
 import { useRouter } from 'next/router'
 import { useFormik } from 'formik'
@@ -29,7 +29,7 @@ const validationSchema = yup.object({
 const LeftNavbar = () => {
     return (
         <div className="w-full h-24 flex justify-between items-center px-5">
-            <Image src={Logo} alt="logo" className=" w-20 h-20" />
+            <Img src="/images/nlogo.png" alt="logo" className=" w-20 h-16" />
             <div className=" xl:hidden lg:hidden md:flex sm:flex w-20 justify-between items-center">
                 <FiSearch size={25} color="grey" />
                 <FiMenu size={25} color="grey" />
