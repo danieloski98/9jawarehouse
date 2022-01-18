@@ -1,5 +1,5 @@
 import React from 'react'
-import { InputGroup, InputLeftElement, InputRightElement, Input, Spinner, Modal, ModalOverlay, ModalContent, ModalBody } from '@chakra-ui/react'
+import { InputGroup, InputLeftElement, InputRightElement, Input, Spinner, Modal, ModalOverlay, ModalContent, ModalBody, Image as Img } from '@chakra-ui/react'
 import { FiMail, FiLock, FiEye, FiEyeOff, FiUser } from 'react-icons/fi'
 import { useRouter } from 'next/router'
 import { useFormik } from 'formik'
@@ -9,7 +9,7 @@ import Link from 'next/link'
 // image
 import Image from 'next/image';
 import Girl from '../../public/images/girl2.png';
-import Logo from '../../public/images/logo.svg';
+import Logo from '../../public/images/nlogo.png';
 import Envelope from '../../public/images/envelope.svg';
 
 import { FiSearch, FiMenu } from 'react-icons/fi'

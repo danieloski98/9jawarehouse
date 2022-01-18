@@ -21,7 +21,7 @@ const validationSchema = yup.object({
 // image
 import Image from 'next/image';
 import Girl from '../../public/images/bg.png';
-import Logo from '../../public/images/logo.svg';
+import Logo from '../../public/images/nlogo.png';
 import Google from '../../public/images/google.svg';
 import Mail from '../../public/images/mail.png';
 import { FiSearch, FiMenu } from 'react-icons/fi'

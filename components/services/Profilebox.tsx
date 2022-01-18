@@ -73,7 +73,7 @@ export default function ProfileBox({user, reviews}: IProps) {
         {/* details */}
 
         <div className="w-full flex xl:flex-row lg:flex-row md:flex-col sm:flex-col justify-between xl:px-10 lg:px-10 md:px-10 sm:px-5 mt-6">
-          <div className="flex flex-1">
+          <div className="flex xl:justify-start lg:justify-start  md:items-center sm:items-center flex-1 xl:flex-row lg:flex-row md:flex-col sm:flex-col">
             <Avatar
               src={user.profile_pic}
               className="mr-6"
@@ -81,11 +81,11 @@ export default function ProfileBox({user, reviews}: IProps) {
               w="124px"
               h="124px"
             />
-            <div className="flex flex-col justify-center">
+            <div className="flex flex-col justify-center xl:items-start lg:items-start md:items-center sm:items-center md:mt-2 sm:mt-2">
               <p className="text-xl font-Circular-std-medium text-gray-700 cursor-pointer">
                 <a href="#comments">{user.business_name}</a>
               </p>
-              <div className="flex w-full flex-wrap">
+              <div className="flex xl:justify-start lg:justify-start md:justify-center sm:justify-center w-full flex-wrap md:mt-3 sm:mt-3">
               {user !== undefined && user.services.map((item, index) => (
                 <p key={index.toString()} className="text-md text-themeGreen font-Cerebri-sans-book mr-2">
                   {item}, 
@@ -116,16 +116,16 @@ export default function ProfileBox({user, reviews}: IProps) {
 
         {/* description box */}
 
-        <div className="w-full xl:px-10 lg:px-10 md:px-5 sm:px-5 mt-10 flex flex-col">
+        <div className="w-full xl:px-10 lg:px-10 md:px-5 sm:px-5 mt-10 flex flex-col xl:text-left lg:text-left md:text-center sm:text-center">
           <p className="text-xl font-Circular-std-medium text-themeGreen">Description</p>
-          <p className="text-md font-Cerebri-sans-book mt-2 text-gray-500 text-justify">
+          <p className="text-md font-Cerebri-sans-book mt-2 text-gray-500 xl:text-justify lg:text-justify md:text-center sm:text-center">
             {user.business_description}
           </p>
         </div>
 
         {/* contacts */}
 
-        <div className="w-full flex xl:flex-row lg:flex-row md:flex-col sm:flex-col justify-between xl:px-10 lg:px-10 md:px-5 sm:px-5 xl:mt-10 lg:mt-10">
+        <div className="w-full flex xl:flex-row lg:flex-row md:flex-col sm:flex-col justify-between xl:px-10 lg:px-10 md:px-5 sm:px-5 xl:mt-10 lg:mt-10 xl:text-left lg:text-left md:text-center sm:text-center">
           <div className="flex flex-1 flex-col xl:mt-0 lg:mt-0 md:mt-4 sm:mt-4">
             <p className="text-xl font-Circular-std-medium text-themeGreen">Location</p>
             <p className="text-md font-Cerebri-sans-book mt-2 text-gray-500">
@@ -146,7 +146,7 @@ export default function ProfileBox({user, reviews}: IProps) {
           </div>
         </div>
 
-        <div className="w-full flex xl:flex-row lg:flex-row md:flex-col sm:flex-col justify-between xl:px-10 lg:px-10 md:px-5 sm:px-5 xl:mt-10 lg:mt-10">
+        <div className="w-full flex xl:flex-row lg:flex-row md:flex-col sm:flex-col justify-between xl:px-10 lg:px-10 md:px-5 sm:px-5 xl:mt-10 lg:mt-10 xl:text-left lg:text-left md:text-center sm:text-center">
           <div className="flex flex-1 flex-col xl:mt-0 lg:mt-0 md:mt-4 sm:mt-4">
             <p className="text-xl font-Circular-std-medium text-themeGreen">Country</p>
             <p className="text-md font-Cerebri-sans-book mt-2 text-gray-500">
@@ -170,11 +170,11 @@ export default function ProfileBox({user, reviews}: IProps) {
         {/* social media links */}
 
         <div className="w-full flex xl:flex-row lg:flex-row md:flex-col sm:flex-col justify-between xl:px-10 lg:px-10 md:px-5 sm:px-5 mt-10">
-          <div className="flex flex-col xl:mt-0 lg:mt-0 md:mt-4 sm:mt-4">
+          <div className="flex flex-col sm:items-center md:items-center xl:mt-0 lg:mt-0 md:mt-4 sm:mt-4">
             <p className="text-xl font-Circular-std-medium text-themeGreen">
               Social Media Links
             </p>
-            <div className="flex w-full mt-2">
+            <div className="flex md:justify-center sm:justify-center w-full mt-2">
               {user.facebook !== "" && (
                 <a href={user.facebook} className="cursor-pointer" title={user.facebook}>
                   <FaFacebook size={25} color="#0085CC" />
@@ -219,9 +219,9 @@ export default function ProfileBox({user, reviews}: IProps) {
         </div>
 
          {/* certificates */}
-         <div className="flex flex-col xl:mt-10 lg:mt-10 md:mt-4 sm:mt-4 flex-1 xl:ml-10 lg:ml-10 md:ml-5 sm:ml-5">
+         <div className="flex flex-col xl:items-start lg:items-start md:items-center sm:items-center xl:mt-10 lg:mt-10 md:mt-6 sm:mt-6 flex-1 xl:ml-10 lg:ml-10 md:ml-5 sm:ml-5">
             <p className="text-xl font-Circular-std-medium text-themeGreen">Certifications</p>
-            <div className="xl:flex lg:flex md:hidden sm:hidden mt-6 flex-wrap text-left">
+            <div className="xl:flex lg:flex md:hidden sm:hidden mt-6 flex-wrap text-left w-full">
                 <p className="text-sm font-Circular-std-medium text-themeGreen flex-1">Certificate</p>
                 <p className="text-sm font-Circular-std-medium text-themeGreen mt-1 flex-1">Organization</p>
                 <p className="text-sm font-Circular-std-medium text-themeGreen mt-1 flex-1">Year Issued</p>
@@ -234,7 +234,7 @@ export default function ProfileBox({user, reviews}: IProps) {
 
           <div className="flex flex-col flex-wrap">
           {user.certificates.length > 0 && user.certificates.map((item, index) => (
-              <div key={index.toString()} className="mt-2 mb-0 mr-6 flex xl:flex-row lg:flex-row md:flex-col sm:flex-col xl:items-center lg:items-center md:items-start sm:items-start font-Circular-std-book" >
+              <div key={index.toString()} className="w-full mt-2 mb-0 mr-6 flex xl:flex-row lg:flex-row md:flex-col sm:flex-col xl:items-center lg:items-center md:items-center sm:items-center font-Circular-std-book" >
                   <p className="text-md font-Cerebri-sans-book mt-2 text-gray-500 flex-1">{item.certificate}</p>
                   <p className="text-md font-Cerebri-sans-book mt-2 text-gray-500 flex-1">{item.organization}</p>
                   <p className="text-md font-Cerebri-sans-book mt-2 text-gray-500 flex-1">{item.year}</p>
