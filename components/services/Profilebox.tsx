@@ -63,7 +63,7 @@ export default function ProfileBox({user, reviews}: IProps) {
   }
 
   return (
-    <div className="w-full h-auto pb-10 border-2 border-gray-200 mb-8">
+    <div className="w-full h-auto pb-0 border-2 border-gray-200 mb-8">
 
       {/* modals */}
       <ConnectModal isOpen={openModal} close={close} value={modalValue} icon={icon} />
@@ -125,7 +125,7 @@ export default function ProfileBox({user, reviews}: IProps) {
 
         {/* contacts */}
 
-        <div className="w-full flex xl:flex-row lg:flex-row md:flex-col sm:flex-col justify-between xl:px-10 lg:px-10 md:px-5 sm:px-5 mt-10">
+        <div className="w-full flex xl:flex-row lg:flex-row md:flex-col sm:flex-col justify-between xl:px-10 lg:px-10 md:px-5 sm:px-5 xl:mt-10 lg:mt-10">
           <div className="flex flex-1 flex-col xl:mt-0 lg:mt-0 md:mt-4 sm:mt-4">
             <p className="text-xl font-Circular-std-medium text-themeGreen">Location</p>
             <p className="text-md font-Cerebri-sans-book mt-2 text-gray-500">
@@ -146,7 +146,7 @@ export default function ProfileBox({user, reviews}: IProps) {
           </div>
         </div>
 
-        <div className="w-full flex xl:flex-row lg:flex-row md:flex-col sm:flex-col justify-between xl:px-10 lg:px-10 md:px-5 sm:px-5 mt-10">
+        <div className="w-full flex xl:flex-row lg:flex-row md:flex-col sm:flex-col justify-between xl:px-10 lg:px-10 md:px-5 sm:px-5 xl:mt-10 lg:mt-10">
           <div className="flex flex-1 flex-col xl:mt-0 lg:mt-0 md:mt-4 sm:mt-4">
             <p className="text-xl font-Circular-std-medium text-themeGreen">Country</p>
             <p className="text-md font-Cerebri-sans-book mt-2 text-gray-500">
@@ -234,11 +234,11 @@ export default function ProfileBox({user, reviews}: IProps) {
 
           <div className="flex flex-col flex-wrap">
           {user.certificates.length > 0 && user.certificates.map((item, index) => (
-              <div key={index.toString()} className="mt-2 mb-5 mr-6 flex xl:flex-row lg:flex-row md:flex-col sm:flex-col xl:items-center lg:items-center md:items-start sm:items-start font-Circular-std-book" >
+              <div key={index.toString()} className="mt-2 mb-0 mr-6 flex xl:flex-row lg:flex-row md:flex-col sm:flex-col xl:items-center lg:items-center md:items-start sm:items-start font-Circular-std-book" >
                   <p className="text-md font-Cerebri-sans-book mt-2 text-gray-500 flex-1">{item.certificate}</p>
                   <p className="text-md font-Cerebri-sans-book mt-2 text-gray-500 flex-1">{item.organization}</p>
                   <p className="text-md font-Cerebri-sans-book mt-2 text-gray-500 flex-1">{item.year}</p>
-                  <a href={item.link} target="_blank" rel="noreferrer" className="flex-1">
+                  <a href={item.link} target="_blank" rel="noreferrer" className="flex-1 sm:mt-1 md:mt-1">
                     <button className="w-20 h-8 rounded-full border-2 border-themeGreen text-themeGreen mt-0 font-Circular-std-book text-xs">View</button>
                   </a>
               </div>

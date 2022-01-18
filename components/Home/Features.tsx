@@ -12,9 +12,9 @@ export default function Features() {
     const router = useRouter();
 
   return (
-    <div className="w-full xl:h-auto lg:h-auto md:h-auto sm:h-auto flex flex-col py-10 mb-10">
+    <div className="w-full xl:h-auto lg:h-auto md:h-auto sm:h-auto flex flex-col py-10 mb-0">
 
-        <div className="w-full h-2/4 flex xl:flex-row lg:flex-row md:flex-col sm:flex-col mb-24 xl:px-32 lg:px-32">
+        <div className="w-full h-2/4 flex xl:flex-row lg:flex-row md:flex-col sm:flex-col mb-10 xl:px-32 lg:px-32">
 
             <div className="flex-1  flex justify-center items-center">
                 {/* <div className="w-40 h-40 bg-green-200 z-10"></div> */}
@@ -44,7 +44,7 @@ export default function Features() {
 
         </div>
 
-        <div className="w-full h-2/4 flex xl:flex-row-reverse lg:flex-row-reverse md:flex-col sm:flex-col mb-10 xl:px-32 lg:px-32">
+        <div className="w-full h-2/4 flex xl:flex-row-reverse lg:flex-row-reverse md:flex-col sm:flex-col mb-0 xl:px-32 lg:px-32">
 
             <div className="flex-1  flex justify-center items-center">
                 {/* <div className="w-40 h-40 bg-green-200 z-10"></div> */}

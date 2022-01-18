@@ -145,7 +145,7 @@ export default function Profile({ setPage }: IProps) {
 
         {/* contacts */}
 
-        <div className="w-full flex xl:flex-row lg:flex-row md:flex-col sm:flex-col justify-between xl:px-10 lg:px-10 md:px-5 sm:px-5 mt-10">
+        <div className="w-full flex xl:flex-row lg:flex-row md:flex-col sm:flex-col justify-between xl:px-10 lg:px-10 md:px-5 sm:px-5 xl:mt-10 lg:mt-10">
           <div className="flex flex-col items-start flex-1 xl:mt-0 lg:mt-0 md:mt-4 sm:mt-4">
             <p className="text-md font-Circular-std-medium text-gray-600">Location</p>
             <p className="text-sm text-gray-500 font-Cerebri-sans-book">
@@ -167,7 +167,7 @@ export default function Profile({ setPage }: IProps) {
         </div>
 
 
-        <div className="w-full flex xl:flex-row lg:flex-row md:flex-col sm:flex-col justify-between xl:px-10 lg:px-10 md:px-5 sm:px-5 mt-10">
+        <div className="w-full flex xl:flex-row lg:flex-row md:flex-col sm:flex-col justify-between xl:px-10 lg:px-10 md:px-5 sm:px-5 xl:mt-10 lg:mt-10">
           <div className="flex flex-col items-start flex-1 xl:mt-0 lg:mt-0 md:mt-4 sm:mt-4">
             <p className="text-md font-Circular-std-medium text-gray-600">Country</p>
             <p className="text-sm text-gray-500 font-Cerebri-sans-book">
@@ -256,7 +256,7 @@ export default function Profile({ setPage }: IProps) {
                   <p className="text-sm mt-1 flex-1">{item.organization}</p>
                   <p className="text-sm mt-1 flex-1">{item.year}</p>
                   <a href={item.link} target="_blank" rel="noreferrer" className="flex-1 md:mt-3 sm:mt-3">
-                    <button className="w-20 h-8 rounded-full border-2 border-themeGreen text-themeGreen mt-0 font-Circular-std-book text-xs">View</button>
+                    <button className="w-20 h-8 rounded-full border-2 border-themeGreen text-themeGreen mt-0 font-Circular-std-book text-xs sm:mt-1 md:mt-1">View</button>
                   </a>
               </div>
             ))}

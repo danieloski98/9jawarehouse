@@ -1,6 +1,6 @@
 import React from 'react';
 import { FiSearch, FiBell, FiMenu, FiChevronDown, FiChevronUp, FiX, FiTrash2 } from 'react-icons/fi'
-import { Avatar, Drawer, DrawerOverlay, DrawerContent, DrawerBody, Menu, MenuButton, MenuList, MenuItem, Button, Accordion, AccordionButton, AccordionItem, AccordionPanel, AccordionIcon, Box, Divider, DrawerCloseButton, Spinner,  Popover, PopoverTrigger, PopoverContent, PopoverArrow, PopoverBody, ModalOverlay, PopoverHeader } from '@chakra-ui/react'
+import { Avatar, Drawer, DrawerOverlay, DrawerContent, DrawerBody, Menu, MenuButton, MenuList, MenuItem, Button, Accordion, AccordionButton, AccordionItem, AccordionPanel, AccordionIcon, Box, Divider, DrawerCloseButton, Spinner,  Popover, PopoverTrigger, PopoverContent, PopoverArrow, PopoverBody, ModalOverlay, PopoverHeader, Input, InputGroup, InputLeftElement, InputRightElement } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import { useQuery } from 'react-query'
@@ -42,6 +42,7 @@ const getNotifications = async (user_id: string) => {
 
 export default function Navbar({page, setPage}: IProps) {
   const [open, setOpen] = React.useState(false);
+  const [query, setQuery] = React.useState('');
   const [loading, setLoading] = React.useState(true);
   const [notiLoading, setNotiLoading] = React.useState(true);
   const [notiError, setNotiError] = React.useState(false);
@@ -145,6 +146,12 @@ export default function Navbar({page, setPage}: IProps) {
     setPage(num)
   }
 
+  const handleKeydonw = (e: any) => {
+    if (e.key === 'Enter') {
+      router.push(`/services/${query}`);
+    }
+  }
+
   const getDate = (date: any) => {
     const dt = moment.default(date);
     return dt.startOf('hours').fromNow();
@@ -164,7 +171,34 @@ export default function Navbar({page, setPage}: IProps) {
               <Image src="/images/nlogo.png" alt="logo" className="w-full h-12 object-contain cursor-pointer" />
             </Link>
         </div>
+
+        <div className="flex-1 h-full xl:hidden lg:hidden md:flex sm:flex items-center px-3">
+              <InputGroup>
+                  <InputLeftElement  h="60px" paddingLeft="20px">
+                      <FiSearch size={25} color="grey" />
+                  </InputLeftElement>
+                  <Input bgColor="#F1EEEE" paddingLeft="50px"  h="60px" onKeyPress={handleKeydonw} onChange={(e) => setQuery(e.target.value)} fontSize="sm" className="font-Cerebri-sans-book" />
+                  <InputRightElement  h="60px">
+                  {query !== '' && <FiX size={20} color="grey" onClick={() => setQuery('')} className='cursor-pointer' />}
+                  </InputRightElement>
+              </InputGroup>
+          </div>
+
+
         <div className="flex-1 xl:flex lg:flex md:hidden sm:hidden justify-end items-center z-20">
+
+        <div 
+              className="w-auto h-full xl:flex lg:flex md:hidden sm:hidden mr-8 items-center">
+                  <InputGroup>
+                      <InputLeftElement h="55px" paddingLeft="20px">
+                          <Search  size={20} primaryColor='grey' />
+                      </InputLeftElement>
+                      <Input bgColor="#F1EEEE" w="559px" h="55px" paddingLeft="60px" onKeyPress={handleKeydonw} value={query} onChange={(e) => setQuery(e.target.value)} fontSize="sm" className="font-Cerebri-sans-book" />
+                      <InputRightElement h="60px">
+                          {query !== '' && <FiX size={20} color="grey" onClick={() => setQuery('')} className='cursor-pointer' />}
+                      </InputRightElement>
+                  </InputGroup>
+              </div>
 
             <Menu size="lg" preventOverflow={true}>
                   <MenuButton

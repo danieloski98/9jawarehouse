@@ -4,6 +4,7 @@ import ServiceNavbar from '../components/services/ServiceNav';
 import { InputGroup, InputLeftElement, InputRightElement, Input, Spinner } from '@chakra-ui/react'
 import { FiSearch, FiMenu } from 'react-icons/fi'
 import { FiMail, FiLock, FiEye, FiEyeOff, FiUser } from 'react-icons/fi'
+import { FaFacebookF } from 'react-icons/fa'
 import Footer from '../components/Home/Footer';
 import NormNavbar from '../components/general/NorNavbar';
 import * as yup from 'yup';
@@ -107,7 +108,7 @@ export default function ContactUs() {
                         }
                     </div>
 
-                    <button onClick={submit} className="mt-5 w-full h-10 bg-themeGreen text-white text-sm font-Cerebri-sans-book">
+                    <button onClick={submit} className="mt-5 w-full h-12 bg-themeGreen text-white text-sm font-Cerebri-sans-book">
                         {loading && (<Spinner size="md" color="white" />)}
                         {!loading && (<span>Send Message</span>)}
                     </button>
@@ -115,7 +116,7 @@ export default function ContactUs() {
                 </div>
             </div>
 
-            <div className=" flex-1 xl:w-72 lg:w-72 md:w-full sm:w-full xl:h-96 lg:h-96 md:h-auto sm:h-auto xl:mt-0 lg:mt-0 md:mb-6 sm:mb-6 md:mt-6 sm:mt-6">
+            <div className=" flex-1 xl:w-72 lg:w-72 md:w-full sm:w-full xl:h-96 lg:h-96 md:h-auto sm:h-auto xl:mt-0 lg:mt-0 md:mb-6 sm:mb-6 md:mt-6 sm:mt-6 flex flex-col xl:justify-center lg:justify-center">
                 <div className="flex flex-col">
                     <p className="text-md font-Cerebri-sans-book">Phone</p>
                     <p className="mt-0 font-Cerebri-sans-book text-themeGreen">+1 234 567 89 10</p>
@@ -127,14 +128,20 @@ export default function ContactUs() {
                 </div>
 
                 <div className="w-full flex mt-6">
-                    <div className="w-10 h-10 rounded-full bg-gray-200 flex justify-center items-center mr-6 cursor-pointer">
-                        <FaInstagram size={20} className='text-themeGreen ' />
+                    <div className="w-10 h-10 rounded-full bg-gray-100 flex justify-center items-center mr-6 cursor-pointer">
+                        <a href="https://www.twitter.com/9ja_warehouse"  target="_blank" rel="noreferrer">
+                            <FaTwitter size={20} className='text-themeGreen ' />
+                        </a>
                     </div>
-                    <div className="w-10 h-10 rounded-full bg-gray-200 flex justify-center items-center mr-6 cursor-pointer">
-                        <FaTwitter size={20} className='text-themeGreen ' />
+                    <div className="w-10 h-10 rounded-full bg-gray-100  flex justify-center items-center mr-6 cursor-pointer">
+                        <a href="https://www.instagram.com/9ja_warehouse"  target="_blank" rel="noreferrer">
+                            <FaInstagram size={20} className='text-themeGreen ' />
+                        </a>
                     </div>
-                    <div className="w-10 h-10 rounded-full bg-gray-200 flex justify-center items-center mr-6 cursor-pointer">
-                        <FaLinkedin size={20} className='text-themeGreen ' />
+                    <div className="w-10 h-10 rounded-full bg-gray-100  flex justify-center items-center mr-6 cursor-pointer">
+                        <a href="https://web.facebook.com/9ja-Warehouse-112164614644154" target="_blank" rel="noreferrer">
+                            <FaFacebookF size={20} className='text-themeGreen ' />
+                        </a>
                     </div>
                 </div>
             </div>

@@ -31,7 +31,7 @@ const Card = ({name, image, position}: ICard) => {
 
 export default function Reviews() {
   return (
-    <div className="w-full xl:px-32 lg:px-32 md:-text-center sm:text-center xl:pb-10 lg:py-10 h-auto">
+    <div className="w-full xl:px-32 lg:px-32 md:text-center sm:text-center xl:pb-10 lg:py-10 h-auto">
         <p className="text-3xl font-Circular-std-medium text-themeGreen">What they are saying</p>
 
         <div className="w-full xl:mt-20 lg:mt-20 md:mt-6 sm:mt-6 flex xl:flex-row lg:flex-row md:flex-col sm:flex-col xl:justify-between lg:justify-between md:justify-center sm:justify-center xl:items-start lg:items-start md:items-center sm:items-center pb-10">

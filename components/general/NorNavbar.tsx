@@ -1,6 +1,6 @@
 import React from 'react';
 import { FiSearch, FiBell, FiMenu, FiChevronDown, FiX, FiChevronUp } from 'react-icons/fi'
-import { Avatar, Drawer, DrawerOverlay, DrawerContent, DrawerBody, Menu, MenuButton, MenuList, MenuItem, Button, Accordion, AccordionItem, AccordionButton, AccordionPanel, AccordionIcon, Box, Divider, Spinner, DrawerCloseButton  } from '@chakra-ui/react'
+import { Avatar, Drawer, DrawerOverlay, DrawerContent, DrawerBody, Menu, MenuButton, MenuList, MenuItem, Button, Accordion, AccordionItem, AccordionButton, AccordionPanel, AccordionIcon, Box, Divider, Spinner, DrawerCloseButton, Input, InputGroup, InputLeftElement, InputRightElement  } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import * as moment from 'moment'
@@ -45,6 +45,7 @@ const getServices = async () => {
 
 export default function NormNavbar() {
   const [open, setOpen] = React.useState(false);
+  const [query, setQuery] = React.useState('');
   const [userMenuOpen, setUserMenuOpen] = React.useState(false);
   const [notiLoading, setNotiLoading] = React.useState(true);
   const [notiError, setNotiError] = React.useState(false);
@@ -117,6 +118,12 @@ export default function NormNavbar() {
     dispatch(logout())
   }
 
+  const handleKeydonw = (e: any) => {
+    if (e.key === 'Enter') {
+      router.push(`/services/${query}`);
+    }
+  }
+
   const getDate = (date: any) => {
     const dt = moment.default(date);
     return dt.startOf('hours').fromNow();
@@ -130,6 +137,19 @@ export default function NormNavbar() {
             </Link>
         </div>
         <div className="flex-1 xl:flex lg:flex md:hidden sm:hidden justify-end items-center">
+
+            <div 
+              className="w-auto h-full xl:flex lg:flex md:hidden sm:hidden mr-8 items-center">
+                  <InputGroup>
+                      <InputLeftElement h="55px" paddingLeft="20px">
+                          <Search  size={20} primaryColor='grey' />
+                      </InputLeftElement>
+                      <Input bgColor="#F1EEEE" w="559px" h="55px" paddingLeft="60px" onKeyPress={handleKeydonw} value={query} onChange={(e) => setQuery(e.target.value)} fontSize="sm" className="font-Cerebri-sans-book" />
+                      <InputRightElement h="60px">
+                          {query !== '' && <FiX size={20} color="grey" onClick={() => setQuery('')} className='cursor-pointer' />}
+                      </InputRightElement>
+                  </InputGroup>
+              </div>
            
               <Menu size="lg" preventOverflow={true}>
                   <MenuButton
