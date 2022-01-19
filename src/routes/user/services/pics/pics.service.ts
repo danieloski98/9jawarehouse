@@ -44,6 +44,12 @@ export class PicsService {
         for (let i = 0; i < images.length; i++) {
           const upload = await Cloudinary.uploader.upload(
             join(process.cwd(), `/pictures/${images[i].filename}`),
+            {
+              transformation: {
+                width: 920,
+                height: 250,
+              },
+            },
           );
           imgs.push(upload.secure_url);
           // delete file
@@ -83,6 +89,12 @@ export class PicsService {
         for (let i = 0; i < images.length; i++) {
           const upload = await Cloudinary.uploader.upload(
             join(process.cwd(), `/pictures/${images[i].filename}`),
+            {
+              transformation: {
+                width: 920,
+                height: 250,
+              },
+            },
           );
           imgs.push(upload.secure_url);
           // delete file
@@ -133,60 +145,36 @@ export class PicsService {
         });
       }
 
-      if (record === null || record === undefined) {
-        const upload = await Cloudinary.uploader.upload(
-          join(process.cwd(), `/pictures/${image.filename}`),
-        );
-        // delete file
-        const fileExist = existsSync(
-          join(process.cwd(), `/pictures/${image.filename}`),
-        );
-        if (fileExist) {
-          // delete the file
-          rmSync(join(process.cwd(), `/pictures/${image.filename}`));
-        }
-        const recordRec = await this.recordModel.create({
-          profilePic: upload.secure_url,
-        });
-
-        return Return({
-          error: false,
-          statusCode: 200,
-          successMessage: 'Record created and awaiting approval',
-        });
-      }
-      if (record.profilePic === '') {
-        const upload = await Cloudinary.uploader.upload(
-          join(process.cwd(), `/pictures/${image.filename}`),
-        );
-        // delete file
-        const fileExist = existsSync(
-          join(process.cwd(), `/pictures/${image.filename}`),
-        );
-        if (fileExist) {
-          // delete the file
-          rmSync(join(process.cwd(), `/pictures/${image.filename}`));
-        }
-        const recordRec = await this.recordModel.updateOne(
-          { _id: record._id },
-          {
-            profilePic: upload.secure_url,
+      const upload = await Cloudinary.uploader.upload(
+        join(process.cwd(), `/pictures/${image.filename}`),
+        {
+          transformation: {
+            width: 140,
+            height: 140,
+            format: 'png',
           },
-        );
+        },
+      );
+      // delete file
+      const fileExist = existsSync(
+        join(process.cwd(), `/pictures/${image.filename}`),
+      );
+      if (fileExist) {
+        // delete the file
+        rmSync(join(process.cwd(), `/pictures/${image.filename}`));
+      }
 
-        return Return({
-          error: false,
-          statusCode: 200,
-          successMessage: 'Record created and awaiting approval',
-        });
-      }
-      if (record.profilePic !== '') {
-        return Return({
-          error: true,
-          statusCode: 400,
-          errorMessage: 'You already have an unapproved record',
-        });
-      }
+      // update record
+      const newPic = await this.userModel.updateOne(
+        { _id },
+        { profile_pic: upload.secure_url },
+      );
+
+      return Return({
+        error: false,
+        statusCode: 200,
+        successMessage: 'Profile Pic updated',
+      });
     } catch (error) {
       console.log(error);
       return Return({
