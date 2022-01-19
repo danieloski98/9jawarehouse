@@ -165,7 +165,7 @@ export default function Navbar({page, setPage}: IProps) {
   }
 
   return (
-    <div className="w-full h-20 py-0 bg-white px-10 flex justify-between items-center">
+    <div className="w-full h-20 py-0 bg-white xl:px-10 lg:px-10 md:px-5 sm:px-5 flex justify-between items-center">
         <div className="w-16 h-full flex items-center overflow-hidden ">
             <Link href="/" passHref>
               <Image src="/images/nlogo.png" alt="logo" className="w-full h-12 object-contain cursor-pointer" />

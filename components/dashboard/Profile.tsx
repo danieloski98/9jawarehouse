@@ -108,7 +108,7 @@ export default function Profile({ setPage }: IProps) {
         {/* details */}
 
         <div className="w-full flex xl:flex-row lg:flex-row md:flex-col sm:flex-col justify-between xl:px-10 lg:px-10 md:px-10 sm:px-5 mt-6">
-          <div className="flex flex-1">
+          <div className="flex xl:flex-row lg:flex-row md:flex-col sm:flex-col md:items-center sm:items-center  flex-1">
             <Avatar
               src={userDetails.profile_pic}
               className="mr-6"
@@ -116,13 +116,13 @@ export default function Profile({ setPage }: IProps) {
               w="124px"
               h="124px"
             />
-            <div className="flex flex-col justify-center">
+            <div className="flex flex-col justify-center xl:items-start lg:items-start md:items-center sm:items-center">
               <p className="text-lg font-Circular-std-medium text-gray-600">
                 {userDetails.business_name}
               </p>
-              <div className="flex w-auto h-auto flex-wrap mt-2">
+              <div className="flex w-full h-auto flex-wrap mt-2">
                 {userDetails.services.map((item: string, index: number) => (
-                  <p key={index.toString()} className="text-sm text-themeGreen font-Cerebri-sans-book">
+                  <p key={index.toString()} className="text-sm text-themeGreen md:text-center sm:text-center font-Cerebri-sans-book">
                     {item},
                   </p>
                 ))}
@@ -139,8 +139,8 @@ export default function Profile({ setPage }: IProps) {
         {/* description box */}
 
         <div className="w-full xl:px-10 lg:px-10 md:px-5 sm:px-5 mt-10 flex flex-col">
-          <p className="text-md font-Circular-std-medium text-gray-600 md:text-center sm:text-center">Description</p>
-          <p className="text-sm font-Cerebri-sans-book mt-4 text-gray-500 xl:text-justify lg:text-justify md:text-center sm:text-center">
+          <p className="text-md font-Circular-std-medium text-gray-600 text-start">Description</p>
+          <p className="text-sm font-Cerebri-sans-book mt-4 text-gray-500 xl:text-justify lg:text-justify ">
            {userDetails.business_description}
           </p>
         </div>
