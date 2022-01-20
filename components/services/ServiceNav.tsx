@@ -174,13 +174,13 @@ export default function ServiceNavbar() {
         </div>
 
       
-          <div className="flex-1 h-full xl:hidden lg:hidden md:flex sm:flex items-center px-3">
+        <div className="flex-1 h-full xl:hidden lg:hidden md:flex sm:flex items-center px-3">
               <InputGroup>
-                  <InputLeftElement  h="60px" paddingLeft="20px">
+                  <InputLeftElement  h="50px" paddingLeft="20px">
                       <FiSearch size={25} color="grey" />
                   </InputLeftElement>
-                  <Input bgColor="#F1EEEE" paddingLeft="50px"  h="60px" onKeyPress={handleKeydonw} onChange={(e) => setQuery(e.target.value)} fontSize="sm" className="font-Cerebri-sans-book" />
-                  <InputRightElement  h="60px">
+                  <Input bgColor="#F1EEEE" paddingLeft="50px"  h="50px" onKeyPress={handleKeydonw} onChange={(e) => setQuery(e.target.value)} fontSize="sm" className="font-Cerebri-sans-book" />
+                  <InputRightElement  h="50px">
                   {query !== '' && <FiX size={20} color="grey" onClick={() => setQuery('')} className='cursor-pointer' />}
                   </InputRightElement>
               </InputGroup>

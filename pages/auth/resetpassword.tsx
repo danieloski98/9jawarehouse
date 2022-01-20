@@ -29,10 +29,12 @@ const validationSchema = yup.object({
 const LeftNavbar = () => {
     return (
         <div className="w-full h-24 flex justify-between items-center px-5">
-            <Img src="/images/nlogo.png" alt="logo" className=" w-20 h-16" />
+           <Link href="/" passHref>
+                <Img src="/images/nlogo.png" alt="logo" className=" w-20 h-16 cursor-pointer" />
+            </Link>
             <div className=" xl:hidden lg:hidden md:flex sm:flex w-20 justify-between items-center">
-                <FiSearch size={25} color="grey" />
-                <FiMenu size={25} color="grey" />
+                {/* <FiSearch size={25} color="grey" />
+                <FiMenu size={25} color="grey" /> */}
             </div>
         </div>
     )

@@ -138,18 +138,17 @@ export default function NormNavbar() {
         </div>
         <div className="flex-1 xl:flex lg:flex md:hidden sm:hidden justify-end items-center">
 
-            <div 
-              className="w-auto h-full xl:flex lg:flex md:hidden sm:hidden mr-8 items-center">
-                  <InputGroup>
-                      <InputLeftElement h="55px" paddingLeft="20px">
-                          <Search  size={20} primaryColor='grey' />
-                      </InputLeftElement>
-                      <Input bgColor="#F1EEEE" w="559px" h="55px" paddingLeft="60px" onKeyPress={handleKeydonw} value={query} onChange={(e) => setQuery(e.target.value)} fontSize="sm" className="font-Cerebri-sans-book" />
-                      <InputRightElement h="60px">
-                          {query !== '' && <FiX size={20} color="grey" onClick={() => setQuery('')} className='cursor-pointer' />}
-                      </InputRightElement>
-                  </InputGroup>
-              </div>
+        <div className="flex-1 h-full xl:hidden lg:hidden md:flex sm:flex items-center px-3">
+              <InputGroup>
+                  <InputLeftElement  h="50px" paddingLeft="20px">
+                      <FiSearch size={25} color="grey" />
+                  </InputLeftElement>
+                  <Input bgColor="#F1EEEE" paddingLeft="50px"  h="50px" onKeyPress={handleKeydonw} onChange={(e) => setQuery(e.target.value)} fontSize="sm" className="font-Cerebri-sans-book" />
+                  <InputRightElement  h="50px">
+                  {query !== '' && <FiX size={20} color="grey" onClick={() => setQuery('')} className='cursor-pointer' />}
+                  </InputRightElement>
+              </InputGroup>
+          </div>
            
               <Menu size="lg" preventOverflow={true}>
                   <MenuButton
