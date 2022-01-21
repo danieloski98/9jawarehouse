@@ -17,7 +17,7 @@ export class CrudService {
   ): Promise<IReturnObject> {
     try {
       // check if a service already exist with that same name
-      const name = payload.name.toLowerCase();
+      const name = payload.name.toLowerCase().replace(/[\/$@:]/g, ' ');
       const exist = await this.serviceModel.find({ name });
       if (exist.length >= 1) {
         return Return({
