@@ -123,14 +123,31 @@ export default function Business() {
     React.useEffect(() => {
         window.onpopstate = () => {
             const service = localStorage.getItem('activeService') as string;
-            if (service === null || service === undefined) {
-                router.push(`/services?service=${user.services[0]}&state=${user.state}&lga=${user.lga}`);
-            } else {
-                router.push(`/services?service=${service}&state=${user.state}`);
+            if (router.pathname === '/services') {
+                if (service === null || service === undefined) {
+                    router.replace(`/services?service=${user.services[0]}&state=${user.state}&lga=${user.lga}`)
+                    // window.location = `/services?service=${user.services[0]}&state=${user.state}&lga=${user.lga}` as any;
+                    //window.history.back();
+                    //router.back();
+                    return;
+                    
+                    // router.push();
+                } else {
+                    //router.back();
+                    router.replace(`/services?service=${service}&state=${user.state}`);
+                    //window.history.back();
+                    return;
+                    
+                    // window.location = `/services?service=${service}&state=${user.state}` as any;
+                    // router.push();
+                }
             }
-            
+             
         }
-    })
+        return () => {
+            window.removeEventListener('popstate', () => {});
+        }
+    }, [router, user])
 
     console.log(user);
 

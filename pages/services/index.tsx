@@ -85,34 +85,51 @@ export default function Services({states, services}: IProps) {
     React.useEffect(() => {
         localStorage.setItem('activeService', sr as string);
         (async function() {
-            setLoading(true);
-            const request = await fetch(`${url}user?service=${sr}&state=${st}`);
-            const json = await request.json() as IServerReturnObject;
-            const data = json.data as IUser[];
-            setBusinesses(data);
-            setLoading(false);
+            if (st !== '' || st !== undefined) {
+                setLoading(true);
+                const request = await fetch(`${url}user?service=${sr}&state=${st}`);
+                const json = await request.json() as IServerReturnObject;
+                const data = json.data as IUser[];
+                setBusinesses(data);
+                setLoading(false);
+            } else {
+                setLoading(true);
+                const request = await fetch(`${url}user?service=${sr}`);
+                const json = await request.json() as IServerReturnObject;
+                const data = json.data as IUser[];
+                setBusinesses(data);
+                setLoading(false);
+            }
         })()
     }, [sr]);
 
     React.useEffect(() => {
         setSr(router.query['service']);
-        setSt(router.query['state'] as string)
-        setState(router.query['state'] as string);
+        if (router.query['state'] !== undefined) {
+            setSt(router.query['state'] as string)
+            setState(router.query['state'] as string);
+        }
 
-        if (router.query['lga'] !== '') {
+        if (router.query['lga'] !== undefined) {
             setLa(router.query['lga'] as string);
         }
         
-        setLoading(true);
-        (async function() {
-            (async function() {
-                const request = await fetch(`${url}user?service=${router.query['service']}&state=${router.query['state']}`);
-                const json = await request.json() as IServerReturnObject;
-                const data = json.data as IUser[];
-                setBusinesses(data);
-                setLoading(false);
-            })()
-        })()
+        // setLoading(true);
+        //     (async function() {
+        //         if (router.query['state'] !== undefined || router.query['state'] !== '') {
+        //             const request = await fetch(`${url}user?service=${router.query['service']}&state=${router.query['state']}`);
+        //             const json = await request.json() as IServerReturnObject;
+        //             const data = json.data as IUser[];
+        //             setBusinesses(data);
+        //             setLoading(false);
+        //         } else {
+        //             const request = await fetch(`${url}user?service=${router.query['service']}`);
+        //             const json = await request.json() as IServerReturnObject;
+        //             const data = json.data as IUser[];
+        //             setBusinesses(data);
+        //             setLoading(false);
+        //         }
+        //     })()
     }, [router.query]);
 
     const setValues = () => {
@@ -288,7 +305,7 @@ export default function Services({states, services}: IProps) {
                </div>
                <div className="w-32 h-10 ml-6">
                     <Select border="none" bgColor="whitesmoke" fontSize="sm" className="font-Cerebri-sans-book text-xs" onChange={(e) => setLa(e.target.value)}>
-                       <option value="" selected className='text-xs font-gray-500'>LGA (optional)</option>
+                       <option value="LGA" selected className='text-xs font-gray-500'>LGA</option>
                        {lgas !== undefined && lgas.length > 0 && lgas.map((item, index) => (
                            <option key={index.toString()} value={item.LGA}>{item.LGA}</option>
                        ))}

@@ -11,12 +11,12 @@ const Comments = ({comment}: {comment: IComment}) => {
         <div className="w-full p-5 flex flex-col h-auto border-b-1 border-gray-200 mb-4">
             <p className="text-sm font-Circular-std-book text-gray-400">{new Date(comment.created_at).toDateString()}</p>
 
-            <div className="flex md:flex-col sm:flex-col mt-4">
+            <div className="flex xl:flex-row lg:flex-row md:flex-col sm:flex-col mt-4">
                 <p className='text-lg text-themeGreen font-Circular-std-medium '>{comment.fullname}</p>
 
                 <div className=" flex flex-col mt-1 xl:ml-3 lg:ml-3">
                 {/* <p className="font-semibold text-sm text-gray-500">Overall Rating</p> */}
-                <div className="flex h-5 items-center">
+                <div className="flex flex-row w-full h-5 items-center">
                         <p className="text-md font-light text-themeGreen mr-1">{comment.rating}/5</p>
                         <ReactStars
                             count={5}

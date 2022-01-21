@@ -35,6 +35,7 @@ export default function BusinessCard({user}: {user: IUser}) {
         <div className="w-full h-auto flex flex-col items-center px-4 text-center mt-2">
             <p className=" font-Circular-std-medium text-lg text-gray-600 mb-0">{user.business_name}</p>
             <p className='text-xl text-themeGreen font-Circular-std-book'>{user.services[0]}</p>
+            <p className='text-sm text-gray-400 mt-3 font-Cerebri-sans-book'>{user.state}</p>
 
             {/* <p className="font-semibold text-sm text-gray-500">Business Type</p> */}
             <div className="mt-0 flex flex-col">
