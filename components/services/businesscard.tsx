@@ -27,7 +27,7 @@ export default function BusinessCard({user}: {user: IUser}) {
       }
       
   return (
-    <div className="xl:w-30/100 lg:30/100 md:w-full sm:w-full h-auto flex flex-col border-1 border-lightGrey mb-6 py-8">
+    <div className="xl:w-30/100 lg:30/100 md:w-full sm:w-full h-auto flex flex-col border-1 border-lightGrey mb-6 py-8 xl:mr-4 lg:mr-4">
         <div className="w-full h-auto flex items-center justify-center">
             <Avatar src={user.profile_pic} size="xl" />
         </div>
