@@ -83,13 +83,41 @@ export class CrudService {
     lga: string;
   }): Promise<IReturnObject> {
     try {
+      if (query.state) {
+        const user = await this.userModel.find({
+          verified: true,
+          disabled: false,
+          services: query.service,
+          state: query.state,
+        });
+        const users = [];
+        for (let i = 0; i < user.length; i++) {
+          const commentCount = await this.commentModel.find({
+            business_id: user[i]._id,
+          });
+          const newObj = {
+            ...user[i]['_doc'],
+            commentLength: commentCount.length,
+          };
+          users.push(newObj);
+          console.log(commentCount.length);
+          // user[i]['commentLenght'] = commentCount.length;
+        }
+        return Return({
+          error: false,
+          statusCode: 200,
+          successMessage: 'User found state',
+          data: users,
+        });
+      }
+      // checking of lga
       if (query.lga) {
         const user = await this.userModel.find({
           verified: true,
           disabled: false,
-          services: query.service || '',
-          state: query.state || '',
-          lga: query.lga || '',
+          services: query.service.toLowerCase(),
+          state: query.state,
+          lga: query.lga,
         });
         const users = [];
         for (let i = 0; i < user.length; i++) {
@@ -110,12 +138,13 @@ export class CrudService {
           successMessage: 'User found',
           data: users,
         });
-      } else {
+      }
+
+      if (!query.state && !query.lga) {
         const user = await this.userModel.find({
           verified: true,
           disabled: false,
-          services: query.service || '',
-          state: query.state || '',
+          services: query.service,
         });
         const users = [];
         for (let i = 0; i < user.length; i++) {
@@ -133,7 +162,7 @@ export class CrudService {
         return Return({
           error: false,
           statusCode: 200,
-          successMessage: 'User found',
+          successMessage: 'User found service',
           data: users,
         });
       }
