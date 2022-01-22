@@ -177,7 +177,7 @@ export default function Navbar({page, setPage}: IProps) {
                   <InputLeftElement  h="50px" paddingLeft="20px">
                       <FiSearch size={25} color="grey" />
                   </InputLeftElement>
-                  <Input bgColor="#F1EEEE" paddingLeft="50px"  h="50px" onKeyPress={handleKeydonw} onChange={(e) => setQuery(e.target.value)} fontSize="sm" className="font-Cerebri-sans-book" />
+                  <Input type="text" name="search" value={query} bgColor="#F1EEEE" paddingLeft="50px"  h="50px" onKeyPress={handleKeydonw} onChange={(e) => setQuery(e.target.value)} fontSize="sm" className="font-Cerebri-sans-book" />
                   <InputRightElement  h="50px">
                   {query !== '' && <FiX size={20} color="grey" onClick={() => setQuery('')} className='cursor-pointer' />}
                   </InputRightElement>
@@ -193,7 +193,7 @@ export default function Navbar({page, setPage}: IProps) {
                       <InputLeftElement h="55px" paddingLeft="20px">
                           <Search  size={20} primaryColor='grey' />
                       </InputLeftElement>
-                      <Input bgColor="#F1EEEE" w="559px" h="55px" paddingLeft="60px" onKeyPress={handleKeydonw} value={query} onChange={(e) => setQuery(e.target.value)} fontSize="sm" className="font-Cerebri-sans-book" />
+                      <Input type="text" name="search" value={query} bgColor="#F1EEEE" w="559px" h="55px" paddingLeft="60px" onKeyPress={handleKeydonw} onChange={(e) => setQuery(e.target.value)} fontSize="sm" className="font-Cerebri-sans-book" />
                       <InputRightElement h="60px">
                           {query !== '' && <FiX size={20} color="grey" onClick={() => setQuery('')} className='cursor-pointer' />}
                       </InputRightElement>
@@ -269,7 +269,10 @@ export default function Navbar({page, setPage}: IProps) {
         </div>
 
         <div className="xl:hidden lg:hidden md:flex sm:flex items-center justify-end">
-          {loggedIn && <FiBell size={25} color="black" className='mr-5 cursor-pointer' onClick={() => setShowNoti(true)} />}
+          
+          {loggedIn && <span onClick={() => setShowNoti(true)}>
+            <Notification size={25} primaryColor='grey' filled style={{ color: 'grey' }}  />
+          </span>}
           <FiMenu size={30} color="grey" onClick={() => setOpen(true)} />
         </div>
 

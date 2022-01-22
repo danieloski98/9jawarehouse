@@ -143,7 +143,7 @@ export default function NormNavbar() {
                   <InputLeftElement  h="50px" paddingLeft="20px">
                       <FiSearch size={25} color="grey" />
                   </InputLeftElement>
-                  <Input bgColor="#F1EEEE" paddingLeft="50px"  h="50px" onKeyPress={handleKeydonw} onChange={(e) => setQuery(e.target.value)} fontSize="sm" className="font-Cerebri-sans-book" />
+                  <Input type="text" name="search" value={query} bgColor="#F1EEEE" paddingLeft="50px"  h="50px" onKeyPress={handleKeydonw} onChange={(e) => setQuery(e.target.value)} fontSize="sm" className="font-Cerebri-sans-book" />
                   <InputRightElement  h="50px">
                   {query !== '' && <FiX size={20} color="grey" onClick={() => setQuery('')} className='cursor-pointer' />}
                   </InputRightElement>
