@@ -262,7 +262,7 @@ export default function Navbar({page, setPage}: IProps) {
 
             {!loggedIn && (
               <div className="flex font-Cerebri-sans-book text-sm cursor-pointer">
-                <p className="mr-3"><Link href="/auth/signup">Create Account</Link></p>
+                <p className="mr-3"><Link href="/auth/signup">Become a vendor</Link></p>
                 <p><Link href="/auth/loginform">Login</Link></p>
               </div>
             )}
@@ -277,7 +277,7 @@ export default function Navbar({page, setPage}: IProps) {
         </div>
 
 
-        {/* Notofication Drawer */}
+        {/* Notification Drawer */}
         <Drawer isOpen={showNoti} onClose={() => setShowNoti(false)}>
           <DrawerOverlay />
           <DrawerContent>
@@ -390,7 +390,6 @@ export default function Navbar({page, setPage}: IProps) {
                                     <p onClick={() => navigate(1)}>Profile</p>
                                     <p className="mt-3" onClick={() => navigate(2)}>Customer Reviews</p>
                                     <p className="mt-3" onClick={() => navigate(3)}>Subscriptions</p>
-                                    <p className="mt-3">Notifications</p>
                                     <p className="mt-3" onClick={() => navigate(4)}>Settings</p>
                                   </div>
                                 </AccordionPanel>
@@ -428,7 +427,7 @@ export default function Navbar({page, setPage}: IProps) {
                    
                   </div>
 
-                  <p className="text-red-500 mt-5 text-sm font-Cerebri-sans-book">Logout</p>
+                  {loggedIn && <p onClick={handleLogout} className="text-red-500 mt-5 ml-5 text-xl font-Cerebri-sans-book">Logout</p>}
 
 
                 </div>

@@ -215,7 +215,7 @@ export default function NormNavbar() {
               <div className="flex font-Cerebri-sans-book text-md cursor-pointer">
                 <Link href="/auth/signup" passHref>
                   <p className="mr-6 font-Cerebri-sans-book text-md">
-                    Create Account
+                    Become a vendor
                     </p>
                 </Link>
                 <p className='font-Cerebri-sans-book'><Link href="/auth/loginform">Login</Link></p>
@@ -309,7 +309,7 @@ export default function NormNavbar() {
 
                     {!loggedIn && (
                       <div className="flex flex-col font-Cerebri-sans-book text-md text-themeGreen cursor-pointer">
-                        <p className="mr-3"><Link href="/auth/signup">Create Account</Link></p>
+                        <p className="mr-3"><Link href="/auth/signup">Become a vendor</Link></p>
                         <p className='mt-4'><Link href="/auth/loginform">Login</Link></p>
                       </div>
                     )}
@@ -344,7 +344,7 @@ export default function NormNavbar() {
                         </AccordionItem>
                     </Accordion>
 
-                    <p onClick={handleLogout} className="text-red-500 mt-5 text-sm font-Cerebri-sans-book">Logout</p>
+                    <p onClick={handleLogout} className="text-red-500 mt-5 text-xl ml-5 font-Cerebri-sans-book">Logout</p>
                   </div>
 
 

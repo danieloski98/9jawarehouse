@@ -111,13 +111,13 @@ export default function Profile({ setPage }: IProps) {
           <div className="flex xl:flex-row lg:flex-row md:flex-col sm:flex-col md:items-center sm:items-center  flex-1">
             <Avatar
               src={userDetails.profile_pic}
-              className="mr-6"
+              className="xl:mr-6 lg:mr-6 sm:mr-0 md:mr-0 sm:mt-6 md:mt-6"
               size="lg"
               w="124px"
               h="124px"
             />
             <div className="flex flex-col justify-center xl:items-start lg:items-start md:items-center sm:items-center">
-              <p className="text-lg font-Circular-std-medium text-gray-600">
+              <p className="text-lg font-Circular-std-medium text-gray-600 md:mt-6 sm:mt-6">
                 {userDetails.business_name}
               </p>
               <div className="flex w-full h-auto flex-wrap mt-2">

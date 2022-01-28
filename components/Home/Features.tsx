@@ -26,11 +26,11 @@ export default function Features() {
 
             <div className="flex-1 flex flex-col justify-center items-start text-left pl-20 pr-6">
                 
-                <p className="mt-6 text-sm font-Circular-std-medium text-gray-500">FOR VENDORS</p>
+                <p className="xl:mt-6 lg:mt-6 md:mt-20 sm:mt-20 text-md font-Circular-std-medium text-gray-500 ">FOR VENDORS</p>
                 <h3 className="mt-6 text-themeGreen text-4xl font-Circular-std-medium">Reach More Customers</h3>
-                <p className="mt-6 text-sm font-Circular-std-book text-gray-500 xl:w-4/5 lg:w-4/5 md:w-full sm:w-full">Meet customers youre exicted to work with and take your career or business to new heights.</p>
+                <p className="mt-6 text-md font-Circular-std-book text-gray-500 xl:w-4/5 lg:w-4/5 md:w-full sm:w-full">Meet customers youre exicted to work with and take your career or business to new heights.</p>
 
-                <ul className="list-disc mt-6 ml-4 text-sm font-Circular-std-book text-gray-500">
+                <ul className="list-disc mt-6 ml-4 text-md font-Circular-std-book text-gray-500">
                     <li>Build a Profile that suits your work</li>
                     <li className="mt-3">Get Reviews on your work</li>
                     <li className="mt-3">Control when, where, and how you work</li>
@@ -54,18 +54,18 @@ export default function Features() {
             </div>
 
             <div className="flex-1 flex flex-col justify-center items-start text-left pl-20 pr-6">
-                <p className="mt-6 text-sm font-Circular-std-medium text-gray-500">FOR CUSTOMERS</p>
+                <p className="mt-6 text-md font-Circular-std-medium text-gray-500">FOR CUSTOMERS</p>
                 <h3 className="mt-6 text-themeGreen text-4xl font-Circular-std-medium">Hire A Pro For Any Skill</h3>
                 
 
-                <ul className="list-disc mt-6 ml-4 text-sm font-Circular-std-book text-gray-500">
+                <ul className="list-disc mt-6 ml-4 text-md font-Circular-std-book text-gray-500">
                     <li>Photography</li>
                     <li className="mt-3">Events</li>
                     <li className="mt-3">IT Specialists</li>
                     <li className="mt-3">Beauty and SPA</li>
                 </ul>
 
-                <p className="mt-6 text-sm font-Circular-std-book text-green-600 flex">See All Specialities <FiArrowRight size={20} className="ml-6 cursor-pointer" onClick={() => router.push('/services?service=')} /> </p>
+                <p className="mt-6 text-md font-Circular-std-book text-green-600 flex">See All Specialities <FiArrowRight size={20} className="ml-6 cursor-pointer" onClick={() => router.push('/services?service=')} /> </p>
 
             </div>
 

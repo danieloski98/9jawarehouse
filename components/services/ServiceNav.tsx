@@ -272,7 +272,7 @@ export default function ServiceNavbar() {
 
             {!loggedIn && (
               <div className="flex font-Cerebri-sans-book text-sm cursor-pointer">
-                <p className="mr-3"><Link href="/auth/signup">Create Account</Link></p>
+                <p className="mr-3"><Link href="/auth/signup">Become a vendor</Link></p>
                 <p><Link href="/auth/loginform">Login</Link></p>
               </div>
             )}
@@ -368,8 +368,8 @@ export default function ServiceNavbar() {
                     {/* {loggedIn && <FiBell size={25} color="black" className='cursor-pointer' onClick={() => setShowNoti(true)} />} */}
 
                     {!loggedIn && (
-                      <div className="flex flex-col font-Cerebri-sans-book text-md text-themeGreen cursor-pointer">
-                        <p className="mr-3"><Link href="/auth/signup">Create Account</Link></p>
+                      <div className="flex flex-col font-Cerebri-sans-book text-xl text-themeGreen cursor-pointer">
+                        <p className="mr-3"><Link href="/auth/signup">Become a vendor</Link></p>
                         <p className='mt-4'><Link href="/auth/loginform">Login</Link></p>
                       </div>
                     )}
@@ -379,7 +379,7 @@ export default function ServiceNavbar() {
                         <AccordionItem>
                             <AccordionButton>
                                 <Box flex="1" textAlign="left">
-                                  <p className="text-xl font-light text-themeGreen">Find Services</p>
+                                  <p className="text-xl font-Cerebri-sans-book text-themeGreen">Find Services</p>
                                 </Box>
                                 <AccordionIcon />
                             </AccordionButton>
@@ -396,7 +396,7 @@ export default function ServiceNavbar() {
                         </AccordionItem>
                     </Accordion>
 
-                    <p className="text-red-500 mt-5 text-sm font-light" onClick={handleLogout}>Logout</p>
+                    <p className="text-red-500 mt-5 text-xl ml-5 font-Cerebri-sans-book" onClick={handleLogout}>Logout</p>
                   </div>
 
 

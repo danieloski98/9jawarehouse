@@ -72,8 +72,8 @@ export const LeftNavbar = () => {
                             {/* <Avatar src="https://bit.ly/broken-link" className="" size="sm" /> */}
                             {!loggedIn && (
                               <>
-                                <p onClick={() => router.push('/auth/loginform')} className="mt-6 text-md font-Cerebri-sans-book text-themeGreen">Login</p>
-                                <p onClick={() => router.push('/auth/signup')} className="mt-4 mb-4 text-md font-Cerebri-sans-book text-themeGreen">Register</p>
+                                <p onClick={() => router.push('/auth/loginform')} className="mt-6 ml-5 text-xl font-Cerebri-sans-book text-themeGreen">Login</p>
+                                <p onClick={() => router.push('/auth/signup')} className="mt-4 mb-4  ml-5 text-xl font-Cerebri-sans-book text-themeGreen">Become a vendor</p>
                               </>
                             )}
 
@@ -113,7 +113,7 @@ export const LeftNavbar = () => {
                             </AccordionPanel>
                         </AccordionItem>
                     </Accordion>
-                    <p className="text-red-500 mt-5 text-sm font-light" onClick={handleLogout}>Logout</p>
+                    <p className="text-red-500 mt-5 text-xl font-Cerebri-sans-book ml-5" onClick={handleLogout}>Logout</p>
                         </div>
                     </DrawerBody>
                 </DrawerContent>

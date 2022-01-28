@@ -1,5 +1,5 @@
 import React from 'react';
-import { InputGroup, InputLeftElement, InputRightElement, Input, Spinner, Image as Img } from '@chakra-ui/react'
+import { InputGroup, InputLeftElement, InputRightElement, Input, Spinner, Image as Img, useToast } from '@chakra-ui/react'
 import { FiMail, FiLock, FiEye, FiEyeOff, FiUser } from 'react-icons/fi'
 import { useRouter } from 'next/router'
 
@@ -51,6 +51,7 @@ export default function LoginForm() {
     const [loading, setLoading] = React.useState(false);
     const dispatch = useDispatch();
     const router = useRouter();
+    const toast = useToast();
 
     const formik = useFormik({
         initialValues: {email: '', password: ''},
@@ -61,12 +62,24 @@ export default function LoginForm() {
     const submit = async() => {
         try {
             if (!formik.dirty) {
-                alert('Please fill in the form to continue');
+                toast({
+                    title: 'Warning',
+                    description: 'Please fill in the form to continue',
+                    status: 'warning',
+                    position: 'top',
+                    duration: 4000
+                });
                 return;
             }
 
             if (!formik.isValid) {
-                alert('Please fill in the form correctly');
+                toast({
+                    title: 'Warning',
+                    description: 'Please fill in the form correctly',
+                    status: 'warning',
+                    position: 'top',
+                    duration: 4000
+                });
                 return;
             }
 
@@ -84,7 +97,13 @@ export default function LoginForm() {
             console.log(json.data);
 
             if (json.statusCode !== 200) {
-                alert(json.errorMessage);
+                toast({
+                    title: 'Error',
+                    description: json.errorMessage,
+                    status: 'error',
+                    position: 'top',
+                    duration: 4000
+                });
                 return;
             } else if (json.statusCode === 200) {
                 if (json.data.user.disabled) {
@@ -177,7 +196,7 @@ export default function LoginForm() {
         </div>
 
         <div className="w-2/5 h-full  xl:block lg:block md:hidden sm:hidden">
-            <Image src={Girl} alt="girl" className="w-full h-full object-cover" />
+            <Img src="/images/bg.png" alt="girl" className="w-full h-full object-cover" />
             <div className="z-20 absolute flex flex-col top-96 pt-24 px-8 bottom-0 ">
                 <p className='font-Circular-std-medium text-2xl text-white'>Join 9ja Warehouse!</p>
                 <p className='mt-4 font-Cerebri-sans-book text-sm  text-white'> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Bibendum est ultricies integer quis. Iaculis urna id volutpat lacus laoreet. Mauris vitae ultricies leo integer malesuada. Ac odio tempor orci dapibus ultrices in. Egestas diam in arcu cursus euismod. Dictum fusce ut placerat orci nulla.</p>
