@@ -4,6 +4,7 @@ import PersonalInfo from './PersonalInfo';
 import BusinessInfo from './businessScreen';
 import SocialMediaInfo from './socialMedia';
 import {useRouter} from 'next/router'
+import { useToast } from '@chakra-ui/react'
 
 
 import * as yup from 'yup';
@@ -15,6 +16,10 @@ import url from '../../utils/url';
 import { IServerReturnObject } from '../../utils/types/serverreturntype';
 import { IState } from '../../utils/types/Lga&State';
 import { clearTimeout } from 'timers';
+
+import { useDispatch } from 'react-redux'
+import { updateUser } from '../../reducers/User.reducer';
+// import { setTimeout } from 'timers/promises';
 
 // validationSchema
 const validationSchema = yup.object({
@@ -71,6 +76,8 @@ export default function BigScreen({ states, services}: {states: IState[], servic
     const router = useRouter();
     const [caller, setCaller] = React.useState(1);
     const [loading, setLoading] = React.useState(false);
+    const dispatch = useDispatch();
+    const toast = useToast();
 
     React.useEffect(() => {
         setCertificates([
@@ -266,7 +273,8 @@ export default function BigScreen({ states, services}: {states: IState[], servic
             alert(json1.errorMessage);
             setLoading(false);
         }
-
+        // save to localstorage
+        const save = localStorage.setItem('9jauser', JSON.stringify(json1.data.user));
         if (json1.statusCode === 200) {
             // send images
             imagesFiles.map((item) => {
@@ -280,6 +288,18 @@ export default function BigScreen({ states, services}: {states: IState[], servic
 
             const json = await result.json() as IServerReturnObject;
 
+            if (json.statusCode !== 200) {
+                toast({
+                    title: 'Error',
+                    description: json.errorMessage,
+                    status: 'error',
+                    position: 'top',
+                    duration: 4000,
+                });
+                setLoading(false);
+                return;
+            }
+
             if (json.statusCode === 200) {
                 pp.append('pic', profilePic as any);
                 const result = await fetch(`${url}user/${router.query['id']}/profilepic`, {
@@ -288,7 +308,31 @@ export default function BigScreen({ states, services}: {states: IState[], servic
                 });
     
                 const json = await result.json() as IServerReturnObject;
-                router.push('/dashboard');
+
+                if (json.statusCode !== 200) {
+                    toast({
+                        title: 'Error',
+                        description: json.errorMessage,
+                        status: 'error',
+                        position: 'top',
+                        duration: 4000,
+                    });
+                    setLoading(false);
+                    return;
+                }
+                    
+                    toast({
+                        title: 'Message',
+                        description: 'Update Successfull',
+                        status: 'success',
+                        position: 'top',
+                        duration: 4000,
+                    });
+                    setLoading(false);
+
+                    dispatch(updateUser(json.data.user));
+                    router.push('/dashboard');
+                // setTimeout(() => , 3000);
                 setLoading(false);
             }
         }

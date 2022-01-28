@@ -154,7 +154,7 @@ export default function EditProfile({ next }: IProps) {
       });
 
       // make request
-      const request = await fetch(`${url}user/${details._id}/images`, {
+      const request = await fetch(`${url}user/${details._id}/imagesrecord`, {
         method: 'put',
         body: formData,
       });

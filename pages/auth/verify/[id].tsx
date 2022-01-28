@@ -49,24 +49,28 @@ export default function VerifyAccount() {
 
     const verify = async() => {
         setLoading(true);
-        console.log(router.query);
+        // console.log(router.query);
+        if (code === '' || code === null ) {
+            alert('please enter your code');
+            return;
+        }
         const request = await fetch(`${url}auth/verify/${router.query.id}/${code}`, {
             method: 'post',
         });
 
         const json = await request.json() as IServerReturnObject;
-
+        setLoading(false);
         if (json.statusCode !== 200) {
             alert(json.errorMessage);
         }else {
             // login user
-            const stringified = localStorage.setItem('9jauser', JSON.stringify(json.data.user));
-            const token = localStorage.setItem('9jatoken', json.data.token);
-            dispatch(updateUser(json.data.user));
-            dispatch(updatetoken(json.data.token));
-            dispatch(login())
-            router.push(`/registration/${router.query.id}`)
-            console.log(json);
+            // const stringified = localStorage.setItem('9jauser', JSON.stringify(json.data.user));
+            // const token = localStorage.setItem('9jatoken', json.data.token);
+            // dispatch(updateUser(json.data.user));
+            // dispatch(updatetoken(json.data.token));
+            // dispatch(login())
+            router.push(`/auth/verification/${router.query.id}`)
+            // console.log(json);
         }
     }
 
@@ -125,7 +129,7 @@ export default function VerifyAccount() {
                         <InputLeftElement>
                             <FiLock size={25} color="gray" />
                         </InputLeftElement>
-                        <Input name="code" className="font-Cerebri-sans-book" fontSize="md" onChange={(e) => setCode(e.target.value)} />
+                        <Input name="code" className="font-Cerebri-sans-book" value={code} fontSize="md" onChange={(e) => setCode(e.target.value)} />
                     </InputGroup>
                 </div>
 
