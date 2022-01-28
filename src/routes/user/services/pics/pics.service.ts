@@ -22,6 +22,70 @@ export class PicsService {
     @InjectModel(Record.name) private recordModel: Model<RecordDocument>,
   ) {}
 
+  async uploadInitialImgs(
+    _id: string,
+    images: Array<IFile>,
+  ): Promise<IReturnObject> {
+    try {
+      console.log(images);
+      const user = await this.userModel.findById(_id);
+
+      if (user === null) {
+        return Return({
+          error: true,
+          statusCode: 400,
+          errorMessage: 'User not found',
+        });
+      }
+
+      const imgs: string[] = [];
+      for (let i = 0; i < images.length; i++) {
+        const upload = await Cloudinary.uploader.upload(
+          join(process.cwd(), `/pictures/${images[i].filename}`),
+          {
+            transformation: {
+              width: 920,
+              height: 250,
+            },
+          },
+        );
+        imgs.push(upload.secure_url);
+        // delete file
+        const fileExist = existsSync(
+          join(process.cwd(), `/pictures/${images[i].filename}`),
+        );
+
+        if (fileExist) {
+          // delete the file
+          rmSync(join(process.cwd(), `/pictures/${images[i].filename}`));
+        }
+      }
+      // const rec = {
+      //   images: imgs,
+      //   user_id: _id,
+      // };
+      const update = await this.userModel.updateOne(
+        { _id },
+        { pictures: imgs },
+      );
+      // const recordRec = await this.recordModel.create(rec);
+
+      return Return({
+        error: false,
+        statusCode: 200,
+        successMessage: 'Record created and awaiting approval',
+      });
+    } catch (error) {
+      console.log(error);
+      return Return({
+        error: true,
+        statusCode: 500,
+        trace: error,
+        errorMessage: 'Internal Server error.',
+      });
+    }
+  }
+
   async uploadImgs(_id: string, images: Array<IFile>): Promise<IReturnObject> {
     try {
       console.log(images);
@@ -169,11 +233,12 @@ export class PicsService {
         { _id },
         { profile_pic: upload.secure_url },
       );
-
+      const newUser = await this.userModel.findById(_id);
       return Return({
         error: false,
         statusCode: 200,
         successMessage: 'Profile Pic updated',
+        data: newUser,
       });
     } catch (error) {
       console.log(error);

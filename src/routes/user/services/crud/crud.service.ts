@@ -9,6 +9,7 @@ import { join } from 'path';
 import { existsSync, rmSync } from 'fs';
 import cloudinary from 'src/utils/cloudinary';
 import { CommentDocument, Comment } from 'src/Schema/Comment.Schema';
+import { UploadApiResponse } from 'cloudinary';
 
 @Injectable()
 export class CrudService {
@@ -197,10 +198,15 @@ export class CrudService {
         { _id: id },
         details,
       );
+      const newUser = await this.userModel.findById(id);
+      console.log(newUser);
       return Return({
         error: false,
         statusCode: 200,
         successMessage: 'Done',
+        data: {
+          user: newUser,
+        },
       });
     } catch (error) {
       return Return({
@@ -311,6 +317,58 @@ export class CrudService {
         error: false,
         statusCode: 200,
         successMessage: 'Business creation successful, awaiting verification',
+      });
+    } catch (error) {
+      return Return({
+        error: true,
+        statusCode: 500,
+        trace: error,
+        errorMessage: 'Internal Server error.',
+      });
+    }
+  }
+
+  async uploadDocuments(
+    id: string,
+    details: {
+      verification_document_type: string;
+      verification_document: string;
+      cac?: string;
+    },
+  ): Promise<IReturnObject> {
+    try {
+      const userExist = await this.userModel.findById(id);
+
+      if (userExist === null) {
+        return Return({
+          error: true,
+          statusCode: 400,
+          errorMessage: 'User not found',
+        });
+      }
+
+      // update the details
+      // upload the images
+      const verification_doc = await cloudinary.uploader.upload(
+        details.verification_document,
+      );
+      let cac_doc: UploadApiResponse;
+      if (details.cac) {
+        cac_doc = await cloudinary.uploader.upload(details.cac);
+      }
+      const updatedValues = await this.userModel.updateOne(
+        { _id: id },
+        {
+          verification_document_type: details.verification_document_type,
+          verification_document: verification_doc.secure_url,
+          CAC: cac_doc ? cac_doc.secure_url : '',
+          disabled: true,
+        },
+      );
+      return Return({
+        error: false,
+        statusCode: 200,
+        successMessage: 'Done',
       });
     } catch (error) {
       return Return({

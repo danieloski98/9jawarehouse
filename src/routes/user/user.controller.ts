@@ -84,6 +84,24 @@ export class UserController {
     @Param() param: any,
     @UploadedFiles() files: IFile[],
   ) {
+    const result = await this.picService.uploadInitialImgs(param['id'], files);
+    res.status(result.statusCode).send(result);
+  }
+
+  @ApiTags('User')
+  @ApiParam({ type: String, name: 'id' })
+  @ApiBody({ type: User })
+  @Put(':id/imagesrecord')
+  @UseInterceptors(
+    AnyFilesInterceptor({
+      dest: join(process.cwd(), '/pictures'),
+    }),
+  )
+  async uploadImagesrecord(
+    @Res() res: Response,
+    @Param() param: any,
+    @UploadedFiles() files: IFile[],
+  ) {
     const result = await this.picService.uploadImgs(param['id'], files);
     res.status(result.statusCode).send(result);
   }
@@ -121,6 +139,31 @@ export class UserController {
   ) {
     console.log(body);
     const result = await this.picService.uploadImg(param['id'], files[0]);
+    res.status(result.statusCode).send(result);
+  }
+
+  @ApiTags('User')
+  @ApiParam({ type: String, name: 'id' })
+  @ApiBody({ type: User })
+  @Put(':id/verification')
+  // @UseInterceptors(
+  //   AnyFilesInterceptor({
+  //     dest: join(process.cwd(), '/pictures'),
+  //   }),
+  // )
+  async uploadverificationfiles(
+    @Res() res: Response,
+    @Param() param: any,
+    @UploadedFiles() files: IFile[],
+    @Body()
+    body: {
+      verification_document_type: string;
+      verification_document: string;
+      cac?: string;
+    },
+  ) {
+    // console.log(body);
+    const result = await this.crudService.uploadDocuments(param['id'], body);
     res.status(result.statusCode).send(result);
   }
 }

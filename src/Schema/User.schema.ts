@@ -276,13 +276,40 @@ export class User {
   nextPayment: string;
 
   @ApiProperty({
-    type: String,
+    type: Number,
   })
   @Prop({
     type: Number,
     default: 0,
   })
   rating: number;
+
+  @ApiProperty({
+    type: String,
+  })
+  @Prop({
+    type: String,
+    default: '',
+  })
+  verification_document_type: string;
+
+  @ApiProperty({
+    type: String,
+  })
+  @Prop({
+    type: String,
+    default: '',
+  })
+  verification_document: string;
+
+  @ApiProperty({
+    type: String,
+  })
+  @Prop({
+    type: String,
+    default: '',
+  })
+  CAC: string;
 
   @ApiProperty({
     type: String,
