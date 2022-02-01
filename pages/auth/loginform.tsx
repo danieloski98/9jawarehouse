@@ -106,7 +106,7 @@ export default function LoginForm() {
                 });
                 return;
             } else if (json.statusCode === 200) {
-                if (json.data.user.disabled) {
+                if (json.data.user.blocked) {
                     router.push('/underreview');
                     return;
                 }
