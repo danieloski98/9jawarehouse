@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { InjectModel } from '@nestjs/mongoose';
 import { User, UserDocument } from 'src/Schema/User.schema';
@@ -11,6 +11,8 @@ import { IReturnObject } from 'src/utils/ReturnObject';
 import { Return } from 'src/utils/Returnfunctions';
 import { NotificationUserService as UserNotificationService } from 'src/routes/notifications/services/user/user.service';
 import * as moment from 'moment';
+import { SchedulerRegistry } from '@nestjs/schedule';
+import { CronJob } from 'cron';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require('dotenv').config();
@@ -19,16 +21,23 @@ require('dotenv').config();
 export class UserService {
   private INIT_URL = 'https://api.paystack.co/transaction/initialize';
   private VERIDY_URL = 'https://api.paystack.co/transaction/verify/';
+  private logger = new Logger();
   constructor(
     private httpService: HttpService,
     @InjectModel(User.name) private userModel: Model<UserDocument>,
     @InjectModel(Subscription.name)
     private subscriptionModel: Model<SubscriptionDocument>,
     private userNotificationService: UserNotificationService,
+    private scheduleRegistry: SchedulerRegistry,
   ) {}
 
-  async generateLink(_id: string, amount: number): Promise<IReturnObject> {
+  async generateLink(
+    _id: string,
+    amount: number,
+    query?: string,
+  ): Promise<IReturnObject> {
     try {
+      console.log(query);
       const user = await this.userModel.findById(_id);
       if (user === null) {
         return Return({
@@ -37,6 +46,7 @@ export class UserService {
           errorMessage: 'User not found',
         });
       }
+      const numq = parseInt(query);
       // create object payload
       const obj = {
         email: user.email,
@@ -47,7 +57,7 @@ export class UserService {
           fullname: `${user.first_name} ${user.last_name}`,
           phone: user.phone,
         },
-        plan: process.env.PS_PLAN,
+        plan: numq === 1 ? process.env.PS_PLAN : process.env.PS_PLAN_2,
         channels: ['card', 'bank_transfer'],
       };
       // make request
@@ -77,15 +87,58 @@ export class UserService {
         amount,
         fullname: `${user.first_name} ${user.last_name}`,
         email: user.email,
-        expires: currentDate.add(30, 'days').format('YYYY-MM-DD hh:mm'),
+        expires:
+          numq === 1
+            ? currentDate.add(1, 'month').format('YYYY-MM-DD hh:mm')
+            : currentDate.add(5, 'months').format('YYYY-MM-DD hh:mm'),
         status: 1,
       });
       console.log(newSub);
       // update User
       const userUpdate = await this.userModel.updateOne(
         { _id: user._id },
-        { nextPayment: currentDate.add(30, 'days').format('YYYY-MM-DD hh:mm') },
+        {
+          nextPayment:
+            numq === 1
+              ? currentDate.add(1, 'month').format('YYYY-MM-DD hh:mm')
+              : currentDate.add(5, 'months').format('YYYY-MM-DD hh:mm'),
+        },
       );
+      // console.log(userUpdate);
+      // console.log(numq);
+      // // setup cron job
+      // if (numq === 1) {
+      //   (function () {
+      //     const date = currentDate.add(1, 'month').format('YYYY-MM-DD');
+      //     const datearr = date.split('-');
+      //     const name = 'monthly sub';
+      //     const job = new CronJob(`2 * * ${datearr[2]} ${datearr[1]} *`, () => {
+      //       console.log(`time (2) for job ${name} to run!`);
+      //     });
+      //     this.schedulerRegistry.addCronJob(name, job);
+      //     job.start();
+      //     this.logger.warn(`job ${name} added for each minute at 1`);
+      //   })();
+      // }
+
+      // if (numq > 1) {
+      //   const caller = () => {
+      //     const date = currentDate.add(5, 'months').format('YYYY-MM-DD');
+      //     const datearr = date.split('-');
+      //     console.log(datearr);
+      //     const name = 'monthly sub';
+      //     // const job = new CronJob(`1 * * * * *`, () => {
+      //     //   console.log(`time (1) for job ${name} to run!`);
+      //     // });
+      //     const job = new CronJob(`* * * ${datearr[2]} ${datearr[1]} *`, () => {
+      //       console.log(`time (2) for job ${name} to run!`);
+      //     });
+      //     this.scheduleRegistry.addCronJob(name, job);
+      //     job.start();
+      //     console.log(`job ${name} added for each minute at 1`);
+      //   };
+      //   caller();
+      // }
       return Return({
         error: false,
         statusCode: 200,

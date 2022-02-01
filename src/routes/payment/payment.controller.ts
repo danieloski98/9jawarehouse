@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Res } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query, Res } from '@nestjs/common';
 import { ApiBody, ApiParam, ApiProperty, ApiTags } from '@nestjs/swagger';
 import { Response } from 'express';
 import { UserService as PaymentUserService } from './services/user/user.service';
@@ -29,8 +29,13 @@ export class PaymentController {
   async generateLink(
     @Res() res: Response,
     @Body() body: { id: string; amount: number },
+    @Query() query: any,
   ) {
-    const request = await this.userService.generateLink(body.id, body.amount);
+    const request = await this.userService.generateLink(
+      body.id,
+      body.amount,
+      query['plan'],
+    );
     res.status(request.statusCode).send(request);
   }
 

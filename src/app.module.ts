@@ -18,6 +18,7 @@ import { StatesModule } from './routes/states/states.module';
 import { NotificationsModule } from './routes/notifications/notifications.module';
 import { WebhooksModule } from './routes/webhooks/webhooks.module';
 import { MessagesModule } from './routes/messages/messages.module';
+import { ScheduleModule } from '@nestjs/schedule';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require('dotenv').config();
 
@@ -33,6 +34,7 @@ const URL =
       useUnifiedTopology: true,
       useNewUrlParser: true,
     }),
+    ScheduleModule.forRoot(),
     AuthModule,
     UserModule,
     EmaillistModule,
