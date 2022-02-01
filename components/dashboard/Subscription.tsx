@@ -33,16 +33,17 @@ const SubModal = ({ open, onClose, user }: IProps) => {
 
     const pay = async () => {
         setLoading(true);
-        const request = await fetch(`${url}payment`, {
+        const request = await fetch(`${url}payment?plan=${sel}`, {
             method: 'post',
             headers: {
                 'content-type': 'application/json',
             },
-            body: JSON.stringify({amount: 2000, id: user._id})
+            body: JSON.stringify({amount: sel === 1 ? 2000: 12000, id: user._id})
         });
 
         const json = await request.json() as IServerReturnObject;
         if (json.statusCode !== 200) {
+            setLoading(false);
             alert(json.errorMessage);
             return;
         }
@@ -58,29 +59,29 @@ const SubModal = ({ open, onClose, user }: IProps) => {
                 <AlertDialogBody>
                     {stage === 1 && (
                         <div className="w-full flex flex-col py-10">
-                        <p className="font-semibold text-xl text-gray-500 text-center">Select A Subscription Plan</p>
+                        <p className=" font-Circular-std-book text-xl text-gray-500 text-center">Select A Subscription Plan</p>
                         <div className="w-full flex justify-center ">
-                            <p className="font-light mt-4 text-center text-gray-600 text-sm w-4/5">By choosing a Subscription Plan you will have access to all feature, if your account doesnt meet our criteria we will make a refund back to you</p>
+                            <p className=" font-Cerebri-sans-book mt-4 text-center text-gray-600 text-sm w-4/5">By choosing a Subscription Plan you will have access to all feature, if your account doesnt meet our criteria we will make a refund back to you</p>
                         </div>
 
                         <div className="w-full flex justify-center mt-6">
 
                             <div onClick={() => setSel(1)} className={sel === 1 ? SELECTED:NOTSELECTED}>
-                                <p className="font-light text-xl text-themeGreen">Monthly Plan</p>
-                                <p className="font-semibold mt-4 text-sm text-gray-500">You will have all full access on this account to all features. Auto Renewal will be activated </p>
+                                <p className=" font-Circular-std-Medium text-xl text-themeGreen">Monthly Plan</p>
+                                <p className="font-Cerebri-sans-book mt-4 text-sm text-gray-500">You will have all full access on this account to all features. Auto Renewal will be activated </p>
                                 <div className="flex justify-center items-center mt-6">
-                                    <span className="text-xl font-light text-gray-500">N2,000</span><span className="font-semibold text-sm text-gray-500 ml-4">Monthly</span>
+                                    <span className="text-xl font-Cerebri-sans-book text-gray-500">N2,000</span><span className="font-semibold text-sm text-gray-500 ml-4">Monthly</span>
                                 </div>
                             </div>
 
-                            {/* <div onClick={() => setSel(2)} className={sel === 2 ? SELECTED:NOTSELECTED}>
-                                <p className="font-light text-xl text-themeGreen">Yearly Plan</p>
-                                <p className="font-semibold mt-4 text-sm text-gray-500">Save 20%  on this plan.
+                            <div onClick={() => setSel(2)} className={sel === 2 ? SELECTED:NOTSELECTED}>
+                                <p className="font-Circular-std-Medium text-xl text-themeGreen">6 Months Plan</p>
+                                <p className="font-Cerebri-sans-book mt-4 text-sm text-gray-500">Save 20%  on this plan.
 You will have all full access on this account to all features. Auto Renewal will be activated</p>
                                 <div className="flex justify-center items-center mt-6">
-                                    <span className="text-xl font-light text-gray-500">N10,000</span> <span className="font-semibold text-sm text-gray-500 ml-4">/ Month</span>
+                                    <span className="text-xl font-Cerebri-sans-book text-gray-500">N12,000</span> <span className="font-semibold text-sm text-gray-500 ml-4">/ Month</span>
                                 </div>
-                            </div> */}
+                            </div>
 
                         </div>
 

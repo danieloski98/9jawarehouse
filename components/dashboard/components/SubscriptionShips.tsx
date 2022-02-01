@@ -26,7 +26,7 @@ export default function SubscriptionShip({details}: {details: ISubscription}) {
   return (
     <div className="w-full h-16 rounded-md flex justify-between items-center xl:px-4 lg:px-4 md:px-0 sm:px-0 mt-4 mb-4 text-sm font-Cerebri-sans-book">
         <p className="flex-1">{new Date(details.created_at).toDateString()}</p>
-        <p className="flex-1">Monthly</p>
+        <p className="flex-1">{details.amount === 2000 ? 'Monthly':'6 Months'}</p>
         <p className="flex-1">{details.amount}</p>
         {status(details.status)}
     </div>
