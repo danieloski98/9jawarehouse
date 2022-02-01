@@ -76,7 +76,7 @@ export class User {
   })
   @Prop({
     type: Boolean,
-    default: false,
+    default: true,
   })
   blocked: boolean;
 

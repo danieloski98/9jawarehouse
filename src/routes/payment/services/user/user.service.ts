@@ -95,13 +95,14 @@ export class UserService {
       });
       console.log(newSub);
       // update User
+      const updatedDate = moment(new Date());
       const userUpdate = await this.userModel.updateOne(
         { _id: user._id },
         {
           nextPayment:
             numq === 1
-              ? currentDate.add(1, 'month').format('YYYY-MM-DD hh:mm')
-              : currentDate.add(5, 'months').format('YYYY-MM-DD hh:mm'),
+              ? updatedDate.add(1, 'month').format('YYYY-MM-DD hh:mm')
+              : updatedDate.add(180, 'days').format('YYYY-MM-DD hh:mm'),
         },
       );
       // console.log(userUpdate);
