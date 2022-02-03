@@ -19,6 +19,7 @@ export default function Settings() {
   const [loading, setLoading] = React.useState(false);
   const [show1, setShow1] = React.useState(false);
   const [show2, setShow2] = React.useState(false);
+  const [showT, setShowT] = React.useState(false);
   const user = useSelector((state: RootState) => state.UserReducer.user);
   const formik = useFormik({
       initialValues: {newpassword: '', oldpassword: ''},
@@ -78,9 +79,9 @@ export default function Settings() {
                             fontSize="sm"
                             className="bg-gray-100 mt-3 font-Cerebri-sans-book"
                             />
-                            <Tooltip hasArrow size="lg" fontSize="xs" className="font-Cerebri-sans-book" label="Sorry, you can't update this information at the moment. Reach out to our support for further assistance" placement="top">
+                            <Tooltip hasArrow size="lg" fontSize="xs" className="font-Cerebri-sans-book" label="Sorry, you can't update this information at the moment. Reach out to our support for further assistance" placement="top" isOpen={showT} onClose={() => setShowT(false)} >
                             <span>
-                                <FiHelpCircle color="green" size={20} className="cursor-pointer ml-2" />
+                                <FiHelpCircle color="green" size={20} className="cursor-pointer ml-2" onClick={() => setShowT(true)} />
                             </span>
                             </Tooltip>
                     </div>

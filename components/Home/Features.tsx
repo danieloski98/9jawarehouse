@@ -24,7 +24,7 @@ export default function Features() {
                 </div>
             </div>
 
-            <div className="flex-1 flex flex-col justify-center items-start text-left pl-20 pr-6">
+            <div className="flex-1 flex flex-col justify-center items-start text-left xl:pl-20 lg:pl-20 md:pl-10 sm:pl-10 pr-6">
                 
                 <p className="xl:mt-6 lg:mt-6 md:mt-20 sm:mt-20 text-md font-Circular-std-medium text-gray-500 ">FOR VENDORS</p>
                 <h3 className="mt-6 text-themeGreen text-4xl font-Circular-std-medium">Reach More Customers</h3>
@@ -48,13 +48,13 @@ export default function Features() {
 
             <div className="flex-1  flex justify-center items-center">
                 {/* <div className="w-40 h-40 bg-green-200 z-10"></div> */}
-                <div className="w-3/5 h-4/5 bg-green-200 z-20 rounded-lg">
-                    <Image alt="woman" src={Male} className="w-full h-full rounded-lg" />
+                <div className="w-80 h-72 bg-green-200 z-20 rounded-lg">
+                    <Image alt="woman" src={Male} className="w-full h-full" />
                 </div>
             </div>
 
-            <div className="flex-1 flex flex-col justify-center items-start text-left pl-20 pr-6">
-                <p className="mt-6 text-md font-Circular-std-medium text-gray-500">FOR CUSTOMERS</p>
+            <div className="flex-1 flex flex-col justify-center items-start text-left xl:pl-20 lg:pl-20 md:pl-10 sm:pl-10 pr-6">
+                <p className="mt-6 text-md font-Circular-std-medium text-gray-500 sm:mt-32">FOR CUSTOMERS</p>
                 <h3 className="mt-6 text-themeGreen text-4xl font-Circular-std-medium">Hire A Pro For Any Skill</h3>
                 
 

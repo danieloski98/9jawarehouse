@@ -90,14 +90,14 @@ export default function Profile({ setPage }: IProps) {
 
       
 
-      <div className="flex-1 overflow-y-auto flex flex-col bg-white">
+      <div className="flex-1 overflow-y-auto flex flex-col bg-white pb-10">
         
 
        <div className="w-full h-64 z-30">
         <Carousel showArrows showIndicators dynamicHeight={false} autoPlay interval={7000} infiniteLoop>
             {userDetails.pictures.map((item, index) => (
-              <div key={index.toString()} className="w-full h-64">
-                <Img src={item} alt="img" className="w-full h-64" />
+              <div key={index.toString()} className="w-full h-64 bg-gray-200">
+                <Img src={item} alt="img" className="w-full h-full object-cover" />
               </div>
             ))}
           </Carousel>
@@ -238,7 +238,9 @@ export default function Profile({ setPage }: IProps) {
         </div>
 
         {/* certificates */}
-        <div className="flex flex-col xl:mt-10 lg:mt-10 md:mt-4 sm:mt-4 flex-1 xl:ml-10 lg:ml-10 md:ml-5 sm:ml-5">
+        {
+          userDetails.certificates.length > 0 && (
+            <div className="flex flex-col xl:mt-10 lg:mt-10 md:mt-4 sm:mt-4 flex-1 xl:ml-10 lg:ml-10 md:ml-5 sm:ml-5">
             <p className="text-md font-semibold text-gray-600">Certifications</p>
             <div className="xl:flex lg:flex md:hidden sm:hidden mt-6 flex-wrap text-left">
                 <p className="text-sm flex-1">Certificate</p>
@@ -264,6 +266,8 @@ export default function Profile({ setPage }: IProps) {
             ))}
           </div>
           </div>
+          )
+        }
 
       </div>
     </div>

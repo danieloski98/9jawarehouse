@@ -223,7 +223,11 @@ export default function NormNavbar() {
             )}
         </div>
 
-        <div className="xl:hidden lg:hidden md:flex sm:flex items-center">
+        <div className="xl:hidden lg:hidden md:flex sm:flex items-center justify-end">
+          
+          {loggedIn && <span className='mr-4 ml-2' onClick={() => setShowNoti(true)}>
+            <Notification size={25} primaryColor='grey' filled style={{ color: 'grey' }}  />
+          </span>}
           <FiMenu size={30} color="grey" onClick={() => setOpen(true)} />
         </div>
 

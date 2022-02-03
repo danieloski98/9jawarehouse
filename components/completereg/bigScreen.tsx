@@ -81,12 +81,12 @@ export default function BigScreen({ states, services}: {states: IState[], servic
 
     React.useEffect(() => {
         setCertificates([
-            {
-                certificate: '',
-                organization: '',
-                year: '',
-                link: '',
-            }
+            // {
+            //     certificate: '',
+            //     organization: '',
+            //     year: '',
+            //     link: '',
+            // }
         ])
     }, []);
 

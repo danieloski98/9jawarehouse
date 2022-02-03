@@ -99,6 +99,8 @@ export default function Navbar({page, setPage}: IProps) {
                 dispatch(updatePin(json.data.code));
 
                 setLoading(false);
+            }else {
+              setLoading(false)
             }
         })()
     }, [dispatch, user._id, user.pin]);
@@ -177,7 +179,7 @@ export default function Navbar({page, setPage}: IProps) {
                   <InputLeftElement  h="50px" paddingLeft="20px">
                       <FiSearch size={25} color="grey" />
                   </InputLeftElement>
-                  <Input type="text" name="search" value={query} bgColor="#F1EEEE" paddingLeft="50px"  h="50px" onKeyPress={handleKeydonw} onChange={(e) => setQuery(e.target.value)} fontSize="sm" className="font-Cerebri-sans-book" />
+                  <Input type="text" name="search" autoComplete="off" value={query} bgColor="#F1EEEE" paddingLeft="50px"  h="50px" onKeyPress={handleKeydonw} onChange={(e) => setQuery(e.target.value)} fontSize="sm" className="font-Cerebri-sans-book" />
                   <InputRightElement  h="50px">
                   {query !== '' && <FiX size={20} color="grey" onClick={() => setQuery('')} className='cursor-pointer' />}
                   </InputRightElement>
@@ -193,7 +195,7 @@ export default function Navbar({page, setPage}: IProps) {
                       <InputLeftElement h="55px" paddingLeft="20px">
                           <Search  size={20} primaryColor='grey' />
                       </InputLeftElement>
-                      <Input type="text" name="search" value={query} bgColor="#F1EEEE" w="559px" h="55px" paddingLeft="60px" onKeyPress={handleKeydonw} onChange={(e) => setQuery(e.target.value)} fontSize="sm" className="font-Cerebri-sans-book" />
+                      <Input type="text" name="search" value={query} autoComplete="off" bgColor="#F1EEEE" w="559px" h="55px" paddingLeft="60px" onKeyPress={handleKeydonw} onChange={(e) => setQuery(e.target.value)} fontSize="sm" className="font-Cerebri-sans-book" />
                       <InputRightElement h="60px">
                           {query !== '' && <FiX size={20} color="grey" onClick={() => setQuery('')} className='cursor-pointer' />}
                       </InputRightElement>
@@ -270,7 +272,7 @@ export default function Navbar({page, setPage}: IProps) {
 
         <div className="xl:hidden lg:hidden md:flex sm:flex items-center justify-end">
           
-          {loggedIn && <span onClick={() => setShowNoti(true)}>
+          {loggedIn && <span className='mr-4 ml-2' onClick={() => setShowNoti(true)}>
             <Notification size={25} primaryColor='grey' filled style={{ color: 'grey' }}  />
           </span>}
           <FiMenu size={30} color="grey" onClick={() => setOpen(true)} />

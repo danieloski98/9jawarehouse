@@ -62,7 +62,7 @@ export default function Services({states, services}: IProps) {
 
     // filters
     const [st, setSt] = React.useState("");
-    const [sr, setSr] = React.useState(router.query['service']);
+    const [sr, setSr] = React.useState(router.query['service'] !== undefined ? (router.query['service'] as string).toLowerCase(): '');
     const [la, setLa] = React.useState("");
 
     React.useMemo(() => {
@@ -104,7 +104,7 @@ export default function Services({states, services}: IProps) {
     }, [sr]);
 
     React.useEffect(() => {
-        setSr(router.query['service']);
+        setSr(router.query['service'] as string);
         if (router.query['state'] !== undefined) {
             setSt(router.query['state'] as string)
             setState(router.query['state'] as string);

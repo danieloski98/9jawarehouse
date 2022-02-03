@@ -37,7 +37,7 @@ export default function Footer() {
 
         <div className="flex-1 flex xl:flex-row lg:flex-row md:flex-col sm:flex-col xl:items-center lg:items-center md:items-start sm:items-start xl:justify-between lg:justify-between md:justify-start sm:justify-start xl:px-20 lg:px-20 md:px-0 sm:px-0 sm:pt-10 md:pt-10 xl:pt-0 lg:pt-0 text-white font-semibold text-md">
 
-            <div className="flex flex-col md:my-6 sm:my-6 xl:my-0 lg:my-0">
+            <div className="flex flex-col md:my-6 sm:my-6 xl:my-0 lg:my-0 w-full">
                 <p className="text-md text-gray-300 font-Circular-std-medium">COMPANY</p>
                 <div className="mt-6 text-sm font-Cerebri-sans-book rcular-std-book text-white flex flex-col">
                     <Link href="/aboutus">
@@ -52,7 +52,7 @@ export default function Footer() {
                     </Link>
                 </div>
             </div>
-            <div className="flex flex-col md:my-6 sm:my-6 xl:my-0 lg:my-0">
+            <div className="flex flex-col md:my-6 sm:my-6 xl:my-0 lg:my-0 w-full">
                 <p className="text-md text-gray-300 font-Circular-std-medium">RESOURCES</p>
                 <div className="mt-6 text-sm font-Cerebri-sans-bookar-std-book text-white flex flex-col">
                     <Link href="/contactus">
@@ -64,7 +64,7 @@ export default function Footer() {
                     </Link>
                 </div>
             </div>
-            <div className="flex flex-col md:my-6 sm:my-6 xl:my-0 lg:my-0">
+            <div className="flex flex-col md:my-6 sm:my-6 xl:my-0 lg:my-0 w-full">
                 <p className="text-md text-gray-300 font-Circular-std-medium">FOR VENDORS</p>
                 <div className="mt-6 text-sm font-Cerebri-sans-book text-white flex flex-col">
                     <Link href="/faqs">

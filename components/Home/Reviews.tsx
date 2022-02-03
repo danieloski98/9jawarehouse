@@ -16,7 +16,7 @@ interface ICard {
 const Card = ({name, image, position}: ICard) => {
     return(
         <div className="w-64 xl:h-auto lg:h-64 md:h-auto sm:h-auto mb-10 flex- flex-col">
-            <Image src={image} alt="man" className="w-full h-24 rounded-lg" />
+            <Image src={image} alt="man" className="w-full h-24 " />
             <p className="text-themeGreen font-Circular-std-book text-md mt-6">
             My relationship with Cara & CompuVision keeps on growing. The projects get larger and more technical every year.
             </p>

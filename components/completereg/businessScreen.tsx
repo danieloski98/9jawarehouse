@@ -168,6 +168,7 @@ export default function BusinessInfo({ next, images, picker, profilePic, formik,
                 <label>Services</label>
                 <div className="xl:w-11/12 lg:w-11/12 md:w-full sm:w-full">
                     <Select border="none" bgColor="whitesmoke" borderRadius={0} className="bg-gray-100 mt-3" onChange={(e) => selectService(e.target.value)}>
+                        <option selected>Pick a Service</option>
                         {services.map((item, index) => (
                             <option key={index.toString()}>{item.name}</option>
                         ))}
