@@ -45,7 +45,7 @@ export class PicsService {
           {
             transformation: {
               width: 920,
-              height: 250,
+              height: 450,
             },
           },
         );
@@ -110,8 +110,8 @@ export class PicsService {
             join(process.cwd(), `/pictures/${images[i].filename}`),
             {
               transformation: {
-                width: 920,
-                height: 250,
+                width: 1920,
+                height: 720,
               },
             },
           );

@@ -88,6 +88,7 @@ export class CrudService {
         const user = await this.userModel.find({
           verified: true,
           disabled: false,
+          blocked: false,
           services: query.service,
           state: query.state,
         });
@@ -116,6 +117,7 @@ export class CrudService {
         const user = await this.userModel.find({
           verified: true,
           disabled: false,
+          blocked: false,
           services: query.service.toLowerCase(),
           state: query.state,
           lga: query.lga,
