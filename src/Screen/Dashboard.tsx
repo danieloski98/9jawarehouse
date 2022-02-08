@@ -14,15 +14,10 @@ export default function Dashboard() {
                     <Menu />
                 </div>
                 <div  style={{backgroundColor: '#F6F4F6'}} className='w-screen pt-32 lg:pt-0 overflow-x-hidden h-screen lg:w-full bg-white overflow-y-auto  ' >
-                    <Navbar />
-                    {/* {tab === 'Overview' ? 
-                        <Overview />
-                        :tab === 'Activity' ? 
-                            <Activity />
-                            :tab === 'Vendors' ? 
-                                <ArchivedVendors />
-                    :null} */}
-                    <Outlet />
+                    <Navbar /> 
+                    <>
+                        <Outlet />
+                    </>
                 </div>
             </div>
         </div>

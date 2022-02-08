@@ -1,10 +1,14 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom';
 
 export default function VendorProfile() {
+
+    const navigate = useNavigate();
+ 
     return (
         <div className='w-full py-10 px-10' >
             <div className='w-full flex items-center' >  
-                <div className='w-5 h-5 cursor-pointer mr-4 rounded-full flex border border-black justify-center items-center' >
+                <div onClick={()=> navigate('/dashboard/vendors')} className='w-5 h-5 cursor-pointer mr-4 rounded-full flex border border-black justify-center items-center' >
 
                 </div>
                 <p style={{fontSize: '20px'}} className='font-Graphik-Medium'>Vendor Profile</p>  

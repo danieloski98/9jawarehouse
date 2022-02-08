@@ -1,5 +1,6 @@
 import { Select, Input, Table, Thead, Tr, Th, Tbody, Td } from '@chakra-ui/react'
-import React from 'react'
+import React from 'react' 
+import { useNavigate } from 'react-router-dom'
 
 const Information = [
     {
@@ -32,18 +33,21 @@ const Information = [
       date: 'March 12, 2021',
       time: '05:09:01 PM', 
     },
-]
+] 
 
 export default function Vendors() {
+
+    const navigate = useNavigate();
+
     return (
-        <div className='w-full py-10 px-10' >
+        <div className='w-full' >
             <div className='w-full flex items-center' > 
                 <div className=''>
                     <p style={{fontSize: '20px'}} className='font-Graphik-Medium'>Vendors</p>
                     <p style={{color: '#8A8A8A'}} className='text-sm font-Graphik-Regular' >Manage all Vendors on 9jawarehouse</p>
                 </div>
                 <div className='ml-auto'>  
-                    <button style={{backgroundColor: '#FBFBFB', border: '1px solid #585858'}} className='px-3 py-3 font-Graphik-Regular text-xs rounded-md' >Archived Profiles</button>
+                    <button onClick={()=> navigate('/dashboard/vendors/archived')} style={{backgroundColor: '#FBFBFB', border: '1px solid #585858'}} className='px-3 py-3 font-Graphik-Regular text-xs rounded-md' >Archived Profiles</button>
                 </div>
             </div>
             <div className='w-full flex my-6 px-8 items-center justify-between ' >
@@ -112,7 +116,7 @@ export default function Vendors() {
                                                 <path id="Edit-2" data-name="Edit" d="M11.793,4.406,4.959,13.244a1.637,1.637,0,0,1-1.271.635l-2.724.033a.311.311,0,0,1-.305-.242L.04,10.986a1.659,1.659,0,0,1,.314-1.4L5.2,3.32a.243.243,0,0,1,.33-.042L7.568,4.9a.658.658,0,0,0,.5.142.735.735,0,0,0,.636-.811.816.816,0,0,0-.256-.493L6.47,2.149a.294.294,0,0,1-.05-.409l.768-1a2.01,2.01,0,0,1,2.946-.2l1.147.911a2.384,2.384,0,0,1,.891,1.363,1.868,1.868,0,0,1-.38,1.589" fill="#200e32"/>
                                             </g>
                                         </svg>
-                                        <svg className='mx-2 cursor-pointer' id="Iconly_Bold_Show" data-name="Iconly/Bold/Show" xmlns="http://www.w3.org/2000/svg" width="15" height="12" viewBox="0 0 15 12">
+                                        <svg onClick={()=> navigate('/dashboard/vendors/profile')} className='mx-2 cursor-pointer' id="Iconly_Bold_Show" data-name="Iconly/Bold/Show" xmlns="http://www.w3.org/2000/svg" width="15" height="12" viewBox="0 0 15 12">
                                             <g id="Show">
                                                 <path id="Show-2" data-name="Show" d="M7.493,12C4.4,12,1.611,9.836.044,6.211a.543.543,0,0,1,0-.429C1.609,2.161,4.394,0,7.493,0H7.5a6.98,6.98,0,0,1,4.3,1.534,10.676,10.676,0,0,1,3.154,4.248.543.543,0,0,1,0,.429C13.389,9.836,10.6,12,7.5,12ZM4.573,6A2.923,2.923,0,1,0,7.5,3.091,2.918,2.918,0,0,0,4.573,6Zm1.1,0a1.865,1.865,0,0,1,.037-.356h.036a1.5,1.5,0,0,0,1.5-1.44A1.492,1.492,0,0,1,7.5,4.18,1.814,1.814,0,1,1,5.672,6Z" fill="#200e32"/>
                                             </g>

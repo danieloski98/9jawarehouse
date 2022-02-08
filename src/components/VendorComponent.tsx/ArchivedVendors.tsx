@@ -1,5 +1,7 @@
 import { Input, Select, Table, Thead, Tr, Th, Tbody, Td } from '@chakra-ui/react'
 import React from 'react'
+import { useNavigate } from 'react-router-dom';
+// import { IoIosArrowBack } from "react-icons/io"
 
 const Information = [
     {
@@ -35,11 +37,14 @@ const Information = [
 ]
 
 export default function ArchivedVendors() {
+
+    const navigate = useNavigate();
+ 
     return (
         <div className='w-full py-10 px-10' >
             <div className='w-full flex items-center' >   
-                <div className='w-5 h-5 cursor-pointer mr-4 rounded-full flex border border-black justify-center items-center' >
-
+                <div onClick={()=> navigate('/dashboard/vendors')} className='w-5 h-5 cursor-pointer mr-4 rounded-full flex border border-black justify-center items-center' >
+                    {/* <IoIosArrowBack /> */}
                 </div>
                 <div className=''>
                     <p style={{fontSize: '20px'}} className='font-Graphik-Medium'>Archived Vendors</p>

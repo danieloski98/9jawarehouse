@@ -14,6 +14,7 @@ export default function Menu(props: any) {
     const ClickHandler =(index: any)=> {
         setActive(index);
 
+        localStorage.setItem('tab', index)
         const rout = index.toLowerCase().replace(/\s/g,'')
 
         if(index === 'Overview'){ 
@@ -22,6 +23,12 @@ export default function Menu(props: any) {
             navigate('/dashboard/'+rout) 
         }
     }   
+ 
+    React.useEffect(() => {
+        if(localStorage.getItem('tab')){
+            setActive(localStorage.getItem('tab')+'')
+        }
+    },[])
 
     return (
         <div className='w-full h-screen pt-4 flex flex-col items-start overflow-y-auto' > 
