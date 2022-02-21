@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 
 export default function Menu(props: any) { 
 
-    const Array = [ 'Overview', 'Activity', 'Vendors', 'Push Notifications', 'Categories', 'Support Tickets', 'Subscriptions', 'Role Management', 'Account Settings' ] 
+    const Array = [ 'Overview', 'Activity', 'Vendors', 'Push Notifications', 'Categories', 'Subscriptions', 'Role Management', 'Account Settings' ] 
 
     const navigate = useNavigate();
 
@@ -16,7 +16,8 @@ export default function Menu(props: any) {
 
         localStorage.setItem('tab', index)
         const rout = index.toLowerCase().replace(/\s/g,'')
-
+ 
+         console.log(rout)
         if(index === 'Overview'){ 
             navigate('/dashboard') 
         } else {
@@ -27,6 +28,8 @@ export default function Menu(props: any) {
     React.useEffect(() => {
         if(localStorage.getItem('tab')){
             setActive(localStorage.getItem('tab')+'')
+        }else{ 
+            setActive('Overview')
         }
     },[])
 

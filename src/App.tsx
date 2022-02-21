@@ -10,6 +10,9 @@ import Vendors from './components/VendorComponent.tsx';
 import ArchivedVendors from './components/VendorComponent.tsx/ArchivedVendors';
 import Vendor from './components/DashboardTabs/Vendor';
 import VendorProfile from './components/VendorComponent.tsx/VendorProfile';
+import PushNotifications from './components/DashboardTabs/PushNotifications';
+import Categories from './components/DashboardTabs/Categories';
+import Subscriptions from './components/DashboardTabs/Subscriptions';
 
 export default function App() {
     return (
@@ -26,6 +29,9 @@ export default function App() {
                 <Route path='/dashboard/vendors/archived' element={<ArchivedVendors />} />
                 <Route path='/dashboard/vendors/profile' element={<VendorProfile />} />
               </Route>
+              <Route path='/dashboard/pushnotifications' element={<PushNotifications />} />
+              <Route path='/dashboard/categories' element={<Categories />} />
+              <Route path='/dashboard/subscriptions' element={<Subscriptions />} />
             </Route>
           </Routes>
         </Router>
