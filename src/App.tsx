@@ -13,6 +13,8 @@ import VendorProfile from './components/VendorComponent.tsx/VendorProfile';
 import PushNotifications from './components/DashboardTabs/PushNotifications';
 import Categories from './components/DashboardTabs/Categories';
 import Subscriptions from './components/DashboardTabs/Subscriptions';
+import RoleManagement from './components/DashboardTabs/RoleManagement';
+import AccountSettings from './components/DashboardTabs/AccountSettings';
 
 export default function App() {
     return (
@@ -32,6 +34,8 @@ export default function App() {
               <Route path='/dashboard/pushnotifications' element={<PushNotifications />} />
               <Route path='/dashboard/categories' element={<Categories />} />
               <Route path='/dashboard/subscriptions' element={<Subscriptions />} />
+              <Route path='/dashboard/rolemanagement' element={<RoleManagement />} />
+              <Route path='/dashboard/accountsettings' element={<AccountSettings />} />
             </Route>
           </Routes>
         </Router>

@@ -31,7 +31,13 @@ export default function Menu(props: any) {
         }else{ 
             setActive('Overview')
         }
-    },[])
+        const rout = active.toLowerCase().replace(/\s/g,'')
+        if(active === 'Overview'){ 
+            navigate('/dashboard') 
+        } else {
+            navigate('/dashboard/'+rout) 
+        }
+    },[active, navigate])
 
     return (
         <div className='w-full h-screen pt-4 flex flex-col items-start overflow-y-auto' > 
