@@ -1,7 +1,7 @@
 import { Input, Select, Table, Thead, Tr, Th, Tbody, Td } from '@chakra-ui/react'
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
-// import { IoIosArrowBack } from "react-icons/io"
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io"
 
 const Information = [
     {
@@ -44,7 +44,7 @@ export default function ArchivedVendors() {
         <div className='w-full py-10 px-10' >
             <div className='w-full flex items-center' >   
                 <div onClick={()=> navigate('/dashboard/vendors')} className='w-5 h-5 cursor-pointer mr-4 rounded-full flex border border-black justify-center items-center' >
-                    {/* <IoIosArrowBack /> */}
+                    <IoIosArrowBack />
                 </div>
                 <div className=''>
                     <p style={{fontSize: '20px'}} className='font-Graphik-Medium'>Archived Vendors</p>
@@ -114,8 +114,8 @@ export default function ArchivedVendors() {
             <div className='flex items-center my-12' >
                 <p style={{fontSize: '14px'}} className='font-Graphik-Regular'>Showing <span className='font-Graphik-SemiBold' >1-10</span> from <span className='font-Graphik-SemiBold' >46 data</span></p>
                 <div className='flex items-center ml-auto' >
-                    <div style={{borderColor: '#C2C2C2'}} className='w-10 h-10 rounded-lg cursor-pointer flex justify-center items-center border' >
-
+                    <div style={{borderColor: '#C2C2C2'}} className='w-10 h-10 rounded-lg cursor-pointer flex justify-center items-center border' > 
+                        <IoIosArrowBack color='#878787' />
                     </div>
                     <div style={{borderColor: '#C2C2C2'}} className='w-auto h-10 font-Graphik-Bold rounded-lg flex border mx-2'> 
                         <div style={{backgroundColor: '#3E3F41'}} className='w-10 cursor-pointer h-10 rounded-lg flex text-white justify-center items-center' >
@@ -132,7 +132,7 @@ export default function ArchivedVendors() {
                         </div>
                     </div>
                     <div style={{borderColor: '#C2C2C2'}} className='w-10 h-10 rounded-lg cursor-pointer flex justify-center items-center border' >
-
+                        <IoIosArrowForward color='#878787' />
                     </div>
                 </div>
             </div>

@@ -34,10 +34,17 @@ export default function Menu(props: any) {
         const rout = active.toLowerCase().replace(/\s/g,'')
         if(active === 'Overview'){ 
             navigate('/dashboard') 
+        } else if(active === 'Vendors'){ 
+            // navigate('/dashboard/') 
         } else {
             navigate('/dashboard/'+rout) 
         }
     },[active, navigate])
+
+
+    React.useEffect(() => { 
+        navigate('/dashboard/vendors') 
+    },[])
 
     return (
         <div className='w-full h-screen pt-4 flex flex-col items-start overflow-y-auto' > 

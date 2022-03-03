@@ -26,16 +26,16 @@ export default function App() {
             <Route path='/dashboard' element={<Dashboard />}> 
               <Route path='/dashboard/' element={<Overview />} />
               <Route path='/dashboard/activity' element={<Activity />} />
-              <Route path='/dashboard/vendors' element={<Vendor />} > 
-                <Route path='/dashboard/vendors/' element={<Vendors />} />
-                <Route path='/dashboard/vendors/archived' element={<ArchivedVendors />} />
-                <Route path='/dashboard/vendors/profile' element={<VendorProfile />} />
-              </Route>
               <Route path='/dashboard/pushnotifications' element={<PushNotifications />} />
               <Route path='/dashboard/categories' element={<Categories />} />
               <Route path='/dashboard/subscriptions' element={<Subscriptions />} />
               <Route path='/dashboard/rolemanagement' element={<RoleManagement />} />
               <Route path='/dashboard/accountsettings' element={<AccountSettings />} />
+              <Route path='/dashboard/vendors' element={<Vendor />} > 
+                <Route path='/dashboard/vendors' element={<Vendors />} />
+                <Route path='/dashboard/vendors/archived' element={<ArchivedVendors />} />
+                <Route path='/dashboard/vendors/profile' element={<VendorProfile />} />
+              </Route>
             </Route>
           </Routes>
         </Router>
