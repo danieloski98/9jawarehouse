@@ -13,9 +13,9 @@ export default function VendorProfile() {
  
     return (
         <div className='w-full py-10 px-10' >
-            <div className='w-full flex items-center' >  
-                <div onClick={()=> navigate('/dashboard/vendors')} className='w-5 h-5 cursor-pointer mr-4 rounded-full flex border border-black justify-center items-center' >
-                    <IoIosArrowBack />
+            <div className='w-full flex items-center' >   
+                <div onClick={()=> navigate('/dashboard/vendors')} className='w-5 h-5 cursor-pointer mr-4 rounded-full flex border-2 border-black justify-center mt-1 items-center' >
+                    <IoIosArrowBack size='20px' />
                 </div>
                 <p style={{fontSize: '20px'}} className='font-Graphik-Medium'>Vendor Profile</p>  
             </div>
@@ -32,9 +32,9 @@ export default function VendorProfile() {
                 <div onClick={()=> setTab(3)} style={tab === 3 ? {backgroundColor: '#004143', color: 'white'}: {}} className='w-full cursor-pointer font-Graphik-Regular mx-3 py-3 rounded-lg flex justify-center items-center' >
                     Subscriptions
                 </div>
-                <div onClick={()=> setTab(4)} style={tab === 4 ? {backgroundColor: '#004143', color: 'white'}: {}} className='w-full cursor-pointer font-Graphik-Regular mx-3 py-3 rounded-lg flex justify-center items-center' >
+                {/* <div onClick={()=> setTab(4)} style={tab === 4 ? {backgroundColor: '#004143', color: 'white'}: {}} className='w-full cursor-pointer font-Graphik-Regular mx-3 py-3 rounded-lg flex justify-center items-center' >
                     Support Tickets
-                </div>
+                </div> */}
             </div>
             <div className='w-full' >
                 {tab === 0 ?
