@@ -47,7 +47,7 @@ export default function Subscription() {
 
     const [showModal, setShowModal] = React.useState(false)
     const [renewModal, setRenewModal] = React.useState(false)
-    const [cancelModal, setCancelModal] = React.useState(true)
+    const [cancelModal, setCancelModal] = React.useState(false)
 
     return (
         <div className='w-full' >  

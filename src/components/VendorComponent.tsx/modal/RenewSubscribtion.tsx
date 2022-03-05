@@ -18,7 +18,7 @@ export default function RenewSubscribtion(props: any) {
             </div>
             <p className='text-sm font-Graphik-Regular my-4' >You are about to Renew subscription for Limmer makeover</p>
             <p className='text-sm font-Graphik-Medium mb-2 mt-8' >Peroid</p>
-            <Select backgroundColor='white' placeholder='Choose Plan' border='1px solid #0C346839' />
+            <Select backgroundColor='white' fontSize='sm' placeholder='Choose Plan' border='1px solid #0C346839' />
             <div className='w-full flex mt-6' > 
                 <p className='text-sm font-Graphik-Medium' >Total</p>
                 <p className='text-sm font-Graphik-Medium ml-auto' >N0.00</p>

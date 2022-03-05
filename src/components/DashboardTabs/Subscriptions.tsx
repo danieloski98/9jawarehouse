@@ -1,5 +1,8 @@
 import { Select, Input, Table, Thead, Tr, Th, Tbody, Td } from '@chakra-ui/react'
 import React from 'react'
+import CancelSubscribtion from '../VendorComponent.tsx/CancelSubscribtion'
+import RenewSubscribtion from '../VendorComponent.tsx/modal/RenewSubscribtion'
+import SubscriptionModal from '../VendorComponent.tsx/modal/SubscriptionModal'
 
 const Information = [
     {
@@ -40,6 +43,11 @@ const Information = [
 ]
 
 export default function Subscriptions() {
+
+    const [showModal, setShowModal] = React.useState(false)
+    const [renewModal, setRenewModal] = React.useState(false)
+    const [cancelModal, setCancelModal] = React.useState(false)
+
     return (
         <div className='w-full py-10 px-10' >
             <div className='w-full flex items-center' > 
@@ -94,7 +102,7 @@ export default function Subscriptions() {
                                     <Td>{item.date}</Td>
                                     <Td style={item.status === 'Active' ? {color: "#0CD27C"}: {color: '#777777'}} >{item.status}</Td>
                                     <Td >
-                                        <svg className='mx-auto cursor-pointer' id="Iconly_Bold_Show" data-name="Iconly/Bold/Show" xmlns="http://www.w3.org/2000/svg" width="15" height="12" viewBox="0 0 15 12">
+                                        <svg onClick={()=> setShowModal(true)} className='mx-auto cursor-pointer' id="Iconly_Bold_Show" data-name="Iconly/Bold/Show" xmlns="http://www.w3.org/2000/svg" width="15" height="12" viewBox="0 0 15 12">
                                             <g id="Show">
                                                 <path id="Show-2" data-name="Show" d="M7.493,12C4.4,12,1.611,9.836.044,6.211a.543.543,0,0,1,0-.429C1.609,2.161,4.394,0,7.493,0H7.5a6.98,6.98,0,0,1,4.3,1.534,10.676,10.676,0,0,1,3.154,4.248.543.543,0,0,1,0,.429C13.389,9.836,10.6,12,7.5,12ZM4.573,6A2.923,2.923,0,1,0,7.5,3.091,2.918,2.918,0,0,0,4.573,6Zm1.1,0a1.865,1.865,0,0,1,.037-.356h.036a1.5,1.5,0,0,0,1.5-1.44A1.492,1.492,0,0,1,7.5,4.18,1.814,1.814,0,1,1,5.672,6Z" fill="#200e32"/>
                                             </g>
@@ -132,6 +140,36 @@ export default function Subscriptions() {
                     </div>
                 </div>
             </div>
+
+            {showModal ? 
+                (
+                    <>
+                        <div className="h-auto flex justify-center items-center overflow-x-hidden overflow-y-hidden fixed pb-4 px-4 inset-0 z-50 outline-none focus:outline-none"> 
+                            <SubscriptionModal close={setShowModal} next={setRenewModal} cancel={setCancelModal} />
+                        </div> 
+                        <div className="opacity-25 fixed flex flex-1 inset-0 z-40 bg-black"/>
+                    </>
+                ) : null} 
+
+            {renewModal ? 
+                (
+                    <>
+                        <div className="h-auto flex justify-center items-center overflow-x-hidden overflow-y-hidden fixed pb-4 px-4 inset-0 z-50 outline-none focus:outline-none"> 
+                            <RenewSubscribtion close={setRenewModal} />
+                        </div> 
+                        <div className="opacity-25 fixed flex flex-1 inset-0 z-40 bg-black"/>
+                    </>
+                ) : null} 
+
+            {cancelModal ? 
+                (
+                    <>
+                        <div className="h-auto flex justify-center items-center overflow-x-hidden overflow-y-hidden fixed pb-4 px-4 inset-0 z-50 outline-none focus:outline-none"> 
+                            <CancelSubscribtion close={setCancelModal} />
+                        </div> 
+                        <div className="opacity-25 fixed flex flex-1 inset-0 z-40 bg-black"/>
+                    </>
+                ) : null} 
         </div>
     )
 }
