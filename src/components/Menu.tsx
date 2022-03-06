@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 
 export default function Menu(props: any) { 
 
-    const Array = [ 'Overview', 'Activity', 'Vendors', 'Push Notifications', 'Categories', 'Subscriptions', 'Role Management', 'Account Settings' ] 
+    const Array = [ 'Overview', 'Activity', 'Vendors', 'Categories', 'Subscriptions', 'Role Management', 'Account Settings' ] 
 
     const navigate = useNavigate();
 

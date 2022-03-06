@@ -74,7 +74,7 @@ export default function RoleManagement() {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> 
         </div>
     )
 }
