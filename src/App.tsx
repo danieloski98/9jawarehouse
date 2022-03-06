@@ -14,7 +14,10 @@ import PushNotifications from './components/DashboardTabs/PushNotifications';
 import Categories from './components/DashboardTabs/Categories';
 import Subscriptions from './components/DashboardTabs/Subscriptions';
 import RoleManagement from './components/DashboardTabs/RoleManagement';
+import RoleManage from './components/RoleManagement/index';
 import AccountSettings from './components/DashboardTabs/AccountSettings';
+import AddNewRole from './components/RoleManagement/AddNewRole';
+import EditRole from './components/RoleManagement/EditRole';
 
 export default function App() {
     return (
@@ -29,7 +32,11 @@ export default function App() {
               <Route path='/dashboard/pushnotifications' element={<PushNotifications />} />
               <Route path='/dashboard/categories' element={<Categories />} />
               <Route path='/dashboard/subscriptions' element={<Subscriptions />} />
-              <Route path='/dashboard/rolemanagement' element={<RoleManagement />} />
+              <Route path='/dashboard/rolemanagement' element={<RoleManagement />} >
+                <Route path='/dashboard/rolemanagement' element={<RoleManage />} />
+                <Route path='/dashboard/rolemanagement/adduser' element={<AddNewRole />} />
+                <Route path='/dashboard/rolemanagement/edituser' element={<EditRole />} />
+              </Route>
               <Route path='/dashboard/accountsettings' element={<AccountSettings />} />
               <Route path='/dashboard/vendors' element={<Vendor />} > 
                 <Route path='/dashboard/vendors' element={<Vendors />} />

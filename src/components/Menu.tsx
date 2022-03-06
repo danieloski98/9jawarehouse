@@ -9,7 +9,7 @@ export default function Menu(props: any) {
 
     const navigate = useNavigate();
 
-    const [active, setActive] = React.useState('Overview')  
+    const [active, setActive] = React.useState(localStorage.getItem('tab')+'')  
 
     const ClickHandler =(index: any)=> {
         setActive(index);
@@ -36,6 +36,8 @@ export default function Menu(props: any) {
             navigate('/dashboard') 
         } else if(active === 'Vendors'){ 
             // navigate('/dashboard/') 
+        } else if(active === 'Role Management'){ 
+            // navigate('/dashboard/') 
         } else {
             navigate('/dashboard/'+rout) 
         }
@@ -43,7 +45,11 @@ export default function Menu(props: any) {
 
 
     React.useEffect(() => { 
-        navigate('/dashboard/vendors') 
+        if(active === 'Vendors'){ 
+            navigate('/dashboard/vendors') 
+        } else if(active === 'Role Management'){ 
+            navigate('/dashboard/rolemanagement') 
+        }
     },[])
 
     return (
