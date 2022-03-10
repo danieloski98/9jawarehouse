@@ -3,7 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './routes/auth/auth.module';
 
-// import { AdminModule } from './routes/admin/admin.module';
+import { AdminModule } from './routes/admin/admin.module';
 // import { NotificationsModule } from './routes/notifications/notifications.module';
 import { EmailService } from './globalservices/email/email.service';
 import { MongooseModule } from '@nestjs/mongoose';
@@ -22,7 +22,7 @@ import { ScheduleModule } from '@nestjs/schedule';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require('dotenv').config();
 
-console.log(process.env.COMPANY_EMAIL);
+console.log(process.env.NODE_ENV);
 const URL =
   process.env.NODE_ENV === 'development'
     ? process.env.LOCAL_DB
@@ -46,7 +46,7 @@ const URL =
     NotificationsModule,
     WebhooksModule,
     MessagesModule,
-    // AdminModule,
+    AdminModule,
     // NotificationsModule,
   ],
   controllers: [AppController],
