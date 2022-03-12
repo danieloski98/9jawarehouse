@@ -241,4 +241,22 @@ export class UserService {
       });
     }
   }
+
+  async getSubs(): Promise<IReturnObject> {
+    try {
+      const subs = await this.subscriptionModel.find();
+      return Return({
+        error: false,
+        statusCode: 200,
+        data: subs,
+      });
+    } catch (error) {
+      return Return({
+        error: true,
+        statusCode: 500,
+        errorMessage: 'Internal Server Error',
+        trace: error,
+      });
+    }
+  }
 }

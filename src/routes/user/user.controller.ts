@@ -16,6 +16,7 @@ import { Response } from 'express';
 import { join } from 'path';
 import { User } from 'src/Schema/User.schema';
 import { IFile } from 'src/Types/file';
+import { AdminService } from './services/admin/admin.service';
 import { CrudService } from './services/crud/crud.service';
 import { PicsService } from './services/pics/pics.service';
 
@@ -34,7 +35,26 @@ export class UserController {
   constructor(
     private crudService: CrudService,
     private picService: PicsService,
+    private adminService: AdminService,
   ) {}
+
+  @ApiTags('User')
+  @ApiParam({ type: String, name: 'id' })
+  @Get('admin')
+  async getUsersbyadmin(@Res() res: Response) {
+    console.log('this is it');
+    const result = await this.adminService.getAllUser();
+    res.status(result.statusCode).send(result);
+  }
+
+  @ApiTags('User')
+  @ApiParam({ type: String, name: 'id' })
+  @Get('admin/:id')
+  async getUsersbyid(@Res() res: Response, @Param() param: any) {
+    console.log('hit!!!');
+    const result = await this.adminService.getAllUserByID(param['id']);
+    res.status(result.statusCode).send(result);
+  }
 
   @ApiTags('User')
   @ApiParam({ type: String, name: 'id' })
@@ -67,6 +87,15 @@ export class UserController {
       param['id'],
       body,
     );
+    res.status(result.statusCode).send(result);
+  }
+
+  @ApiTags('User')
+  @ApiParam({ type: String, name: 'id' })
+  @Put('admin/approve/:id')
+  async enableUserbyid(@Res() res: Response, @Param() param: any) {
+    console.log('hit!!!');
+    const result = await this.adminService.approveUserByID(param['id']);
     res.status(result.statusCode).send(result);
   }
 

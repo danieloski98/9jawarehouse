@@ -16,10 +16,17 @@ export class PaymentController {
   constructor(private userService: PaymentUserService) {}
 
   @ApiTags('PAYMENT')
-  @ApiParam({ name: 'id' })
-  @Get('subscriptions/:id')
+  @ApiParam({ name: 'vendor_id' })
+  @Get('subscriptions/:vendor_id')
   async getpayment(@Res() res: Response, @Param() param: any) {
     const request = await this.userService.getAllSubs(param['id']);
+    res.status(request.statusCode).send(request);
+  }
+
+  @ApiTags('PAYMENT')
+  @Get('subscriptions')
+  async getallsubs(@Res() res: Response) {
+    const request = await this.userService.getSubs();
     res.status(request.statusCode).send(request);
   }
 

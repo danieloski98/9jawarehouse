@@ -10,6 +10,8 @@ import { ProfilePic, ProfilePicSchema } from 'src/Schema/ProfilePic.Schema';
 import { PicsService } from './services/pics/pics.service';
 import { Record, RecordSchema } from 'src/Schema/Record.Schema';
 import { CommentSchema, Comment } from 'src/Schema/Comment.Schema';
+import { AdminService } from './services/admin/admin.service';
+import { Subscription, SubscriptionSchema } from 'src/Schema/Subscriptions.Schema';
 
 @Module({
   imports: [
@@ -21,9 +23,10 @@ import { CommentSchema, Comment } from 'src/Schema/Comment.Schema';
       { name: ProfilePic.name, schema: ProfilePicSchema },
       { name: Record.name, schema: RecordSchema },
       { name: Comment.name, schema: CommentSchema },
+      { name: Subscription.name, schema: SubscriptionSchema },
     ]),
   ],
   controllers: [UserController],
-  providers: [CrudService, PicsService],
+  providers: [CrudService, PicsService, AdminService],
 })
 export class UserModule {}
