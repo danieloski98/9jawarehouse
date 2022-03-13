@@ -316,7 +316,7 @@ export class User {
   })
   @Prop({
     type: Boolean,
-    default: '',
+    default: false,
   })
   CAC_verified: boolean;
 
