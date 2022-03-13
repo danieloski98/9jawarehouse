@@ -156,7 +156,7 @@ export class CrudService {
     try {
       const reviews = await this.commentModel.updateOne(
         { _id: id },
-        { reviwed: true },
+        { reviewed: true },
       );
       console.log(reviews);
       return Return({
