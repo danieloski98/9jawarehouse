@@ -5,11 +5,50 @@ import ProfileInformation from './component/ProfileInformation';
 import CustomerReview from './component/CustomerReview';
 import Verification from './component/Verification';
 import Subscription from './component/Subscription';
+import {useParams} from 'react-router-dom'
+import { IUser } from '../../types/user';
+import { url } from '../../utils/url';
+import { IReturnObject } from '../../types/ServerReturnType';
+import { useQuery } from 'react-query';
+import {useToast} from '@chakra-ui/react'
+
+const getUser = async (id: string) => {
+    const request = await fetch(`${url}/user/admin/${id}`);
+    const json = await request.json() as IReturnObject;
+
+    if (!request.ok) {
+        throw new Error('An error occured');
+    }
+
+    return json.data as IUser;
+}
 
 export default function VendorProfile() {
+    const [loading, setLoading] = React.useState(true);
+    const [user, setUser] = React.useState({} as IUser|undefined);
 
     const navigate = useNavigate();
+    const params = useParams();
+    const toast = useToast();
+    
     const [tab, setTab] = React.useState(0)
+
+    const userQuery = useQuery(['getUser', params.id], () => getUser(params.id as string), {
+        onSuccess: (data) => {
+            setUser(data);
+            setLoading(false);
+        },
+        onError: () => {
+            toast({
+                status: 'error',
+                title: 'Error',
+                description: 'An error occured while getting user',
+                position: 'top',
+                isClosable: true,
+                duration: 5000,
+            })
+        }
+    })
  
     return (
         <div className='w-full py-10 px-10' >
@@ -38,13 +77,13 @@ export default function VendorProfile() {
             </div>
             <div className='w-full' >
                 {tab === 0 ?
-                    <ProfileInformation />
+                    <ProfileInformation user={user as any} />
                         :tab === 1 ?
-                            <CustomerReview />
+                            <CustomerReview user={user as any} />
                                 :tab === 2 ?
-                                    <Verification />
+                                    <Verification user={user as any}  />
                                         :tab === 3 ?
-                                            <Subscription />
+                                            <Subscription user={user as any} />
                 :null}
             </div>
         </div>

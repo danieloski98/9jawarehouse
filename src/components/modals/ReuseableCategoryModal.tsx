@@ -1,7 +1,134 @@
-import { Input, Select } from '@chakra-ui/react'
-import React from 'react'
+import { Input, Select, useToast, Spinner } from '@chakra-ui/react'
+import React from 'react';
+import { queryClient } from '../../App';
+import { IReturnObject } from '../../types/ServerReturnType';
+import { url } from '../../utils/url';
 
-export default function ReuseableCategoryModal(props: any) {
+interface IProps {
+    header: string;
+    button: string;
+    close: Function;
+    new: boolean;
+    delete: boolean;
+    value?: string;
+    body: string;
+    id: string;
+}
+
+export default function ReuseableCategoryModal(props: IProps) {
+    const [loading, setLoading] = React.useState(false);
+    const [cat, setCat] = React.useState(props.new ? '': props.value);
+    const toast = useToast();
+    
+    const create = async () => {
+        const request = await fetch(`${url}/services`, {
+            method: 'post',
+            headers: {
+                'content-type': 'application/json',
+            },
+            body: JSON.stringify({ name: cat }),
+        });
+        const json = await request.json() as IReturnObject;
+        setLoading(false);
+        if (json.statusCode !== 200) {
+            toast({
+                title: 'Error',
+                description: json.errorMessage,
+                status: 'error',
+                duration: 3000,
+                position: 'top',
+            });
+            return;
+        } else {
+            toast({
+                title: 'Success',
+                description: json.successMessage,
+                status: 'success',
+                duration: 3000,
+                position: 'top',
+            });
+            props.close(false);
+            queryClient.invalidateQueries();
+            return;
+        }
+    }
+
+    const edit = async () => {
+        const request = await fetch(`${url}/services/${props.id}`, {
+            method: 'put',
+            headers: {
+                'content-type': 'application/json',
+            },
+            body: JSON.stringify({ name: cat }),
+        });
+        const json = await request.json() as IReturnObject;
+        setLoading(false);
+        if (json.statusCode !== 200) {
+            toast({
+                title: 'Error',
+                description: json.errorMessage,
+                status: 'error',
+                duration: 3000,
+                position: 'top',
+            });
+            return;
+        } else {
+            toast({
+                title: 'Success',
+                description: json.successMessage,
+                status: 'success',
+                duration: 3000,
+                position: 'top',
+            });
+            props.close(false);
+            queryClient.invalidateQueries();
+            return;
+        }
+    }
+
+    const deletee = async () => {
+        const request = await fetch(`${url}/services/${props.id}`, {
+            method: 'delete',
+        });
+        const json = await request.json() as IReturnObject;
+        setLoading(false);
+        if (json.statusCode !== 200) {
+            toast({
+                title: 'Error',
+                description: json.errorMessage,
+                status: 'error',
+                duration: 3000,
+                position: 'top',
+            });
+            return;
+        } else {
+            toast({
+                title: 'Success',
+                description: json.successMessage,
+                status: 'success',
+                duration: 3000,
+                position: 'top',
+            });
+            props.close(false);
+            queryClient.invalidateQueries();
+            return;
+        }
+    }
+
+    const caller = () => {
+        setLoading(true);
+        if (!props.delete && props.new) {
+            create();
+            return;
+        }
+        if (!props.delete && !props.new) {
+            edit()
+            return
+        }
+        if (props.delete) {
+            deletee();
+        }
+    }
     return (
         <div style={{width: '416px'}} className='bg-white rounded-lg px-10 py-4 pb-14'  > 
             <div className='w-full flex items-center' >
@@ -18,14 +145,17 @@ export default function ReuseableCategoryModal(props: any) {
             </div>
             <p className='text-sm font-Graphik-Regular my-4' >{props.body}</p>
             <p className='text-sm font-Graphik-Medium mb-2 mt-8' >Category</p>
-            {props.delete ? 
+            {/* {props.delete ? 
                 <Select backgroundColor='white' fontSize='sm' placeholder='Select Category' border='1px solid #0C346839' />  
-            :
-                <Input backgroundColor='white' fontSize='sm' placeholder='Enter Category Name' border='1px solid #0C346839' /> 
-            }
-            <p className='text-sm font-Graphik-Medium mb-2 mt-4' >Enter your password</p>
-            <Input backgroundColor='white' fontSize='sm' placeholder='Enter Password' border='1px solid #0C346839' />
-            <button style={{backgroundColor: '#1A8F85'}} className='w-full py-3 font-Graphik-Bold text-sm text-white rounded-md mt-8' >{props.button} </button>
+            : */}
+                <Input disabled={props.delete} backgroundColor='white' value={cat} onChange={(e) => setCat(e.target.value)} fontSize='sm' placeholder='Enter Category Name' border='1px solid #0C346839' /> 
+            {/* } */}
+            {/* <p className='text-sm font-Graphik-Medium mb-2 mt-4' >Enter your password</p>
+            <Input backgroundColor='white' fontSize='sm' placeholder='Enter Password' border='1px solid #0C346839' /> */}
+            <button onClick={caller} style={{backgroundColor: '#1A8F85'}} className='w-full py-3 font-Graphik-Bold text-sm text-white rounded-md mt-8' >
+                {!loading && props.button}
+                {loading && <Spinner size="sm" color="white" />}
+             </button>
         </div>
     )
 }

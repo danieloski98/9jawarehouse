@@ -1,11 +1,50 @@
 import React from 'react'
+import { ICategory } from '../../types/Categories';
+import { IReturnObject } from '../../types/ServerReturnType';
+import { url } from '../../utils/url';
 import ReuseableCategoryModal from '../modals/ReuseableCategoryModal'
+import {useQuery} from 'react-query'
+import {useToast} from '@chakra-ui/react'
+
+const getCategories = async () => {
+    const request = await fetch(`${url}/services`);
+    const json = await request.json() as IReturnObject;
+
+    if(!request.ok) {
+        throw new Error('An error occured while getting categories');
+    }
+
+    return json.data as Array<ICategory>;
+}
 
 export default function Categories() {
 
     const [showModal, setShowModal] = React.useState(false)
     const [deleteModal, setDeleteModal] = React.useState(false)
     const [editModal, setEditModal] = React.useState(false)
+    const [cats, setCats] = React.useState([] as Array<ICategory>);
+    const [loading, setLoading] = React.useState(true);
+    const [active, setActive] = React.useState('');
+    const [id, setId] = React.useState('');
+
+    const toast = useToast();
+
+    const catQuery = useQuery('getCategories', getCategories, {
+        onSuccess: (data) => {
+            setCats(data);
+            setLoading(false);
+        },
+        onError: () => {
+            setLoading(false);
+            toast({
+                title: 'Error',
+                description: 'An error occured while tryng to get Categories',
+                status: 'error',
+                position: 'top',
+                isClosable: true,
+            });
+        }
+    })
 
     return (
         <div className='w-full py-10 px-10' >
@@ -19,74 +58,39 @@ export default function Categories() {
                 </div>
             </div> 
             <div className='w-full flex flex-col justify-center' > 
-                <div className=' mx-auto grid grid-cols-2 gap-8 my-8' >
-                    <div style={{width: '387px', height: '62px'}} className=' bg-white border border-[#70707038] px-6 rounded flex items-center' >
-                        <p className='text-sm font-Graphik-Medium' >Category Name</p>
-                        <div className='ml-auto flex items-center' >
-                            <svg onClick={()=> setEditModal(true)} className='mx-3 cursor-pointer' id="Iconly_Bold_Edit" data-name="Iconly/Bold/Edit" xmlns="http://www.w3.org/2000/svg" width="12.218" height="13.913" viewBox="0 0 12.218 13.913">
-                                <g id="Edit" transform="translate(0)">
-                                    <path id="Edit-2" data-name="Edit" d="M11.793,4.406,4.959,13.244a1.637,1.637,0,0,1-1.271.635l-2.724.033a.311.311,0,0,1-.305-.242L.04,10.986a1.659,1.659,0,0,1,.314-1.4L5.2,3.32a.243.243,0,0,1,.33-.042L7.568,4.9a.658.658,0,0,0,.5.142.735.735,0,0,0,.636-.811.816.816,0,0,0-.256-.493L6.47,2.149a.294.294,0,0,1-.05-.409l.768-1a2.01,2.01,0,0,1,2.946-.2l1.147.911a2.384,2.384,0,0,1,.891,1.363,1.868,1.868,0,0,1-.38,1.589" fill="#200e32"/>
-                                </g>
-                            </svg>
-                            <svg onClick={()=> setDeleteModal(true)} className='mx-3 cursor-pointer' id="Iconly_Bold_Delete" data-name="Iconly/Bold/Delete" xmlns="http://www.w3.org/2000/svg" width="14" height="15" viewBox="0 0 14 15">
-                                <g id="Delete">
-                                    <path id="Delete-2" data-name="Delete" d="M3.991,14.971a2.233,2.233,0,0,1-2.28-2.12c-.244-2.135-.65-7.183-.658-7.234A.58.58,0,0,1,1.2,5.2a.56.56,0,0,1,.407-.176H12.4A.573.573,0,0,1,12.8,5.2a.546.546,0,0,1,.141.419c0,.051-.414,5.106-.651,7.234a2.236,2.236,0,0,1-2.33,2.12C8.956,14.993,7.972,15,7,15,5.975,15,4.968,14.993,3.991,14.971ZM.555,3.819A.557.557,0,0,1,0,3.268V2.983a.552.552,0,0,1,.555-.551H2.823a.989.989,0,0,0,.965-.761l.118-.512A1.536,1.536,0,0,1,5.394,0H8.606a1.536,1.536,0,0,1,1.48,1.123l.127.547a.988.988,0,0,0,.965.762h2.268A.552.552,0,0,1,14,2.983v.285a.557.557,0,0,1-.554.551Z" transform="translate(0)" fill="#200e32"/>
-                                </g>
-                            </svg>
-                        </div>
+
+                {!loading && (
+                    <div className=' mx-auto grid grid-cols-2 gap-8 my-8' >
+
+
+                    {!loading && cats.length > 0 && cats.map((items, index) => (
+                         <div key={index.toString()} style={{width: '387px', height: '62px'}} className=' bg-white border border-[#70707038] px-6 rounded flex items-center' >
+                             <p className='text-sm font-Graphik-Medium' >{items.name}</p>
+                             <div className='ml-auto flex items-center' >
+                                 <svg onClick={()=> {setActive(items.name); setId(items._id); setEditModal(true)}} className='mx-3 cursor-pointer' id="Iconly_Bold_Edit" data-name="Iconly/Bold/Edit" xmlns="http://www.w3.org/2000/svg" width="12.218" height="13.913" viewBox="0 0 12.218 13.913">
+                                     <g id="Edit" transform="translate(0)">
+                                         <path id="Edit-2" data-name="Edit" d="M11.793,4.406,4.959,13.244a1.637,1.637,0,0,1-1.271.635l-2.724.033a.311.311,0,0,1-.305-.242L.04,10.986a1.659,1.659,0,0,1,.314-1.4L5.2,3.32a.243.243,0,0,1,.33-.042L7.568,4.9a.658.658,0,0,0,.5.142.735.735,0,0,0,.636-.811.816.816,0,0,0-.256-.493L6.47,2.149a.294.294,0,0,1-.05-.409l.768-1a2.01,2.01,0,0,1,2.946-.2l1.147.911a2.384,2.384,0,0,1,.891,1.363,1.868,1.868,0,0,1-.38,1.589" fill="#200e32"/>
+                                     </g>
+                                 </svg>
+                                 <svg onClick={()=> {setActive(items.name); setId(items._id); setDeleteModal(true)}} className='mx-3 cursor-pointer' id="Iconly_Bold_Delete" data-name="Iconly/Bold/Delete" xmlns="http://www.w3.org/2000/svg" width="14" height="15" viewBox="0 0 14 15">
+                                     <g id="Delete">
+                                         <path id="Delete-2" data-name="Delete" d="M3.991,14.971a2.233,2.233,0,0,1-2.28-2.12c-.244-2.135-.65-7.183-.658-7.234A.58.58,0,0,1,1.2,5.2a.56.56,0,0,1,.407-.176H12.4A.573.573,0,0,1,12.8,5.2a.546.546,0,0,1,.141.419c0,.051-.414,5.106-.651,7.234a2.236,2.236,0,0,1-2.33,2.12C8.956,14.993,7.972,15,7,15,5.975,15,4.968,14.993,3.991,14.971ZM.555,3.819A.557.557,0,0,1,0,3.268V2.983a.552.552,0,0,1,.555-.551H2.823a.989.989,0,0,0,.965-.761l.118-.512A1.536,1.536,0,0,1,5.394,0H8.606a1.536,1.536,0,0,1,1.48,1.123l.127.547a.988.988,0,0,0,.965.762h2.268A.552.552,0,0,1,14,2.983v.285a.557.557,0,0,1-.554.551Z" transform="translate(0)" fill="#200e32"/>
+                                     </g>
+                                 </svg>
+                             </div>
+                         </div>
+                    ))}
+                   
+               
                     </div>
-                    <div style={{width: '387px', height: '62px'}} className=' bg-white border border-[#70707038] px-6 rounded flex items-center' >
-                        <p className='text-sm font-Graphik-Medium' >Category Name</p>
-                        <div className='ml-auto flex items-center' >
-                            <svg onClick={()=> setEditModal(true)} className='mx-3 cursor-pointer' id="Iconly_Bold_Edit" data-name="Iconly/Bold/Edit" xmlns="http://www.w3.org/2000/svg" width="12.218" height="13.913" viewBox="0 0 12.218 13.913">
-                                <g id="Edit" transform="translate(0)">
-                                    <path id="Edit-2" data-name="Edit" d="M11.793,4.406,4.959,13.244a1.637,1.637,0,0,1-1.271.635l-2.724.033a.311.311,0,0,1-.305-.242L.04,10.986a1.659,1.659,0,0,1,.314-1.4L5.2,3.32a.243.243,0,0,1,.33-.042L7.568,4.9a.658.658,0,0,0,.5.142.735.735,0,0,0,.636-.811.816.816,0,0,0-.256-.493L6.47,2.149a.294.294,0,0,1-.05-.409l.768-1a2.01,2.01,0,0,1,2.946-.2l1.147.911a2.384,2.384,0,0,1,.891,1.363,1.868,1.868,0,0,1-.38,1.589" fill="#200e32"/>
-                                </g>
-                            </svg>
-                            <svg onClick={()=> setDeleteModal(true)} className='mx-3 cursor-pointer' id="Iconly_Bold_Delete" data-name="Iconly/Bold/Delete" xmlns="http://www.w3.org/2000/svg" width="14" height="15" viewBox="0 0 14 15">
-                                <g id="Delete">
-                                    <path id="Delete-2" data-name="Delete" d="M3.991,14.971a2.233,2.233,0,0,1-2.28-2.12c-.244-2.135-.65-7.183-.658-7.234A.58.58,0,0,1,1.2,5.2a.56.56,0,0,1,.407-.176H12.4A.573.573,0,0,1,12.8,5.2a.546.546,0,0,1,.141.419c0,.051-.414,5.106-.651,7.234a2.236,2.236,0,0,1-2.33,2.12C8.956,14.993,7.972,15,7,15,5.975,15,4.968,14.993,3.991,14.971ZM.555,3.819A.557.557,0,0,1,0,3.268V2.983a.552.552,0,0,1,.555-.551H2.823a.989.989,0,0,0,.965-.761l.118-.512A1.536,1.536,0,0,1,5.394,0H8.606a1.536,1.536,0,0,1,1.48,1.123l.127.547a.988.988,0,0,0,.965.762h2.268A.552.552,0,0,1,14,2.983v.285a.557.557,0,0,1-.554.551Z" transform="translate(0)" fill="#200e32"/>
-                                </g>
-                            </svg>
-                        </div>
-                    </div>
-                    <div style={{width: '387px', height: '62px'}} className=' bg-white border border-[#70707038] px-6 rounded flex items-center' >
-                        <p className='text-sm font-Graphik-Medium' >Category Name</p>
-                        <div className='ml-auto flex items-center' >
-                            <svg onClick={()=> setEditModal(true)} className='mx-3 cursor-pointer' id="Iconly_Bold_Edit" data-name="Iconly/Bold/Edit" xmlns="http://www.w3.org/2000/svg" width="12.218" height="13.913" viewBox="0 0 12.218 13.913">
-                                <g id="Edit" transform="translate(0)">
-                                    <path id="Edit-2" data-name="Edit" d="M11.793,4.406,4.959,13.244a1.637,1.637,0,0,1-1.271.635l-2.724.033a.311.311,0,0,1-.305-.242L.04,10.986a1.659,1.659,0,0,1,.314-1.4L5.2,3.32a.243.243,0,0,1,.33-.042L7.568,4.9a.658.658,0,0,0,.5.142.735.735,0,0,0,.636-.811.816.816,0,0,0-.256-.493L6.47,2.149a.294.294,0,0,1-.05-.409l.768-1a2.01,2.01,0,0,1,2.946-.2l1.147.911a2.384,2.384,0,0,1,.891,1.363,1.868,1.868,0,0,1-.38,1.589" fill="#200e32"/>
-                                </g>
-                            </svg>
-                            <svg onClick={()=> setDeleteModal(true)} className='mx-3 cursor-pointer' id="Iconly_Bold_Delete" data-name="Iconly/Bold/Delete" xmlns="http://www.w3.org/2000/svg" width="14" height="15" viewBox="0 0 14 15">
-                                <g id="Delete">
-                                    <path id="Delete-2" data-name="Delete" d="M3.991,14.971a2.233,2.233,0,0,1-2.28-2.12c-.244-2.135-.65-7.183-.658-7.234A.58.58,0,0,1,1.2,5.2a.56.56,0,0,1,.407-.176H12.4A.573.573,0,0,1,12.8,5.2a.546.546,0,0,1,.141.419c0,.051-.414,5.106-.651,7.234a2.236,2.236,0,0,1-2.33,2.12C8.956,14.993,7.972,15,7,15,5.975,15,4.968,14.993,3.991,14.971ZM.555,3.819A.557.557,0,0,1,0,3.268V2.983a.552.552,0,0,1,.555-.551H2.823a.989.989,0,0,0,.965-.761l.118-.512A1.536,1.536,0,0,1,5.394,0H8.606a1.536,1.536,0,0,1,1.48,1.123l.127.547a.988.988,0,0,0,.965.762h2.268A.552.552,0,0,1,14,2.983v.285a.557.557,0,0,1-.554.551Z" transform="translate(0)" fill="#200e32"/>
-                                </g>
-                            </svg>
-                        </div>
-                    </div>
-                    <div style={{width: '387px', height: '62px'}} className=' bg-white border border-[#70707038] px-6 rounded flex items-center' >
-                        <p className='text-sm font-Graphik-Medium' >Category Name</p>
-                        <div className='ml-auto flex items-center' >
-                            <svg onClick={()=> setEditModal(true)} className='mx-3 cursor-pointer' id="Iconly_Bold_Edit" data-name="Iconly/Bold/Edit" xmlns="http://www.w3.org/2000/svg" width="12.218" height="13.913" viewBox="0 0 12.218 13.913">
-                                <g id="Edit" transform="translate(0)">
-                                    <path id="Edit-2" data-name="Edit" d="M11.793,4.406,4.959,13.244a1.637,1.637,0,0,1-1.271.635l-2.724.033a.311.311,0,0,1-.305-.242L.04,10.986a1.659,1.659,0,0,1,.314-1.4L5.2,3.32a.243.243,0,0,1,.33-.042L7.568,4.9a.658.658,0,0,0,.5.142.735.735,0,0,0,.636-.811.816.816,0,0,0-.256-.493L6.47,2.149a.294.294,0,0,1-.05-.409l.768-1a2.01,2.01,0,0,1,2.946-.2l1.147.911a2.384,2.384,0,0,1,.891,1.363,1.868,1.868,0,0,1-.38,1.589" fill="#200e32"/>
-                                </g>
-                            </svg>
-                            <svg onClick={()=> setDeleteModal(true)} className='mx-3 cursor-pointer' id="Iconly_Bold_Delete" data-name="Iconly/Bold/Delete" xmlns="http://www.w3.org/2000/svg" width="14" height="15" viewBox="0 0 14 15">
-                                <g id="Delete">
-                                    <path id="Delete-2" data-name="Delete" d="M3.991,14.971a2.233,2.233,0,0,1-2.28-2.12c-.244-2.135-.65-7.183-.658-7.234A.58.58,0,0,1,1.2,5.2a.56.56,0,0,1,.407-.176H12.4A.573.573,0,0,1,12.8,5.2a.546.546,0,0,1,.141.419c0,.051-.414,5.106-.651,7.234a2.236,2.236,0,0,1-2.33,2.12C8.956,14.993,7.972,15,7,15,5.975,15,4.968,14.993,3.991,14.971ZM.555,3.819A.557.557,0,0,1,0,3.268V2.983a.552.552,0,0,1,.555-.551H2.823a.989.989,0,0,0,.965-.761l.118-.512A1.536,1.536,0,0,1,5.394,0H8.606a1.536,1.536,0,0,1,1.48,1.123l.127.547a.988.988,0,0,0,.965.762h2.268A.552.552,0,0,1,14,2.983v.285a.557.557,0,0,1-.554.551Z" transform="translate(0)" fill="#200e32"/>
-                                </g>
-                            </svg>
-                        </div>
-                    </div>
-                </div>
+                )}
+
             </div> 
             {deleteModal ? 
                 (
                     <>
                         <div className="h-auto flex justify-center items-center overflow-x-hidden overflow-y-hidden fixed pb-4 px-4 inset-0 z-50 outline-none focus:outline-none"> 
-                            <ReuseableCategoryModal delete={true} close={setDeleteModal} button='Delete & Move' header='Delete Category Name' body='You are about to delete “ Category Name” From 9jawarehouse. Select a category to move all users in this category' />
+                            <ReuseableCategoryModal id={id} delete={true} close={setDeleteModal} button='Delete & Move' header='Delete Category Name' body='You are about to delete “ Category Name” From 9jawarehouse. Select a category to move all users in this category' new={false} value={active} />
                         </div> 
                         <div className="opacity-25 fixed flex flex-1 inset-0 z-40 bg-black"/>
                     </>
@@ -96,7 +100,7 @@ export default function Categories() {
                 (
                     <>
                         <div className="h-auto flex justify-center items-center overflow-x-hidden overflow-y-hidden fixed pb-4 px-4 inset-0 z-50 outline-none focus:outline-none"> 
-                            <ReuseableCategoryModal close={setShowModal} button='Save' header='Add New Category' body='You are about to add new “ Category Name” for 9jawarehouse. All users would be updated to the new category name' />
+                            <ReuseableCategoryModal id={id} new={true} close={setShowModal} button='Save' header='Add New Category' body='You are about to add new “ Category Name” for 9jawarehouse. All users would be updated to the new category name' delete={false} />
                         </div> 
                         <div className="opacity-25 fixed flex flex-1 inset-0 z-40 bg-black"/>
                     </>
@@ -106,7 +110,7 @@ export default function Categories() {
                 (
                     <>
                         <div className="h-auto flex justify-center items-center overflow-x-hidden overflow-y-hidden fixed pb-4 px-4 inset-0 z-50 outline-none focus:outline-none"> 
-                            <ReuseableCategoryModal close={setEditModal} button='Save' header='Edit Category Name' body='You are about to edit “ Category Name” From 9jawarehouse. All users would be updated to the new category name' />
+                            <ReuseableCategoryModal id={id} new={false} value={active} close={setEditModal} button='Save' header='Edit Category Name' body='You are about to edit “ Category Name” From 9jawarehouse. All users would be updated to the new category name' delete={false} />
                         </div> 
                         <div className="opacity-25 fixed flex flex-1 inset-0 z-40 bg-black"/>
                     </>

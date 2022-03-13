@@ -1,7 +1,68 @@
-import { Input, InputGroup, InputRightElement } from '@chakra-ui/input'
-import React from 'react'
+import { Input, InputGroup, InputRightElement, Spinner, toast, useToast } from '@chakra-ui/react'
+import React, {useState} from 'react'
+import * as yup from 'yup';
+import { useFormik } from 'formik';
+import { useRecoilState } from 'recoil';
+import { AdminState } from '../../states/AdminState';
+import { url } from '../../utils/url';
+import { IReturnObject } from '../../types/ServerReturnType';
+import { theme } from '../../utils/theme';
+import { queryClient } from '../../App';
+
+const validationSchema = yup.object({
+    email: yup.string().email('Invalid email'),
+    password: yup.string(),
+    fullname: yup.string(),
+});
 
 export default function AccountSettings() {
+    const [loading, setLoading] = useState(false);
+
+    const toast = useToast();
+
+    // recoil state
+    const [admin, setAdmin] = useRecoilState(AdminState);
+
+    const formik = useFormik({
+        initialValues: {email: admin.email, password: admin.password, fullname: admin.fullname},
+        validationSchema,
+        onSubmit: () => {},
+        enableReinitialize: true,
+    });
+
+    const submit = async () => {
+        setLoading(true);
+        const request = await fetch(`${url}/admin/${admin._id}`, {
+            method: 'put',
+            headers: {
+                'content-type': 'application/json',
+            },
+            body: JSON.stringify(formik.values),
+        });
+        setLoading(false);
+        const json = await request.json() as IReturnObject;
+
+        if (json.statusCode !== 200) {
+            toast({
+                status: 'error',
+                title: 'error',
+                description: json.errorMessage,
+                position: 'bottom',
+                duration: 5000,
+            });
+            return;
+        } else {
+            toast({
+                status: 'success',
+                title: 'Success',
+                description: json.successMessage,
+                position: 'bottom',
+                duration: 5000,
+            });
+            queryClient.invalidateQueries();
+        }
+    }
+
     return (
         <div className='w-full py-10 px-10' >
             <div className='w-full flex items-center' > 
@@ -18,11 +79,17 @@ export default function AccountSettings() {
                 <div className='grid grid-cols-2 gap-y-8 gap-x-16' > 
                     <div> 
                         <p className='text-sm mb-1 font-Graphik-Medium '>Name</p> 
-                        <Input size='lg' placeholder="Email" />
+                        <Input size='lg' placeholder="Email" name="fullname" value={formik.values.fullname} onChange={formik.handleChange} onBlur={formik.handleBlur} onFocus={() => formik.setFieldTouched('fullname', true, true)} />
+                        {formik.touched.fullname && formik.errors.fullname && (
+                            <p className='text-xs mt-2 text-red-300'>{formik.errors.fullname}</p>
+                        )}
                     </div>
                     <div> 
                         <p className='text-sm mb-1 font-Graphik-Medium '>Email Address</p> 
-                        <Input size='lg' placeholder="Email" />
+                        <Input disabled={admin.type !== 1} title={admin.type !== 1 ? 'You cant change your email': ''} size='lg' placeholder="Email" name="email" value={formik.values.email} onChange={formik.handleChange} onBlur={formik.handleBlur} onFocus={() => formik.setFieldTouched('email', true, true)} />
+                        {formik.touched.email && formik.errors.email && (
+                            <p className='text-xs mt-2 text-red-300'>{formik.errors.email}</p>
+                        )}
                     </div>
                     <div> 
                         <p className='text-sm mb-1 font-Graphik-Medium '>Old Password</p>  
@@ -34,8 +101,11 @@ export default function AccountSettings() {
                                     </svg>
                                 }
                                 />
-                                <Input size='lg' placeholder="Password" /> 
+                                <Input size='lg' placeholder="Password" type="password" name="password" value={formik.values.password} onChange={formik.handleChange} onBlur={formik.handleBlur} onFocus={() => formik.setFieldTouched('password', true, true)} /> 
                             </InputGroup>
+                            {formik.touched.password && formik.errors.password && (
+                            <p className='text-xs mt-2 text-red-300'>{formik.errors.password}</p>
+                        )}
                     </div>
                     <div> 
                         <p className='text-sm mb-1 font-Graphik-Medium '>New Password</p>  
@@ -47,11 +117,14 @@ export default function AccountSettings() {
                                     </svg>
                                 }
                                 />
-                                <Input size='lg' placeholder="Password" /> 
+                                <Input size='lg' placeholder="Password" type="password" /> 
                             </InputGroup>
                     </div>
                 </div>
-                    <button style={{backgroundColor: '#1A8F85'}} className='px-4 py-3 font-Graphik-Regular text-sm text-white flex items-center rounded-md mt-8' >Update</button>
+                    <button disabled={loading} onClick={submit} style={{backgroundColor: '#1A8F85'}} className='px-4 py-3 font-Graphik-Regular text-sm text-white flex items-center rounded-md mt-8' >
+                        {!loading && (<span>Update</span>)}
+                        {loading && <Spinner size="md" color='white' />}
+                    </button>
             </div>
         </div>
     )

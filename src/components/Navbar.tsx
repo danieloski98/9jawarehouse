@@ -1,11 +1,14 @@
 import { InputGroup, InputLeftElement, Input } from '@chakra-ui/input'
 import React from 'react'
+import { useRecoilState } from 'recoil'
+import { AdminState } from '../states/AdminState'
 import NotificationModal from './modals/NotificationModal'
 
 export default function Navbar(props: any) {
+    const [admin, setAdmin] = useRecoilState(AdminState);
 
     return (
-        <div className='w-full flex items-center bg-white py-7 px-10' >
+        <div className='w-full flex items-center bg-white py-7 px-10 border-b-2 border-gray-400' >
             <div style={{width: '650px'}}>
                 <InputGroup>
                     <InputLeftElement
@@ -24,16 +27,18 @@ export default function Navbar(props: any) {
                     <Input backgroundColor='#FBFBFB' size='lg' fontSize='sm' border='1px solid #70707017' placeholder='Search For Vendors' />
                 </InputGroup>
             </div>
-            <div className='flex ml-auto items-center' >
-                <svg onClick={()=> props.open(true)} className='cursor-pointer' id="Iconly_Light_Notification" data-name="Iconly/Light/Notification" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                    <g id="Notification" transform="translate(3.5 2)">
-                        <path id="Path_425" d="M0,11.787v-.219A3.6,3.6,0,0,1,.6,9.75,4.87,4.87,0,0,0,1.8,7.436c0-.666,0-1.342.058-2.009C2.155,2.218,5.327,0,8.461,0h.078c3.134,0,6.306,2.218,6.617,5.427.058.666,0,1.342.049,2.009A4.955,4.955,0,0,0,16.4,9.759a3.506,3.506,0,0,1,.6,1.809v.209a3.566,3.566,0,0,1-.844,2.39A4.505,4.505,0,0,1,13.3,15.538a45.078,45.078,0,0,1-9.615,0A4.554,4.554,0,0,1,.835,14.167,3.6,3.6,0,0,1,0,11.787Z" transform="translate(0 0)" fill="none" stroke="#0c0c0c" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
-                        <path id="Path_421" d="M0,0A3.061,3.061,0,0,0,2.037,1.127,3.088,3.088,0,0,0,4.288.5,2.886,2.886,0,0,0,4.812,0" transform="translate(6.055 18.852)" fill="none" stroke="#0c0c0c" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
-                    </g>
-                </svg>
-                <div className='ml-8'>
-                    <p className='text-sm font-Graphik-Medium'>Mitchelle Archie</p>
-                    <p className='text-xs font-Graphik-Regular' >marchie@gmail.com</p>
+            <div className='flex flex-1 ml-auto items-center' >
+                <div className="w-16 flex justify-center">
+                    <svg onClick={()=> props.open(true)} className='cursor-pointer' id="Iconly_Light_Notification" data-name="Iconly/Light/Notification" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                        <g id="Notification" transform="translate(3.5 2)">
+                            <path id="Path_425" d="M0,11.787v-.219A3.6,3.6,0,0,1,.6,9.75,4.87,4.87,0,0,0,1.8,7.436c0-.666,0-1.342.058-2.009C2.155,2.218,5.327,0,8.461,0h.078c3.134,0,6.306,2.218,6.617,5.427.058.666,0,1.342.049,2.009A4.955,4.955,0,0,0,16.4,9.759a3.506,3.506,0,0,1,.6,1.809v.209a3.566,3.566,0,0,1-.844,2.39A4.505,4.505,0,0,1,13.3,15.538a45.078,45.078,0,0,1-9.615,0A4.554,4.554,0,0,1,.835,14.167,3.6,3.6,0,0,1,0,11.787Z" transform="translate(0 0)" fill="none" stroke="#0c0c0c" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+                            <path id="Path_421" d="M0,0A3.061,3.061,0,0,0,2.037,1.127,3.088,3.088,0,0,0,4.288.5,2.886,2.886,0,0,0,4.812,0" transform="translate(6.055 18.852)" fill="none" stroke="#0c0c0c" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+                        </g>
+                    </svg>
+                </div>
+                <div className='ml-0'>
+                    <p className='text-sm font-Graphik-Medium'>{admin.fullname}</p>
+                    <p className='text-xs font-Graphik-Regular' >{admin.email}</p>
                 </div>
                 <div className='w-12 h-12 mx-4 bg-green-200 rounded-full ' />
             </div>

@@ -2,6 +2,7 @@ import { Input, Select, Table, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react
 import React from 'react'
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io'
 import { useNavigate } from 'react-router-dom';
+import { IUser } from '../../../types/user';
 
 const Information = [
     {
@@ -38,7 +39,8 @@ const Information = [
     },
 ]
 
-export default function CustomerReview() {
+
+export default function CustomerReview({user}: {user: IUser}) {
 
     const navigate = useNavigate();
     
@@ -105,7 +107,7 @@ export default function CustomerReview() {
                     {/* <TableCaption>Imperial to metric conversion factors</TableCaption> */}
                     <Thead>
                         <Tr className='font-Graphik-Medium text-sm' >
-                            <Th>SERVICE</Th>
+                            <Th>S/N</Th>
                             <Th>CREATED BY</Th> 
                             <Th>VENDOR</Th> 
                             <Th>APPROVED ON</Th> 
@@ -114,14 +116,14 @@ export default function CustomerReview() {
                         </Tr>
                     </Thead>
                     <Tbody>
-                        {Information.map((item, index)=> {
+                        {user.comments !== undefined && user.comments.map((item, index)=> {
                             return(
                                 <Tr className='font-Graphik-Regular text-sm' key={index} >
-                                    <Td>{item.service}</Td>
-                                    <Td className='flex flex-col'><p>{item.user}</p><p className='text-xs' >{item.time}</p></Td>
-                                    <Td>{item.vendor}</Td>
-                                    <Td>{item.approved}</Td>
-                                    <Td style={item.status === 'Approved' ? {color: '#0CD27C'} : item.status === 'Pending' ? {color: '#A6B805'} : item.status === 'Rejected' ? {color: '#F60D0D'} : {}}>{item.status}</Td>
+                                    <Td>{index+1}</Td>
+                                    <Td className='flex flex-col'><p>{item.fullname}</p><p className='text-xs' >{new Date(item.created_at).toDateString()}</p></Td>
+                                    <Td>{user.business_name}</Td>
+                                    <Td>{new Date(item.created_at).toDateString()}</Td>
+                                    <Td style={item.reviewed ? {color: '#0CD27C'} :  {color: '#F60D0D'}}>{item.reviewed ? 'Approved':'Not Approved'}</Td>
                                     <Td >
                                         <svg className='mx-auto cursor-pointer' id="Iconly_Bold_Show" data-name="Iconly/Bold/Show" xmlns="http://www.w3.org/2000/svg" width="15" height="12" viewBox="0 0 15 12">
                                             <g id="Show">

@@ -1,11 +1,147 @@
-import { Checkbox, Input, InputGroup, InputRightElement } from '@chakra-ui/react'
+import { Checkbox, Input, InputGroup, InputRightElement, Select, Spinner, useToast } from '@chakra-ui/react'
 import React from 'react'
 import { IoIosArrowBack } from 'react-icons/io'
+import {FiUser} from 'react-icons/fi'
 import { useNavigate } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
+import { AdminState } from '../../states/AdminState';
+import * as yup from 'yup';
+import {useFormik} from 'formik';
+import { url } from '../../utils/url';
+import { IReturnObject } from '../../types/ServerReturnType';
+
+const validationSchema = yup.object({
+    email: yup.string().email('Invalid email').required('This field is required'),
+    password: yup.string().required('This field is required'),
+    fullname: yup.string().required('Fullname is required'),
+});
 
 export default function AddNewRole() {
+    // recoild state
+    const [admin, setAdmin] = useRecoilState(AdminState);
+    // react state
+    const [picture, setPicture] = React.useState(admin.picture);
+    const [permissions, setPermissions] = React.useState([] as Array<string>);
+    const [type, setType] = React.useState(3);
+    const [vendors, setVendors] = React.useState(false);
+    const [subs, setSubs] = React.useState(false);
+    const [cat, setCat] = React.useState(false);
+    const [re, setRe] = React.useState(false);
+    const [loading, setLoading] = React.useState(false);
+
+    // ref
+
+    const toast = useToast();
+
+    React.useEffect(() => {
+        setPermissions(permissions);
+        console.log(permissions);
+        setVendors(permissions.includes('VENDOR'));
+        setSubs(permissions.includes('SUBSCRIPTION'));
+        setCat(permissions.includes('CATEGORY'));
+        setRe(permissions.includes('REVIEW'));
+    }, [permissions])
+
 
     const navigate = useNavigate(); 
+
+    const formik = useFormik({
+        initialValues: {email: '', password: '', fullname: ''},
+        validationSchema,
+        onSubmit: async () => {},
+    });
+
+    const check = (value: string) => {
+        if (permissions.includes(value)) {
+            // remove it from permissions list
+            const pp = [...permissions];
+            const index = pp.indexOf(value);
+            pp.splice(index, 1);
+            setPermissions(pp);
+            return;
+        }
+        if (!permissions.includes(value)) {
+            const pp = [...permissions, value];
+            setPermissions(pp);
+        }
+    }
+
+    const submit = async () => {
+        if (!formik.dirty) {
+            toast({
+                title: 'Error',
+                description: 'please fillin the form',
+                status: 'warning',
+                duration: 3000,
+                position: 'top',
+                isClosable: true,
+            });
+            return;
+        }
+
+        if (!formik.isValid) {
+            toast({
+                title: 'Error',
+                description: 'please fillin the form correctly',
+                status: 'error',
+                duration: 3000,
+                position: 'top',
+                isClosable: true,
+            });
+            return;
+        }
+
+        if (permissions.length < 1) {
+            if (!formik.isValid) {
+                toast({
+                    title: 'Error',
+                    description: 'please pick at least 1 permission for this user',
+                    status: 'error',
+                    duration: 3000,
+                    position: 'top',
+                    isClosable: true,
+                });
+                return;
+            }
+        }
+        setLoading(true);
+        const obj = {
+            ...formik.values,
+            permissions,
+            type,
+        }
+        const request = await fetch(`${url}/admin/createaccount`, {
+            method: 'post',
+            headers: {
+                'content-type': 'application/json',
+            },
+            body: JSON.stringify(obj),
+        });
+        const json = await request.json() as IReturnObject;
+        setLoading(false);
+        if (json.statusCode !== 200) {
+            toast({
+                title: 'Error',
+                description: json.errorMessage,
+                status: 'error',
+                duration: 3000,
+                position: 'top',
+                isClosable: true,
+            });
+            return;
+        } else {
+            toast({
+                title: 'Success',
+                description: json.successMessage,
+                status: 'success',
+                duration: 3000,
+                position: 'top',
+                isClosable: true,
+            });
+            navigate('/dashboard/rolemanagement')
+            return;
+        }
+    }
     
     return (
         <div className='w-full py-10 px-10' > 
@@ -19,22 +155,41 @@ export default function AddNewRole() {
                 </div> 
             </div> 
             <div className='my-12 bg-white rounded-xl p-8' >
-                <p className='font-Graphik-Medium text-lg' >Add Profile Photo</p>
+                {/* <p className='font-Graphik-Medium text-lg' >Add Profile Photo</p>
                 <div style={{width: '139px', height: '131px', backgroundColor: '#F0F0F0'}} className='bg-#F0F0F0 rounded-lg my-6' >
-
-                </div>
+                    {picture === undefined && (
+                        <div className='w-full h-full flex justify-center items-center'>
+                            <FiUser size={70} color="grey" />
+                        </div>
+                    )}
+                    {picture === '' && (
+                        <div className='w-full h-full flex justify-center items-center'>
+                            <FiUser size={70} color="grey" />
+                        </div>
+                    )}
+                    {picture !== undefined && picture !== '' && (
+                        <img src={picture} className="w-full h-full object-cover" alt="pic" />
+                    )}
+                </div> */}
                 <div className='flex w-full mt-4' > 
                     <div className='w-full mr-6' >
                         <div> 
                             <p className='text-sm mb-1 font-Graphik-Medium '>Name</p> 
-                            <Input size='lg' placeholder="Name" />
+                            <Input size='lg' placeholder="Name" name="fullname" value={formik.values.fullname} onChange={formik.handleChange} onBlur={formik.handleBlur} onFocus={() => formik.setFieldTouched('fullname', true, true)} />
+                            {formik.touched.fullname && formik.errors.fullname && (
+                            <p className='text-xs mt-2 text-red-300'>{formik.errors.fullname}</p>
+                        )}
                         </div>
                         <div> 
                             <p className='text-sm mb-1 mt-6 font-Graphik-Medium '>User Type</p> 
-                            <Input size='lg' placeholder="Admin" />
+                            <Select size='lg' value={type} onChange={(e) => setType(parseInt(e.target.value))}>
+                                <option value={1}>Super Admin</option>
+                                <option value={2}>Admin</option>
+                                <option value={3}>Viewer</option>
+                            </Select>
                         </div>
                         <div> 
-                            <p className='text-sm mb-1 mt-6 font-Graphik-Medium '>Old Password</p>  
+                            <p className='text-sm mb-1 mt-6 font-Graphik-Medium '>Password</p>  
                                 <InputGroup >
                                     <InputRightElement 
                                     children={
@@ -43,48 +198,58 @@ export default function AddNewRole() {
                                         </svg>
                                     }
                                     />
-                                    <Input size='lg' placeholder="Password" /> 
+                                    <Input size='lg' type="password" placeholder="Password" name="password" value={formik.values.password} onChange={formik.handleChange} onBlur={formik.handleBlur} onFocus={() => formik.setFieldTouched('password', true, true)} /> 
                                 </InputGroup>
+                                {formik.touched.password && formik.errors.password && (
+                                    <p className='text-xs mt-2 text-red-300'>{formik.errors.password}</p>
+                                )}
                         </div> 
                     </div>
                     <div className='w-full ml-6' > 
                         <div> 
                             <p className='text-sm mb-1 font-Graphik-Medium '>Email Address</p> 
-                            <Input size='lg' placeholder="Email" />
+                            <Input size='lg' placeholder="Email" name="email" value={formik.values.email} onChange={formik.handleChange} onBlur={formik.handleBlur} onFocus={() => formik.setFieldTouched('email', true, true)} />
+                            {formik.touched.email && formik.errors.email && (
+                            <p className='text-xs mt-2 text-red-300'>{formik.errors.email}</p>
+                        )}
                         </div>
 
                         <p className='text-sm mb-1 mt-6 font-Graphik-Medium '>Permissions</p> 
                         <div className='flex items-center mt-4 ' >
-                            <div className='flex items-center mr-3' >
+                            {/* <div className='flex items-center mr-3' >
                                 <Checkbox />
                                 <p className='ml-3 font-Graphik-Regular text-sm' >Customers</p>
-                            </div>
+                            </div> */}
                             <div className='flex items-center mr-3' >
-                                <Checkbox />
+                                <Checkbox isChecked={vendors} onChange={() => check('VENDOR') } />
                                 <p className='ml-3 font-Graphik-Regular text-sm' >Vendors</p>
                             </div>
                             <div className='flex items-center' >
-                                <Checkbox />
+                                <Checkbox isChecked={subs} onChange={() => check('SUBSCRIPTION') } />
                                 <p className='ml-3 font-Graphik-Regular text-sm' >Subscriptions</p>
                             </div> 
                         </div>
                         <div className='flex items-center my-6' > 
                             <div className='flex items-center mr-3' >
-                                <Checkbox />
+                                <Checkbox isChecked={cat} onChange={() => check('CATEGORY') } />
                                 <p className='ml-3 font-Graphik-Regular text-sm' >Categories</p>
                             </div>
-                            <div className='flex items-center mr-3' >
-                                <Checkbox />
-                                <p className='ml-3 font-Graphik-Regular text-sm' >Support Tickets</p>
-                            </div>
-                        </div>
-                        <div className='flex items-center' >
-                            <Checkbox />
+                            <div className='flex items-center' >
+                            <Checkbox isChecked={re} value="REVIEW" onChange={(e) => check(e.target.value) }  />
                             <p className='ml-3 font-Graphik-Regular text-sm' >Customer Reviews</p>
                         </div>
+                            {/* <div className='flex items-center mr-3' >
+                                <Checkbox />
+                                <p className='ml-3 font-Graphik-Regular text-sm' >Support Tickets</p>
+                            </div> */}
+                        </div>
+                        
                     </div>
                 </div>
-                    <button style={{backgroundColor: '#1A8F85'}} className='px-4 py-3 font-Graphik-Regular text-sm text-white flex items-center rounded-md mt-8' >Create User</button>
+                    <button onClick={submit} style={{backgroundColor: '#1A8F85'}} className='px-4 py-3 font-Graphik-Regular text-sm text-white flex items-center rounded-md mt-8' >
+                        {!loading && <span>Create User</span>}
+                        {loading && (<Spinner size="sm" color="white" />)}
+                    </button>
             </div>
         </div>
     )

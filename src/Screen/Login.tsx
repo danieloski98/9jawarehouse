@@ -1,12 +1,100 @@
-import React from 'react'
+import React, {useCallback, useState} from 'react'
 import logo from '../assets/images/logo.png' 
-import {InputGroup, InputRightElement, Input} from '@chakra-ui/react'
+import {InputGroup, InputRightElement, Input, useToast, Spinner} from '@chakra-ui/react'
 import { useNavigate } from 'react-router-dom';
 import SideImage from '../components/SideImage';
 
-export default function Login() {
+import {useFormik} from 'formik';
+import * as yup from 'yup';
+import { url } from '../utils/url';
+import { IReturnObject } from '../types/ServerReturnType';
+import { useRecoilState } from 'recoil';
+import { AdminState } from '../states/AdminState';
+import { TokenState } from '../types/Token.Type';
+import { theme } from '../utils/theme';
 
+const validationSchema = yup.object({
+    email: yup.string().email('Invalid email').required('This field is required'),
+    password: yup.string().required('This field is required'),
+});
+
+export default function Login() {
+    const [loading, setLoading] = useState(false);
+
+    // recoil states
+    const [admin, setAdmin] = useRecoilState(AdminState);
+    const [token, setToken] = useRecoilState(TokenState);
+
+    const toast = useToast();
     const navigate = useNavigate();
+
+    const formik = useFormik({
+        initialValues: {email: '', password: ''},
+        validationSchema,
+        onSubmit: async () => {
+           
+
+        },
+    });
+    
+    const submit = async() => {
+         // validate fields
+         if (!formik.dirty) {
+            toast({
+                title: 'Warning',
+                description: 'Please fillin the form to continue',
+                status: 'warning',
+                duration: 3000,
+            });
+            return;
+        }
+        if (!formik.isValid) {
+            toast({
+                title: 'Error',
+                description: 'Please fillin the form to correctly',
+                status: 'error',
+                duration: 3000,
+                position: 'top',
+            });
+            return;
+        }
+        setLoading(true);
+        // make request
+        const request = await fetch(`${url}/admin/login`, {
+            method: 'post',
+            headers: {
+                'content-type': 'application/json',
+            },
+            body: JSON.stringify(formik.values),
+        });
+
+        setLoading(false);
+        const json = await request.json() as IReturnObject;
+
+        if (json.statusCode !== 200) {
+            toast({
+                title: 'Error',
+                description: json.errorMessage,
+                status: 'error',
+                duration: 3000,
+                position: 'top',
+            });
+            return;
+        } else {
+            toast({
+                title: 'Success',
+                description: json.successMessage,
+                status: 'success',
+                duration: 3000,
+                position: 'top',
+            });
+            setAdmin(json.data.admin);
+            setToken(json.data.token);
+            // save details in localStorage;
+            navigate('dashboard')
+            return;
+        }
+    }
 
     return (
         <div className='w-full flex bg-white flex-row h-screen'> 
@@ -20,7 +108,10 @@ export default function Login() {
                     <p className='text-base font-Graphik-Regular mt-4 mb-6'>Manage 9Jawarehouse SEAMLESSLY</p> 
                     <div className='my-4 pt-4 w-full' >
                         <p className='text-sm mb-1 font-Graphik-Medium '>Email Address</p> 
-                        <Input size='lg' placeholder="Email" />
+                        <Input size='lg' placeholder="Email" name="email" value={formik.values.email} onChange={formik.handleChange} onBlur={formik.handleBlur} onFocus={() => formik.setFieldTouched('email', true, true)} />
+                        {formik.touched.email && formik.errors.email && (
+                            <p className='text-xs mt-2 text-red-300'>{formik.errors.email}</p>
+                        )}
                     </div> 
                     <div className='my-4 pt-2 w-full' >
                         <p className='text-sm mb-1 font-Graphik-Medium '>Password</p>  
@@ -32,11 +123,17 @@ export default function Login() {
                                 </svg>
                             }
                             />
-                            <Input size='lg' placeholder="Password" /> 
+                            <Input size='lg' type="password" placeholder="Password" name="password" value={formik.values.password} onChange={formik.handleChange} onBlur={formik.handleBlur} onFocus={() => formik.setFieldTouched('password', true, true)} /> 
                         </InputGroup>
+                        {formik.touched.password && formik.errors.password && (
+                            <p className='text-xs mt-2 text-red-300'>{formik.errors.password}</p>
+                        )}
                     </div>   
                         <p onClick={()=> navigate('/resetpassword')} className='text-base cursor-pointer my-2 text-right font-Graphik-Regular '>Forgot Password?</p> 
-                    <button onClick={()=> navigate('/dashboard')} style={{ width: '166px' ,backgroundColor:'#1A8F85'}} className='text-base text-white  rounded  py-3 font-Graphik-SemiBold'>Log In</button>
+                    <button onClick={()=> submit()} style={{ width: '166px' ,backgroundColor:'#1A8F85'}} className='text-base text-white  rounded  py-3 font-Graphik-SemiBold'>
+                        {!loading && (<span>Log In</span>)}
+                        {loading && <Spinner size="sm" color="white" />}
+                    </button>
                 </div>
             </div>
         </div>

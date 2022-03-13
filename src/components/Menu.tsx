@@ -25,38 +25,38 @@ export default function Menu(props: any) {
         }
     }   
  
-    React.useEffect(() => {
-        if(localStorage.getItem('tab')){
-            setActive(localStorage.getItem('tab')+'')
-        }else{ 
-            setActive('Overview')
-        }
-        const rout = active.toLowerCase().replace(/\s/g,'')
-        if(active === 'Overview'){ 
-            navigate('/dashboard') 
-        } else if(active === 'Vendors'){ 
-            // navigate('/dashboard/') 
-        } else if(active === 'Role Management'){ 
-            // navigate('/dashboard/') 
-        } else {
-            navigate('/dashboard/'+rout) 
-        }
-    },[active, navigate])
+    // React.useEffect(() => {
+    //     if(localStorage.getItem('tab')){
+    //         setActive(localStorage.getItem('tab')+'')
+    //     }else{ 
+    //         setActive('Overview')
+    //     }
+    //     const rout = active.toLowerCase().replace(/\s/g,'')
+    //     if(active === 'Overview'){ 
+    //         navigate('/dashboard') 
+    //     } else if(active === 'Vendors'){ 
+    //         // navigate('/dashboard/') 
+    //     } else if(active === 'Role Management'){ 
+    //         // navigate('/dashboard/') 
+    //     } else {
+    //         navigate('/dashboard/'+rout) 
+    //     }
+    // },[active, navigate])
 
 
     React.useEffect(() => { 
-        if(active === 'Vendors'){ 
-            navigate('/dashboard/vendors') 
-        } else if(active === 'Role Management'){ 
-            navigate('/dashboard/rolemanagement') 
-        }
+        // if(active === 'Vendors'){ 
+        //     navigate('/dashboard/vendors') 
+        // } else if(active === 'Role Management'){ 
+        //     navigate('/dashboard/rolemanagement') 
+        // }
     },[])
 
     return (
         <div className='w-full h-screen pt-4 flex flex-col items-start overflow-y-auto' > 
         <img style={{width: '70px', height:'70px'}} className='ml-6' alt='logo' src={logo} />
             <p className=' font-Graphik-Medium text-sm my-4 ml-6' >Internal Dashboard</p>
-            <div className='w-full' style={{backgroundColor: '#FCFCFC'}} >
+            <div className='w-full z-0' style={{backgroundColor: '#FCFCFC'}} >
                 {Array.map((item: any, index: any) => {
                     return(  
                         <div key={index} className='w-full cursor-pointer px-4 my-3' > 

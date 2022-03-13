@@ -1,8 +1,12 @@
-import { Select, Input, Table, Thead, Tr, Th, Tbody, Td } from '@chakra-ui/react'
+import { Select, Input, Table, Thead, Tr, Th, Tbody, Td, useToast } from '@chakra-ui/react'
 import React from 'react' 
 import { useNavigate } from 'react-router-dom'
 import EditUserProfileModal from './modal/EditUserProfileModal';
 import ReuseableUserModal from './modal/ReuseableUserModal';
+import {useQuery} from 'react-query';
+import { url } from '../../utils/url';
+import { IReturnObject } from '../../types/ServerReturnType';
+import { IUser } from '../../types/user';
 
 const Information = [
     {
@@ -35,13 +39,42 @@ const Information = [
       date: 'March 12, 2021',
       time: '05:09:01 PM', 
     },
-] 
+];
+
+const getAllBusiness = async () => {
+    const request = await fetch(`${url}/user/admin`);
+    const json = await request.json() as IReturnObject;
+
+    if (!request.ok) {
+        throw new Error('An Error occured');
+    }
+    return json.data as Array<IUser>;
+}
 
 export default function Vendors() {
 
     const navigate = useNavigate(); 
     const [showModal, setShowModal] = React.useState(false) 
     const [deleteModal, setDeleteModal] = React.useState(false)
+    const [users, setUsers] = React.useState([] as Array<IUser>);
+
+    const toast = useToast();
+
+    const userQuery = useQuery('getVendors', getAllBusiness, {
+        onSuccess: (data) => {
+            setUsers(data);
+        },
+        onError: () => {
+            toast({
+                status: 'error',
+                title: 'error',
+                description: 'Anerror occured while getting vendors',
+                isClosable: true,
+                position: 'top',
+                duration: 5000,
+            })
+        }
+    })
 
     return (
         <div className='w-full h-full' >
@@ -58,17 +91,17 @@ export default function Vendors() {
                 <div className='bg-white w-full mx-2 p-4 rounded-lg' >
                     <p style={{fontSize: '24px'}} className='font-Graphik-SemiBold'>3000</p>
                     <p className='text-sm font-Graphik-Medium mt-1' >Total Register Vendors</p>
-                    <p style={{color: '#8A8A8A'}} className='text-xs font-Graphik-Regular mt-2' ><span style={{color: '#E00253'}} >-2%</span> than last month</p>
+                    {/* <p style={{color: '#8A8A8A'}} className='text-xs font-Graphik-Regular mt-2' ><span style={{color: '#E00253'}} >-2%</span> than last month</p> */}
                 </div> 
                 <div className='bg-white w-full mx-2 p-4 rounded-lg' >
                     <p style={{fontSize: '24px'}} className='font-Graphik-SemiBold'>2500</p>
                     <p className='text-sm font-Graphik-Medium mt-1' >Total verfied</p>
-                    <p style={{color: '#8A8A8A'}} className='text-xs font-Graphik-Regular mt-2' ><span style={{color: '#E00253'}} >-2%</span> than last month</p>
+                    {/* <p style={{color: '#8A8A8A'}} className='text-xs font-Graphik-Regular mt-2' ><span style={{color: '#E00253'}} >-2%</span> than last month</p> */}
                 </div> 
                 <div className='bg-white w-full mx-2 p-4 rounded-lg' >
                     <p style={{fontSize: '24px'}} className='font-Graphik-SemiBold'>500</p>
                     <p className='text-sm font-Graphik-Medium mt-1' >Total Unverified</p>
-                    <p style={{color: '#8A8A8A'}} className='text-xs font-Graphik-Regular mt-2' ><span style={{color: '#0CD27C'}} >-2%</span> than last month</p>
+                    {/* <p style={{color: '#8A8A8A'}} className='text-xs font-Graphik-Regular mt-2' ><span style={{color: '#0CD27C'}} >-2%</span> than last month</p> */}
                 </div> 
             </div>
             <div className='flex items-center my-12' >
@@ -96,19 +129,19 @@ export default function Vendors() {
                             <Th>VENDOR NAME</Th> 
                             <Th>VENDOR EMAIL</Th> 
                             <Th>SIGN UP DATE</Th> 
-                            <Th>SIGN UP TIME</Th> 
+                            <Th>Status</Th> 
                             <Th>ACTION</Th> 
                         </Tr>
                     </Thead>
                     <Tbody>
-                        {Information.map((item, index)=> {
+                        {users.map((item, index)=> {
                             return(
                                 <Tr className='font-Graphik-Regular text-sm' key={index} >
                                     <Td>{index+1}</Td>
-                                    <Td>{item.name}</Td>
+                                    <Td>{item.business_name}</Td>
                                     <Td>{item.email}</Td>
-                                    <Td>{item.date}</Td>
-                                    <Td>{item.time}</Td>
+                                    <Td>{new Date(item.createAt).toDateString()}</Td>
+                                    <Td>{item.disabled ? 'INACTIVE':'ACTIVE'}</Td>
                                     <Td className='flex items-center justify-between' >
                                         <svg onClick={()=> setDeleteModal(true)} className='mx-2 cursor-pointer' id="Iconly_Bold_Delete" data-name="Iconly/Bold/Delete" xmlns="http://www.w3.org/2000/svg" width="14" height="15" viewBox="0 0 14 15">
                                             <g id="Delete">
@@ -120,7 +153,7 @@ export default function Vendors() {
                                                 <path id="Edit-2" data-name="Edit" d="M11.793,4.406,4.959,13.244a1.637,1.637,0,0,1-1.271.635l-2.724.033a.311.311,0,0,1-.305-.242L.04,10.986a1.659,1.659,0,0,1,.314-1.4L5.2,3.32a.243.243,0,0,1,.33-.042L7.568,4.9a.658.658,0,0,0,.5.142.735.735,0,0,0,.636-.811.816.816,0,0,0-.256-.493L6.47,2.149a.294.294,0,0,1-.05-.409l.768-1a2.01,2.01,0,0,1,2.946-.2l1.147.911a2.384,2.384,0,0,1,.891,1.363,1.868,1.868,0,0,1-.38,1.589" fill="#200e32"/>
                                             </g>
                                         </svg>
-                                        <svg onClick={()=> navigate('/dashboard/vendors/profile')} className='mx-2 cursor-pointer' id="Iconly_Bold_Show" data-name="Iconly/Bold/Show" xmlns="http://www.w3.org/2000/svg" width="15" height="12" viewBox="0 0 15 12">
+                                        <svg onClick={()=> navigate(`/dashboard/vendors/profile/${item._id}`)} className='mx-2 cursor-pointer' id="Iconly_Bold_Show" data-name="Iconly/Bold/Show" xmlns="http://www.w3.org/2000/svg" width="15" height="12" viewBox="0 0 15 12">
                                             <g id="Show">
                                                 <path id="Show-2" data-name="Show" d="M7.493,12C4.4,12,1.611,9.836.044,6.211a.543.543,0,0,1,0-.429C1.609,2.161,4.394,0,7.493,0H7.5a6.98,6.98,0,0,1,4.3,1.534,10.676,10.676,0,0,1,3.154,4.248.543.543,0,0,1,0,.429C13.389,9.836,10.6,12,7.5,12ZM4.573,6A2.923,2.923,0,1,0,7.5,3.091,2.918,2.918,0,0,0,4.573,6Zm1.1,0a1.865,1.865,0,0,1,.037-.356h.036a1.5,1.5,0,0,0,1.5-1.44A1.492,1.492,0,0,1,7.5,4.18,1.814,1.814,0,1,1,5.672,6Z" fill="#200e32"/>
                                             </g>

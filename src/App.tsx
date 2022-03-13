@@ -2,7 +2,6 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Dashboard from './Screen/Dashboard';
 import Login from './Screen/Login';
-import { ChakraProvider } from '@chakra-ui/react'
 import ResetPassword from './Screen/ResetPassword'; 
 import Overview from './components/DashboardTabs/Overview';
 import Activity from './components/DashboardTabs/Activity';
@@ -19,33 +18,44 @@ import AccountSettings from './components/DashboardTabs/AccountSettings';
 import AddNewRole from './components/RoleManagement/AddNewRole';
 import EditRole from './components/RoleManagement/EditRole';
 
+import { ChakraProvider } from '@chakra-ui/react'
+import { QueryClient, QueryClientProvider} from 'react-query';
+import { RecoilRoot } from 'recoil';
+
+export const queryClient = new QueryClient();
+
 export default function App() {
     return (
-      <ChakraProvider>
-        <Router>
-          <Routes> 
-            <Route path='/' element={<Login />} />
-            <Route path='/resetpassword' element={<ResetPassword />} />
-            <Route path='/dashboard' element={<Dashboard />}> 
-              <Route path='/dashboard/' element={<Overview />} />
-              <Route path='/dashboard/activity' element={<Activity />} />
-              <Route path='/dashboard/pushnotifications' element={<PushNotifications />} />
-              <Route path='/dashboard/categories' element={<Categories />} />
-              <Route path='/dashboard/subscriptions' element={<Subscriptions />} />
-              <Route path='/dashboard/rolemanagement' element={<RoleManagement />} >
-                <Route path='/dashboard/rolemanagement' element={<RoleManage />} />
-                <Route path='/dashboard/rolemanagement/adduser' element={<AddNewRole />} />
-                <Route path='/dashboard/rolemanagement/edituser' element={<EditRole />} />
+      <QueryClientProvider client={queryClient}>
+        <RecoilRoot>
+        <ChakraProvider>
+          <Router>
+            <Routes> 
+              <Route path='/' element={<Login />} />
+              <Route path='/resetpassword' element={<ResetPassword />} />
+              <Route path='/dashboard' element={<Dashboard />}> 
+                <Route path='/dashboard' element={<Overview />} />
+                <Route path='/dashboard/overview' element={<Overview />} />
+                <Route path='/dashboard/activity' element={<Activity />} />
+                <Route path='/dashboard/pushnotifications' element={<PushNotifications />} />
+                <Route path='/dashboard/categories' element={<Categories />} />
+                <Route path='/dashboard/subscriptions' element={<Subscriptions />} />
+                <Route path='/dashboard/rolemanagement' element={<RoleManagement />} >
+                  <Route path='/dashboard/rolemanagement' element={<RoleManage />} />
+                  <Route path='/dashboard/rolemanagement/adduser' element={<AddNewRole />} />
+                  <Route path='/dashboard/rolemanagement/edituser' element={<EditRole />} />
+                </Route>
+                <Route path='/dashboard/accountsettings' element={<AccountSettings />} />
+                <Route path='/dashboard/vendors' element={<Vendor />} > 
+                  <Route path='/dashboard/vendors/' element={<Vendors />} />
+                  <Route path='/dashboard/vendors/archived' element={<ArchivedVendors />} />
+                  <Route path='/dashboard/vendors/profile/:id' element={<VendorProfile />} />
+                </Route>
               </Route>
-              <Route path='/dashboard/accountsettings' element={<AccountSettings />} />
-              <Route path='/dashboard/vendors' element={<Vendor />} > 
-                <Route path='/dashboard/vendors' element={<Vendors />} />
-                <Route path='/dashboard/vendors/archived' element={<ArchivedVendors />} />
-                <Route path='/dashboard/vendors/profile' element={<VendorProfile />} />
-              </Route>
-            </Route>
-          </Routes>
-        </Router>
-      </ChakraProvider>
+            </Routes>
+          </Router>
+        </ChakraProvider>
+        </RecoilRoot>
+      </QueryClientProvider>
     );
 }

@@ -1,6 +1,7 @@
 import { Input, Select, Table, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react'
 import React from 'react'
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io'
+import { IUser } from '../../../types/user'
 import CancelSubscribtion from '../CancelSubscribtion'
 import RenewSubscribtion from '../modal/RenewSubscribtion'
 import SubscriptionModal from '../modal/SubscriptionModal'
@@ -43,7 +44,7 @@ const Information = [
     },
 ]
 
-export default function Subscription() {
+export default function Subscription({user}: {user: IUser}) {
 
     const [showModal, setShowModal] = React.useState(false)
     const [renewModal, setRenewModal] = React.useState(false)
@@ -120,14 +121,14 @@ export default function Subscription() {
                         </Tr>
                     </Thead>
                     <Tbody>
-                        {Information.map((item, index)=> {
+                        {user.subscriptions !== undefined && user.subscriptions.map((item, index)=> {
                             return(
                                 <Tr className='font-Graphik-Regular text-sm' key={index} >
-                                    <Td>{item.id}</Td> 
+                                    <Td>{item.reference_id}</Td> 
                                     <Td>{item.amount}</Td>
-                                    <Td>{item.period}</Td>
-                                    <Td>{item.date}</Td>
-                                    <Td style={item.status === 'Active' ? {color: "#0CD27C"}: {color: '#777777'}} >{item.status}</Td>
+                                    <Td>{item.business_id}</Td>
+                                    <Td>{new Date(item.created_at).toDateString()}</Td>
+                                    <Td style={item.status === 1 ? {color: "#0CD27C"}: {color: '#777777'}} >{item.status}</Td>
                                     <Td >
                                         <svg onClick={()=> setShowModal(true)} className='mx-auto cursor-pointer' id="Iconly_Bold_Show" data-name="Iconly/Bold/Show" xmlns="http://www.w3.org/2000/svg" width="15" height="12" viewBox="0 0 15 12">
                                             <g id="Show">
