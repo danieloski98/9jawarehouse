@@ -152,6 +152,48 @@ export class CrudService {
     }
   }
 
+  async acceptReview(id: string): Promise<IReturnObject> {
+    try {
+      const reviews = await this.commentModel.updateOne(
+        { _id: id },
+        { reviwed: true },
+      );
+      console.log(reviews);
+      return Return({
+        error: false,
+        statusCode: 200,
+        successMessage: 'Review approved',
+        data: reviews,
+      });
+    } catch (error) {
+      return Return({
+        error: true,
+        statusCode: 500,
+        errorMessage: 'Internal server Error',
+        trace: error,
+      });
+    }
+  }
+
+  async getAllReviews(): Promise<IReturnObject> {
+    try {
+      const reviews = await this.commentModel.find();
+      return Return({
+        error: false,
+        statusCode: 200,
+        successMessage: 'Reviews gotten',
+        data: reviews,
+      });
+    } catch (error) {
+      return Return({
+        error: true,
+        statusCode: 500,
+        errorMessage: 'Internal server Error',
+        trace: error,
+      });
+    }
+  }
+
   async getReviews(id: string): Promise<IReturnObject> {
     try {
       const userExist = await this.userModel.findById(id);

@@ -5,6 +5,7 @@ import {
   Param,
   Post,
   Res,
+  Put,
   UploadedFiles,
   UseInterceptors,
 } from '@nestjs/common';
@@ -20,10 +21,25 @@ export class CommentsController {
   constructor(private crudService: CrudService) {}
 
   @ApiTags('REVIEWS')
+  @Get('admin')
+  async getAllReviews(@Res() res: Response) {
+    const result = await this.crudService.getAllReviews();
+    res.status(result.statusCode).send(result);
+  }
+
+  @ApiTags('REVIEWS')
   @ApiParam({ name: 'user_id', type: String })
   @Get(':user_id')
   async getReviews(@Res() res: Response, @Param() param: any) {
     const result = await this.crudService.getReviews(param['user_id']);
+    res.status(result.statusCode).send(result);
+  }
+
+  @ApiTags('REVIEWS')
+  @ApiParam({ name: 'id', type: String })
+  @Put('admin/approve/:id')
+  async acceptReviews(@Res() res: Response, @Param() param: any) {
+    const result = await this.crudService.acceptReview(param['id']);
     res.status(result.statusCode).send(result);
   }
 
