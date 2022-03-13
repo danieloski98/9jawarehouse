@@ -99,4 +99,38 @@ export class CrudService {
       });
     }
   }
+
+  async editService(id: string, service: string): Promise<IReturnObject> {
+    try {
+      // check if a service exist with that id
+      const serviceExist = await this.serviceModel.findById(id);
+      if (serviceExist === null) {
+        return Return({
+          error: true,
+          statusCode: 400,
+          errorMessage: 'Service does not exisit',
+        });
+      }
+
+      // update the service
+      const updated = await this.serviceModel.updateOne(
+        { _id: id },
+        { name: service },
+      );
+      this.logger.log(updated);
+      return Return({
+        error: false,
+        statusCode: 200,
+        successMessage: `service with id ${id} deleted`,
+      });
+    } catch (error) {
+      this.logger.error(error);
+      return Return({
+        error: true,
+        statusCode: 500,
+        errorMessage: 'Internal Server Error',
+        trace: error,
+      });
+    }
+  }
 }

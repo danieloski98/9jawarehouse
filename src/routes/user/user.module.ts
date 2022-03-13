@@ -12,6 +12,7 @@ import { Record, RecordSchema } from 'src/Schema/Record.Schema';
 import { CommentSchema, Comment } from 'src/Schema/Comment.Schema';
 import { AdminService } from './services/admin/admin.service';
 import { Subscription, SubscriptionSchema } from 'src/Schema/Subscriptions.Schema';
+import { EmailService } from '../admin/services/email/email.service';
 
 @Module({
   imports: [
@@ -27,6 +28,6 @@ import { Subscription, SubscriptionSchema } from 'src/Schema/Subscriptions.Schem
     ]),
   ],
   controllers: [UserController],
-  providers: [CrudService, PicsService, AdminService],
+  providers: [CrudService, PicsService, AdminService, EmailService],
 })
 export class UserModule {}

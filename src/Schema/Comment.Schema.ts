@@ -59,6 +59,13 @@ export class Comment {
     default: new Date().toISOString(),
   })
   created_at: Date;
+
+  @ApiProperty()
+  @Prop({
+    type: Date,
+    default: new Date().toISOString(),
+  })
+  updated_at: Date;
 }
 
 export const CommentSchema = SchemaFactory.createForClass(Comment);

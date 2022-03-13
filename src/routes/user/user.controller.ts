@@ -30,6 +30,11 @@ class ICert {
   }>;
 }
 
+class IRej {
+  @ApiProperty()
+  message: string;
+}
+
 @Controller('user')
 export class UserController {
   constructor(
@@ -86,6 +91,23 @@ export class UserController {
     const result = await this.crudService.uploadBusinessDetails(
       param['id'],
       body,
+    );
+    res.status(result.statusCode).send(result);
+  }
+
+  @ApiTags('User')
+  @ApiParam({ type: String, name: 'user_id' })
+  @ApiBody({ type: IRej })
+  @Post('admin/rejectverification/:user_id')
+  async rejectUser(
+    @Res() res: Response,
+    @Param() param: any,
+    @Body() body: IRej,
+  ) {
+    console.log(body);
+    const result = await this.adminService.rejectUserByID(
+      param['user_id'],
+      body.message,
     );
     res.status(result.statusCode).send(result);
   }

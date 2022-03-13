@@ -287,4 +287,38 @@ export class EmailService {
       });
     }
   }
+
+  public async sendRejectionEmail(
+    email: string,
+    text: string,
+  ): Promise<IReturnObject> {
+    try {
+      const mailOption: MailOptions = {
+        from: process.env.COMPANY_EMAIL,
+        to: email,
+        subject: `Account Verification Failed`,
+        html: `<p>Your account verification failed. 
+        ${text} </p>`,
+      };
+      this.transporter.sendMail(mailOption, (error: any, info: any) => {
+        if (error) {
+          this.logger.error(error);
+        } else {
+          this.logger.log(info);
+        }
+      });
+      return Return({
+        error: false,
+        successMessage: 'Account verification email sent',
+        statusCode: 200,
+      });
+    } catch (error) {
+      return Return({
+        error: true,
+        statusCode: 500,
+        trace: error,
+        errorMessage: 'Internal Server error',
+      });
+    }
+  }
 }

@@ -39,6 +39,7 @@ export class Admin {
   })
   @Prop({
     type: String,
+    default: '',
   })
   picture: string;
 

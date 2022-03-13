@@ -6,6 +6,7 @@ import {
   Get,
   Delete,
   Param,
+  Put
 } from '@nestjs/common';
 import { ApiBody, ApiParam, ApiTags } from '@nestjs/swagger';
 import { Response } from 'express';
@@ -33,6 +34,15 @@ export class ServicesController {
     @Body() body: Partial<ServiceDocument>,
   ) {
     const result = await this.crudService.createService(body);
+    res.status(result.statusCode).send(result);
+  }
+
+  @ApiTags('Services')
+  @ApiParam({ name: 'id', type: Number })
+  @ApiBody({ type: Service })
+  @Put(':id')
+  async updateService(@Res() res: Response, @Param() param: any, @Body() body: {name: string}) {
+    const result = await this.crudService.editService(param['id'], body.name);
     res.status(result.statusCode).send(result);
   }
 

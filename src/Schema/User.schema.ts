@@ -315,6 +315,15 @@ export class User {
     type: String,
   })
   @Prop({
+    type: Boolean,
+    default: '',
+  })
+  CAC_verified: boolean;
+
+  @ApiProperty({
+    type: String,
+  })
+  @Prop({
     type: String,
     default: new Date().toISOString(),
   })

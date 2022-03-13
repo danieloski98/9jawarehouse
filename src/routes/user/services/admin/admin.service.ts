@@ -9,6 +9,7 @@ import {
 } from 'src/Schema/Subscriptions.Schema';
 import { Return } from 'src/utils/Returnfunctions';
 import { IReturnObject } from 'src/utils/ReturnObject';
+import { EmailService } from 'src/routes/admin/services/email/email.service';
 
 @Injectable()
 export class AdminService {
@@ -17,6 +18,7 @@ export class AdminService {
     @InjectModel(Comment.name) private commentModel: Model<CommentDocument>,
     @InjectModel(Subscription.name)
     private subscriptionModel: Model<SubscriptionDocument>,
+    private emailService: EmailService,
   ) {}
 
   async getAllUser(): Promise<IReturnObject> {
@@ -88,6 +90,38 @@ export class AdminService {
   async approveUserByID(_id: string): Promise<IReturnObject> {
     try {
       const user = await this.userModel.updateOne({ _id }, { disabled: false });
+      return Return({
+        error: false,
+        statusCode: 200,
+        successMessage: 'Users account enabled',
+      });
+    } catch (error) {
+      return Return({
+        error: true,
+        statusCode: 500,
+        trace: error,
+        errorMessage: 'Internal Server error.',
+      });
+    }
+  }
+
+  async rejectUserByID(_id: string, msg: string): Promise<IReturnObject> {
+    try {
+      const user = await this.userModel.findById({ _id });
+      if (user === null) {
+        return Return({
+          error: true,
+          statusCode: 400,
+          errorMessage: 'User not found',
+        });
+      }
+      // send rejection email
+      const email = await this.emailService.sendRejectionEmail(user.email, msg);
+      if (email.statusCode === 400) {
+        return email;
+      } else {
+        return email;
+      }
       return Return({
         error: false,
         statusCode: 200,

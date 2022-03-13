@@ -192,6 +192,7 @@ export class CrudService {
       }
       // update the admin
       delete details.picture;
+      delete details.password;
       const update = await this.adminModel.updateOne(
         { _id: id },
         { ...details },
