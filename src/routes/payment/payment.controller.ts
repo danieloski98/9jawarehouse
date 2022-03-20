@@ -24,7 +24,7 @@ export class PaymentController {
   }
 
   @ApiTags('PAYMENT')
-  @Get('subscriptions')
+  @Get('admin/subscriptions')
   async getallsubs(@Res() res: Response) {
     const request = await this.userService.getSubs();
     res.status(request.statusCode).send(request);

@@ -40,6 +40,25 @@ export class AdminService {
     }
   }
 
+  async getAchUsers(): Promise<IReturnObject> {
+    try {
+      const users = await this.userModel.find({ disabled: true });
+      return Return({
+        error: false,
+        statusCode: 200,
+        successMessage: 'Users found',
+        data: users,
+      });
+    } catch (error) {
+      return Return({
+        error: true,
+        statusCode: 500,
+        trace: error,
+        errorMessage: 'Internal Server error.',
+      });
+    }
+  }
+
   async getAllUserByID(_id: string): Promise<IReturnObject> {
     try {
       const users = await this.userModel.findOne({ _id });
@@ -88,6 +107,42 @@ export class AdminService {
   }
 
   async approveUserByID(_id: string): Promise<IReturnObject> {
+    try {
+      const user = await this.userModel.updateOne({ _id }, { blocked: false });
+      return Return({
+        error: false,
+        statusCode: 200,
+        successMessage: 'Users account enabled',
+      });
+    } catch (error) {
+      return Return({
+        error: true,
+        statusCode: 500,
+        trace: error,
+        errorMessage: 'Internal Server error.',
+      });
+    }
+  }
+
+  async arhUserByID(_id: string): Promise<IReturnObject> {
+    try {
+      const user = await this.userModel.updateOne({ _id }, { disabled: true });
+      return Return({
+        error: false,
+        statusCode: 200,
+        successMessage: 'Users account enabled',
+      });
+    } catch (error) {
+      return Return({
+        error: true,
+        statusCode: 500,
+        trace: error,
+        errorMessage: 'Internal Server error.',
+      });
+    }
+  }
+
+  async unarhUserByID(_id: string): Promise<IReturnObject> {
     try {
       const user = await this.userModel.updateOne({ _id }, { disabled: false });
       return Return({

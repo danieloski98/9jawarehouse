@@ -19,13 +19,14 @@ import { NotificationsModule } from './routes/notifications/notifications.module
 import { WebhooksModule } from './routes/webhooks/webhooks.module';
 import { MessagesModule } from './routes/messages/messages.module';
 import { ScheduleModule } from '@nestjs/schedule';
+import { AnalyticsModule } from './routes/analytics/analytics.module';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require('dotenv').config();
 
 console.log(process.env.NODE_ENV);
 const URL =
   process.env.NODE_ENV === 'development'
-    ? process.env.LOCAL_DB
+    ? process.env.DB_URL
     : process.env.DB_URL;
 
 @Module({
@@ -47,6 +48,7 @@ const URL =
     WebhooksModule,
     MessagesModule,
     AdminModule,
+    AnalyticsModule,
     // NotificationsModule,
   ],
   controllers: [AppController],

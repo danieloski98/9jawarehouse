@@ -54,6 +54,15 @@ export class UserController {
 
   @ApiTags('User')
   @ApiParam({ type: String, name: 'id' })
+  @Get('admin/archive')
+  async getArchUsers(@Res() res: Response) {
+    console.log('this is it');
+    const result = await this.adminService.getAchUsers();
+    res.status(result.statusCode).send(result);
+  }
+
+  @ApiTags('User')
+  @ApiParam({ type: String, name: 'id' })
   @Get('admin/:id')
   async getUsersbyid(@Res() res: Response, @Param() param: any) {
     console.log('hit!!!');
@@ -118,6 +127,24 @@ export class UserController {
   async enableUserbyid(@Res() res: Response, @Param() param: any) {
     console.log('hit!!!');
     const result = await this.adminService.approveUserByID(param['id']);
+    res.status(result.statusCode).send(result);
+  }
+
+  @ApiTags('User')
+  @ApiParam({ type: String, name: 'user_id' })
+  @ApiBody({ type: User })
+  @Put('admin/archive/:user_id')
+  async archiveAccount(@Res() res: Response, @Param() param: any) {
+    const result = await this.adminService.arhUserByID(param['user_id']);
+    res.status(result.statusCode).send(result);
+  }
+
+  @ApiTags('User')
+  @ApiParam({ type: String, name: 'user_id' })
+  @ApiBody({ type: User })
+  @Put('admin/unarchive/:user_id')
+  async unarchiveAccount(@Res() res: Response, @Param() param: any) {
+    const result = await this.adminService.unarhUserByID(param['user_id']);
     res.status(result.statusCode).send(result);
   }
 

@@ -11,7 +11,10 @@ import { PicsService } from './services/pics/pics.service';
 import { Record, RecordSchema } from 'src/Schema/Record.Schema';
 import { CommentSchema, Comment } from 'src/Schema/Comment.Schema';
 import { AdminService } from './services/admin/admin.service';
-import { Subscription, SubscriptionSchema } from 'src/Schema/Subscriptions.Schema';
+import {
+  Subscription,
+  SubscriptionSchema,
+} from 'src/Schema/Subscriptions.Schema';
 import { EmailService } from '../admin/services/email/email.service';
 
 @Module({
