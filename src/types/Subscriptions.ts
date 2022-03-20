@@ -16,4 +16,8 @@ export interface ISubscription {
   
     created_at: Date;
 
+    expires: string;
+
+    expired: boolean;
+
 }

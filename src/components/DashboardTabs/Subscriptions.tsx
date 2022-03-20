@@ -1,52 +1,68 @@
-import { Select, Input, Table, Thead, Tr, Th, Tbody, Td } from '@chakra-ui/react'
+import { Select, Input, Table, Thead, Tr, Th, Tbody, Td, Spinner, useToast } from '@chakra-ui/react'
 import React from 'react'
-import CancelSubscribtion from '../VendorComponent.tsx/CancelSubscribtion'
-import RenewSubscribtion from '../VendorComponent.tsx/modal/RenewSubscribtion'
+import { ISubscription } from '../../types/Subscriptions'
 import SubscriptionModal from '../VendorComponent.tsx/modal/SubscriptionModal'
+import {useQuery} from 'react-query'
+import { url } from '../../utils/url'
+import { IReturnObject } from '../../types/ServerReturnType'
+import { theme } from '../../utils/theme'
 
-const Information = [
-    {
-      id: '16GSF572HH',
-      amount: 'N1000',
-      period: 'Monthly',
-      date: 'Jun 20, 2021', 
-      status: 'Active'
-    },
-    {
-      id: '16GSF572HH',
-      amount: 'N1000',
-      period: 'Monthly',
-      date: 'Jun 20, 2021', 
-      status: 'Active'
-    },
-    {
-      id: '16GSF572HH',
-      amount: 'N1000',
-      period: 'Monthly',
-      date: 'Jun 20, 2021', 
-      status: 'Expired'
-    },
-    {
-      id: '16GSF572HH',
-      amount: 'N1000',
-      period: 'Monthly',
-      date: 'Jun 20, 2021', 
-      status: 'Active'
-    },
-    {
-      id: '16GSF572HH',
-      amount: 'N1000',
-      period: 'Monthly',
-      date: 'Jun 20, 2021', 
-      status: 'Expired'
-    },
-]
+
+const getSubs = async () => {
+    const request = await fetch(`${url}/payment/admin/subscriptions`);
+    const json = await request.json() as IReturnObject;
+    if (!request.ok) {
+        throw new Error('An error occured');
+    }
+    return json;
+}
 
 export default function Subscriptions() {
 
     const [showModal, setShowModal] = React.useState(false)
-    const [renewModal, setRenewModal] = React.useState(false)
-    const [cancelModal, setCancelModal] = React.useState(false)
+    const [loading, setLoading] = React.useState(true);
+    const [subs, setSubs] = React.useState([] as Array<ISubscription>);
+    const [error, setError] = React.useState(false);
+    const [active, setActive] = React.useState({} as ISubscription);
+
+    // 
+    const toast = useToast();
+
+    const getSubsQuery = useQuery('getSubs', getSubs, {
+        onSuccess: (data) => {
+            if (data.statusCode !== 200) {
+                toast({
+                    title: 'Error',
+                    description: data.errorMessage,
+                    duration: 4000,
+                    isClosable: true,
+                    position: 'top',
+                    status: 'error',
+                })
+            }else {
+                setSubs(data.data);
+                setLoading(false);
+            }
+        },
+        onError: (error) => {
+            setLoading(false);
+            setError(true);
+        }
+    });
+
+    const status = (status: number) => {
+        switch(status) {
+            case 1: {
+                return 'Pending';
+            }
+            case 2: {
+                return 'Approved';
+            }
+            case 3: {
+                return 'Declined';
+            }
+        }
+    }
 
     return (
         <div className='w-full py-10 px-10' >
@@ -92,17 +108,18 @@ export default function Subscriptions() {
                             <Th>ACTION</Th> 
                         </Tr>
                     </Thead>
+                  
                     <Tbody>
-                        {Information.map((item, index)=> {
+                        {!loading && !error && subs.length > 0 && subs.map((item, index)=> {
                             return(
                                 <Tr className='font-Graphik-Regular text-sm' key={index} >
-                                    <Td>{item.id}</Td> 
+                                    <Td>{item.reference_id}</Td> 
                                     <Td>{item.amount}</Td>
-                                    <Td>{item.period}</Td>
-                                    <Td>{item.date}</Td>
-                                    <Td style={item.status === 'Active' ? {color: "#0CD27C"}: {color: '#777777'}} >{item.status}</Td>
+                                    <Td>{item.amount === 6000 ? '6 Months':'12 Months'}</Td>
+                                    <Td>{new Date(item.created_at).toDateString()}</Td>
+                                    <Td style={item.status === 2 ? {color: "#0CD27C"}: {color: '#777777'}} >{status(item.status)}</Td>
                                     <Td >
-                                        <svg onClick={()=> setShowModal(true)} className='mx-auto cursor-pointer' id="Iconly_Bold_Show" data-name="Iconly/Bold/Show" xmlns="http://www.w3.org/2000/svg" width="15" height="12" viewBox="0 0 15 12">
+                                        <svg onClick={()=> {setActive(item); setShowModal(true)}} className='mx-auto cursor-pointer' id="Iconly_Bold_Show" data-name="Iconly/Bold/Show" xmlns="http://www.w3.org/2000/svg" width="15" height="12" viewBox="0 0 15 12">
                                             <g id="Show">
                                                 <path id="Show-2" data-name="Show" d="M7.493,12C4.4,12,1.611,9.836.044,6.211a.543.543,0,0,1,0-.429C1.609,2.161,4.394,0,7.493,0H7.5a6.98,6.98,0,0,1,4.3,1.534,10.676,10.676,0,0,1,3.154,4.248.543.543,0,0,1,0,.429C13.389,9.836,10.6,12,7.5,12ZM4.573,6A2.923,2.923,0,1,0,7.5,3.091,2.918,2.918,0,0,0,4.573,6Zm1.1,0a1.865,1.865,0,0,1,.037-.356h.036a1.5,1.5,0,0,0,1.5-1.44A1.492,1.492,0,0,1,7.5,4.18,1.814,1.814,0,1,1,5.672,6Z" fill="#200e32"/>
                                             </g>
@@ -113,6 +130,18 @@ export default function Subscriptions() {
                         })}
                     </Tbody> 
                 </Table>
+                {loading && !error && (
+                        <div className="w-full h-20 items-center flex justify-center">
+                            <Spinner size="lg" color={theme.primaryColor} />
+                        </div>
+                )}
+
+                {!loading && error && (
+                        <div className="w-full h-20 items-center flex flex-col justify-center">
+                            <h5>An Error occured</h5>
+                            <button onClick={async() => await getSubsQuery.refetch()} className="w-56 h-12 rounded text-white text-md">Reset</button>
+                        </div>
+                )}
             </div>
 
             <div className='flex items-center my-12' >
@@ -141,35 +170,15 @@ export default function Subscriptions() {
                 </div>
             </div>
 
-            {showModal ? 
+            {showModal &&
                 (
                     <>
                         <div className="h-auto flex justify-center items-center overflow-x-hidden overflow-y-hidden fixed pb-4 px-4 inset-0 z-50 outline-none focus:outline-none"> 
-                            <SubscriptionModal close={setShowModal} next={setRenewModal} cancel={setCancelModal} />
+                            <SubscriptionModal close={setShowModal} subs={active} />
                         </div> 
                         <div className="opacity-25 fixed flex flex-1 inset-0 z-40 bg-black"/>
                     </>
-                ) : null} 
-
-            {renewModal ? 
-                (
-                    <>
-                        <div className="h-auto flex justify-center items-center overflow-x-hidden overflow-y-hidden fixed pb-4 px-4 inset-0 z-50 outline-none focus:outline-none"> 
-                            <RenewSubscribtion close={setRenewModal} />
-                        </div> 
-                        <div className="opacity-25 fixed flex flex-1 inset-0 z-40 bg-black"/>
-                    </>
-                ) : null} 
-
-            {cancelModal ? 
-                (
-                    <>
-                        <div className="h-auto flex justify-center items-center overflow-x-hidden overflow-y-hidden fixed pb-4 px-4 inset-0 z-50 outline-none focus:outline-none"> 
-                            <CancelSubscribtion close={setCancelModal} />
-                        </div> 
-                        <div className="opacity-25 fixed flex flex-1 inset-0 z-40 bg-black"/>
-                    </>
-                ) : null} 
+            )} 
         </div>
     )
 }

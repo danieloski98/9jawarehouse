@@ -1,4 +1,4 @@
-import { Input, Select, useToast } from '@chakra-ui/react'
+import { Input, Select, useToast, Spinner } from '@chakra-ui/react'
 import React from 'react'
 import {
     Table,
@@ -14,6 +14,7 @@ import { url } from '../../utils/url'
 import { IReturnObject } from '../../types/ServerReturnType'
 import { IComment } from '../../types/comments';
 import {useQuery} from 'react-query'
+import { theme } from '../../utils/theme'
 
   const getComment = async () => {
       const request = await fetch(`${url}/comments/admin`);
@@ -26,14 +27,58 @@ import {useQuery} from 'react-query'
       return json.data as Array<IComment>;
   }
 
+  const getActivity = async () => {
+    const request = await fetch(`${url}/analytics/comments`);
+    const json = await request.json() as IReturnObject;
+
+    if (!request.ok) {
+        throw new Error('An error occured');
+    }
+
+    return json;
+  }
+
 export default function Activity() {
 
     const [showModal, setShowModal] = React.useState(false) 
     const [showRejectModal, setShowRejectModal] = React.useState(false);
     const [comment, setComment]= React.useState([] as Array<IComment>);
     const [activeComment, setActiveComment] = React.useState({} as IComment);
+    const [data, setData] = React.useState({ approved: 0, comments: 0, average: '0' });
+    const [loading, setLoading] = React.useState(true);
+    const [error, setError] = React.useState(false);
 
     const toast = useToast();
+
+    const query = useQuery('overview', getActivity, {
+        onSuccess: (data) => {
+            if (data.statusCode !== 200) {
+                setLoading(false);
+                toast({
+                    title: 'Error',
+                    description: data.errorMessage,
+                    isClosable: true,
+                    duration: 4000,
+                    position: 'top',
+                });
+                setError(true);
+            } else {
+                setData(data.data);
+                setLoading(false);
+            }
+        },
+        onError: (error) => {
+            setLoading(false);
+            setError(true);
+            toast({
+                title: 'Error',
+                description: 'An error occured',
+                isClosable: true,
+                duration: 4000,
+                position: 'top',
+            });
+        }
+    })
 
     const commentQuery = useQuery('getComments', getComment, {
         onSuccess: (data) => {
@@ -68,19 +113,22 @@ export default function Activity() {
             </div>
             <div className='w-full flex my-6 px-8 items-center justify-between ' >
                 <div className='bg-white w-full mx-2 p-4 rounded-lg' >
-                    <p style={{fontSize: '24px'}} className='font-Graphik-SemiBold'>30</p>
-                    <p className='text-sm font-Graphik-Medium mt-1' >Total Reviews</p>
-                    <p style={{color: '#8A8A8A'}} className='text-xs font-Graphik-Regular mt-2' ><span style={{color: '#E00253'}} >-2%</span> than last month</p>
+                    {!loading && <p style={{fontSize: '24px'}} className='font-Graphik-SemiBold'>{data.comments}</p>}
+                    {loading && <Spinner size="sm" color={theme.primaryColor} />}
+                    <p className='text-sm font-Graphik-Medium mt-1' >Total Comments</p>
+                    {/* <p style={{color: '#8A8A8A'}} className='text-xs font-Graphik-Regular mt-2' ><span style={{color: '#E00253'}} >-2%</span> than last month</p> */}
                 </div> 
                 <div className='bg-white w-full mx-2 p-4 rounded-lg' >
-                    <p style={{fontSize: '24px'}} className='font-Graphik-SemiBold'>25</p>
+                    {!loading && <p style={{fontSize: '24px'}} className='font-Graphik-SemiBold'>{data.approved}</p>}
+                    {loading && <Spinner size="sm" color={theme.primaryColor} />}
                     <p className='text-sm font-Graphik-Medium mt-1' >Total Approved</p>
-                    <p style={{color: '#8A8A8A'}} className='text-xs font-Graphik-Regular mt-2' ><span style={{color: '#E00253'}} >-2%</span> than last month</p>
+                    {/* <p style={{color: '#8A8A8A'}} className='text-xs font-Graphik-Regular mt-2' ><span style={{color: '#E00253'}} >-2%</span> than last month</p> */}
                 </div> 
                 <div className='bg-white w-full mx-2 p-4 rounded-lg' >
-                    <p style={{fontSize: '24px'}} className='font-Graphik-SemiBold'>4.8</p>
+                    {!loading && <p style={{fontSize: '24px'}} className='font-Graphik-SemiBold'>{data.average}</p>}
+                    {loading && <Spinner size="sm" color={theme.primaryColor} />}
                     <p className='text-sm font-Graphik-Medium mt-1' >Average Rating</p>
-                    <p style={{color: '#8A8A8A'}} className='text-xs font-Graphik-Regular mt-2' ><span style={{color: '#0CD27C'}} >-2%</span> than last month</p>
+                    {/* <p style={{color: '#8A8A8A'}} className='text-xs font-Graphik-Regular mt-2' ><span style={{color: '#0CD27C'}} >-2%</span> than last month</p> */}
                 </div> 
             </div>
             <div className='flex items-center my-12' >

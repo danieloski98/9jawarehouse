@@ -1,4 +1,4 @@
-import { Select, Input, Table, Thead, Tr, Th, Tbody, Td, useToast } from '@chakra-ui/react'
+import { Select, Input, Table, Thead, Tr, Th, Tbody, Td, useToast, Spinner } from '@chakra-ui/react'
 import React from 'react' 
 import { useNavigate } from 'react-router-dom'
 import EditUserProfileModal from './modal/EditUserProfileModal';
@@ -7,39 +7,19 @@ import {useQuery} from 'react-query';
 import { url } from '../../utils/url';
 import { IReturnObject } from '../../types/ServerReturnType';
 import { IUser } from '../../types/user';
+import { theme } from '../../utils/theme';
 
-const Information = [
-    {
-      name: 'Limmer makeover',
-      email: 'Jamie@emailapp.com',
-      date: 'March 12, 2021',
-      time: '05:09:01 PM', 
-    },
-    {
-      name: 'Limmer makeover',
-      email: 'Jamie@emailapp.com',
-      date: 'March 12, 2021',
-      time: '05:09:01 PM', 
-    },
-    {
-      name: 'Limmer makeover',
-      email: 'Jamie@emailapp.com',
-      date: 'March 12, 2021',
-      time: '05:09:01 PM', 
-    },
-    {
-      name: 'Limmer makeover',
-      email: 'Jamie@emailapp.com',
-      date: 'March 12, 2021',
-      time: '05:09:01 PM', 
-    },
-    {
-      name: 'Limmer makeover',
-      email: 'Jamie@emailapp.com',
-      date: 'March 12, 2021',
-      time: '05:09:01 PM', 
-    },
-];
+
+const getActivity = async () => {
+    const request = await fetch(`${url}/analytics/vendors`);
+    const json = await request.json() as IReturnObject;
+
+    if (!request.ok) {
+        throw new Error('An error occured');
+    }
+
+    return json;
+  }
 
 const getAllBusiness = async () => {
     const request = await fetch(`${url}/user/admin`);
@@ -57,8 +37,41 @@ export default function Vendors() {
     const [showModal, setShowModal] = React.useState(false) 
     const [deleteModal, setDeleteModal] = React.useState(false)
     const [users, setUsers] = React.useState([] as Array<IUser>);
+    const [data, setData] = React.useState({ users: 0, blocked: 0, approved: '0' });
+    const [loading, setLoading] = React.useState(true);
+    const [error, setError] = React.useState(false);
 
     const toast = useToast();
+
+    const query = useQuery('overview', getActivity, {
+        onSuccess: (data) => {
+            if (data.statusCode !== 200) {
+                setLoading(false);
+                toast({
+                    title: 'Error',
+                    description: data.errorMessage,
+                    isClosable: true,
+                    duration: 4000,
+                    position: 'top',
+                });
+                setError(true);
+            } else {
+                setData(data.data);
+                setLoading(false);
+            }
+        },
+        onError: (error) => {
+            setLoading(false);
+            setError(true);
+            toast({
+                title: 'Error',
+                description: 'An error occured',
+                isClosable: true,
+                duration: 4000,
+                position: 'top',
+            });
+        }
+    })
 
     const userQuery = useQuery('getVendors', getAllBusiness, {
         onSuccess: (data) => {
@@ -89,17 +102,20 @@ export default function Vendors() {
             </div>
             <div className='w-full flex my-6 px-8 items-center justify-between ' >
                 <div className='bg-white w-full mx-2 p-4 rounded-lg' >
-                    <p style={{fontSize: '24px'}} className='font-Graphik-SemiBold'>3000</p>
+                    {!loading && <p style={{fontSize: '24px'}} className='font-Graphik-SemiBold'>{data.users}</p>}
+                    {loading && <Spinner size="sm" color={theme.primaryColor} />}
                     <p className='text-sm font-Graphik-Medium mt-1' >Total Register Vendors</p>
                     {/* <p style={{color: '#8A8A8A'}} className='text-xs font-Graphik-Regular mt-2' ><span style={{color: '#E00253'}} >-2%</span> than last month</p> */}
                 </div> 
                 <div className='bg-white w-full mx-2 p-4 rounded-lg' >
-                    <p style={{fontSize: '24px'}} className='font-Graphik-SemiBold'>2500</p>
+                    {!loading && <p style={{fontSize: '24px'}} className='font-Graphik-SemiBold'>{data.approved}</p>}
+                    {loading && <Spinner size="sm" color={theme.primaryColor} />}
                     <p className='text-sm font-Graphik-Medium mt-1' >Total verfied</p>
                     {/* <p style={{color: '#8A8A8A'}} className='text-xs font-Graphik-Regular mt-2' ><span style={{color: '#E00253'}} >-2%</span> than last month</p> */}
                 </div> 
                 <div className='bg-white w-full mx-2 p-4 rounded-lg' >
-                    <p style={{fontSize: '24px'}} className='font-Graphik-SemiBold'>500</p>
+                    {!loading && <p style={{fontSize: '24px'}} className='font-Graphik-SemiBold'>{data.blocked}</p>}
+                    {loading && <Spinner size="sm" color={theme.primaryColor} />}
                     <p className='text-sm font-Graphik-Medium mt-1' >Total Unverified</p>
                     {/* <p style={{color: '#8A8A8A'}} className='text-xs font-Graphik-Regular mt-2' ><span style={{color: '#0CD27C'}} >-2%</span> than last month</p> */}
                 </div> 
@@ -141,7 +157,7 @@ export default function Vendors() {
                                     <Td>{item.business_name}</Td>
                                     <Td>{item.email}</Td>
                                     <Td>{new Date(item.createAt).toDateString()}</Td>
-                                    <Td>{item.disabled ? 'INACTIVE':'ACTIVE'}</Td>
+                                    <Td>{item.blocked ? 'INACTIVE':'ACTIVE'}</Td>
                                     <Td className='flex items-center justify-between' >
                                         <svg onClick={()=> setDeleteModal(true)} className='mx-2 cursor-pointer' id="Iconly_Bold_Delete" data-name="Iconly/Bold/Delete" xmlns="http://www.w3.org/2000/svg" width="14" height="15" viewBox="0 0 14 15">
                                             <g id="Delete">
