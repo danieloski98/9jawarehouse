@@ -130,7 +130,7 @@ export class AdminService {
       return Return({
         error: false,
         statusCode: 200,
-        successMessage: 'Users account enabled',
+        successMessage: 'Users account archived',
       });
     } catch (error) {
       return Return({
@@ -148,7 +148,7 @@ export class AdminService {
       return Return({
         error: false,
         statusCode: 200,
-        successMessage: 'Users account enabled',
+        successMessage: 'Users account unarchived',
       });
     } catch (error) {
       return Return({
