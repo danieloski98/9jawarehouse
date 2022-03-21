@@ -236,16 +236,16 @@ export default function EditUserProfileModal({close, user}: IProps) {
                     </div> 
                     <div className='my-0 pt-1 w-full' >
                         <p className='text-sm mb-1 font-Graphik-Medium '>Facebook URL</p> 
-                        <div className="xl:w-11/12 lg:w-11/12 md:w-full sm:w-full">
-                            <Input border="none" bgColor="whitesmoke" borderRadius={0} className="bg-gray-100 mt-3" name="facebook" value={formik.values.facebook} onChange={formik.handleChange} onFocus={() => formik.setFieldTouched('facebook', true, true)} />
+                        <div className="">
+                            <Input className="bg-gray-100 mt-3" name="facebook" value={formik.values.facebook} onChange={formik.handleChange} onFocus={() => formik.setFieldTouched('facebook', true, true)} />
                         </div>
                         {formik.touched.facebook && formik.errors.facebook && <p className="text-xs mt-1 Cerebri-sans-book text-red-400">{formik.errors.facebook}</p>}
                     </div> 
                     <div className='my-2 pt-4 w-full' >
                         <p className='text-sm mb-1 font-Graphik-Medium '>Whatsapp Number</p> 
                       
-                        <div className="xl:w-11/12 lg:w-11/12 md:w-full sm:w-full">
-                            <Input border="none" bgColor="whitesmoke" borderRadius={0} className="bg-gray-100 mt-3" name="whatsapp" value={formik.values.whatsapp} onChange={formik.handleChange} onFocus={() => formik.setFieldTouched('whatsapp', true, true)} />
+                        <div className="">
+                            <Input className="bg-gray-100 mt-3" name="whatsapp" value={formik.values.whatsapp} onChange={formik.handleChange} onFocus={() => formik.setFieldTouched('whatsapp', true, true)} />
                         </div>
                         {formik.touched.whatsapp && formik.errors.whatsapp && <p className="text-xs mt-1 Cerebri-sans-book text-red-400">{formik.errors.whatsapp}</p>}
                     </div> 

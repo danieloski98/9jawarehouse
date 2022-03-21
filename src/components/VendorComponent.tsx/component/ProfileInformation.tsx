@@ -63,6 +63,10 @@ export default function ProfileInformation({user}: {user: IUser}) {
                         <div className='w-full px-4 mx-auto' >
                             <p style={{color: '#676767'}} className=' font-Graphik-Medium text-sm ' >Average Rating</p>
                             <p className=' font-Graphik-SemiBold ' >{av}</p>
+
+                            <a href={`mailto:${user.email}`}>
+                                <button className="w-32 h-10 mt-3 text-sm bg-green-400 text-white">Send Email</button>
+                            </a>
                         </div>
                     </div>
                 </div>
