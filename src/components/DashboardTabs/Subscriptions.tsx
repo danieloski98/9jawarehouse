@@ -83,15 +83,15 @@ export default function Subscriptions() {
                 {/* <p style={{fontSize: '16px'}} className='font-Graphik-SemiBold'>Reviews</p> */}
             
                 <div className='ml-auto flex items-center'>
-                    <Input  className='font-Graphik-Regular mx-2' fontSize='14px' backgroundColor='#FBFBFB' placeholder='Search Subscriptions' />
+                    {/* <Input  className='font-Graphik-Regular mx-2' fontSize='14px' backgroundColor='#FBFBFB' placeholder='Search Subscriptions' /> */}
                     
-                <p style={{fontSize: '14px'}} className='font-Graphik-Medium mx-2'>Filter</p>
-                    <Select className='font-Graphik-Regular mx-2' fontSize='14px' backgroundColor='#FBFBFB' placeholder='All Subscriptions'>
+                {/* <p style={{fontSize: '14px'}} className='font-Graphik-Medium mx-2'>Filter</p> */}
+                    {/* <Select className='font-Graphik-Regular mx-2' fontSize='14px' backgroundColor='#FBFBFB' placeholder='All Subscriptions'>
                         <option value='option1'>Option 1</option>
                         <option value='option2'>Option 2</option>
                         <option value='option3'>Option 3</option>
-                    </Select>
-                <button style={{backgroundColor: '#1A8F85'}} className='px-8 py-3 font-Graphik-Regular text-sm text-white rounded-md ml-8' >Apply</button>
+                    </Select> */}
+                {/* <button style={{backgroundColor: '#1A8F85'}} className='px-8 py-3 font-Graphik-Regular text-sm text-white rounded-md ml-8' >Apply</button> */}
                 </div>
             </div>
             <div className='bg-white w-full py-6' >

@@ -44,6 +44,24 @@ export default function Vendors() {
     const [error, setError] = React.useState(false);
     const [active, setActive] = React.useState({} as IUser);
     const [arc, setArc] = React.useState(false);
+    const [sort, setSort] = React.useState(1);
+    const [search, setSearch] = React.useState('');
+
+    const [filteredUsers, setFilteredUsers] = React.useState([] as Array<IUser>);
+
+    React.useEffect(() => {
+        if (search === '') {
+            setFilteredUsers([...users]);
+            return;
+        }
+        // eslint-disable-next-line array-callback-return
+        const newArr = users.filter((item, index) => {
+            if (item.email?.toLowerCase().includes(search.toLowerCase()) || item.business_name?.toLowerCase().includes(search.toLowerCase())) {
+                return item;
+            }
+        });
+        setFilteredUsers([...newArr]);
+    }, [search, users])
 
     const toast = useToast();
 
@@ -128,6 +146,21 @@ export default function Vendors() {
         setArc(false);
     }
 
+    const compare = React.useCallback(( a: IUser, b: IUser ) => {
+        if (sort === 1) {
+            if ((a.business_name as string) < (b.business_name as string)) {
+                return -1;
+            }
+        }
+
+        if (sort === 2) {
+            if ((a.createAt as string) < (b.createAt as string)) {
+                return -1;
+            }
+        }
+        return 0;
+      }, [sort]);
+
     return (
         <div className='w-full h-full' >
             <div className='w-full flex items-center' > 
@@ -163,15 +196,15 @@ export default function Vendors() {
                 <p style={{fontSize: '16px'}} className='font-Graphik-SemiBold'>All Vendors</p>
             
                 <div className='ml-auto flex items-center'>
-                    <Input  className='font-Graphik-Regular mx-2' fontSize='14px' backgroundColor='#FBFBFB' placeholder='Search Vendor' />
+                    <Input  className='font-Graphik-Regular mx-2' fontSize='14px' backgroundColor='#FBFBFB' placeholder='Search name or email' onChange={(e) => setSearch(e.target.value)} value={search} />
                     
                 <p style={{fontSize: '14px'}} className='font-Graphik-Medium mx-2'>Filter</p>
-                    <Select className='font-Graphik-Regular mx-2' fontSize='14px' backgroundColor='#FBFBFB' placeholder='Alphabetically'>
-                        <option value='option1'>Option 1</option>
-                        <option value='option2'>Option 2</option>
-                        <option value='option3'>Option 3</option>
+                    <Select className='font-Graphik-Regular mx-2' fontSize='14px' backgroundColor='#FBFBFB' onChange={(e) => setSort(parseInt(e.target.value))}>
+                        <option value={1}>Busines name</option>
+                        <option value={2}>Date Created</option>
+                        
                     </Select>
-                <button style={{backgroundColor: '#1A8F85'}} className='px-8 py-3 font-Graphik-Regular text-sm text-white rounded-md ml-8' >Apply</button>
+                <button style={{backgroundColor: '#1A8F85'}} className='px-2 py-2 w-56 font-Graphik-Regular text-xs text-white rounded-md ml-8' >Download Report</button>
                 </div>
             </div>
             <div className='bg-white w-full py-6' >
@@ -189,7 +222,9 @@ export default function Vendors() {
                         </Tr>
                     </Thead>
                     <Tbody>
-                        {users.map((item, index)=> {
+                        {filteredUsers
+                        .sort(compare)
+                        .map((item, index)=> {
                             return(
                                 <Tr className='font-Graphik-Regular text-sm' key={index} >
                                     <Td>{index+1}</Td>

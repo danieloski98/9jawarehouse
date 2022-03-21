@@ -47,6 +47,23 @@ export default function Activity() {
     const [data, setData] = React.useState({ approved: 0, comments: 0, average: '0' });
     const [loading, setLoading] = React.useState(true);
     const [error, setError] = React.useState(false);
+    const [sort, setSort] = React.useState(1);
+    const [search, setSearch] = React.useState('');
+    const [filteredUsers, setFilteredUsers] = React.useState([] as Array<IComment>);
+
+    React.useEffect(() => {
+        if (search === '') {
+            setFilteredUsers([...comment]);
+            return;
+        }
+        // eslint-disable-next-line array-callback-return
+        const newArr = comment.filter((item, index) => {
+            if (item.fullname?.toLowerCase().includes(search.toLowerCase()) || item.email?.toLowerCase().includes(search.toLowerCase())) {
+                return item;
+            }
+        });
+        setFilteredUsers([...newArr]);
+    }, [search, comment])
 
     const toast = useToast();
 
@@ -96,6 +113,21 @@ export default function Activity() {
         }
     })
 
+    const compare = React.useCallback(( a: IComment, b: IComment ) => {
+        if (sort === 1) {
+            if ((a.email as string) < (b.email as string)) {
+                return -1;
+            }
+        }
+
+        if (sort === 2) {
+            if ((a.fullname as string) < (b.fullname as string)) {
+                return -1;
+            }
+        }
+        return 0;
+      }, [sort]);
+
     return (
         <div className='w-full py-10 px-10' >
             <div className='w-full flex items-center' > 
@@ -135,13 +167,12 @@ export default function Activity() {
                 <p style={{fontSize: '16px'}} className='font-Graphik-SemiBold'>Reviews</p>
             
                 <div className='ml-auto flex items-center'>
-                    <Input  className='font-Graphik-Regular mx-2' fontSize='14px' backgroundColor='#FBFBFB' placeholder='Search Vendor' />
+                    <Input  className='font-Graphik-Regular mx-2' fontSize='14px' backgroundColor='#FBFBFB' placeholder='Search by name or email' onChange={(e) => setSearch(e.target.value)} value={search} />
                     
                 <p style={{fontSize: '14px'}} className='font-Graphik-Medium mx-2'>Filter</p>
-                    <Select className='font-Graphik-Regular mx-2' fontSize='14px' backgroundColor='#FBFBFB' placeholder='All Reviews'>
-                        <option value='option1'>Option 1</option>
-                        <option value='option2'>Option 2</option>
-                        <option value='option3'>Option 3</option>
+                    <Select className='font-Graphik-Regular mx-2' fontSize='14px' backgroundColor='#FBFBFB' onChange={(e) => setSort(parseInt(e.target.value))}>
+                        <option value={1}>Email</option>
+                        <option value={2}>Full name</option>
                     </Select>
                 <button style={{backgroundColor: '#1A8F85'}} className='px-8 py-3 font-Graphik-Regular text-sm text-white rounded-md ml-8' >Apply</button>
                 </div>
@@ -161,7 +192,9 @@ export default function Activity() {
                         </Tr>
                     </Thead>
                     <Tbody>
-                        {comment.map((item, index)=> {
+                        {filteredUsers
+                        .sort(compare)
+                        .map((item, index)=> {
                             return(
                                 <Tr className='font-Graphik-Regular text-sm' key={index} >
                                     <Td>{index+1}</Td>
