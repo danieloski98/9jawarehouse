@@ -1,11 +1,15 @@
 import { Input } from '@chakra-ui/input'
+import { Spinner } from '@chakra-ui/react'
 import React from 'react'
+import {FiArchive} from 'react-icons/fi'
+import { theme } from '../../../utils/theme'
 
 export default function RestoreUser(props: any) {
     return (
         <div style={{width: '416px'}} className='bg-white rounded-lg px-10 py-4 pb-14'  > 
             <div className='w-full flex items-center' >
                 <p className='font-Graphik-SemiBold mt-6' style={{color:'#0C0C0C'}} >{props.header}</p> 
+                {/* <FiArchive color="grey" size={25} onClick={()=> props.close(false)} className="mt-4 ml-3" /> */}
                 <svg onClick={()=> props.close(false)} className='ml-auto cursor-pointer' xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
                     <g id="Iconly_Light_Close_Square" data-name="Iconly/Light/Close Square" transform="translate(0.75 0.75)">
                         <g id="Close_Square" data-name="Close Square">
@@ -17,9 +21,10 @@ export default function RestoreUser(props: any) {
                 </svg>
             </div>
             <p className='text-sm font-Graphik-Regular my-4' >{props.body}</p>
-            <p className='text-sm font-Graphik-Medium mb-2 mt-8' >Enter your password</p>
-            <Input backgroundColor='white' placeholder='Enter Password' border='1px solid #0C346839' />
-            <button style={{backgroundColor: '#1A8F85'}} className='w-full py-3 font-Graphik-Bold text-sm text-white rounded-md mt-8' >{props.button} </button>
+            <button onClick={() => props.action()} style={{backgroundColor: '#1A8F85'}} className='w-full py-3 font-Graphik-Bold text-sm text-white rounded-md mt-8' >
+                {props.loading && <Spinner color="white" size="sm" />}
+                {!props.loading && props.button} 
+            </button>
         </div>
     )
 }
