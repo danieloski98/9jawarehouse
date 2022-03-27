@@ -254,7 +254,7 @@ const RightNavBar = () => {
               >
                 <p className="flex mr-0">
                   {/* <FiSearch size={20} className="text-white" /> */}
-                  <span className="ml-3 font-Circular-std-book text-md cursor-pointer">Find Servicegcchch</span>
+                  <span className="ml-3 font-Circular-std-book text-md cursor-pointer">Find Service</span>
                   <FiChevronDown size={20} color="white" className="ml-1 mt-1" />
                 </p>
               </MenuButton>
@@ -290,7 +290,7 @@ const RightNavBar = () => {
                   </MenuButton>
                   <MenuList w="100px" minW="173px" maxH="200px" marginRight="12px" overflow="auto" padding="0px" className="flex flex-col font-light text-sm p-0">
                         <p onClick={() => router.push('/dashboard')}  className="text-md text-themeGreen font-Circular-std-book mx-0 mt-0 flex items-center cursor-pointer h-12 hover:bg-gray-100 p-2">
-                          <span>Dashboardfwfwe</span>
+                          <span>Dashboard</span>
                         </p>
 
                         <p onClick={handleLogout} className="text-md text-red-400 font-Circular-std-book mx-0 mt-0 flex items-center cursor-pointer h-12 hover:bg-gray-100 p-2">
