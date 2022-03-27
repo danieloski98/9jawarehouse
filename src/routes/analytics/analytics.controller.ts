@@ -20,6 +20,7 @@ export class AnalyticsController {
     const result = await this.generalService.vendors();
     res.status(result.statusCode).send(result);
   }
+  
 
   @ApiTags('ANALYTICS')
   @Get('comments')
