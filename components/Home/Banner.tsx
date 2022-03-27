@@ -11,7 +11,6 @@ import * as moment from 'moment';
 import { Notification, Search } from 'react-iconly';
 
 // redux
-// redux
 import {useSelector, useDispatch} from 'react-redux';
 import { RootState } from '../../store/index';
 import { setServices as SetServ } from '../../reducers/services.reducer'
@@ -158,6 +157,7 @@ const RightNavBar = () => {
           router.push('/');
           alert(json.errorMessage);
           dispatch(logout());
+          localStorage.removeItem('9jauser');
           setLoading(false);
           return
       } else {
@@ -238,7 +238,7 @@ const RightNavBar = () => {
         <div className="w-full h-24 flex justify-end pr-12 items-center text-white">
 
             {/* modal */}
-            <Modal isOpen={loading} onClose={() => setLoading(false)} isCentered={true}>
+            {/* <Modal isOpen={loading} onClose={() => setLoading(false)} isCentered={true}>
                 <ModalOverlay />
                 <ModalContent>
                     <ModalContent className="w-full flex flex-col items-center justify-center h-56">
@@ -246,7 +246,7 @@ const RightNavBar = () => {
                         <p className="mt-4 font-Cerebri-sans-book text-xl">Loading Details...</p>
                     </ModalContent>
                 </ModalContent>
-            </Modal>
+            </Modal> */}
 
              <Menu size="lg" preventOverflow={true}>
               <MenuButton
