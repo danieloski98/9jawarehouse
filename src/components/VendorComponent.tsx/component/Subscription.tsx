@@ -128,7 +128,7 @@ export default function Subscription({user}: {user: IUser}) {
                                 <Tr className='font-Graphik-Regular text-sm' key={index} >
                                     <Td>{item.reference_id}</Td> 
                                     <Td>{item.amount}</Td>
-                                    <Td>{item.amount === 6 ? '6 Months':'12 Months'}</Td>
+                                    <Td>{item.amount === 12000 ? '6 Months':'12 Months'}</Td>
                                     <Td>{new Date(item.created_at).toDateString()}</Td>
                                     <Td style={item.status === 1 ? {color: "#777777"}: {color: '#0CD27C'}} >{item.status === 1 ? 'Pending':'Active'}</Td>
                                     <Td >

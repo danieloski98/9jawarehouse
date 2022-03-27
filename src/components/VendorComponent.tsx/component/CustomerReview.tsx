@@ -41,6 +41,21 @@ const Information = [
 
 
 export default function CustomerReview({user}: {user: IUser}) {
+    const [approved, setApproved] = React.useState(0);
+    const [average, setAv] = React.useState(0);
+
+    React.useEffect(() => {
+        const appro = user.comments?.filter((item) => item.reviewed).length as number;
+        let total = 0;
+        const com = user.comments?.map((item) => {
+            total += item.rating;
+            return item;
+        })
+        const av = total / (com as any).length;
+        setApproved(appro);
+        setAv(av);
+
+    }, [user]);
 
     const navigate = useNavigate();
     
@@ -48,19 +63,19 @@ export default function CustomerReview({user}: {user: IUser}) {
         <div className='w-full' >  
             <div className='w-full flex my-6 px-8 items-center justify-between ' >
                 <div className='bg-white w-full mx-2 p-4 rounded-lg' >
-                    <p style={{fontSize: '24px'}} className='font-Graphik-SemiBold'>30</p>
+                    <p style={{fontSize: '24px'}} className='font-Graphik-SemiBold'>{user.comments?.length}</p>
                     <p className='text-sm font-Graphik-Medium mt-1' >Total Reviews</p>
-                    <p style={{color: '#8A8A8A'}} className='text-xs font-Graphik-Regular mt-2' ><span style={{color: '#E00253'}} >-2%</span> than last month</p>
+                    {/* <p style={{color: '#8A8A8A'}} className='text-xs font-Graphik-Regular mt-2' ><span style={{color: '#E00253'}} >-2%</span> than last month</p> */}
                 </div> 
                 <div className='bg-white w-full mx-2 p-4 rounded-lg' >
-                    <p style={{fontSize: '24px'}} className='font-Graphik-SemiBold'>25</p>
+                    <p style={{fontSize: '24px'}} className='font-Graphik-SemiBold'>{approved}</p>
                     <p className='text-sm font-Graphik-Medium mt-1' >Total Approved</p>
-                    <p style={{color: '#8A8A8A'}} className='text-xs font-Graphik-Regular mt-2' ><span style={{color: '#E00253'}} >-2%</span> than last month</p>
+                    {/* <p style={{color: '#8A8A8A'}} className='text-xs font-Graphik-Regular mt-2' ><span style={{color: '#E00253'}} >-2%</span> than last month</p> */}
                 </div> 
                 <div className='bg-white w-full mx-2 p-4 rounded-lg' >
-                    <p style={{fontSize: '24px'}} className='font-Graphik-SemiBold'>4.8</p>
+                    <p style={{fontSize: '24px'}} className='font-Graphik-SemiBold'>{average || 0}</p>
                     <p className='text-sm font-Graphik-Medium mt-1' >Average Rating</p>
-                    <p style={{color: '#8A8A8A'}} className='text-xs font-Graphik-Regular mt-2' ><span style={{color: '#0CD27C'}} >-2%</span> than last month</p>
+                    {/* <p style={{color: '#8A8A8A'}} className='text-xs font-Graphik-Regular mt-2' ><span style={{color: '#0CD27C'}} >-2%</span> than last month</p> */}
                 </div> 
             </div>
             <div className='w-full flex items-center my-12' > 

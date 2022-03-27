@@ -73,10 +73,10 @@ export default function AccountSettings() {
             </div>
             <div className='my-12 bg-white rounded-xl p-8' >
                 <p className='font-Graphik-Medium text-lg' >My Account</p>
-                <div style={{width: '139px', height: '131px', backgroundColor: '#F0F0F0'}} className='bg-#F0F0F0 rounded-lg my-6' >
+                {/* <div style={{width: '139px', height: '131px', backgroundColor: '#F0F0F0'}} className='bg-#F0F0F0 rounded-lg my-6' >
 
-                </div>
-                <div className='grid grid-cols-2 gap-y-8 gap-x-16' > 
+                </div> */}
+                <div className='grid grid-cols-2 gap-y-8 gap-x-16 mt-6' > 
                     <div> 
                         <p className='text-sm mb-1 font-Graphik-Medium '>Name</p> 
                         <Input size='lg' placeholder="Email" name="fullname" value={formik.values.fullname} onChange={formik.handleChange} onBlur={formik.handleBlur} onFocus={() => formik.setFieldTouched('fullname', true, true)} />

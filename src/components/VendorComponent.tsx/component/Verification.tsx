@@ -65,7 +65,7 @@ export default function Verification({user}:{user: IUser}) {
                 <div style={{background: '#FBFBFB 0% 0% no-repeat padding-box', opacity: '1', width: '322px' }} className='ml-auto px-8 py-9 rounded-lg' >
                     <div className='w-full flex items-center'>
                     <p style={{color: '#04101F'}} className='text-sm font-Graphik-SemiBold' >Approval Status</p>
-                    <p style={{color: user.disabled ? 'red':'green'}} className='text-sm ml-auto font-Graphik-Bold' >{user.disabled ? 'INACTIVE' : 'ACTIVE'}</p>
+                    <p style={{color: user.disabled ? 'red':'green'}} className='text-sm ml-auto font-Graphik-Bold' >{user.blocked ? 'INACTIVE' : 'ACTIVE'}</p>
                     </div>
                     {/* <div style={{width:'322px', height: '8px', backgroundColor: '#4164E324', borderRadius: '8px'}} className='mt-4' /> */}
                 </div>
@@ -86,11 +86,11 @@ export default function Verification({user}:{user: IUser}) {
                 {tab === 0 ?
                     <IdentificationCard img={user.verification_document} />
                         :tab === 1 ?
-                            <IdentificationCard img={user.verification_document}  />
+                            <IdentificationCard img={user.CAC}  />
                                 :tab === 2 ?
                                     <IdentificationCard img={user.verification_document}  />
                 :null}
-                {user.disabled && (
+                {user.blocked && (
                     <div className='ml-auto mt-10 flex w-full' style={{}} >
                         <button onClick={approve} className='w-full py-3 text-white font-Graphik-Regular text-sm rounded-md h-12 mr-4' style={{backgroundColor: '#1A8F85'}} >
                             {!loading && 'Approve Account'}

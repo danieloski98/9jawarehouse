@@ -69,7 +69,7 @@ export default function Subscriptions() {
             <div className='w-full flex items-center' > 
                 <div className=''>
                     <p style={{fontSize: '20px'}} className='font-Graphik-Medium'>Subscriptions</p>
-                    <p style={{color: '#8A8A8A'}} className='text-sm font-Graphik-Regular' >Keep Track of all supports on 9jawarehouse</p>
+                    <p style={{color: '#8A8A8A'}} className='text-sm font-Graphik-Regular' >Keep Track of all subscriptions on 9jawarehouse</p>
                 </div>
                 <div className='ml-auto'>
                     <Select className='font-Graphik-Regular ' fontSize='12px' backgroundColor='white' placeholder='Past 30 days'>
