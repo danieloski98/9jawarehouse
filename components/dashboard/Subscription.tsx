@@ -66,20 +66,20 @@ const SubModal = ({ open, onClose, user }: IProps) => {
 
                         <div className="w-full flex justify-center mt-6">
 
-                            <div onClick={() => setSel(1)} className={sel === 1 ? SELECTED:NOTSELECTED}>
+                            {/* <div onClick={() => setSel(1)} className={sel === 1 ? SELECTED:NOTSELECTED}>
                                 <p className=" font-Circular-std-Medium text-xl text-themeGreen">Monthly Plan</p>
                                 <p className="font-Cerebri-sans-book mt-4 text-sm text-gray-500">You will have all full access on this account to all features. Auto Renewal will be activated </p>
                                 <div className="flex justify-center items-center mt-6">
                                     <span className="text-xl font-Cerebri-sans-book text-gray-500">N2,000</span><span className="font-semibold text-sm text-gray-500 ml-4">Monthly</span>
                                 </div>
-                            </div>
+                            </div> */}
 
                             <div onClick={() => setSel(2)} className={sel === 2 ? SELECTED:NOTSELECTED}>
                                 <p className="font-Circular-std-Medium text-xl text-themeGreen">6 Months Plan</p>
                                 <p className="font-Cerebri-sans-book mt-4 text-sm text-gray-500">Save 20%  on this plan.
 You will have all full access on this account to all features. Auto Renewal will be activated</p>
                                 <div className="flex justify-center items-center mt-6">
-                                    <span className="text-xl font-Cerebri-sans-book text-gray-500">N12,000</span> <span className="font-semibold text-sm text-gray-500 ml-4">/ Month</span>
+                                    <span className="text-xl font-Cerebri-sans-book text-gray-500">N12,000</span> <span className="font-semibold text-sm text-gray-500 ml-4">/ 6 Month</span>
                                 </div>
                             </div>
 

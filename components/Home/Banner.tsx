@@ -83,7 +83,7 @@ export const LeftNavbar = () => {
                             </div>
                           )}
 
-                    <Accordion className="mt-5" allowToggle allowMultiple defaultIndex={[0]}>
+                    <Accordion className="mt-5 w-full" allowToggle allowMultiple defaultIndex={[0]}>
 
 
                         <AccordionItem>
@@ -235,7 +235,7 @@ const RightNavBar = () => {
       }
 
     return (
-        <div className="w-full h-24 flex justify-end pr-12 items-center text-white">
+        <div className="w-full h-24 flex justify-end pr-0 items-center text-white">
 
             {/* modal */}
             {/* <Modal isOpen={loading} onClose={() => setLoading(false)} isCentered={true}>
@@ -252,9 +252,9 @@ const RightNavBar = () => {
               <MenuButton
                 rightIcon={<FiChevronDown size={20} color="grey" />}
               >
-                <p className="flex mr-6">
+                <p className="flex mr-0">
                   {/* <FiSearch size={20} className="text-white" /> */}
-                  <span className="ml-3 font-Circular-std-book text-md cursor-pointer">Find Service</span>
+                  <span className="ml-3 font-Circular-std-book text-md cursor-pointer">Find Servicegcchch</span>
                   <FiChevronDown size={20} color="white" className="ml-1 mt-1" />
                 </p>
               </MenuButton>
@@ -290,7 +290,7 @@ const RightNavBar = () => {
                   </MenuButton>
                   <MenuList w="100px" minW="173px" maxH="200px" marginRight="12px" overflow="auto" padding="0px" className="flex flex-col font-light text-sm p-0">
                         <p onClick={() => router.push('/dashboard')}  className="text-md text-themeGreen font-Circular-std-book mx-0 mt-0 flex items-center cursor-pointer h-12 hover:bg-gray-100 p-2">
-                          <span>Dashboard</span>
+                          <span>Dashboardfwfwe</span>
                         </p>
 
                         <p onClick={handleLogout} className="text-md text-red-400 font-Circular-std-book mx-0 mt-0 flex items-center cursor-pointer h-12 hover:bg-gray-100 p-2">
