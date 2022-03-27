@@ -117,7 +117,7 @@ export default function ProfileBox({user, reviews}: IProps) {
         {/* description box */}
 
         <div className="w-full xl:px-10 lg:px-10 md:px-5 sm:px-5 mt-10 flex flex-col xl:text-left lg:text-left md:text-left sm:text-left">
-          <p className="text-lg font-Circular-std-medium text-themeGreen">Description</p>
+          <p className="text-lg font-Circular-std-medium text-themeGreen">Business Description</p>
           <p className="text-md font-Cerebri-sans-book mt-2 text-gray-500 xl:text-justify lg:text-justify md:text-justify sm:text-justify">
             {user.business_description}
           </p>
