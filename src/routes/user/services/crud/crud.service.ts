@@ -333,6 +333,10 @@ export class CrudService {
   async uploadDocuments(
     id: string,
     details: {
+      first_name: string;
+      last_name: string;
+      business_name: string;
+      business_description: string;
       verification_document_type: string;
       verification_document: string;
       cac?: string;
@@ -340,7 +344,7 @@ export class CrudService {
   ): Promise<IReturnObject> {
     try {
       const userExist = await this.userModel.findById(id);
-
+      console.log(id);
       if (userExist === null) {
         return Return({
           error: true,
@@ -361,6 +365,7 @@ export class CrudService {
       const updatedValues = await this.userModel.updateOne(
         { _id: id },
         {
+          ...details,
           verification_document_type: details.verification_document_type,
           verification_document: verification_doc.secure_url,
           CAC: cac_doc ? cac_doc.secure_url : '',

@@ -235,12 +235,16 @@ export class UserController {
     @UploadedFiles() files: IFile[],
     @Body()
     body: {
+      first_name: string;
+      last_name: string;
+      business_name: string;
+      business_description: string;
       verification_document_type: string;
       verification_document: string;
       cac?: string;
     },
   ) {
-    // console.log(body);
+    console.log(body);
     const result = await this.crudService.uploadDocuments(param['id'], body);
     res.status(result.statusCode).send(result);
   }
