@@ -107,7 +107,7 @@ export default function LoginForm() {
                 return;
             } else if (json.statusCode === 200) {
                 if (json.data.user.blocked) {
-                    router.push('/underreview');
+                    router.push(`/underreview?id=${json.data.user._id}`);
                     return;
                 }
                 if (json.data.user.business_name === '') {

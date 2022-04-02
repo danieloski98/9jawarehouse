@@ -150,7 +150,7 @@ export default function Navbar({page, setPage}: IProps) {
 
   const handleKeydonw = (e: any) => {
     if (e.key === 'Enter') {
-      router.push(`/services/${query}`);
+      router.push(`/services?service=${query}`);
     }
   }
 

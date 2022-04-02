@@ -51,7 +51,6 @@ const ContactBox = ({user}: {user: IUser}) => {
 }
 
 const ReviewBox = (props: { open: Function }) => {
-
     return (
         <div  className="w-full p-5 border-2 border-gray-200 flex flex-col">
             <p className="font-Circular-std-medium text-lg text-themeGreen">Review Business/Vendor</p>
@@ -120,57 +119,6 @@ export default function Business() {
         })()
     }, [router.query]);
 
-    React.useEffect(() => {
-        window.onpopstate = () => {
-            const service = localStorage.getItem('activeService') as string;
-            if (router.pathname === '/services') {
-                if (service === null || service === undefined) {
-                    router.replace(`/services?service=${user.services[0]}&state=${user.state}&lga=${user.lga}`)
-                    // window.location = `/services?service=${user.services[0]}&state=${user.state}&lga=${user.lga}` as any;
-                    //window.history.back();
-                    //router.back();
-                    return;
-                    
-                    // router.push();
-                } else {
-                    //router.back();
-                    router.replace(`/services?service=${service}&state=${user.state}`);
-                    //window.history.back();
-                    return;
-                    
-                    // window.location = `/services?service=${service}&state=${user.state}` as any;
-                    // router.push();
-                }
-            }
-             
-        }
-        return () => {
-            window.removeEventListener('popstate', () => {
-                const service = localStorage.getItem('activeService') as string;
-                if (router.pathname === '/services') {
-                    if (service === null || service === undefined) {
-                        router.replace(`/services?service=${user.services[0]}&state=${user.state}&lga=${user.lga}`)
-                        // window.location = `/services?service=${user.services[0]}&state=${user.state}&lga=${user.lga}` as any;
-                        //window.history.back();
-                        //router.back();
-                        return;
-                        
-                        // router.push();
-                    } else {
-                        //router.back();
-                        router.replace(`/services?service=${service}&state=${user.state}`);
-                        //window.history.back();
-                        return;
-                        
-                        // window.location = `/services?service=${service}&state=${user.state}` as any;
-                        // router.push();
-                    }
-                }
-                 
-            });
-        }
-    }, [router, user])
-
     console.log(user);
 
 
@@ -215,7 +163,7 @@ export default function Business() {
             <Carousel showArrows showIndicators showStatus={false} dynamicHeight={false} autoPlay interval={7000} infiniteLoop >
                 {user.pictures.map((item, index) => (
                   <div key={index.toString()} className="w-full h-96">
-                    <Img src={item} alt="img" className="w-full h-96 object-contain" />
+                    <Img src={item} alt="img" className="w-full h-96 object-cover" />
                   </div>
                 ))}
               </Carousel>
