@@ -20,9 +20,9 @@ export default function EditRole() {
             </div> 
             <div className='my-12 bg-white rounded-xl p-8' >
                 <p className='font-Graphik-Medium text-lg' >Add Profile Photo</p>
-                <div style={{width: '139px', height: '131px', backgroundColor: '#F0F0F0'}} className='bg-#F0F0F0 rounded-lg my-6' >
+                {/* <div style={{width: '139px', height: '131px', backgroundColor: '#F0F0F0'}} className='bg-#F0F0F0 rounded-lg my-6' >
 
-                </div>
+                </div> */}
                 <div className='flex w-full mt-4' > 
                     <div className='w-full mr-6' >
                         <div> 
