@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { User, UserDocument } from 'src/Schema/User.schema';
-import { Comment, CommentDocument } from 'src/Schema/Comment.schema';
+import { Comment, CommentDocument } from 'src/Schema/Comment.Schema';
 import {
   Subscription,
   SubscriptionDocument,
-} from 'src/Schema/Subscriptions.schema';
+} from 'src/Schema/Subscriptions.Schema';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { Return } from 'src/utils/Returnfunctions';
