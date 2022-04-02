@@ -20,6 +20,12 @@ export class Notification {
 
   @ApiProperty()
   @Prop({
+    default: false,
+  })
+  forAdmin: boolean;
+
+  @ApiProperty()
+  @Prop({
     default: '',
   })
   message: string;

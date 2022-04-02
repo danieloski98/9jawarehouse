@@ -53,7 +53,7 @@ export class CrudService {
             'Invalid pin, please contact the vendor for the correct pin.',
         });
       }
-
+      const comments = await this.commentModel.find({ user_id });
       if (pinActive.use_count < 1) {
         const userExist = await this.userModel.findById(user_id);
         if (userExist === null) {
@@ -82,19 +82,16 @@ export class CrudService {
           { _id: pinActive._id },
           { use_count: pinActive.use_count + 1 },
         );
-
-        if (userExist.rating < 5) {
-          const userUpdate = await this.userModel.updateOne(
-            { _id: user_id },
-            {
-              rating:
-                payload.rating < 4
-                  ? userExist.rating + 0.01
-                  : userExist.rating + 0.1,
-            },
-          );
-          console.log(userUpdate);
+        let rating = payload.rating;
+        for (let i = 0; i < comments.length; i++) {
+          rating += comments[i].rating;
         }
+        const userUpdate = await this.userModel.updateOne(
+          { _id: user_id },
+          {
+            rating: rating > 5 ? 5 : rating / comments.length,
+          },
+        );
         console.log(updatePin);
         this.logger.log(newComment);
         // this.userNotificationService.triggerNotification(
@@ -131,6 +128,16 @@ export class CrudService {
           business_id: user_id,
         };
         const newComment = await this.commentModel.create(obj);
+        let rating = payload.rating;
+        for (let i = 0; i < comments.length; i++) {
+          rating += comments[i].rating;
+        }
+        const userUpdate = await this.userModel.updateOne(
+          { _id: user_id },
+          {
+            rating: rating > 5 ? 5 : rating / comments.length,
+          },
+        );
         // renew pin
         await this.pinService.createPin(user_id);
 

@@ -108,7 +108,10 @@ export class AdminService {
 
   async approveUserByID(_id: string): Promise<IReturnObject> {
     try {
+      const userEmail = await this.userModel.findById(_id);
       const user = await this.userModel.updateOne({ _id }, { blocked: false });
+      const email = await this.emailService.sendAcceptedEmail(userEmail.email);
+      console.log(email);
       return Return({
         error: false,
         statusCode: 200,
