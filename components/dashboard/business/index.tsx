@@ -145,7 +145,29 @@ export default function Business() {
              
         }
         return () => {
-            window.removeEventListener('popstate', () => {});
+            window.removeEventListener('popstate', () => {
+                const service = localStorage.getItem('activeService') as string;
+                if (router.pathname === '/services') {
+                    if (service === null || service === undefined) {
+                        router.replace(`/services?service=${user.services[0]}&state=${user.state}&lga=${user.lga}`)
+                        // window.location = `/services?service=${user.services[0]}&state=${user.state}&lga=${user.lga}` as any;
+                        //window.history.back();
+                        //router.back();
+                        return;
+                        
+                        // router.push();
+                    } else {
+                        //router.back();
+                        router.replace(`/services?service=${service}&state=${user.state}`);
+                        //window.history.back();
+                        return;
+                        
+                        // window.location = `/services?service=${service}&state=${user.state}` as any;
+                        // router.push();
+                    }
+                }
+                 
+            });
         }
     }, [router, user])
 
@@ -167,7 +189,7 @@ export default function Business() {
        )}
 
         <div className="w-full h-20 flex items-center xl:px-10 lg:px-10 md:px-5 sm:px-5 mt-32">
-            <FiChevronLeft size={30} color="grey" className="cursor-pointer" onClick={() => router.back()} />
+            {/* <FiChevronLeft size={30} color="grey" className="cursor-pointer" onClick={() => router.back()} /> */}
             <div className="ml-6 font-Cerebri-sans-book text-md">
                 <Breadcrumb className="text-sm font-light text-gray-400">
                     <BreadcrumbItem>
@@ -178,9 +200,10 @@ export default function Business() {
                         <p onClick={() => router.back()} className='cursor-pointer hover:underline'>Services</p>
                     </BreadcrumbItem>
 
-                    {!loading && <BreadcrumbItem>
-                                    <p className="text-gray-600">{user.business_name}</p>
-                                </BreadcrumbItem>}
+                    {!loading && 
+                        <BreadcrumbItem>
+                            <p className="text-gray-600">{user.business_name}</p>
+                        </BreadcrumbItem>}
                 </Breadcrumb>
             </div>
         </div>
@@ -188,11 +211,11 @@ export default function Business() {
         {/* Banner */}
 
         {!loading && (
-            <div className="w-full h-64 overflow-hidden mt-6">
+            <div className="w-full h-96 bg-white overflow-hidden mt-6">
             <Carousel showArrows showIndicators showStatus={false} dynamicHeight={false} autoPlay interval={7000} infiniteLoop >
                 {user.pictures.map((item, index) => (
-                  <div key={index.toString()} className="w-full h-64">
-                    <Img src={item} alt="img" className="w-full h-64" />
+                  <div key={index.toString()} className="w-full h-96">
+                    <Img src={item} alt="img" className="w-full h-96 object-contain" />
                   </div>
                 ))}
               </Carousel>
