@@ -6,7 +6,9 @@ import NotificationModal from './modals/NotificationModal'
 
 export default function Navbar(props: any) {
     const [admin, setAdmin] = useRecoilState(AdminState);
-    const [open, setOpen] = React.useState(false)
+    const [open, setOpen] = React.useState(false);
+
+    const icon = `https://avatars.dicebear.com/api/human/${admin.email}.png`;
 
     return (
         <div className='w-full flex items-center bg-white py-7 px-10 border-b-2 border-gray-400' >
@@ -55,7 +57,9 @@ export default function Navbar(props: any) {
                     <p className='text-sm font-Graphik-Medium'>{admin.fullname}</p>
                     <p className='text-xs font-Graphik-Regular' >{admin.email}</p>
                 </div>
-                <div className='w-12 h-12 mx-4 bg-green-200 rounded-full ' />
+                <div className='w-12 h-12 mx-4 bg-green-200 rounded-full flex justify-center items-center ' >
+                    <img src={icon} className="w-10 h-10" alt="icon" />
+                </div>
             </div>
             <svg xmlns="http://www.w3.org/2000/svg" width="16.121" height="8.811" viewBox="0 0 16.121 8.811">
                 <g id="Iconly_Light_Arrow_-_Down_2" data-name="Iconly/Light/Arrow - Down 2" transform="translate(1.061 1.061)">

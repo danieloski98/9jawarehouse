@@ -1,11 +1,163 @@
-import { Input, InputGroup, InputRightElement, Checkbox } from '@chakra-ui/react';
+import { Input, InputGroup, InputRightElement, Checkbox, useToast, Select, Spinner } from '@chakra-ui/react';
 import React from 'react'
 import { IoIosArrowBack } from 'react-icons/io';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { IAdmin } from '../../types/Admin.Type';
+import { IReturnObject } from '../../types/ServerReturnType';
+import { url } from '../../utils/url';
+import * as yup from 'yup';
+import {useFormik} from 'formik';
+
+const validationSchema = yup.object({
+    email: yup.string().email('Invalid email').required('This field is required'),
+    password: yup.string().required('This field is required'),
+    fullname: yup.string().required('Fullname is required'),
+});
 
 export default function EditRole() {
-
     const navigate = useNavigate(); 
+    const params = useParams();
+    const toast = useToast();
+
+    // states
+    const [admin, setAdmin] = React.useState({} as IAdmin);
+    const [permissions, setPermissions] = React.useState([] as Array<string>);    const [type, setType] = React.useState(3);
+    const [vendors, setVendors] = React.useState(false);
+    const [subs, setSubs] = React.useState(false);
+    const [cat, setCat] = React.useState(false);
+    const [re, setRe] = React.useState(false);
+    const [loading, setLoading] = React.useState(false);
+
+    const formik = useFormik({
+        initialValues: {email: admin.email, password: admin.password, fullname: admin.fullname},
+        validationSchema,
+        onSubmit: async () => {},
+        enableReinitialize: true,
+    });
+
+    React.useEffect(() => {
+       (async function() {
+           const request = await fetch(`${url}/admin/${params.id}`);
+           const json = await request.json() as IReturnObject;
+           if (json.statusCode !== 200) {
+               toast({
+                   title: 'Error',
+                   description: json.errorMessage,
+                   status: 'error',
+                   isClosable: true,
+                   position: 'top',
+                   duration: 5000,
+               });
+               navigate('/dashboard/rolemanagement');
+               return;
+           } else {
+               setAdmin(json.data);
+               setPermissions((json.data as IAdmin).permissions);
+           }
+       })()
+    }, [params.id]);
+
+    React.useEffect(() => {
+        setPermissions(permissions);
+        console.log(permissions);
+        setVendors(permissions.includes('VENDOR'));
+        setSubs(permissions.includes('SUBSCRIPTION'));
+        setCat(permissions.includes('CATEGORY'));
+        setRe(permissions.includes('REVIEW'));
+        setType(admin.type);
+    }, [permissions]);
+
+    const check = (value: string) => {
+        if (permissions.includes(value)) {
+            // remove it from permissions list
+            const pp = [...permissions];
+            const index = pp.indexOf(value);
+            pp.splice(index, 1);
+            setPermissions(pp);
+            return;
+        }
+        if (!permissions.includes(value)) {
+            const pp = [...permissions, value];
+            setPermissions(pp);
+        }
+    }
+
+    const submit = async () => {
+        if (!formik.dirty) {
+            toast({
+                title: 'Error',
+                description: 'please fillin the form',
+                status: 'warning',
+                duration: 3000,
+                position: 'top',
+                isClosable: true,
+            });
+            return;
+        }
+
+        if (!formik.isValid) {
+            toast({
+                title: 'Error',
+                description: 'please fillin the form correctly',
+                status: 'error',
+                duration: 3000,
+                position: 'top',
+                isClosable: true,
+            });
+            return;
+        }
+
+        if (permissions.length < 1) {
+            if (!formik.isValid) {
+                toast({
+                    title: 'Error',
+                    description: 'please pick at least 1 permission for this user',
+                    status: 'error',
+                    duration: 3000,
+                    position: 'top',
+                    isClosable: true,
+                });
+                return;
+            }
+        }
+        setLoading(true);
+        const obj = {
+            ...formik.values,
+            permissions,
+            type,
+        }
+        const request = await fetch(`${url}/admin/${admin._id}`, {
+            method: 'put',
+            headers: {
+                'content-type': 'application/json',
+            },
+            body: JSON.stringify(obj),
+        });
+        const json = await request.json() as IReturnObject;
+        setLoading(false);
+        if (json.statusCode !== 200) {
+            toast({
+                title: 'Error',
+                description: json.errorMessage,
+                status: 'error',
+                duration: 3000,
+                position: 'top',
+                isClosable: true,
+            });
+            return;
+        } else {
+            toast({
+                title: 'Success',
+                description: json.successMessage,
+                status: 'success',
+                duration: 3000,
+                position: 'top',
+                isClosable: true,
+            });
+            navigate('/dashboard/rolemanagement')
+            return;
+        }
+    }
     
     return (
         <div className='w-full py-10 px-10' > 
@@ -27,11 +179,18 @@ export default function EditRole() {
                     <div className='w-full mr-6' >
                         <div> 
                             <p className='text-sm mb-1 font-Graphik-Medium '>Name</p> 
-                            <Input size='lg' placeholder="Name" />
+                            <Input size='lg' placeholder="Name" name="fullname" value={formik.values.fullname} onChange={formik.handleChange} onBlur={formik.handleBlur} onFocus={() => formik.setFieldTouched('fullname', true, true)} />
+                            {formik.touched.fullname && formik.errors.fullname && (
+                                <p className='text-xs mt-2 text-red-300'>{formik.errors.fullname}</p>
+                            )}
                         </div>
                         <div> 
                             <p className='text-sm mb-1 mt-6 font-Graphik-Medium '>User Type</p> 
-                            <Input size='lg' placeholder="Admin" />
+                            <Select size='lg' value={type} onChange={(e) => setType(parseInt(e.target.value))}>
+                                <option value={1}>Super Admin</option>
+                                <option value={2}>Admin</option>
+                                <option value={3}>Viewer</option>
+                            </Select>
                         </div>
                         <div> 
                             <p className='text-sm mb-1 mt-6 font-Graphik-Medium '>Old Password</p>  
@@ -43,48 +202,57 @@ export default function EditRole() {
                                         </svg>
                                     }
                                     />
-                                    <Input size='lg' placeholder="Password" /> 
+                                    <Input disabled size='lg' type="password" placeholder="Password" name="password" value={formik.values.password} onChange={formik.handleChange} onBlur={formik.handleBlur} onFocus={() => formik.setFieldTouched('password', true, true)} /> 
                                 </InputGroup>
+                                {formik.touched.password && formik.errors.password && (
+                                    <p className='text-xs mt-2 text-red-300'>{formik.errors.password}</p>
+                                )}
                         </div> 
                     </div>
                     <div className='w-full ml-6' > 
                         <div> 
                             <p className='text-sm mb-1 font-Graphik-Medium '>Email Address</p> 
-                            <Input size='lg' placeholder="Email" />
+                            <Input size='lg' placeholder="Email" name="email" value={formik.values.email} onChange={formik.handleChange} onBlur={formik.handleBlur} onFocus={() => formik.setFieldTouched('email', true, true)} />
+                            {formik.touched.email && formik.errors.email && (
+                            <p className='text-xs mt-2 text-red-300'>{formik.errors.email}</p>
+                            )}
                         </div>
 
                         <p className='text-sm mb-1 mt-6 font-Graphik-Medium '>Permissions</p> 
                         <div className='flex items-center mt-4 ' >
-                            <div className='flex items-center mr-3' >
+                            {/* <div className='flex items-center mr-3' >
                                 <Checkbox />
                                 <p className='ml-3 font-Graphik-Regular text-sm' >Customers</p>
-                            </div>
+                            </div> */}
                             <div className='flex items-center mr-3' >
-                                <Checkbox />
+                                <Checkbox isChecked={vendors} onChange={() => check('VENDOR') } />
                                 <p className='ml-3 font-Graphik-Regular text-sm' >Vendors</p>
                             </div>
                             <div className='flex items-center' >
-                                <Checkbox />
+                                <Checkbox isChecked={subs} onChange={() => check('SUBSCRIPTION') } />
                                 <p className='ml-3 font-Graphik-Regular text-sm' >Subscriptions</p>
                             </div> 
                         </div>
                         <div className='flex items-center my-6' > 
                             <div className='flex items-center mr-3' >
-                                <Checkbox />
+                                <Checkbox isChecked={cat} onChange={() => check('CATEGORY') } />
                                 <p className='ml-3 font-Graphik-Regular text-sm' >Categories</p>
                             </div>
-                            <div className='flex items-center mr-3' >
+                            <div className='flex items-center' >
+                            <Checkbox isChecked={re} value="REVIEW" onChange={(e) => check(e.target.value) }  />
+                            <p className='ml-3 font-Graphik-Regular text-sm' >Customer Reviews</p>
+                        </div>
+                            {/* <div className='flex items-center mr-3' >
                                 <Checkbox />
                                 <p className='ml-3 font-Graphik-Regular text-sm' >Support Tickets</p>
-                            </div>
-                        </div>
-                        <div className='flex items-center' >
-                            <Checkbox />
-                            <p className='ml-3 font-Graphik-Regular text-sm' >Customer Reviews</p>
+                            </div> */}
                         </div>
                     </div>
                 </div>
-                    <button style={{backgroundColor: '#1A8F85'}} className='px-4 py-3 font-Graphik-Regular text-sm text-white flex items-center rounded-md mt-8' >Edit User</button>
+                    <button onClick={submit} style={{backgroundColor: '#1A8F85'}} className='px-4 py-3 font-Graphik-Regular text-sm text-white flex items-center rounded-md mt-8' >
+                        {!loading && <span>Save</span>}
+                        {loading && (<Spinner size="sm" color="white" />)}
+                    </button>
             </div>
         </div>
     )

@@ -31,12 +31,26 @@ const getAdmins = async () => {
 export default function useSync() {
     const [admin, setAdmin] = useRecoilState(AdminState);
     const [admins, setAdmins] = useState([] as IAdmin[]);
+    const [id, setId] = React.useState('');
 
     const toast = useToast();
     const navigate = useNavigate();
+
+    React.useEffect(() => {
+        const id = localStorage.getItem('id');
+        const loggedin = localStorage.getItem('loggedIn');
+
+        if (id === null) {
+            navigate('/');
+        } else if (id !== null && loggedin !== 'true') {
+            navigate('/');
+        } else {
+            setId(id);
+        }
+    }, [])
     
     // queries
-    const adminQuery = useQuery(['getAdmin', admin._id], () => getAdminByID(admin._id), {
+    const adminQuery = useQuery(['getAdmin', id], () => getAdminByID(id), {
         onSuccess: (data) => {
             setAdmin(data);
         },

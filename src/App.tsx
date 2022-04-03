@@ -43,7 +43,7 @@ export default function App() {
                 <Route path='/dashboard/rolemanagement' element={<RoleManagement />} >
                   <Route path='/dashboard/rolemanagement' element={<RoleManage />} />
                   <Route path='/dashboard/rolemanagement/adduser' element={<AddNewRole />} />
-                  <Route path='/dashboard/rolemanagement/edituser' element={<EditRole />} />
+                  <Route path='/dashboard/rolemanagement/edituser/:id' element={<EditRole />} />
                 </Route>
                 <Route path='/dashboard/accountsettings' element={<AccountSettings />} />
                 <Route path='/dashboard/vendors' element={<Vendor />} > 

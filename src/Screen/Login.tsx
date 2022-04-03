@@ -88,6 +88,8 @@ export default function Login() {
                 duration: 3000,
                 position: 'top',
             });
+            localStorage.setItem('id', json.data.admin._id);
+            localStorage.setItem('loggedIn', 'true');
             setAdmin(json.data.admin);
             setToken(json.data.token);
             // save details in localStorage;

@@ -177,8 +177,8 @@ export default function AddNewRole() {
                             <p className='text-sm mb-1 font-Graphik-Medium '>Name</p> 
                             <Input size='lg' placeholder="Name" name="fullname" value={formik.values.fullname} onChange={formik.handleChange} onBlur={formik.handleBlur} onFocus={() => formik.setFieldTouched('fullname', true, true)} />
                             {formik.touched.fullname && formik.errors.fullname && (
-                            <p className='text-xs mt-2 text-red-300'>{formik.errors.fullname}</p>
-                        )}
+                                <p className='text-xs mt-2 text-red-300'>{formik.errors.fullname}</p>
+                            )}
                         </div>
                         <div> 
                             <p className='text-sm mb-1 mt-6 font-Graphik-Medium '>User Type</p> 
@@ -211,7 +211,7 @@ export default function AddNewRole() {
                             <Input size='lg' placeholder="Email" name="email" value={formik.values.email} onChange={formik.handleChange} onBlur={formik.handleBlur} onFocus={() => formik.setFieldTouched('email', true, true)} />
                             {formik.touched.email && formik.errors.email && (
                             <p className='text-xs mt-2 text-red-300'>{formik.errors.email}</p>
-                        )}
+                            )}
                         </div>
 
                         <p className='text-sm mb-1 mt-6 font-Graphik-Medium '>Permissions</p> 
