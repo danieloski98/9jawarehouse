@@ -110,7 +110,7 @@ export default function LoginForm() {
                     router.push(`/underreview?id=${json.data.user._id}`);
                     return;
                 }
-                if (json.data.user.phone === '' || json.data.user.phone === null) {
+                if (!json.data.user.pin) {
                     // save to localstorage
                     const save = localStorage.setItem('9jauser', JSON.stringify(json.data.user));
                     const token = localStorage.setItem('9jatoken', json.data.token);
