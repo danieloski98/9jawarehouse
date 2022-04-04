@@ -120,7 +120,7 @@ export default function NormNavbar() {
 
   const handleKeydonw = (e: any) => {
     if (e.key === 'Enter') {
-      router.push(`/services/${query}`);
+      router.push(`/services?service=${query}`);
     }
   }
 
@@ -130,25 +130,38 @@ export default function NormNavbar() {
   }
 
   return (
-    <div className="w-full h-20 bg-white px-10 flex justify-between fixed z-50">
+    <div className="w-full h-20 bg-white xl:px-10 lg:px-10 md:px-5 sm:px-5 flex justify-between fixed z-50">
         <div className="flex items-center justify-center w-16 h-full overflow-hidden">
             <Link href="/" passHref>
                 <Image src="/images/nlogo.png" fallbackSrc='https://via.placeholder.com/150' alt="logo" className="w-full h-full object-contain" />
             </Link>
         </div>
-        <div className="flex-1 xl:flex lg:flex md:hidden sm:hidden justify-end items-center">
 
         <div className="flex-1 h-full xl:hidden lg:hidden md:flex sm:flex items-center px-3">
               <InputGroup>
                   <InputLeftElement  h="50px" paddingLeft="20px">
                       <FiSearch size={25} color="grey" />
                   </InputLeftElement>
-                  <Input type="text" name="search" value={query} bgColor="#F1EEEE" paddingLeft="50px"  h="50px" onKeyPress={handleKeydonw} onChange={(e) => setQuery(e.target.value)} fontSize="sm" className="font-Cerebri-sans-book" />
+                  <Input type="text" name="search" w="100%" value={query} bgColor="#F1EEEE" paddingLeft="50px"  h="50px" onKeyPress={handleKeydonw} onChange={(e) => setQuery(e.target.value)} fontSize="sm" className="font-Cerebri-sans-book" />
                   <InputRightElement  h="50px">
                   {query !== '' && <FiX size={20} color="grey" onClick={() => setQuery('')} className='cursor-pointer' />}
                   </InputRightElement>
               </InputGroup>
           </div>
+
+        <div className="flex-1 xl:flex lg:flex md:hidden sm:hidden justify-end items-center">
+
+        <div className="w-auto h-full xl:flex lg:flex md:hidden sm:hidden mr-8 items-center">
+                  <InputGroup>
+                      <InputLeftElement h="55px" paddingLeft="20px">
+                          <Search  size={20} primaryColor='grey' />
+                      </InputLeftElement>
+                      <Input type="text" name="search" bgColor="#F1EEEE" w="559px" h="55px" paddingLeft="60px" onKeyPress={handleKeydonw} value={query} onChange={(e) => setQuery(e.target.value)} fontSize="sm" className="font-Cerebri-sans-book" />
+                      <InputRightElement h="60px">
+                          {query !== '' && <FiX size={20} color="grey" onClick={() => setQuery('')} className='cursor-pointer' />}
+                      </InputRightElement>
+                  </InputGroup>
+        </div>
            
               <Menu size="lg" preventOverflow={true}>
                   <MenuButton

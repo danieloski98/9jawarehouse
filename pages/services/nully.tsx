@@ -132,7 +132,7 @@ export default function Services({states, services}: IProps) {
     }
     
   return (
-    <div className="w-full h-auto flex flex-col overflow-x-hidden overflow-y-auto">
+    <div className="w-full h-screen flex flex-col overflow-x-hidden">
 
         {/* small screen filter  */}
     
@@ -182,6 +182,17 @@ export default function Services({states, services}: IProps) {
         <NormNavbar />
     </div>
 
+    <div className="h-24 xl:hidden lg:hidden md:flex sm:flex items-center px-3">
+              <InputGroup>
+                  <InputLeftElement  h="50px" paddingLeft="20px">
+                      <FiSearch size={25} color="grey" />
+                  </InputLeftElement>
+                  <Input type="text" name="search" value={query} bgColor="#F1EEEE" paddingLeft="50px"  h="50px" onKeyPress={handleKeydonw} onChange={(e) => setQuery(e.target.value)} fontSize="sm" className="font-Cerebri-sans-book" />
+                  <InputRightElement  h="50px">
+                  {query !== '' && <FiX size={20} color="grey" onClick={() => setQuery('')} className='cursor-pointer' />}
+                  </InputRightElement>
+              </InputGroup>
+          </div>
 
     {/* {businesses.length} */}
 
@@ -196,7 +207,7 @@ export default function Services({states, services}: IProps) {
             ))}
     </div>
 
-    <div className="z-10 flex-1 h-auto overflow-x-hidden xl:p-0 lg:p-0 md:p-5 sm:p-5 flex justify-between">
+    <div className="z-10 flex-1 h-auto overflow-auto xl:p-0 lg:p-0 md:p-5 sm:p-5 flex justify-between">
 
         <div className="w-1/5 h-full xl:block lg:block md:hidden sm:hidden pb-5 mx-5">
             {/* <Sidebar page={page} setPage={changePage} /> */}
@@ -246,7 +257,7 @@ export default function Services({states, services}: IProps) {
                <button onClick={getUsers} className="w-32 h-10 bg-themeGreen text-white font-Cerebri-sans-book text-sm ml-6">Apply</button>
            </div>
 
-           <div className="flex-1 h-full overflow-y-auto flex xl:flex-row lg:flex-row md:flex-col sm:flex-col xl:justify-start lg:justify-start md:justify-start sm:justify-start xl:pr-16 lg:pr-16 md:pr-0 sm:pr-0 pt-0 mt-6 xl:flex-wrap lg:flex-wrap sm:flex-nowrap md:flex-nowrap xl:pt-0 lg:pt-0 md:pt-5 sm:pt-5">
+           <div className="flex-1 h-full overflow-y-auto flex xl:flex-row lg:flex-row md:flex-col sm:flex-col xl:justify-between lg:justify-between md:justify-start sm:justify-start xl:pr-16 lg:pr-16 md:pr-0 sm:pr-0 pt-0 mt-6 xl:flex-wrap lg:flex-wrap sm:flex-nowrap md:flex-nowrap xl:pt-0 lg:pt-0 md:pt-5 sm:pt-5">
                
                     {loading && (
                         <div className="w-full h-40 flex justify-center">
