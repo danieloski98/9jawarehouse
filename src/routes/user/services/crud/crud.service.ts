@@ -85,11 +85,12 @@ export class CrudService {
   }): Promise<IReturnObject> {
     try {
       if (query.state) {
+        console.log('state');
         const user = await this.userModel.find({
+          $text: { $search: query.service },
           verified: true,
           disabled: false,
           blocked: false,
-          services: query.service,
           state: query.state,
         });
         const users = [];
@@ -114,11 +115,12 @@ export class CrudService {
       }
       // checking of lga
       if (query.lga) {
+        console.log('lga');
         const user = await this.userModel.find({
+          $text: { $search: query.service },
           verified: true,
           disabled: false,
           blocked: false,
-          services: query.service.toLowerCase(),
           state: query.state,
           lga: query.lga,
         });
@@ -144,10 +146,12 @@ export class CrudService {
       }
 
       if (!query.state && !query.lga) {
+        console.log('lgaaaaaa');
         const user = await this.userModel.find({
+          $text: { $search: query.service },
           verified: true,
           disabled: false,
-          services: query.service,
+          blocked: false,
         });
         const users = [];
         for (let i = 0; i < user.length; i++) {
