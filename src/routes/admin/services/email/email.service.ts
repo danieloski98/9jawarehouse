@@ -329,7 +329,7 @@ export class EmailService {
       const mailOption: MailOptions = {
         from: process.env.COMPANY_EMAIL,
         to: email,
-        subject: `Account Verification Failed`,
+        subject: `Account Verification Successful`,
         html: `<p>Your account verification was successful. You can now login and set up your account  </p>`,
       };
       this.transporter.sendMail(mailOption, (error: any, info: any) => {
