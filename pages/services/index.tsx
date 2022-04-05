@@ -1,7 +1,7 @@
 import React, {useReducer} from 'react';
 import { Select, Drawer, DrawerOverlay, DrawerBody, DrawerContent, DrawerCloseButton, Box, Spinner, Divider } from '@chakra-ui/react'
 import BusinessCard from '../../components/services/businesscard';
-import ServiceNavbar from '../../components/services/ServiceNav';
+import ServiceNavbar from '../../components/general/ServiceNavbar';
 import { FiFilter } from 'react-icons/fi'
 import url from '../../utils/url';
 import { states } from '../../components/completereg';
@@ -13,7 +13,6 @@ import { useRouter } from 'next/router'
 import { ILga, IState } from '../../utils/types/Lga&State';
 import { FiSearch, FiBell, FiMenu, FiChevronDown, FiChevronUp, FiX, FiTrash2 } from 'react-icons/fi'
 import { Avatar, Menu, MenuButton, MenuList, MenuItem, Button, InputGroup, Input, InputLeftElement, InputRightElement, Accordion, AccordionItem, AccordionButton, AccordionPanel, AccordionIcon, Popover, PopoverTrigger, PopoverContent, PopoverArrow, PopoverBody, ModalOverlay, PopoverHeader } from '@chakra-ui/react'
-import NormNavbar from '../../components/general/NorNavbar';
 
 
 
@@ -91,7 +90,8 @@ export default function Services({states, services}: IProps) {
 
     const handleKeydonw = (e: any) => {
         if (e.key === 'Enter') {
-          router.push(`/services?service=${query}`);
+            dispatch({ type: 'service', payload: query })
+        //   getUsers();
         }
     }
 
@@ -123,21 +123,8 @@ export default function Services({states, services}: IProps) {
             setBusinesses(data);
             setLoading(false);
         })()
-    }, [reducerState,]);
+    }, [reducerState]);
 
-    // React.useEffect(() => {
-    //     setSr(router.query['service'] as string);
-    //     setLoading(true);
-    //     (async function() {
-    //         (async function() {
-    //             const request = await fetch(`${url}user?service=${router.query['service']}`);
-    //             const json = await request.json() as IServerReturnObject;
-    //             const data = json.data as IUser[];
-    //             setBusinesses(data);
-    //             setLoading(false);
-    //         })()
-    //     })()
-    // }, [router.query]);
 
     const SelectState = (newstate: string) => {
         setState(newstate);
@@ -204,7 +191,7 @@ export default function Services({states, services}: IProps) {
     </Drawer>
 
     <div className="w-full h-24 z-20">
-        <NormNavbar />
+        <ServiceNavbar search={query} setSearch={setQuery} handleEnter={handleKeydonw} />
     </div>
 
 

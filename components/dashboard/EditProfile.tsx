@@ -239,7 +239,7 @@ export default function EditProfile({ next }: IProps) {
                 className="min-w-max w-32 h-full bg-gray-200 flex flex-col justify-center items-center mr-4 z-0 overflow-hidden"
               >
                 {/* <FiX size={20} color="red" className="z-30" /> */}
-                <Image src={item} alt="picture" className="w-24 h-full z-0" />
+                <Image src={item} alt="picture" className="w-32 h-full z-0 object-cover" />
               </div>
 
               <div style={{ backgroundColor: 'rgba(0, 0, 0, 0.345)' }} className="relative w-32 h-32 z-20 flex flex-col bottom-32">

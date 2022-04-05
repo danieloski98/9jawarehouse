@@ -165,7 +165,7 @@ export default function Business() {
             <Carousel showArrows showIndicators showStatus={false} dynamicHeight={false} autoPlay interval={7000} infiniteLoop >
                 {user.pictures.map((item, index) => (
                   <div key={index.toString()} className="w-full h-full  bg-gray-300">
-                    <Img src={item} alt="img" className="w-2/4 h-full" />
+                    <Img src={item} alt="img" className="w-2/4 h-full object-contain" />
                   </div>
                 ))}
               </Carousel>
