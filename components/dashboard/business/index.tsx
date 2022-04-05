@@ -6,6 +6,7 @@ import { useRouter } from 'next/router'
 import { Carousel } from 'react-responsive-carousel';
 import { useQuery } from 'react-query'
 import { Call, Message } from 'react-iconly'
+import Resizer from 'react-image-file-resizer'
 
 // redux
 import { useDispatch, useSelector } from 'react-redux'
@@ -24,6 +25,7 @@ import url from '../../../utils/url';
 import { IUser } from '../../../utils/types/user';
 import { IComment } from '../../../utils/types/comments';
 import Footer from '../../Home/Footer';
+import NorNavbar from '../../general/NorNavbar';
 
 
 const ContactBox = ({user}: {user: IUser}) => {
@@ -125,7 +127,7 @@ export default function Business() {
   return (
     <div className="w-full h-auto flex flex-col overflow-y-auto overflow-x-hidden">
 
-        <ServiceNavbar />
+        <NorNavbar />
 
         {/* modal */}
 
@@ -159,11 +161,11 @@ export default function Business() {
         {/* Banner */}
 
         {!loading && (
-            <div className="w-full h-96 bg-white overflow-hidden mt-6">
+            <div className="w-full xl:h-96 lg:h-96 md:h-64 sm:h-64 bg-white overflow-hidden mt-6">
             <Carousel showArrows showIndicators showStatus={false} dynamicHeight={false} autoPlay interval={7000} infiniteLoop >
                 {user.pictures.map((item, index) => (
-                  <div key={index.toString()} className="w-full h-96">
-                    <Img src={item} alt="img" className="w-full h-96 object-cover" />
+                  <div key={index.toString()} className="w-full h-full  bg-gray-300">
+                    <Img src={item} alt="img" className="w-2/4 h-full" />
                   </div>
                 ))}
               </Carousel>

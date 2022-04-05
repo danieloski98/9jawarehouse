@@ -10,7 +10,7 @@ import Footer from '../components/Home/Footer';
 
 const Home: NextPage = () => {
   return (
-    <div className="w-full h-auto">
+    <div className="w-auto h-auto overflow-hidden">
       <Banner />
       <Stats />
       <Features />
