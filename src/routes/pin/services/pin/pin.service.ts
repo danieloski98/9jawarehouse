@@ -32,9 +32,10 @@ export class PinService {
       }
       // check if the user has a pin
       const piinn = await this.pinModel.find({ business_id: user_id });
-      this.logger.error(piinn);
+      this.logger.error('this is the pin service');
 
-      if (piinn.length < 5) {
+      if (piinn.length < 1) {
+        console.log('this is the if block');
         // generate PIN
         const options = {
           min: 1000,
@@ -55,21 +56,21 @@ export class PinService {
           { _id: user_id },
           { pin: true },
         );
-        this.logger.log(updatedUser);
-
         // get new User
         const user = await this.userModel.findById(user_id);
+        this.logger.log(user);
 
         return Return({
           error: false,
           statusCode: 200,
-          successMessage: 'Pin generated succesfully',
+          successMessage: 'Pin generated succesfully ya',
           data: {
             user,
             pin: code,
           },
         });
       } else {
+        console.log('else block');
         // renew Pin
         // generate PIN
         const options = {
@@ -78,7 +79,7 @@ export class PinService {
           integer: true,
         };
         const code = randomNumber(options);
-        pusher.trigger('NOTIFICATION', `PINCHANGED:${user_id}`, code);
+        //pusher.trigger('NOTIFICATION', `PINCHANGED:${user_id}`, code);
         // this.SocketGateway.server.emit(, code);
         const pin = await this.pinModel.updateOne(
           { _id: piinn[0]._id },
@@ -88,13 +89,23 @@ export class PinService {
           },
         );
 
+        // update the user
+        const updatedUser = await this.userModel.updateOne(
+          { _id: user_id },
+          { pin: true },
+        );
+
+        // get new User
+        const user = await this.userModel.findById(user_id);
+
         this.logger.log(pin);
         return Return({
           error: false,
           statusCode: 200,
-          successMessage: 'Pin generated succesfully',
+          successMessage: 'Pin generated succesfully yayayaya',
           data: {
-            pin,
+            code,
+            user,
           },
         });
       }
