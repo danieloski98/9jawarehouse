@@ -97,7 +97,7 @@ export default function Profile({ setPage }: IProps) {
         <Carousel showArrows showIndicators dynamicHeight={false} autoPlay interval={7000} infiniteLoop>
             {userDetails.pictures.map((item, index) => (
               <div key={index.toString()} className="w-full h-64 bg-gray-200">
-                <Img src={item} alt="img" className="w-full h-64 object-contain" />
+                <Img src={item} alt="img" className="w-full h-64 object-cover" />
               </div>
             ))}
           </Carousel>
@@ -122,9 +122,9 @@ export default function Profile({ setPage }: IProps) {
               </p>
               <div className="flex w-full h-auto flex-wrap mt-2 xl:justify-start lg:justify-start md:justify-center sm:justify-center">
                 {userDetails.services.map((item: string, index: number) => (
-                  <p key={index.toString()} className="text-sm text-themeGreen md:text-center sm:text-center font-Cerebri-sans-book px-2">
-                    {item} {index === userDetails.services.length - 1 ? '.':', '}
-                  </p>
+                  <p key={index.toString()} className="text-sm text-themeGreen md:text-center sm:text-center font-Cerebri-sans-book px-1">
+                    {item}{index === userDetails.services.length - 1 ? '.':'.'}  
+                  </p> 
                 ))}
               </div>
             </div>

@@ -56,7 +56,7 @@ export default function BusinessCard({user}: {user: IUser}) {
                                 color="lightgrey"
                             />
                         </div>
-                        <p className="text-md font-Cerebri-sans-book text-themeGreen mr-2">{user.rating.toFixed(1)}/5</p>
+                        <p className="text-md font-Cerebri-sans-book text-themeGreen mr-2">{user.rating  ? user.rating.toFixed(1) : 0}/5</p>
                     </div>
                 </div>
                 <button onClick={move} className="w-40 bg-themeGreen text-white text-sm font-Cerebri-sans-book h-10">View Profile</button>

@@ -152,7 +152,7 @@ export default function Business() {
 
                     {!loading && 
                         <BreadcrumbItem>
-                            <p className="text-gray-600">{user.business_name}</p>
+                            <p className="text-gray-600">{user.business_name || ''}</p>
                         </BreadcrumbItem>}
                 </Breadcrumb>
             </div>
@@ -165,7 +165,7 @@ export default function Business() {
             <Carousel showArrows showIndicators showStatus={false} dynamicHeight={false} autoPlay interval={7000} infiniteLoop >
                 {user.pictures.map((item, index) => (
                   <div key={index.toString()} className="w-full h-full  bg-gray-300">
-                    <Img src={item} alt="img" className="w-2/4 h-full object-contain" />
+                    <Img src={item} alt="img" className="w-2/4 h-96 object-cover" />
                   </div>
                 ))}
               </Carousel>

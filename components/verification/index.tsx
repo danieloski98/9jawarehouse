@@ -168,8 +168,8 @@ export default function Forgotpassword() {
 
     return (
         <div className="w-full h-screen flex">
-            <input type="file" accept="image/*, application/pdf, application/msword" hidden id="doc" onChange={(e) => readerDoc(e.target.files as any)} />
-            <input type="file" accept="image/*, application/pdf, application/msword" hidden id="cac" onChange={(e) => readerCac(e.target.files as any)} />
+            <input type="file" accept="image/*" hidden id="doc" onChange={(e) => readerDoc(e.target.files as any)} />
+            <input type="file" accept="image/*" hidden id="cac" onChange={(e) => readerCac(e.target.files as any)} />
             
 
         <div className="flex-1 flex flex-col">
