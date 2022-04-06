@@ -103,7 +103,7 @@ export default function Dashboard() {
             setPinmodal(true);
         }
   
-        if (json.data.pin && json.data.blocked) {
+        if (json.data.pin && json.data.disabled) {
             setSubmodal(true);
         }
         dispatch(updateUser(json.data));
