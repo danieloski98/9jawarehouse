@@ -37,8 +37,9 @@ export class UserService {
     query?: string,
   ): Promise<IReturnObject> {
     try {
-      console.log(query);
+      console.log(_id);
       const user = await this.userModel.findById(_id);
+      console.log(user);
       if (user === null) {
         return Return({
           error: true,
@@ -57,7 +58,7 @@ export class UserService {
           fullname: `${user.first_name} ${user.last_name}`,
           phone: user.phone,
         },
-        plan: numq === 1 ? process.env.PS_PLAN : process.env.ps_PLAN,
+        plan: numq === 1 ? process.env.PS_PLAN : process.env.PS_PLAN,
         channels: ['card', 'bank_transfer'],
       };
       // make request
@@ -87,10 +88,7 @@ export class UserService {
         amount,
         fullname: `${user.first_name} ${user.last_name}`,
         email: user.email,
-        expires:
-          numq === 1
-            ? currentDate.add(1, 'month').format('YYYY-MM-DD hh:mm')
-            : currentDate.add(5, 'months').format('YYYY-MM-DD hh:mm'),
+        expires: currentDate.add(6, 'months').format('YYYY-MM-DD hh:mm'),
         status: 1,
       });
       console.log(newSub);
@@ -99,10 +97,7 @@ export class UserService {
       const userUpdate = await this.userModel.updateOne(
         { _id: user._id },
         {
-          nextPayment:
-            numq === 1
-              ? updatedDate.add(1, 'month').format('YYYY-MM-DD hh:mm')
-              : updatedDate.add(180, 'days').format('YYYY-MM-DD hh:mm'),
+          nextPayment: updatedDate.add(6, 'months').format('YYYY-MM-DD hh:mm'),
         },
       );
       // console.log(userUpdate);
@@ -226,7 +221,9 @@ export class UserService {
 
   async getAllSubs(_id: string): Promise<IReturnObject> {
     try {
+      console.log(_id);
       const subs = await this.subscriptionModel.find({ business_id: _id });
+      console.log(subs);
       return Return({
         error: false,
         statusCode: 200,

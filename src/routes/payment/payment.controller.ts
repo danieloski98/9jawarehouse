@@ -19,7 +19,7 @@ export class PaymentController {
   @ApiParam({ name: 'vendor_id' })
   @Get('subscriptions/:vendor_id')
   async getpayment(@Res() res: Response, @Param() param: any) {
-    const request = await this.userService.getAllSubs(param['id']);
+    const request = await this.userService.getAllSubs(param['vendor_id']);
     res.status(request.statusCode).send(request);
   }
 
