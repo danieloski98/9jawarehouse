@@ -57,7 +57,7 @@ export class UserService {
           fullname: `${user.first_name} ${user.last_name}`,
           phone: user.phone,
         },
-        plan: numq === 1 ? process.env.PS_PLAN : process.env.PS_PLAN_2,
+        plan: numq === 1 ? process.env.PS_PLAN : process.env.ps_PLAN,
         channels: ['card', 'bank_transfer'],
       };
       // make request
