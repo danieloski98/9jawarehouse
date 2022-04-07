@@ -158,7 +158,7 @@ export default function ServiceNavbar({ search, handleEnter, setSearch}: { searc
                       </InputLeftElement>
                       <Input type="text" name="search" bgColor="#F1EEEE" w="559px" h="55px" value={search} paddingLeft="60px" onKeyPress={(e) => handleEnter(e)} onChange={(e) => setSearch(e.target.value)} fontSize="sm" className="font-Cerebri-sans-book" />
                       <InputRightElement h="60px">
-                          {query !== '' && <FiX size={20} color="grey" onClick={() => setQuery('')} className='cursor-pointer' />}
+                          {search !== '' && <FiX size={20} color="grey" onClick={() => setQuery('')} className='cursor-pointer' />}
                       </InputRightElement>
             </InputGroup>
         </div>
