@@ -142,7 +142,7 @@ export default function Dashboard() {
 
   const closePinModal = () => {
       setPinmodal(false);
-      if (user.blocked) {
+      if (user.disabled) {
           setSubmodal(true);
       }
   }
