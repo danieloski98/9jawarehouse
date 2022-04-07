@@ -87,9 +87,13 @@ export default function ProfileBox({user, reviews}: IProps) {
               </p>
               <div className="flex xl:justify-start lg:justify-start md:justify-center sm:justify-center w-full flex-wrap md:mt-3 sm:mt-3">
               {user !== undefined && user.services.map((item, index) => (
-                <p key={index.toString()} className="text-md text-themeGreen font-Cerebri-sans-book mr-2">
-                  {item}{index === user.services.length - 1 ? '.':'.'} 
+               <>
+                 <p key={index.toString()} className="text-md text-themeGreen font-Cerebri-sans-book">
+                  {item}
                 </p>
+                <span className="mx-2 text-themeGreen">{index === user.services.length - 1 ? '':'.'}</span>
+               </>
+
               ))}
               </div>
               <div className="flex items-center text-sm font-Cerebri-sans-book text-gray-600 mt-4">

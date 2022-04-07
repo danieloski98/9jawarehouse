@@ -3,6 +3,7 @@ import { Input, Avatar, Image as Img, Modal, ModalOverlay, ModalBody, ModalConte
 import Image from 'next/image'
 import Banner from '../../public/images/banner.png';
 import { FaFacebook, FaWhatsapp, FaInstagram, FaInternetExplorer, FaTwitter, FaLink, FaCopy } from 'react-icons/fa'
+import { FiCircle } from 'react-icons/fi'
 import { Carousel } from 'react-responsive-carousel';
 
 
@@ -122,9 +123,12 @@ export default function Profile({ setPage }: IProps) {
               </p>
               <div className="flex w-full h-auto flex-wrap mt-2 xl:justify-start lg:justify-start md:justify-center sm:justify-center">
                 {userDetails.services.map((item: string, index: number) => (
-                  <p key={index.toString()} className="text-sm text-themeGreen md:text-center sm:text-center font-Cerebri-sans-book px-1">
-                    {item}{index === userDetails.services.length - 1 ? '.':'.'}  
+                 <>
+                   <p key={index.toString()} className="text-sm text-themeGreen md:text-center sm:text-center font-Cerebri-sans-book px-1">
+                    {item}
                   </p> 
+                  <span className="mx-2 text-themeGreen">{index === userDetails.services.length - 1 ? '':'.'}</span>
+                 </>
                 ))}
               </div>
             </div>
