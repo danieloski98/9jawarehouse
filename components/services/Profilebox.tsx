@@ -91,7 +91,7 @@ export default function ProfileBox({user, reviews}: IProps) {
                  <p key={index.toString()} className="text-md text-themeGreen font-Cerebri-sans-book">
                   {item}
                 </p>
-                <span className="mx-2 text-themeGreen">{index === user.services.length - 1 ? '':'.'}</span>
+                <span className="mx-2 text-themeGreen">{index === user.services.length - 1 ? '':'|'}</span>
                </>
 
               ))}

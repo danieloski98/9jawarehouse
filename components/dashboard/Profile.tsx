@@ -124,10 +124,10 @@ export default function Profile({ setPage }: IProps) {
               <div className="flex w-full h-auto flex-wrap mt-2 xl:justify-start lg:justify-start md:justify-center sm:justify-center">
                 {userDetails.services.map((item: string, index: number) => (
                  <>
-                   <p key={index.toString()} className="text-sm text-themeGreen md:text-center sm:text-center font-Cerebri-sans-book px-1">
+                   <p key={index.toString()} className="text-md text-themeGreen md:text-center sm:text-center font-Cerebri-sans-book px-1 mt-0">
                     {item}
                   </p> 
-                  <span className="mx-2 text-themeGreen">{index === userDetails.services.length - 1 ? '':'.'}</span>
+                  <span className="mx-2 text-themeGreen">{index === userDetails.services.length - 1 ? '':'|'}</span>
                  </>
                 ))}
               </div>
