@@ -26,7 +26,7 @@ const NOTSELECTED = 'xl:w-2/5 lg:w-2/5 md:2/4 sm:w-2/4 h-auto text-center p-5 fl
 
 const SubModal = ({ open, onClose, user }: IProps) => {
     const [stage, setStage] = React.useState(1);
-    const [sel, setSel] = React.useState(1);
+    const [sel, setSel] = React.useState(0);
     const [loading, setLoading] = React.useState(false);
     
     const ref = React.useRef<any>();
@@ -86,10 +86,12 @@ You will have all full access on this account to all features. Auto Renewal will
                         </div>
 
                         <div className="w-full flex justify-center mt-6">
-                            <button onClick={pay} className="w-32 h-12 bg-themeGreen text-white text-sm font-li">
-                                {loading && <Spinner size="md" color="white" />}
-                                {!loading && <span>Renew</span>}
-                            </button>
+                            {sel === 2 && (
+                                <button onClick={pay} className="w-32 h-12 bg-themeGreen text-white text-sm font-li">
+                                    {loading && <Spinner size="md" color="white" />}
+                                    {!loading && <span>Subscribe</span>}
+                                </button>
+                            )}
                         </div>
                     </div>
                     )}
@@ -108,6 +110,7 @@ You will have all full access on this account to all features. Auto Renewal will
 
 // get all subs function
 const getSubs = async(id: string) => {
+    console.log(id);
     const request = await fetch(`${url}payment/subscriptions/${id}`);
     const json = await request.json() as IServerReturnObject;
 
@@ -127,8 +130,9 @@ export default function Subscription() {
     const [show, setShow] = React.useState(false);
 
     // request
-    const { refetch } = useQuery(['getSubscriptions'], () => getSubs(user._id), {
+    const { refetch } = useQuery(['getSubscriptions', user._id], () => getSubs(user._id), {
         onSuccess: (data) => {
+            console.log(data.data);
             setSubs(data.data);
             setLoading(false);
             setError(false);

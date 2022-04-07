@@ -5,6 +5,8 @@ import Image from 'next/image';
 import { Spinner } from '@chakra-ui/react';
 import url from '../utils/url';
 import { IServerReturnObject } from '../utils/types/serverreturntype';
+import Lottie from 'react-lottie-player';
+import Password from '../public/lottie/80032-fingerprint.json'
 
 export default function VerifyPayment() {
     const [loading, setLoading] = React.useState(false);
@@ -35,7 +37,16 @@ export default function VerifyPayment() {
   return (
     <div className='w-full h-screen flex items-center justify-center bg-white flex-col'>
         <div className="w-56 h-56">
-            <Image src={Verify} alt="payment" className='w-full h-full' />
+        <div className="flex w-full h-auto justify-center  pr-32">
+                        <div className="w-32 h-auto">
+                            <Lottie 
+                                loop
+                                animationData={Password}
+                                play
+                                style={{ width: 250, height: 250 }}
+                            />
+                        </div>
+                    </div>
         </div>
         <p className='font-light text-xl mt-2 text-gray-600'>Verify Payment</p>
         <button onClick={verify} className="w-40 h-12 bg-green-400 text-white mt-3 font-semibold text-md">
