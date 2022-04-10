@@ -234,6 +234,10 @@ const RightNavBar = () => {
         dispatch(logout())
       }
 
+      function capitalizeFirstLetter(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+      }
+
     return (
         <div className="w-full h-24 flex justify-end pr-0 items-center text-white">
 
@@ -262,7 +266,7 @@ const RightNavBar = () => {
                 {serv.map((item, index) => (
                   // <MenuItem key={index.toString()} >
                     <a href={`/services?service=${item.name}`} key={index}>
-                        <p className="text-gray-600 font-Cerebri-sans-book text-md mb-4 mt-4">{item.name}</p>
+                        <p className="text-gray-600 font-Cerebri-sans-book text-md mb-4 mt-4">{capitalizeFirstLetter(item.name)}</p>
                     </a>
                   // </MenuItem>
                 ))}

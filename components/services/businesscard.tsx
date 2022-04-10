@@ -25,6 +25,10 @@ export default function BusinessCard({user}: {user: IUser}) {
           dispatch(updateUser(user));
           router.push(`/services/business/${user._id}`)
       }
+
+      function capitalizeFirstLetter(item: string) {
+        return item.charAt(0).toUpperCase() + item.slice(1);
+      }
       
   return (
     <div className="xl:w-30/100 lg:w-30/100 md:w-full sm:w-full h-auto flex flex-col border-1 border-lightGrey mb-6 py-8 xl:mr-4 lg:mr-4">
@@ -34,7 +38,7 @@ export default function BusinessCard({user}: {user: IUser}) {
 
         <div className="w-full h-auto flex flex-col items-center px-4 text-center mt-2">
             <p className=" font-Circular-std-medium text-md text-gray-600 mb-0">{user.business_name}</p>
-            <p className='text-md text-themeGreen font-Circular-std-book'>{user.services[0]}</p>
+            <p className='text-md text-themeGreen font-Circular-std-book'>{capitalizeFirstLetter(user.services[0])}</p>
             <p className='text-sm text-gray-400 mt-3 font-Cerebri-sans-book'>{user.state}</p>
 
             {/* <p className="font-semibold text-sm text-gray-500">Business Type</p> */}
