@@ -326,7 +326,7 @@ export default function ReviewModal({ open, setOpen, id, user }: IProps) {
                 {stage === 2 && <PinComponent user={user} change={setStage} changePin={changePin} submit={submit} loading={loading} close={close} />}
                 {stage === 3 && (
                         <div className="w-full h-auto py-20 flex flex-col justify-center items-center">
-                            <Image src={Good} alt="good" className="w-24 h-24" />
+                            <Image src="/images/good.svg" alt="good" className="w-24 h-24" />
                             <p className="mt-6 text-xl font-semibold text-gray-600">Review Sent!</p>
                             <p className="font-light text-sm mt-3 text-gray-500">Your review have been sent to the admin for approval</p>
                         </div>

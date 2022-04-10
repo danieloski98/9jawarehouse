@@ -43,7 +43,7 @@ const LeftNavbar = () => {
 }
 
 
-export default function Forgotpassword() {
+export default function VerificationDocuments() {
     const [loading, setLoading] = React.useState(false);
     const [openSuccessModal, setOpenSuccessModal] = React.useState(false);
     const docReader = React.useRef(new FileReader()).current;
@@ -106,12 +106,34 @@ export default function Forgotpassword() {
 
     const readerDoc = (files: File[]) => {
         const neededDoc = files[0];
+        if (neededDoc.size > 5019878) {
+            toast({
+                status: 'warning',
+                description: 'Can\'t use an image greater than 5MB',
+                title: 'Image Too Large',
+                position: 'top',
+                isClosable: true,
+                duration: 5000,
+            });
+            return;
+        }
         setDocName(neededDoc.name);
         docReader.readAsDataURL(neededDoc);
     }
 
     const readerCac = (files: any[]) => {
         const neededDoc = files[0];
+        if (neededDoc.size > 5019878) {
+            toast({
+                status: 'warning',
+                description: 'Can\'t use an image greater than 5MB',
+                title: 'Image Too Large',
+                position: 'top',
+                isClosable: true,
+                duration: 5000,
+            });
+            return;
+        }
         setCacname(neededDoc.name);
         cacReader.readAsDataURL(neededDoc);
     }
@@ -136,7 +158,7 @@ export default function Forgotpassword() {
             },
             body: JSON.stringify({
                 ...formik.values,
-                cac: cac !== '' ? cac:'',
+                cac: cac,
                 verification_document_type: docType,
                 verification_document: doc,
             })

@@ -216,7 +216,7 @@ export default function Services({states, services}: IProps) {
             <p className=' mb-0 cursor-pointer w-full h-auto p-3 gray-300 font-Circular-std-medium text-md'>Related Service</p>
             <Divider />
                 {services.map((item, index) => (
-                    <p key={index.toString()} onClick={() => setSr(item.name)} className=' cursor-pointer w-full h-auto p-3 hover:bg-gray-200 border-gray-300 font-Cerebri-sans-book text-sm'>{item.name}</p>
+                    <p key={index.toString()} onClick={() => dispatch({ type: 'service', payload: item.name })} className=' cursor-pointer w-full h-auto p-3 hover:bg-gray-200 border-gray-300 font-Cerebri-sans-book text-sm'>{item.name}</p>
                 ))}
             </div>
 
