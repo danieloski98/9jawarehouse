@@ -17,8 +17,9 @@ import { IServerReturnObject } from '../../utils/types/serverreturntype';
 import { IState } from '../../utils/types/Lga&State';
 import { clearTimeout } from 'timers';
 
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { updateUser } from '../../reducers/User.reducer';
+import { RootState } from '../../store/index'
 // import { setTimeout } from 'timers/promises';
 
 // validationSchema
@@ -49,7 +50,7 @@ export const initialValues =  {
     country: 'Nigeria',
     state: '',
     business_name: '',
-    description: '',
+    business_description: '',
     instagram: '',
     facebook: '',
     whatsapp: '',
@@ -78,6 +79,9 @@ export default function BigScreen({ states, services}: {states: IState[], servic
     const [loading, setLoading] = React.useState(false);
     const dispatch = useDispatch();
     const toast = useToast();
+    const user = useSelector((state: RootState) => state.UserReducer.user);
+
+    console.log(user);
 
     React.useEffect(() => {
         setCertificates([
@@ -124,9 +128,10 @@ export default function BigScreen({ states, services}: {states: IState[], servic
     }, [fileReader2])
 
     const formik: any = useFormik({
-        initialValues,
+        initialValues: {...initialValues, first_name: user.first_name, last_name: user.last_name, email: user.email, business_name: user.business_name, business_description: user.business_description},
         validationSchema,
         onSubmit: () => {},
+        enableReinitialize: true,
     });
 
     const move = (val: number) => {
