@@ -9,7 +9,7 @@ import { queryClient } from '../../../App';
 
 export default function Verification({user}:{user: IUser}) {
     const [declinedModal, setDeclineModal] = React.useState(false);
-    const [tab, setTab] = React.useState(0);
+    const [tab, setTab] = React.useState(2);
     const [loading, setLoading] = React.useState(false);
 
     const toast = useToast();
@@ -71,13 +71,13 @@ export default function Verification({user}:{user: IUser}) {
                 </div>
             </div>
             <div className='w-full flex text-sm items-center mt-6 rounded-lg py-2 px-1' style={{backgroundColor: '#004143'}} >
-                <div onClick={()=> setTab(0)} style={tab === 0 ? {backgroundColor: '#1A8F8591'}: {}} className='w-full text-white cursor-pointer font-Graphik-Regular mx-3 py-3 rounded-lg flex justify-center items-center' >
+                <div onClick={()=> setTab(2)} style={tab === 2 ? {backgroundColor: '#1A8F8591'}: {}} className='w-full text-white cursor-pointer font-Graphik-Regular mx-3 py-3 rounded-lg flex justify-center items-center' >
                     Identity Card
                 </div>
                 {/* <div onClick={()=> setTab(1)} style={tab === 1 ? {backgroundColor: '#1A8F8591' }: {}} className='w-full text-white cursor-pointer font-Graphik-Regular mx-3 py-3 rounded-lg flex justify-center items-center' >
                     Utility Bill
                 </div> */}
-                <div onClick={()=> setTab(2)} style={tab === 2 ? {backgroundColor: '#1A8F8591' }: {}} className='w-full text-white cursor-pointer font-Graphik-Regular mx-3 py-3 rounded-lg flex justify-center items-center' >
+                <div onClick={()=> setTab(1)} style={tab === 1 ? {backgroundColor: '#1A8F8591' }: {}} className='w-full text-white cursor-pointer font-Graphik-Regular mx-3 py-3 rounded-lg flex justify-center items-center' >
                     Corporate Affairs Commission
                 </div> 
             </div>

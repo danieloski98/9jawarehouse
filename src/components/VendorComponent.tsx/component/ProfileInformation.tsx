@@ -94,7 +94,7 @@ export default function ProfileInformation({user}: {user: IUser}) {
                 </div>
                 <div className='w-full grid grid-cols-4' >
                     <div className='' >
-                        <p style={{color: '#270223'}} className=' font-Graphik-SemiBold text-sm ' >Social media links</p>
+                        <p style={{color: '#270223'}} className=' font-Graphik-SemiBold text-sm ' >Date Joined</p>
                         <p style={{color: '#828282'}} className=' mt-1 font-Graphik-Regular text-sm ' >June 21, 2021</p>
                     </div>
                     <div className='' >
