@@ -213,8 +213,8 @@ export class PicsService {
         join(process.cwd(), `/pictures/${image.filename}`),
         {
           transformation: {
-            width: 140,
-            height: 140,
+            width: 500,
+            height: 500,
             format: 'png',
           },
         },

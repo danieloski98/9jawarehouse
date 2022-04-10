@@ -372,7 +372,7 @@ export class CrudService {
           ...details,
           verification_document_type: details.verification_document_type,
           verification_document: verification_doc.secure_url,
-          CAC: cac_doc ? cac_doc.secure_url : '',
+          CAC: cac_doc.secure_url !== undefined ? cac_doc.secure_url : '',
           disabled: true,
         },
       );
