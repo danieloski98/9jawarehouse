@@ -103,7 +103,9 @@ export default function ProfileInformation({user}: {user: IUser}) {
                             <div className='mb-3'>
                                 <p style={{color: '#828282'}} className=' mt-1 font-Graphik-Regular text-sm ' >{item.certificate}</p>
                                 <p style={{color: '#828282'}} className=' mt-1 font-Graphik-Regular text-sm ' >Issued on {new Date(item.year).toDateString()}</p>
-                                <button  style={{color: '#828282', border: '1px solid #1A8F85'}} className='text-sm font-Graphik-Regular p-2 mt-5 rounded-lg'>View Certificate</button>
+                                <a href={item.link} target="_blank" rel="noreferrer">
+                                    <button  style={{color: '#828282', border: '1px solid #1A8F85'}} className='text-sm font-Graphik-Regular p-2 mt-5 rounded-lg'>View Certificate</button>
+                                </a>
                             </div>
                         ))}
                         {user.certificates !== undefined && user.certificates.length < 1 && <p style={{color: '#828282'}} className=' mt-1 font-Graphik-Regular text-sm '>No Certificates</p>}

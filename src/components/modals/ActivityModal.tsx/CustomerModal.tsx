@@ -8,6 +8,7 @@ import { url } from '../../../utils/url';
 import { IReturnObject } from '../../../types/ServerReturnType';
 import {useNavigate} from 'react-router-dom'
 import { queryClient } from '../../../App';
+import Viewer from 'react-viewer';
 
 interface IProps {
     close: Function;
@@ -18,8 +19,11 @@ interface IProps {
 export default function CustomerModal({close, next, comment}: IProps) {
 
     const [loading, setLoading] = React.useState(true);
+    const [dloading, setDLoading] = React.useState(false);
     const [vendor, setVendor] = React.useState({} as IUser);
     const [ll, setLL] = React.useState(false);
+    const [ visible, setVisible ] = React.useState(false);
+    const [img, setImg] = React.useState('');
     
     const navigate = useNavigate();
     const toast = useToast();
@@ -71,8 +75,44 @@ export default function CustomerModal({close, next, comment}: IProps) {
         }
     }, [comment._id, toast, close]);
 
+    const decline = useCallback(async () => {
+        setDLoading(true);
+        const request = await fetch(`${url}/comments/admin/decline/${comment._id}`, {
+            method: 'put'
+        });
+        const json = await request.json() as IReturnObject;
+        setDLoading(false);
+        if (json.statusCode !== 200) {
+            toast({
+                title: 'Error',
+                description: json.errorMessage,
+                position: 'top',
+                isClosable: true,
+                duration: 5000,
+                status: 'error',
+            });
+            return;
+        } else {
+            toast({
+                title: 'Success',
+                description: json.successMessage,
+                position: 'top',
+                isClosable: true,
+                duration: 5000,
+                status: 'success',
+            });
+            queryClient.invalidateQueries();
+            close(false);
+        }
+    }, [comment._id, toast, close]);
+
     return (
         <div style={{width: '900px'}} className='bg-white rounded-lg px-10 py-6'  >
+            <Viewer
+                visible={visible}
+                onClose={() => { setVisible(false); } }
+                images={[{src: img, alt: ''}]}
+            />
             <div className='w-full flex items-center' >
                 <p className='font-Graphik-SemiBold' style={{color:'#0C0C0C'}} >Customer Review</p> 
                 <svg onClick={()=> close(false)} className='ml-auto cursor-pointer' xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
@@ -133,7 +173,7 @@ export default function CustomerModal({close, next, comment}: IProps) {
                         <p style={{color: '#1A1A1A'}} className='font-Graphik-SemiBold' >Attachments</p>
                         <div className='flex mt-3' >
                             {comment.pictures.length > 0 && comment.pictures.map((item, index) => (
-                                <img key={index.toString()} src={item} alt='' className='w-20 h-20 mx-1 rounded' />
+                                <img key={index.toString()} src={item} alt='' className='w-20 h-20 mx-1 rounded cursor-pointer' onClick={() => {setImg(item); setVisible(true)}} />
                             ))}
                             {comment.pictures.length < 1 && <p>No images uploaded</p>}
                         </div>
@@ -156,7 +196,10 @@ export default function CustomerModal({close, next, comment}: IProps) {
                         </div>
                     )}
                     <div className='mt-auto ml-auto flex items-center' >
-                        <p style={{color: '#F60D0D'}} className='font-Graphik-SemiBold cursor-pointer px-4 '>Reject</p>
+                        <p onClick={decline} style={{color: '#F60D0D'}} className='font-Graphik-SemiBold cursor-pointer px-4 '>
+                            {!dloading && 'Reject'}
+                           {dloading && <Spinner size="sm" color="green" />}
+                        </p>
                         <button onClick={approve} style={{backgroundColor: '#1A8F85'}} className='px-4 py-3 font-Graphik-Regular text-sm text-white rounded-md ml-4' >
                            {!ll && ' Approve'}
                            {ll && <Spinner size="sm" color="white" />}
