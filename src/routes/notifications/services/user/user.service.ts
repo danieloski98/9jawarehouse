@@ -151,4 +151,28 @@ export class NotificationUserService {
       });
     }
   }
+
+  async triggerAdminNotification(message: string): Promise<IReturnObject> {
+    try {
+      const newNotObj = {
+        message,
+        forAdmin: true,
+      };
+      const newNoti = await this.notificationModel.create(newNotObj);
+      // this.webSocket.server.emit(`NOTIFICATION:${business_id}`, newNoti);
+      console.log(newNoti);
+      return Return({
+        error: false,
+        statusCode: 200,
+        successMessage: 'Notification Sent',
+      });
+    } catch (error) {
+      return Return({
+        error: true,
+        statusCode: 500,
+        errorMessage: 'Internal Server Error',
+        trace: error,
+      });
+    }
+  }
 }

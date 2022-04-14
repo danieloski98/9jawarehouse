@@ -9,18 +9,29 @@ import {
   Put,
 } from '@nestjs/common';
 import { CrudService } from '../services/crud/crud.service';
+import { NotificationsService } from '../services/notifications/notifications.service';
 import { Response } from 'express';
 import { Admin } from 'src/Schema/Admin.Schema';
 import { ApiTags, ApiBody, ApiParam } from '@nestjs/swagger';
 
 @Controller('admin')
 export class AdminController {
-  constructor(private crudService: CrudService) {}
+  constructor(
+    private crudService: CrudService,
+    private notificationService: NotificationsService,
+  ) {}
 
   @ApiTags('ADMIN')
   @Get('')
   async getAllAdmin(@Res() res: Response) {
     const result = await this.crudService.getAllAdmin();
+    res.status(result.statusCode).send(result);
+  }
+
+  @ApiTags('ADMIN')
+  @Get('notifications')
+  async getAllNotifications(@Res() res: Response) {
+    const result = await this.notificationService.getAllNotifications();
     res.status(result.statusCode).send(result);
   }
 
@@ -66,6 +77,17 @@ export class AdminController {
   @Delete(':id')
   async deleteAdmin(@Res() res: Response, @Param() param: { id: string }) {
     const result = await this.crudService.deleteAdminByID(param.id);
+    res.status(result.statusCode).send(result);
+  }
+
+  @ApiTags('ADMIN')
+  @ApiParam({ type: String, name: 'id' })
+  @Delete('notification/:id')
+  async deleteNotification(
+    @Res() res: Response,
+    @Param() param: { id: string },
+  ) {
+    const result = await this.notificationService.deleteNotification(param.id);
     res.status(result.statusCode).send(result);
   }
 }

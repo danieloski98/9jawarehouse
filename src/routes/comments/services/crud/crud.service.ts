@@ -98,6 +98,9 @@ export class CrudService {
         //   user_id,
         //   `User with name ${payload.fullname} left a review for your business. The review is await approval.`,
         // );
+        this.userNotificationService.triggerAdminNotification(
+          `A customer left a comment.`,
+        );
         return Return({
           error: false,
           statusCode: 200,
@@ -170,6 +173,26 @@ export class CrudService {
         error: false,
         statusCode: 200,
         successMessage: 'Review approved',
+        data: reviews,
+      });
+    } catch (error) {
+      return Return({
+        error: true,
+        statusCode: 500,
+        errorMessage: 'Internal server Error',
+        trace: error,
+      });
+    }
+  }
+
+  async declineReview(id: string): Promise<IReturnObject> {
+    try {
+      const reviews = await this.commentModel.deleteOne({ _id: id });
+      console.log(reviews);
+      return Return({
+        error: false,
+        statusCode: 200,
+        successMessage: 'Review Rejected and deleted',
         data: reviews,
       });
     } catch (error) {

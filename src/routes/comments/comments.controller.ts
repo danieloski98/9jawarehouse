@@ -44,6 +44,14 @@ export class CommentsController {
   }
 
   @ApiTags('REVIEWS')
+  @ApiParam({ name: 'id', type: String })
+  @Put('admin/decline/:id')
+  async declineReviews(@Res() res: Response, @Param() param: any) {
+    const result = await this.crudService.declineReview(param['id']);
+    res.status(result.statusCode).send(result);
+  }
+
+  @ApiTags('REVIEWS')
   @ApiParam({ name: 'comment_id', type: String })
   @UseInterceptors(AnyFilesInterceptor({ dest: 'commentPics' }))
   @Post('uploads/:comment_id')
