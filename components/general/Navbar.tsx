@@ -52,6 +52,7 @@ export default function Navbar({page, setPage}: IProps) {
   const user = useSelector((state:RootState) => state.UserReducer.user);
   const pin = useSelector((state: RootState) => state.PinReducer.pin);
   const loggedIn = useSelector((state: RootState) => state.LoggedInReducer.loggedIn);
+  const [sort, setSort] = React.useState(1);
   console.log(user);
   const router = useRouter();
 
@@ -72,6 +73,21 @@ export default function Navbar({page, setPage}: IProps) {
       setNotiError(true);
     }
   })
+
+  const compare = React.useCallback(( a: IServices, b: IServices ) => {
+    if (sort === 1) {
+        if (a.name < b.name) {
+            return -1;
+        }
+    }
+
+    if (sort === 2) {
+        if (a.name < b.name) {
+            return -1;
+        }
+    }
+    return 0;
+  }, [sort]);
 
   React.useMemo(() => {
     (async function() {
@@ -168,9 +184,9 @@ export default function Navbar({page, setPage}: IProps) {
 
   return (
     <div className="w-full h-20 py-0 bg-white xl:px-10 lg:px-10 md:px-5 sm:px-5 flex justify-between items-center">
-        <div className="w-16 h-full flex items-center overflow-hidden ">
+        <div className="w-20 h-16 flex items-center ">
             <Link href="/" passHref>
-              <Image src="/images/nlogo.png" alt="logo" className="w-full h-12 object-contain cursor-pointer" />
+              <Image src="/images/nlogo.png" alt="logo" className="w-20 h-16 cursor-pointer" />
             </Link>
         </div>
 
@@ -213,11 +229,14 @@ export default function Navbar({page, setPage}: IProps) {
                     </p>
                   </MenuButton>
                   <MenuList w="100vw" size maxH="500px" marginTop="20px" borderRadius={0} overflow="auto" mr="200px" className="grid grid-cols-4 font-light text-sm px-12">
-                    {serv.map((item, index) => (
+                    {[...serv]
+                    .sort(compare)
+                    .map((item, index) => (
                       // <MenuItem key={index.toString()} >
-                        <a href={`/services?service=${item.name}`} key={index}>
-                            <p className="text-gray-600 font-Cerebri-sans-book text-md mb-4 mt-4">{item.name}</p>
-                        </a>
+                      <a href={`/services?service=${item.name}`} key={index} className="flex">
+                          <p className="text-black text-xl text-md mb-4 mt-4 font-Circular-std-book">{item.name[0]}</p>
+                          <p className="text-gray-600 font-Cerebri-sans-book text-md mb-4 mt-5">{item.name.slice(1)}</p>
+                      </a>
                       // </MenuItem>
                     ))}
                   </MenuList>
@@ -410,7 +429,9 @@ export default function Navbar({page, setPage}: IProps) {
                             <AccordionPanel>
                               <div className="w-full h-64 overflow-y-auto flex flex-col">
                                 {/* <p>Profile</p> */}
-                                  {serv.map((item, index) => (
+                                  {[...serv]
+                                  .sort(compare)
+                                  .map((item, index) => (
                                     <div key={index.toString()}>
                                       <p className="mt-3 mb-3 font-Cerebri-sans-book" key={index.toString()}>
                                         <Link href={`/services?service=${item.name}`}>{item.name}</Link>

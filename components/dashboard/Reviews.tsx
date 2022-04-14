@@ -5,6 +5,7 @@ import url from '../../utils/url';
 import { IServerReturnObject } from '../../utils/types/serverreturntype';
 import { Spinner, Image } from '@chakra-ui/react'
 import { IComment } from '../../utils/types/comments';
+import Viewer from 'react-viewer';
 
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/index'
@@ -21,11 +22,19 @@ const getReviews = async(id: string) => {
 }
 
 const Comments = ({ review }: {review: IComment}) => {
+    const [ visible, setVisible ] = React.useState(false);
+    const [img, setImg] = React.useState('');
+
     const ratingChanged = (newRating: any) => {
         console.log(newRating);
       };
     return (
         <div className="w-full p-5 flex flex-col h-auto border-1 border-gray-200 mb-4">
+             <Viewer
+                visible={visible}
+                onClose={() => { setVisible(false); } }
+                images={[{src: img, alt: ''}]}
+                />
             <p className="text-sm font-Circular-std-book text-gray-600">{new Date(review.created_at).toDateString()}</p>
 
             <div className="flex mt-6">
@@ -58,7 +67,7 @@ const Comments = ({ review }: {review: IComment}) => {
                 <div className="flex mt-6">
                     {review.pictures.map((items, index) => (
                         <div className="w-16 h-16 mr-2" key={index.toString()}>
-                            <Image src={items} alt="img" className="w-full h-full" />
+                            <Image src={items} alt="img" className="w-full h-full cursor-pointer" onClick={() => {setImg(items); setVisible(true)}} />
                         </div>
                     ))}
                 </div>
@@ -115,6 +124,7 @@ export default function Reviews() {
                                 <p className=" font-Circular-std-book text-md text-gray-500">Overall Rating</p>
                                 <div className="flex h-12 items-center">
                                     <p className="text-3xl font-Circular-std-medium text-themeGreen mr-4">{Math.round(user.rating)}/5</p>
+                                    <span className='xl:block lg:block md:hidden sm:hidden'>
                                     <ReactStars
                                         count={5}
                                         onChange={ratingChanged}
@@ -125,6 +135,20 @@ export default function Reviews() {
                                         edit={false}
                                         color="lightgrey"
                                     />
+                                    </span>
+
+                                    <span className='xl:hidden lg:hidden md:block sm:block'>
+                                    <ReactStars
+                                        count={5}
+                                        onChange={ratingChanged}
+                                        size={18}
+                                        activeColor="#ffd700"
+                                        value={user.rating}
+                                        isHalf={true}
+                                        edit={false}
+                                        color="lightgrey"
+                                    />
+                                    </span>
                                     <p className="text-md font-Cerebri-sans-book text-gray-600 ml-4">{reviews.length} Reviews</p>
                                 </div>
                             </div>

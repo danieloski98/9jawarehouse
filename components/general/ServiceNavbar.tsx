@@ -15,7 +15,6 @@ import { login, logout } from '../../reducers/logged'
 
 // images
 import { Image } from '@chakra-ui/react';
-import Logo from '../../public/images/nlogo.png';
 import Sidebar from '../dashboard/Sidebar';
 import { INotification } from '../../utils/types/Notification';
 import { IServerReturnObject } from '../../utils/types/serverreturntype';
@@ -53,7 +52,8 @@ export default function ServiceNavbar({ search, handleEnter, setSearch}: { searc
   const [showNoti, setShowNoti] = React.useState(false);
   const user = useSelector((state:RootState) => state.UserReducer.user);
   const loggedIn = useSelector((state: RootState) => state.LoggedInReducer.loggedIn);
-  const serv = useSelector((state: RootState) => state.ServicesReducer.services)
+  const serv = useSelector((state: RootState) => state.ServicesReducer.services);
+  const [sort, setSort] = React.useState(1);
   const dispatch = useDispatch();
   console.log(user);
   const router = useRouter();
@@ -82,6 +82,21 @@ export default function ServiceNavbar({ search, handleEnter, setSearch}: { searc
       console.log(error);
     }
   })
+
+  const compare = React.useCallback(( a: IServices, b: IServices ) => {
+    if (sort === 1) {
+        if (a.name < b.name) {
+            return -1;
+        }
+    }
+
+    if (sort === 2) {
+        if (a.name < b.name) {
+            return -1;
+        }
+    }
+    return 0;
+  }, [sort]);
 
   const fetchUser = React.useCallback( async() => {
     // setLoading(true);
@@ -131,9 +146,9 @@ export default function ServiceNavbar({ search, handleEnter, setSearch}: { searc
 
   return (
     <div className="w-full h-20 bg-white xl:px-10 lg:px-10 md:px-5 sm:px-5 flex justify-between fixed z-50">
-        <div className="flex items-center justify-center w-16 h-full overflow-hidden">
+        <div className="flex items-center justify-center w-20 h-16 pt-3">
             <Link href="/" passHref>
-                <Image src="/images/nlogo.png" fallbackSrc='https://via.placeholder.com/150' alt="logo" className="w-full h-full object-contain" />
+                <Image src="/images/nlogo.png" fallbackSrc='https://via.placeholder.com/150' alt="logo" className="w-24 h-16" />
             </Link>
         </div>
 
@@ -174,10 +189,13 @@ export default function ServiceNavbar({ search, handleEnter, setSearch}: { searc
                     </p>
                   </MenuButton>
                   <MenuList w="100vw" size maxH="500px" marginTop="20px" borderRadius={0} overflow="auto" mr="200px" className="grid grid-cols-4 font-light text-sm px-12">
-                    {serv.map((item, index) => (
+                    {[...serv]
+                    .sort(compare)
+                    .map((item, index) => (
                       // <MenuItem key={index.toString()} >
-                        <a href={`/services?service=${item.name}`} key={index}>
-                            <p className="text-gray-600 font-Cerebri-sans-book text-md mb-4 mt-4">{item.name}</p>
+                        <a href={`/services?service=${item.name}`} key={index} className="flex">
+                            <p className="text-black text-xl text-md mb-4 mt-4 font-Circular-std-book">{item.name[0]}</p>
+                            <p className="text-gray-600 font-Cerebri-sans-book text-md mb-4 mt-5">{item.name.slice(1)}</p>
                         </a>
                       // </MenuItem>
                     ))}
@@ -345,7 +363,9 @@ export default function ServiceNavbar({ search, handleEnter, setSearch}: { searc
                             <AccordionPanel>
                               <div className="w-full h-64 overflow-y-auto flex flex-col">
                                 {/* <p>Profile</p> */}
-                                  {serv.map((item, index) => (
+                                  {[...serv]
+                                  .sort(compare)
+                                  .map((item, index) => (
                                     <>
                                       <p className="mt-3 mb-3 font-Cerebri-sans-book" key={index.toString()}>
                                         <Link href={`/services`}>{item.name}</Link>
@@ -361,7 +381,7 @@ export default function ServiceNavbar({ search, handleEnter, setSearch}: { searc
                         </AccordionItem>
                     </Accordion>
 
-                    <p onClick={handleLogout} className="text-red-500 mt-5 text-xl ml-5 font-Cerebri-sans-book">Logout</p>
+                    {loggedIn && <p onClick={handleLogout} className="text-red-500 mt-5 text-xl ml-5 font-Cerebri-sans-book">Logout</p>}
                   </div>
 
 

@@ -2,14 +2,24 @@ import React from 'react';
 import ReactStars from "react-rating-stars-component";
 import { IComment } from '../../utils/types/comments';
 import { Image } from '@chakra-ui/react'
+import Viewer from 'react-viewer';
 
 const Comments = ({comment}: {comment: IComment}) => {
+    const [ visible, setVisible ] = React.useState(false);
+    const [img, setImg] = React.useState('');
+
     const ratingChanged = (newRating: any) => {
         console.log(newRating);
       };
     return (
         <div className="w-full p-5 flex flex-col h-auto border-b-1 border-gray-200 mb-4">
             <p className="text-sm font-Circular-std-book text-gray-400">{new Date(comment.created_at).toDateString()}</p>
+
+            <Viewer
+                visible={visible}
+                onClose={() => { setVisible(false); } }
+                images={[{src: img, alt: ''}]}
+                />
 
             <div className="flex xl:flex-row lg:flex-row md:flex-col sm:flex-col mt-4">
                 <p className='text-lg text-themeGreen font-Circular-std-medium '>{comment.fullname}</p>
@@ -40,7 +50,7 @@ const Comments = ({comment}: {comment: IComment}) => {
                 <div className="w-full h-auto flex mt-6 mb-4">
                 {comment.pictures.map((item, index) => (
                     <div className="w-20 h-20 rounded-md overflow-hidden mr-4" key={index.toString()}>
-                        <Image src={item} alt="img" className="w-full h-full object-cover" />
+                        <Image src={item} alt="img" className="w-full h-full object-cover cursor-pointer" onClick={() => {setImg(item); setVisible(true)}} />
                     </div>
                 ))}
             </div>

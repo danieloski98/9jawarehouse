@@ -74,12 +74,13 @@ export default function Services({states, services}: IProps) {
     const [businesses, setBusinesses] = React.useState([2] as Array<IUser | any>);
     const [loading, setLoading] = React.useState(true);
     const [query, setQuery] = React.useState('');
+    const [sort, setSort] = React.useState(1);
 
     // router
     const router = useRouter();
 
     // useReducer
-    const initialState = {state: '', query: router.query['service'] as string, lga: ''}
+    const initialState = {state: router.query['state'] as string || '', query: router.query['service'] as string, lga: router.query['lga'] as string || ''}
     const [reducerState, dispatch] = useReducer(reducer, initialState);
 
 
@@ -96,10 +97,10 @@ export default function Services({states, services}: IProps) {
     }
 
     React.useEffect(() => {
-        if (state !== "") {
+        if (reducerState.state !== "") {
             (async function() {
                 try {
-                    const request = await fetch(`${url}states/lgas/${state}`);
+                    const request = await fetch(`${url}states/lgas/${reducerState.state}`);
                     const json = await request.json() as IServerReturnObject;
                     const lga = json.data as Array<ILga>;
                     setLgas(lga);
@@ -109,7 +110,7 @@ export default function Services({states, services}: IProps) {
                 }
             })()
         }
-    }, [state]);
+    }, [reducerState.state]);
     
 
     React.useEffect(() => {
@@ -142,6 +143,28 @@ export default function Services({states, services}: IProps) {
         setLoading(false);
         setDrawer(false);
     }
+
+    const compare = React.useCallback(( a: IServices, b: IServices ) => {
+      if (sort === 1) {
+          if (a.name < b.name) {
+              return -1;
+          }
+      }
+
+      if (sort === 2) {
+          if (a.name < b.name) {
+              return -1;
+          }
+      }
+      return 0;
+    }, [sort]);
+
+    const compareUser = React.useCallback(( a: IUser, b: IUser ) => {
+        if (a.rating > b.rating) {
+            return -1
+        }
+        return 0;
+      }, []);
     
   return (
     <div className="w-full h-auto flex flex-col overflow-x-hidden overflow-y-auto">
@@ -159,7 +182,9 @@ export default function Services({states, services}: IProps) {
                <div className="w-full h-10 mb-5">
                    <Select defaultValue={sr} value={reducerState.query}  border="none" bgColor="whitesmoke" onChange={(e) => dispatch({ type: 'service', payload: e.target.value})}>
                        <option value={reducerState.query} selected>{reducerState.query}</option>
-                       {services.map((item, index) => (
+                       {services
+                       .sort(compare)
+                       .map((item, index) => (
                            <option key={index.toString()} value={item.name}>{item.name}</option>
                        ))}
                    </Select>
@@ -203,7 +228,9 @@ export default function Services({states, services}: IProps) {
     </div>
 
     <div className="w-full h-auto py-4 overflow-x-auto px-5 xl:hidden lg:hidden md:flex sm:flex">
-            {services.map((item, index) => (
+            {services
+            .sort(compare)
+            .map((item, index) => (
                 <div className='mr-5 h-full min-w-max p-2 text-sm font-light rounded-full bg-gray-200' onClick={() => dispatch({ type: 'service', payload: item.name })} key={index.toString()} >{item.name}</div>
             ))}
     </div>
@@ -215,7 +242,9 @@ export default function Services({states, services}: IProps) {
             <div className="w-full h-full bg-white border-2 border-gray-200 p-0 overflow-auto">
             <p className=' mb-0 cursor-pointer w-full h-auto p-3 gray-300 font-Circular-std-medium text-md'>Related Service</p>
             <Divider />
-                {services.map((item, index) => (
+                {services
+                .sort(compare)
+                .map((item, index) => (
                     <p key={index.toString()} onClick={() => dispatch({ type: 'service', payload: item.name })} className=' cursor-pointer w-full h-auto p-3 hover:bg-gray-200 border-gray-300 font-Cerebri-sans-book text-sm'>{item.name}</p>
                 ))}
             </div>
@@ -266,7 +295,9 @@ export default function Services({states, services}: IProps) {
                         </div>
                     )}
 
-                    {!loading && businesses !== undefined && businesses.length > 0 && businesses.map((item, index) => (
+                    {!loading && businesses !== undefined && businesses.length > 0 && businesses
+                    .sort(compareUser)
+                    .map((item, index) => (
                         <BusinessCard user={item} key={index.toString()} />
                     ))}
 

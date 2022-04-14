@@ -25,6 +25,7 @@ import url from '../../utils/url';
 import { IServerReturnObject } from '../../utils/types/serverreturntype';
 import { useQuery } from 'react-query';
 import { INotification } from '../../utils/types/Notification';
+import { IServices } from '../../utils/types/services';
 
 
 // other components
@@ -33,6 +34,22 @@ export const LeftNavbar = () => {
     const serv = useSelector((state: RootState) => state.ServicesReducer.services);
     const loggedIn = useSelector((state: RootState) => state.LoggedInReducer.loggedIn);
     const user = useSelector((state: RootState) => state.UserReducer.user);
+    const [sort, setSort] = React.useState(1);
+
+    const compare = React.useCallback(( a: IServices, b: IServices ) => {
+      if (sort === 1) {
+          if (a.name < b.name) {
+              return -1;
+          }
+      }
+
+      if (sort === 2) {
+          if (a.name < b.name) {
+              return -1;
+          }
+      }
+      return 0;
+    }, [sort]);
 
     React.useMemo(() => {
         (async function() {
@@ -97,10 +114,12 @@ export const LeftNavbar = () => {
                             <AccordionPanel>
                               <div className="w-full h-64 overflow-y-auto flex flex-col">
                                 {/* <p>Profile</p> */}
-                                  {serv.map((item, index) => (
+                                  {serv.length > 0 && [...serv].
+                                  sort(compare).
+                                  map((item: IServices, index: number) => (
                                     <div key={index.toString()}>
                                       <p className="mt-3 mb-3 font-Cerebri-sans-book" key={index.toString()}>
-                                        <Link href={`/services/${item.name}`}>{item.name}</Link>
+                                        <Link href={`/services?service=${item.name}`}>{item.name}</Link>
                                       </p>
 
                                       {index !== serv.length - 1 && (
@@ -112,7 +131,8 @@ export const LeftNavbar = () => {
                             </AccordionPanel>
                         </AccordionItem>
                     </Accordion>
-                    <p className="text-red-500 mt-5 text-xl font-Cerebri-sans-book ml-5" onClick={handleLogout}>Logout</p>
+                    {loggedIn && <p className="text-red-500 mt-5 text-xl font-Cerebri-sans-book ml-5" onClick={handleLogout}>Logout</p>
+ }
                         </div>
                     </DrawerBody>
                 </DrawerContent>
@@ -145,6 +165,7 @@ const RightNavBar = () => {
     const [notiLoading, setNotiLoading] = React.useState(true);
     const [notiError, setNotiError] = React.useState(false);
     const [notifications, setNotifications] = React.useState([] as Array<INotification>);
+    const [sort, setSort] = React.useState(1);
 
     const fetchUser = React.useCallback( async() => {
       setLoading(true);
@@ -178,6 +199,21 @@ const RightNavBar = () => {
           fetchUser();
       }
     }, []);
+
+    const compare = React.useCallback(( a: IServices, b: IServices ) => {
+      if (sort === 1) {
+          if (a.name < b.name) {
+              return -1;
+          }
+      }
+
+      if (sort === 2) {
+          if (a.name < b.name) {
+              return -1;
+          }
+      }
+      return 0;
+    }, [sort]);
 
      // query
     const getNotificationQuery = useQuery(['getNotifications', user._id], () => getNotifications(user._id), {
@@ -234,8 +270,8 @@ const RightNavBar = () => {
         dispatch(logout())
       }
 
-      function capitalizeFirstLetter(string) {
-        return string.charAt(0).toUpperCase() + string.slice(1);
+      function capitalizeFirstLetter(str: string) {
+        return str.charAt(0).toUpperCase() + str.slice(1);
       }
 
     return (
@@ -262,12 +298,15 @@ const RightNavBar = () => {
                   <FiChevronDown size={20} color="white" className="ml-1 mt-1" />
                 </p>
               </MenuButton>
-              <MenuList w="100vw" size maxH="500px" borderRadius={0} overflow="auto" mr="200px" className="grid grid-cols-4 font-light text-sm px-12">
-                {serv.map((item, index) => (
+              <MenuList w="100vw" size maxH="500px" borderRadius={0} overflow="auto" mr="200px" zIndex="5" className="grid grid-cols-4 font-light text-sm px-12">
+                {[...serv].
+                sort(compare).
+                map((item, index) => (
                   // <MenuItem key={index.toString()} >
-                    <a href={`/services?service=${item.name}`} key={index}>
-                        <p className="text-gray-600 font-Cerebri-sans-book text-md mb-4 mt-4">{capitalizeFirstLetter(item.name)}</p>
-                    </a>
+                  <a href={`/services?service=${item.name}`} key={index} className="flex">
+                      <p className="text-black text-xl text-md mb-4 mt-4 font-Circular-std-book">{item.name[0]}</p>
+                      <p className="text-gray-600 font-Cerebri-sans-book text-md mb-4 mt-5">{item.name.slice(1)}</p>
+                  </a>
                   // </MenuItem>
                 ))}
               </MenuList>
