@@ -5,7 +5,12 @@ import url from '../../utils/url';
 import { IServerReturnObject } from '../../utils/types/serverreturntype';
 import { Spinner, Image } from '@chakra-ui/react'
 import { IComment } from '../../utils/types/comments';
-import Viewer from 'react-viewer';
+import dynamic from 'next/dynamic'
+
+const Viewer = dynamic(
+    () => import('react-viewer'),
+    { ssr: false }
+)
 
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/index'

@@ -2,7 +2,12 @@ import React from 'react';
 import ReactStars from "react-rating-stars-component";
 import { IComment } from '../../utils/types/comments';
 import { Image } from '@chakra-ui/react'
-import Viewer from 'react-viewer';
+import dynamic from 'next/dynamic'
+
+const Viewer = dynamic(
+    () => import('react-viewer'),
+    { ssr: false }
+)
 
 const Comments = ({comment}: {comment: IComment}) => {
     const [ visible, setVisible ] = React.useState(false);
