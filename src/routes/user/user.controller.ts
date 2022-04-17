@@ -145,6 +145,7 @@ export class UserController {
   async approveRecord(@Res() res: Response, @Param() param: any) {
     console.log('hit!!!');
     const result = await this.adminService.approveRecord(param['id']);
+    console.log(result);
     res.status(result.statusCode).send(result);
   }
 

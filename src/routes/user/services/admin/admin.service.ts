@@ -213,7 +213,7 @@ export class AdminService {
         error: true,
         statusCode: 500,
         trace: error,
-        errorMessage: 'Internal Server error.///////',
+        errorMessage: 'Internal Server error',
       });
     }
   }
@@ -231,7 +231,7 @@ export class AdminService {
       const user = await this.userModel.findOne({ _id: record.user_id });
       if (user === null) {
         return Return({
-          error: false,
+          error: true,
           statusCode: 400,
           errorMessage: 'User not found',
         });
@@ -281,29 +281,17 @@ export class AdminService {
           errorMessage: 'Record not found!',
         });
       }
-      const user = await this.userModel.findOne({ _id: record.user_id });
-      if (user === null) {
-        return Return({
-          error: false,
-          statusCode: 400,
-          errorMessage: 'User not found',
-        });
-      }
+
       const deleteRec = await this.recordModel.deleteOne({ _id });
-      // send user Notification
-      const userNoti = await this.notificationService.triggerNotification(
-        user._id,
-        'Images record declined',
-      );
 
       // send admin Notification
       const adminNoti = await this.notificationService.triggerAdminNotification(
-        `Rejected an image record create by user with email ${user.email}`,
+        `Rejected an image record with id ${record._id}`,
       );
       return Return({
         error: false,
         statusCode: 200,
-        successMessage: 'User records approved',
+        successMessage: 'Record Deleted',
         data: record,
       });
     } catch (error) {
