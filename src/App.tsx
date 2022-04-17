@@ -21,6 +21,7 @@ import EditRole from './components/RoleManagement/EditRole';
 import { ChakraProvider } from '@chakra-ui/react'
 import { QueryClient, QueryClientProvider} from 'react-query';
 import { RecoilRoot } from 'recoil';
+import Records from './components/DashboardTabs/Records';
 
 export const queryClient = new QueryClient();
 
@@ -35,6 +36,7 @@ export default function App() {
               <Route path='/resetpassword' element={<ResetPassword />} />
               <Route path='/dashboard' element={<Dashboard />}> 
                 <Route path='/dashboard' element={<Overview />} />
+                <Route path='/dashboard/records' element={<Records />} />
                 <Route path='/dashboard/overview' element={<Overview />} />
                 <Route path='/dashboard/activity' element={<Activity />} />
                 <Route path='/dashboard/pushnotifications' element={<PushNotifications />} />

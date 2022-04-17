@@ -1,4 +1,5 @@
 import React from 'react';
+import { FiFileText } from 'react-icons/fi'
 
 export default function Icons(props: any) {
     console.log(props);
@@ -166,6 +167,13 @@ export default function Icons(props: any) {
                     </svg>
                 :null
             }
+
+            {props.icons === 'records' && props.index !== '/dashboard/records' ?
+                    <FiFileText color="#777" size={25} />
+               : props.icons === 'records' && props.index === '/dashboard/records' ? 
+                    <FiFileText color="#fff" size={25} />
+                :null
+            }   
         </>
     )
 }

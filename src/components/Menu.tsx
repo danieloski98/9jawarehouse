@@ -7,7 +7,7 @@ import { theme } from '../utils/theme'
 
 export default function Menu(props: any) {
 
-    const Array = ['overview', 'activity', 'vendors', 'categories', 'subscriptions', 'rolemanagement', 'accountsettings']
+    const Array = ['overview', 'activity', 'vendors', 'categories', 'subscriptions', 'rolemanagement', 'accountsettings', 'records']
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -85,6 +85,15 @@ export default function Menu(props: any) {
                             <Icons icons="subscriptions" index={active} />
                         </div>
                         <p style={active === '/dashboard/subscriptions' ? { color: '#fff' } : { color: '#777777' }} className=' font-Graphik-Regular text-base' >Subscriptions</p>
+                    </div>
+                </div>
+
+                <div  className='w-full cursor-pointer px-4 my-3' >
+                    <div onClick={() => ClickHandler(Array[7])} style={active === '/dashboard/records' ? { backgroundColor: '#004143' } : {}} className='w-full h-full py-3 rounded-lg flex flex-row items-center ' >
+                        <div className='w-12 ml-2 flex justify-center items-center' >
+                            <Icons icons="records" index={active} />
+                        </div>
+                        <p style={active === '/dashboard/records' ? { color: '#fff' } : { color: '#777777' }} className=' font-Graphik-Regular text-base' >Records</p>
                     </div>
                 </div>
 
