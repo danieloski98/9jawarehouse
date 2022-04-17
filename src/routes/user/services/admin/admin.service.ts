@@ -213,7 +213,7 @@ export class AdminService {
         error: true,
         statusCode: 500,
         trace: error,
-        errorMessage: 'Internal Server error.',
+        errorMessage: 'Internal Server error.///////',
       });
     }
   }

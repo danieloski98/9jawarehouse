@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Get,
+  Delete,
   Param,
   Post,
   Put,
@@ -131,6 +132,23 @@ export class UserController {
   }
 
   @ApiTags('User')
+  @Get('images/records')
+  async getRecords(@Res() res: Response) {
+    console.log('hit!!!');
+    const result = await this.adminService.getAllRecords();
+    res.status(result.statusCode).send(result);
+  }
+
+  @ApiTags('User')
+  @ApiParam({ type: String, name: 'id' })
+  @Put('records/:id')
+  async approveRecord(@Res() res: Response, @Param() param: any) {
+    console.log('hit!!!');
+    const result = await this.adminService.approveRecord(param['id']);
+    res.status(result.statusCode).send(result);
+  }
+
+  @ApiTags('User')
   @ApiParam({ type: String, name: 'user_id' })
   @ApiBody({ type: User })
   @Put('admin/archive/:user_id')
@@ -246,6 +264,15 @@ export class UserController {
   ) {
     console.log(body);
     const result = await this.crudService.uploadDocuments(param['id'], body);
+    res.status(result.statusCode).send(result);
+  }
+
+  @ApiTags('User')
+  @ApiParam({ type: String, name: 'id' })
+  @Delete('records/:id')
+  async rejectRecord(@Res() res: Response, @Param() param: any) {
+    console.log('hit!!!');
+    const result = await this.adminService.rejectRecord(param['id']);
     res.status(result.statusCode).send(result);
   }
 }
