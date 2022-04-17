@@ -16,6 +16,7 @@ import {
   SubscriptionSchema,
 } from 'src/Schema/Subscriptions.Schema';
 import { EmailService } from '../admin/services/email/email.service';
+import { NotificationsModule } from 'src/routes/notifications/notifications.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { EmailService } from '../admin/services/email/email.service';
       { name: Comment.name, schema: CommentSchema },
       { name: Subscription.name, schema: SubscriptionSchema },
     ]),
+    NotificationsModule,
   ],
   controllers: [UserController],
   providers: [CrudService, PicsService, AdminService, EmailService],
