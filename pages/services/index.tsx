@@ -83,6 +83,10 @@ export default function Services({states, services}: IProps) {
     const initialState = {state: router.query['state'] as string || '', query: router.query['service'] as string, lga: router.query['lga'] as string || ''}
     const [reducerState, dispatch] = useReducer(reducer, initialState);
 
+    React.useEffect(() => {
+        dispatch({ type: 'service', payload: router.query['service'] as string});
+    }, [router.query]);
+
 
     // filters
     const [st, setSt] = React.useState(router.query['state']);
@@ -118,13 +122,13 @@ export default function Services({states, services}: IProps) {
             // setState(sr);
             setLoading(true);
             const request = await fetch(`${url}user?service=${reducerState.query}&state=${reducerState.state}&lga=${reducerState.lga}`);
-            router.push(`/services?service=${reducerState.query}&state=${reducerState.state}&lga=${reducerState.lga}`, undefined, {shallow: true});
+            // router.push(`/services?service=${reducerState.query}&state=${reducerState.state}&lga=${reducerState.lga}`, undefined, {shallow: true});
             const json = await request.json() as IServerReturnObject;
             const data = json.data as IUser[];
             setBusinesses(data);
             setLoading(false);
         })()
-    }, [reducerState]);
+    }, [reducerState.query]);
 
 
     const SelectState = (newstate: string) => {

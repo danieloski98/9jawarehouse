@@ -65,7 +65,7 @@ export default function Features() {
                     <li className="mt-3">Beauty and SPA</li>
                 </ul>
 
-                <p className="mt-6 text-md font-Circular-std-book text-green-600 flex">See All Specialities <FiArrowRight size={20} className="ml-6 cursor-pointer" onClick={() => router.push('/services?service=')} /> </p>
+                <p className="mt-6 text-md font-Circular-std-book text-green-600 flex cursor-pointer" onClick={() => router.push('/services?service=')}>See All Specialities <FiArrowRight size={20} className="ml-6 cursor-pointer"  /> </p>
 
             </div>
 
