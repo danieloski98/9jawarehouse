@@ -1,4 +1,4 @@
-import { InputGroup, InputLeftElement, Input, Drawer, DrawerOverlay, DrawerContent, DrawerBody, DrawerHeader, Spinner } from '@chakra-ui/react'
+import { InputGroup, InputLeftElement, Input, Drawer, DrawerOverlay, DrawerContent, DrawerBody, DrawerHeader, Spinner, Badge } from '@chakra-ui/react'
 import React from 'react'
 import { useRecoilState } from 'recoil'
 import { AdminState } from '../states/AdminState'
@@ -24,12 +24,15 @@ export default function Navbar(props: any) {
     const [notifications, setNotifications] = React.useState([] as Array<INotification>);
     const [notiLoading, setNotiloading] = React.useState(true);
     const [notiError, setNotiError] = React.useState(false);
+    const [unread, setUnread] = React.useState(0); 
 
     const icon = `https://avatars.dicebear.com/api/human/${admin.email}.png`;
 
     const notificationsQuery = useQuery('getNotifications', getNotifications, {
         onSuccess: (data) => {
             setNotifications(data.data);
+            const un = notifications.filter((item) => !item.read);
+            setUnread(un.length);
             setNotiloading(false);
         },
         onError: (err) => {
@@ -37,7 +40,22 @@ export default function Navbar(props: any) {
             setNotiError(true);
             alert('An error occured while getting notifications')
         }
-    })
+    });
+
+    const deleteNotification = React.useCallback(async (id: string) => {
+        const request = await fetch(`${url}/admin/notification/${id}`, {
+            method: 'delete',
+        });
+        const json = await request.json() as IReturnObject;
+
+        if (json.statusCode !== 200) {
+            alert(json.errorMessage);
+            return;
+        } else {
+            alert(json.successMessage);
+            return;
+        }
+    }, []);
 
     return (
         <div className='w-full flex items-center bg-white py-7 px-10 border-b-2 border-gray-400' >
@@ -62,9 +80,14 @@ export default function Navbar(props: any) {
                             <p>No new notifications</p>
                         )}
                         {!notiLoading && !notiError && notifications.length > 0 && notifications.map((item, index) => (
-                            <div className="w-full h-auto p-5 flex flex-col mb-5">
-                                <p>{item.message}</p>
-                                <p className='text-xs mt-1'>{new Date(item.created_at).toDateString()}</p>
+                            <div className="w-full h-auto p-0 flex flex-col mb-5">
+                                <p className='text-sm font-Graphik-Regular text-black'>{item.message}</p>
+                                <p className='text-xs mt-3 text-gray-500 font-Graphik-Regular'>{new Date(item.created_at).toDateString()}</p>
+                                <div className="w-full flex justify-end">
+                                <button onClick={() => deleteNotification(item._id)}>
+                                    <span className='text-xs text-red-300'>Clear</span>
+                                </button>
+                                </div>
                             </div>
                         ))}
                     </DrawerBody>
@@ -97,6 +120,11 @@ export default function Navbar(props: any) {
                             <path id="Path_421" d="M0,0A3.061,3.061,0,0,0,2.037,1.127,3.088,3.088,0,0,0,4.288.5,2.886,2.886,0,0,0,4.812,0" transform="translate(6.055 18.852)" fill="none" stroke="#0c0c0c" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
                         </g>
                     </svg>
+                    {unread > 0 && (
+                        <sup className='bg-green-300 w-auto p-1 h-auto rounded-full flex justify-center items-center text-xs'>
+                            <span>{unread}</span>
+                        </sup>
+                    )}
                 </div>
                 <div className='ml-0'>
                     <p className='text-sm font-Graphik-Medium'>{admin.fullname}</p>
@@ -104,6 +132,7 @@ export default function Navbar(props: any) {
                 </div>
                 <div className='w-12 h-12 mx-4 bg-green-200 rounded-full flex justify-center items-center ' >
                     <img src={icon} className="w-10 h-10" alt="icon" />
+                    
                 </div>
             </div>
             <svg xmlns="http://www.w3.org/2000/svg" width="16.121" height="8.811" viewBox="0 0 16.121 8.811">

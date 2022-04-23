@@ -54,9 +54,13 @@ export default function Records() {
                             <Td>{item._id}</Td>
                             <Td>{new Date(item.created_at).toDateString()}</Td>
                             <Td className='text-center'>{item.images.length}</Td>
-                            <Td>{ item.approved ? 'Approved':'Pending'}</Td>
+                            <Td>{ item.approved ? 
+                                <p className='text-md font-Graphik-SemiBold text-green-300'>Approved</p>
+                            : 
+                                <p className='text-md font-Graphik-SemiBold text-yellow-300'>Pending</p>
+                            }</Td>
                             <Td>
-                                <FiEdit3 size={20} onClick={() => openModal(item)} color="black" className='cursor-pointer' />
+                                { !item.approved && <FiEdit3 size={20} onClick={() => openModal(item)} color="black" className='cursor-pointer' /> }
                             </Td>
                         </Tr>
                     ))}
