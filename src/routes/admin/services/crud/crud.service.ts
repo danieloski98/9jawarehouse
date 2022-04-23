@@ -1,7 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { AdminDocument, Admin } from 'src/Schema/Admin.Schema';
+import { AdminDocument, Admin } from '../../../../Schema/Admin.Schema';
 import { Return } from 'src/utils/Returnfunctions';
 import { IReturnObject } from 'src/utils/ReturnObject';
 import { sign } from 'jsonwebtoken';

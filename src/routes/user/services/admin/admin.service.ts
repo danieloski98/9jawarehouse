@@ -27,7 +27,7 @@ export class AdminService {
 
   async getAllUser(): Promise<IReturnObject> {
     try {
-      const users = await this.userModel.find();
+      const users = await this.userModel.find({ archived: false });
       return Return({
         error: false,
         statusCode: 200,
@@ -46,7 +46,7 @@ export class AdminService {
 
   async getAchUsers(): Promise<IReturnObject> {
     try {
-      const users = await this.userModel.find({ disabled: true });
+      const users = await this.userModel.find({ archived: true });
       return Return({
         error: false,
         statusCode: 200,
@@ -133,7 +133,7 @@ export class AdminService {
 
   async arhUserByID(_id: string): Promise<IReturnObject> {
     try {
-      const user = await this.userModel.updateOne({ _id }, { disabled: true });
+      const user = await this.userModel.updateOne({ _id }, { archived: true });
       return Return({
         error: false,
         statusCode: 200,
@@ -151,7 +151,7 @@ export class AdminService {
 
   async unarhUserByID(_id: string): Promise<IReturnObject> {
     try {
-      const user = await this.userModel.updateOne({ _id }, { disabled: false });
+      const user = await this.userModel.updateOne({ _id }, { archived: false });
       return Return({
         error: false,
         statusCode: 200,

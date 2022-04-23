@@ -17,6 +17,16 @@ export class User {
 
   @Prop({
     required: true,
+    type: Boolean,
+    default: false,
+  })
+  @ApiProperty({
+    type: Boolean,
+  })
+  archived: boolean;
+
+  @Prop({
+    required: true,
     type: String,
   })
   @ApiProperty({
