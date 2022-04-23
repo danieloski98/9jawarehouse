@@ -1,14 +1,43 @@
-import { InputGroup, InputLeftElement, Input, Drawer, DrawerOverlay, DrawerContent, DrawerBody, DrawerHeader } from '@chakra-ui/react'
+import { InputGroup, InputLeftElement, Input, Drawer, DrawerOverlay, DrawerContent, DrawerBody, DrawerHeader, Spinner } from '@chakra-ui/react'
 import React from 'react'
 import { useRecoilState } from 'recoil'
 import { AdminState } from '../states/AdminState'
+import { IReturnObject } from '../types/ServerReturnType'
+import { url } from '../utils/url'
 import NotificationModal from './modals/NotificationModal'
+import { useQuery } from 'react-query'
+import { INotification } from '../types/Notification'
+
+const getNotifications = async () => {
+    const request = await fetch(`${url}/admin/notifications`);
+    const json = await request.json() as IReturnObject;
+
+    if (!request.ok) {
+        throw new Error("Something happend while getting the notifications");
+    }
+    return json;
+}
 
 export default function Navbar(props: any) {
     const [admin, setAdmin] = useRecoilState(AdminState);
     const [open, setOpen] = React.useState(false);
+    const [notifications, setNotifications] = React.useState([] as Array<INotification>);
+    const [notiLoading, setNotiloading] = React.useState(true);
+    const [notiError, setNotiError] = React.useState(false);
 
     const icon = `https://avatars.dicebear.com/api/human/${admin.email}.png`;
+
+    const notificationsQuery = useQuery('getNotifications', getNotifications, {
+        onSuccess: (data) => {
+            setNotifications(data.data);
+            setNotiloading(false);
+        },
+        onError: (err) => {
+            setNotiloading(false);
+            setNotiError(true);
+            alert('An error occured while getting notifications')
+        }
+    })
 
     return (
         <div className='w-full flex items-center bg-white py-7 px-10 border-b-2 border-gray-400' >
@@ -21,7 +50,23 @@ export default function Navbar(props: any) {
                         <p>Notifications</p>
                     </DrawerHeader>
                     <DrawerBody>
-                        <p>There is no new notification</p>
+                        {notiLoading && (
+                            <div className="w-full h-20 flex justify-center items-center">
+                                <Spinner color="green" size="lg" />
+                            </div>
+                        )}
+                        {!notiLoading && notiError && (
+                            <p>An error occured while getting notifications</p>
+                        )}
+                        {!notiLoading && !notiError && notifications.length < 1 && (
+                            <p>No new notifications</p>
+                        )}
+                        {!notiLoading && !notiError && notifications.length > 0 && notifications.map((item, index) => (
+                            <div className="w-full h-auto p-5 flex flex-col mb-5">
+                                <p>{item.message}</p>
+                                <p className='text-xs mt-1'>{new Date(item.created_at).toDateString()}</p>
+                            </div>
+                        ))}
                     </DrawerBody>
                 </DrawerContent>
             </Drawer>
