@@ -251,6 +251,11 @@ export class AdminService {
         'Images approved',
       );
 
+      const updaterecord = await this.recordModel.updateOne(
+        { _id },
+        { approved: true },
+      );
+
       // send admin Notification
       const adminNoti = await this.notificationService.triggerAdminNotification(
         `Apporved images record create by user with email ${user.email}`,

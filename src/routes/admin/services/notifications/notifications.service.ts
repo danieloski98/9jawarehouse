@@ -18,7 +18,7 @@ export class NotificationsService {
 
   async getAllNotifications(): Promise<IReturnObject> {
     try {
-      const getNotis = await this.notiModel.find({ forAmdin: true });
+      const getNotis = await this.notiModel.find({ forAdmin: true });
       console.log(getNotis);
       return Return({
         error: false,
@@ -43,7 +43,7 @@ export class NotificationsService {
         error: false,
         statusCode: 200,
         data: getNotis,
-        successMessage: 'Notifications',
+        successMessage: 'Notification deleted',
       });
     } catch (error) {
       return Return({
