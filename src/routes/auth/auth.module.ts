@@ -5,6 +5,7 @@ import { UserService } from './services/user/user.service';
 import { User as MongoUser, UserSchema } from '../../Schema/User.schema';
 import { MongooseModule } from '@nestjs/mongoose';
 import { CodeSchema, Code } from 'src/Schema/Code.Schema';
+import { HttpModule } from '@nestjs/axios';
 import {
   ForgotPasswordOTP,
   ForgotPasswordOTPSchema,
@@ -12,6 +13,7 @@ import {
 
 @Module({
   imports: [
+    HttpModule,
     MongooseModule.forFeature([
       { name: MongoUser.name, schema: UserSchema },
       { name: Code.name, schema: CodeSchema },

@@ -11,6 +11,7 @@ import {
 } from 'src/Schema/Subscriptions.Schema';
 import { NotificationsModule } from '../notifications/notifications.module';
 import { NotificationUserService } from '../notifications/services/user/user.service';
+import { EmailService } from '../admin/services/email/email.service';
 
 @Module({
   imports: [
@@ -22,6 +23,6 @@ import { NotificationUserService } from '../notifications/services/user/user.ser
     ]),
   ],
   controllers: [PaymentController],
-  providers: [UserService, AdminService, NotificationUserService],
+  providers: [UserService, AdminService, NotificationUserService, EmailService],
 })
 export class PaymentModule {}

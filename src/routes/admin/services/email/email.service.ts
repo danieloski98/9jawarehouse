@@ -353,4 +353,59 @@ export class EmailService {
       });
     }
   }
+
+  public async sendSubscriptionEmail(
+    email: string,
+    subType: string,
+  ): Promise<IReturnObject> {
+    try {
+      const mailOption: MailOptions = {
+        from: process.env.COMPANY_EMAIL,
+        to: email,
+        subject: `Subscription Successful`,
+        html: `<p>Your ${subType} was successful,
+        
+        Fliers/pictures and content (write up including any preferred hash tags) for us to post for you. 9jaWarehouse Enterprise can also help with the hashtags that our branding team feels will reflect your business. This will come at an extra cost to be discussed with the branding team.
+
+        <ol>
+          <li>
+          Bronze subscription will provide 4 different contents for the 4 weeks. Except if they wish to repeat the exact same advert for the 4 times. We accept that too.
+          </li>
+
+          <li>
+          Silver subscription members will provide 8 different content ideas or if they wish, we repeat same content 8 times throughout the month.
+          </li>
+
+          <li>
+          Gold subscription members will provide us with 12 different content ideas to post for them throughout the month.
+          </li>
+        </ol>
+
+        <span>
+          We can accept your content weekly. But must be submitted at most 8pm on Sunday against the new week.
+        </span>
+        
+        </p>`,
+      };
+      this.transporter.sendMail(mailOption, (error: any, info: any) => {
+        if (error) {
+          this.logger.error(error);
+        } else {
+          this.logger.log(info);
+        }
+      });
+      return Return({
+        error: false,
+        successMessage: 'Account verification email sent',
+        statusCode: 200,
+      });
+    } catch (error) {
+      return Return({
+        error: true,
+        statusCode: 500,
+        trace: error,
+        errorMessage: 'Internal Server error',
+      });
+    }
+  }
 }

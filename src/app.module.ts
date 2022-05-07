@@ -26,7 +26,7 @@ require('dotenv').config();
 console.log(process.env.NODE_ENV);
 const URL =
   process.env.NODE_ENV === 'development'
-    ? process.env.DB_URL
+    ? process.env.LOCAL_DB
     : process.env.DB_URL;
 
 @Module({

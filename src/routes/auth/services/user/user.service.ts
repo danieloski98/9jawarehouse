@@ -9,6 +9,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { User as MongoUser, UserDocument } from 'src/Schema/User.schema';
 import { Model } from 'mongoose';
 import { Code, CodeDocument } from 'src/Schema/Code.Schema';
+import { HttpService } from '@nestjs/axios';
 import {
   ForgotPasswordDocument,
   ForgotPasswordOTP,
@@ -21,12 +22,14 @@ require('dotenv').config();
 @Injectable()
 export class UserService {
   private logger = new Logger();
+  private url = new URL('https://api.paystack.co/customer');
   constructor(
     private emailService: EmailService,
     @InjectModel(MongoUser.name) private userModel: Model<UserDocument>,
     @InjectModel(Code.name) private codeModel: Model<CodeDocument>,
     @InjectModel(ForgotPasswordOTP.name)
     private FPModal: Model<ForgotPasswordDocument>,
+    private httpService: HttpService,
   ) {}
 
   async createAccount(userDetails: MongoUser): Promise<IReturnObject> {
@@ -73,17 +76,44 @@ export class UserService {
         : await this.generateHashedPassword(userDetails.password);
       // send email
       // construct new user
+      // create the user on paystack
+      const paystack_request = await this.httpService
+        .post(
+          this.url.toString(),
+          {
+            email: userDetails.email,
+          },
+          {
+            headers: {
+              'content-type': 'application/json',
+              Authorization: `Bearer ${process.env.PS_SECRET}`,
+            },
+          },
+        )
+        .toPromise();
+
+      if (paystack_request.status !== 200) {
+        return Return({
+          error: true,
+          statusCode: 400,
+          errorMessage: paystack_request.data.message,
+        });
+      }
       const newUser = userDetails.passwordless
         ? {
             email: userDetails.email.toLowerCase(),
             username: userDetails.username.toLowerCase(),
             phone: userDetails.phone,
+            paystack_id: paystack_request.data.data.id,
+            customer_code: paystack_request.data.data.customer_code,
           }
         : {
             email: userDetails.email.toLowerCase(),
             username: userDetails.username.toLowerCase(),
             password: newPassword,
             phone: userDetails.phone,
+            paystack_id: paystack_request.data.data.id,
+            customer_code: paystack_request.data.data.customer_code,
           };
 
       // create the record

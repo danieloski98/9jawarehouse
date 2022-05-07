@@ -174,6 +174,7 @@ export class CrudService {
         });
       }
     } catch (error) {
+      console.log(error);
       return Return({
         error: true,
         statusCode: 500,

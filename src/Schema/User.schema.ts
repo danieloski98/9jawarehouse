@@ -325,6 +325,24 @@ export class User {
     type: String,
   })
   @Prop({
+    type: String,
+    default: '',
+  })
+  customer_code: string;
+
+  @ApiProperty({
+    type: String,
+  })
+  @Prop({
+    type: String,
+    default: '',
+  })
+  paystack_id: string;
+
+  @ApiProperty({
+    type: Boolean,
+  })
+  @Prop({
     type: Boolean,
     default: false,
   })
