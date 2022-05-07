@@ -28,6 +28,20 @@ export default function Subscriptions() {
     // 
     const toast = useToast();
 
+    const type = (amount: number) => {
+        switch(amount) {
+            case 5000: {
+                return '1 month';
+            }
+            case 10000: {
+                return '3 months';
+            }
+            case 20000: {
+                return '6 months';
+            }
+        }
+    }
+
     const getSubsQuery = useQuery('getSubs', getSubs, {
         onSuccess: (data) => {
             if (data.statusCode !== 200) {
@@ -61,6 +75,14 @@ export default function Subscriptions() {
             case 3: {
                 return 'Declined';
             }
+        }
+    }
+
+    const sort = (a: ISubscription, b: ISubscription) => {
+        if (a.created_at < b.created_at) {
+                return 1;
+        } else {
+            return -1;
         }
     }
 
@@ -110,12 +132,14 @@ export default function Subscriptions() {
                     </Thead>
                   
                     <Tbody>
-                        {!loading && !error && subs.length > 0 && subs.map((item, index)=> {
+                        {!loading && !error && subs.length > 0 && subs
+                        .sort(sort)
+                        .map((item, index)=> {
                             return(
                                 <Tr className='font-Graphik-Regular text-sm' key={index} >
                                     <Td>{item.reference_id}</Td> 
                                     <Td>{item.amount}</Td>
-                                    <Td>{item.amount === 6000 ? '6 Months':'12 Months'}</Td>
+                                    <Td>{type(item.amount)}</Td>
                                     <Td>{new Date(item.created_at).toDateString()}</Td>
                                     <Td style={item.status === 2 ? {color: "#0CD27C"}: {color: '#777777'}} >{status(item.status)}</Td>
                                     <Td >

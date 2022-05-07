@@ -7,6 +7,7 @@ import { url } from '../utils/url'
 import NotificationModal from './modals/NotificationModal'
 import { useQuery } from 'react-query'
 import { INotification } from '../types/Notification'
+import { queryClient } from '../App'
 
 const getNotifications = async () => {
     const request = await fetch(`${url}/admin/notifications`);
@@ -53,6 +54,7 @@ export default function Navbar(props: any) {
             return;
         } else {
             alert(json.successMessage);
+            queryClient.invalidateQueries();
             return;
         }
     }, []);
