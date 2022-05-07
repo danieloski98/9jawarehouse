@@ -1,7 +1,28 @@
 import React from 'react';
 import { ISubscription } from '../../../utils/types/Subscriptions';
+import { Tbody, Tr, Td } from '@chakra-ui/react'
 
 export default function SubscriptionShip({details}: {details: ISubscription}) {
+    const formatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'NGN',
+    })
+    const amount = (amount: number) => {
+        switch(amount) {
+            case 5000: {
+                return '1 Month';
+                break;
+            }
+            case 10000: {
+                return '3 months';
+                break;
+            }
+            case 20000: {
+                return '6 Months';
+                break;
+            }
+        }
+    }
 
   const status = (stat: number) => {
       switch(stat) {
@@ -24,11 +45,11 @@ export default function SubscriptionShip({details}: {details: ISubscription}) {
   }
 
   return (
-    <div className="w-full h-16 rounded-md flex justify-between items-center xl:px-4 lg:px-4 md:px-0 sm:px-0 mt-4 mb-4 text-sm font-Cerebri-sans-book">
-        <p className="flex-1">{new Date(details.created_at).toDateString()}</p>
-        <p className="flex-1">{details.amount === 2000 ? 'Monthly':'6 Months'}</p>
-        <p className="flex-1">{details.amount}</p>
-        {status(details.status)}
-    </div>
+    <Tr className="">
+        <Td className="flex-1">{new Date(details.created_at).toDateString()}</Td>
+        <Td className="flex-1">{amount(details.amount)}</Td>
+        <Td className="flex-1"><b></b>{formatter.format(details.amount)}</Td>
+        <Td>{status(details.status)}</Td>
+    </Tr>
   );
 }

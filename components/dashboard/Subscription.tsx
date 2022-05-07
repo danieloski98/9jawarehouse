@@ -1,5 +1,5 @@
 import React from 'react';
-import { AlertDialog, AlertDialogOverlay, AlertDialogContent, AlertDialogBody, AlertDialogCloseButton, Spinner } from '@chakra-ui/react'
+import { Modal, ModalOverlay, ModalContent, ModalBody, ModalCloseButton, Spinner, Table, Thead, Tbody, Tr, Td } from '@chakra-ui/react'
 import Image from 'next/image';
 import Good from '../../public/images/good.svg';
 import { useQuery } from 'react-query';
@@ -21,15 +21,33 @@ interface IProps {
     user: IUser;
 }
 
-const SELECTED = 'xl:w-2/5 lg:w-2/5 md:2/4 sm:w-2/4 h-auto text-center p-5 flex flex-col border-2 border-yellow-300 rounded-md cursor-pointer mx-2';
-const NOTSELECTED = 'xl:w-2/5 lg:w-2/5 md:2/4 sm:w-2/4 h-auto text-center p-5 flex flex-col border-2 border-gray-300 rounded-md mx-2 cursor-pointer';
+const SELECTED = 'xl:w-2/5 lg:w-2/5 md:w-full sm:w-full h-auto overflow-auto text-center p-5 flex flex-col border-2 border-yellow-300 rounded-md cursor-pointer mx-2 h-56 md:mb-5 sm:mb-5';
+const NOTSELECTED = 'xl:w-2/5 lg:w-2/5 md:w-full sm:w-full text-center p-5 flex flex-col border-2 border-gray-300 rounded-md mx-2 cursor-pointer h-auto overflow-auto md:mb-5 sm:mb-5';
 
 const SubModal = ({ open, onClose, user }: IProps) => {
     const [stage, setStage] = React.useState(1);
     const [sel, setSel] = React.useState(0);
+    const [amount, setAmount] = React.useState(0);
     const [loading, setLoading] = React.useState(false);
     
     const ref = React.useRef<any>();
+
+    React.useEffect(() => {
+        switch(sel) {
+            case 1: {
+                setAmount(5000);
+                break;
+            }
+            case 2: {
+                setAmount(10000);
+                break;
+            }
+            case 3: {
+                setAmount(20000);
+                break;
+            }
+        }
+    }, [sel])
 
     const pay = async () => {
         setLoading(true);
@@ -38,7 +56,7 @@ const SubModal = ({ open, onClose, user }: IProps) => {
             headers: {
                 'content-type': 'application/json',
             },
-            body: JSON.stringify({amount: sel === 1 ? 2000: 12000, id: user._id})
+            body: JSON.stringify({amount, id: user._id})
         });
 
         const json = await request.json() as IServerReturnObject;
@@ -52,11 +70,11 @@ const SubModal = ({ open, onClose, user }: IProps) => {
     }
 
     return (
-        <AlertDialog isOpen={open} onClose={() => onClose()} isCentered leastDestructiveRef={ref} size={stage === 1 ? '2xl':'xl'} closeOnEsc={false} closeOnOverlayClick={false}>
-            <AlertDialogOverlay />
-            <AlertDialogContent>
-                <AlertDialogCloseButton onClick={() => {onClose(); setStage(1)}} />
-                <AlertDialogBody>
+        <Modal isOpen={open} onClose={() => onClose()} isCentered={false} size="5xl" closeOnEsc={false} closeOnOverlayClick={false}>
+            <ModalOverlay />
+            <ModalContent>
+                <ModalCloseButton onClick={() => {onClose(); setStage(1)}} />
+                <ModalBody>
                     {stage === 1 && (
                         <div className="w-full flex flex-col py-10">
                         <p className=" font-Circular-std-book text-xl text-gray-500 text-center">Select A Subscription Plan</p>
@@ -64,29 +82,60 @@ const SubModal = ({ open, onClose, user }: IProps) => {
                             <p className=" font-Cerebri-sans-book mt-4 text-center text-gray-600 text-sm w-4/5">By choosing a Subscription Plan you will have access to all feature, if your account doesnt meet our criteria we will make a refund back to you</p>
                         </div>
 
-                        <div className="w-full flex justify-center mt-6">
+                        <div className="w-full flex xl:flex-row lg:flex-row md:flex-col sm:flex-col justify-center mt-6">
 
-                            {/* <div onClick={() => setSel(1)} className={sel === 1 ? SELECTED:NOTSELECTED}>
-                                <p className=" font-Circular-std-Medium text-xl text-themeGreen">Monthly Plan</p>
-                                <p className="font-Cerebri-sans-book mt-4 text-sm text-gray-500">You will have all full access on this account to all features. Auto Renewal will be activated </p>
-                                <div className="flex justify-center items-center mt-6">
-                                    <span className="text-xl font-Cerebri-sans-book text-gray-500">N2,000</span><span className="font-semibold text-sm text-gray-500 ml-4">Monthly</span>
+                            <div onClick={() => setSel(1)} className={sel === 1 ? SELECTED:NOTSELECTED}>
+                                <h1 className=' font-bold text-xl text-themeGreen'>BRONZE</h1>
+                                <div className="flex justify-center items-center mt-1">
+                                    <span className="font-semibold text-md text-gray-500">N5,000</span> <span className="font-semibold text-md text-gray-500 ml-1">/ 1 Month</span>
                                 </div>
-                            </div> */}
+                                <ul className='font-Cerebri-sans-book mt-4 text-sm text-gray-500 list-decimal list-outside text-left px-2'>
+                                    <li className='mt-2'>One weekly post on instagram, facebook and twitter.</li>
+                                    <li className='mt-2'>One weekly post on instagram reels.</li>
+                                    <li className='mt-2'>One instagram story weekly.</li>
+                                </ul>
+                               
+                                
+                            </div>
 
                             <div onClick={() => setSel(2)} className={sel === 2 ? SELECTED:NOTSELECTED}>
-                                <p className="font-Circular-std-Medium text-xl text-themeGreen">6 Months Plan</p>
-                                <p className="font-Cerebri-sans-book mt-4 text-sm text-gray-500">Save 20%  on this plan.
-You will have all full access on this account to all features. Auto Renewal will be activated</p>
-                                <div className="flex justify-center items-center mt-6">
-                                    <span className="text-xl font-Cerebri-sans-book text-gray-500">N12,000</span> <span className="font-semibold text-sm text-gray-500 ml-4">/ 6 Month</span>
+                                <h1 className='font-bold text-xl text-themeGreen'>SILVER</h1>
+                                <div className="flex justify-center items-center mt-1">
+                                    <span className="font-semibold text-md text-gray-500">N10,000</span> <span className="font-semibold text-md text-gray-500 ml-1">/ 3 Month</span>
                                 </div>
+                               <ul className='font-Cerebri-sans-book mt-4 text-sm text-gray-500 list-decimal list-outside text-left px-2'>
+                                    <li className='mt-2'>Two weekly post on instagram, facebook and twitter.</li>
+                                    <li className='mt-2'>Two weekly post on instagram reels.</li>
+                                    <li className='mt-2'>Two instagram story weekly.</li>
+                                    <li className='mt-2'>One video post on instagram and facebook weekly.</li>
+                                    <li className='mt-2'>Access to mentorship and business materials, rebranding and sale strategies.</li>
+                                </ul>
+
+                            </div>
+
+                            <div onClick={() => setSel(3)} className={sel === 3 ? SELECTED:NOTSELECTED}>
+                                <h1 className='font-bold text-xl text-themeGreen'>GOLD</h1>
+                                <div className="flex justify-center items-center mt-1">
+                                    <span className="font-semibold text-md text-gray-500">N20,000</span> <span className="font-semibold text-md text-gray-500">/ 6 Month</span>
+                                </div>
+                                <ul className='font-Cerebri-sans-book mt-4 text-sm text-gray-500 list-decimal list-outside text-left px-2'>
+                                    <li className='mt-2'>Three weekly post on instagram, facebook and twitter.</li>
+                                    <li className='mt-2'>Three weekly post on instagram reels and facebook story.</li>
+                                    <li className='mt-2'>Three instagram story weekly.</li>
+                                    <li className='mt-2'>Three video post on instagram and facebook weekly.</li>
+                                    <li className='mt-2'>Access to mentorship and business materials, rebranding and sale strategies.</li>
+                                    <li className='mt-2'>Monthly business feature on instagram and facebook.</li>
+                                    <li className='mt-2'>Opportunity to go live on 9jawarehouse instagram page to discuss business</li>
+                                    <li className='mt-2'>Opportutnity to be selected for business funding* (Terms and conditions applied).</li>
+                                    <li className='mt-2'>Two advertisements per month on our App (When our app launch).</li>
+                                </ul>
+                                
                             </div>
 
                         </div>
 
                         <div className="w-full flex justify-center mt-6">
-                            {sel === 2 && (
+                            {sel !== 0 && (
                                 <button onClick={pay} className="w-32 h-12 bg-themeGreen text-white text-sm font-li">
                                     {loading && <Spinner size="md" color="white" />}
                                     {!loading && <span>Subscribe</span>}
@@ -102,9 +151,9 @@ You will have all full access on this account to all features. Auto Renewal will
                             <p className="font-light text-sm mt-3 text-gray-500">You have successfully Renewed your Plan, Enjoy!</p>
                         </div>
                     )}
-                </AlertDialogBody>
-            </AlertDialogContent>
-        </AlertDialog>
+                </ModalBody>
+            </ModalContent>
+        </Modal>
     )
 }
 
@@ -176,7 +225,7 @@ export default function Subscription() {
         {
             !user.disabled && (
                 <div className="w-full mt-4">
-                    <p className='font-Cerebri-sans-book'>Your subscription is active and will expire on <b>{new Date(user.nextPayment).toDateString()}</b></p>
+                    <p className='font-Cerebri-sans-book'>Your subscription is active and will expire on <b>{user.nextPayment !== null ? new Date(user.nextPayment).toDateString() : 'Invlaid date'}</b></p>
                 </div>
             )
         }
@@ -216,18 +265,22 @@ export default function Subscription() {
 
         {
             !loading && !error && subs.length > 0 && show && (
-                <>
-                     <div className="xl:w-full lg:w-full md:w-auto sm:w-auto h-16 bg-gray-100 rounded-md flex justify-between items-center px-4 mt-6 text-md font-Cerebri-sans-book text-left">
-                            <p>Date</p>
-                            <p>Period</p>
-                            <p>Amount</p>
-                            <p>Status</p>
-                    </div>
+                <Table>
+                     <Thead className="">
+                            <Tr>
+                                <Td>Date</Td>
+                                <Td>Period</Td>
+                                <Td>Amount</Td>
+                                <Td>Status</Td>
+                            </Tr>
+                    </Thead>
 
-                    {subs.map((item, index) => (
-                        <SubscriptionShip key={index.toString()} details={item} />
-                    ))}
-                </>
+                    <Tbody>
+                        {subs.map((item, index) => (
+                            <SubscriptionShip key={index.toString()} details={item} />
+                        ))}
+                    </Tbody>
+                </Table>
             )
         }
 

@@ -227,7 +227,7 @@ export default function Services({states, services}: IProps) {
     {/* {businesses.length} */}
 
     <div className="w-full xl:px-5 lg:px-5 sm:px-5 md:px-5 flex h-auto py-8 items-center justify-between">
-        <p className=" font-Circular-std-medium text-md"> results for  {reducerState.query}</p>
+        <p className=" font-Circular-std-medium text-md"> Results for  {reducerState.query}</p>
         <FiFilter size={25} color="grey" className="xl:hidden lg:hidden md:block sm:block" onClick={() => setDrawer(true)} />
     </div>
 
@@ -299,13 +299,13 @@ export default function Services({states, services}: IProps) {
                         </div>
                     )}
 
-                    {!loading && businesses !== undefined && businesses.length > 0 && businesses
+                    {!loading && businesses !== null && businesses.length > 0 && businesses
                     .sort(compareUser)
                     .map((item, index) => (
                         <BusinessCard user={item} key={index.toString()} />
                     ))}
 
-                    {!loading && businesses !== undefined && businesses.length < 1 && (
+                    {!loading && businesses !== null && businesses.length < 1 && (
                         <div className="w-full h-20 flex font-Cerebri-sans-book text-md mt-0 justify-center">
                           <p>No business found for search &quot;{reducerState.query}&quot; in {reducerState.state}</p>
                         </div>
