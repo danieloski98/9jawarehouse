@@ -57,6 +57,14 @@ export default function Navbar(props: any) {
         }
     }, []);
 
+    const sort = (a: INotification, b: INotification) => {
+        if (a.created_at < b.created_at) {
+                return -1;
+        } else {
+            return 1;
+        }
+    }
+
     return (
         <div className='w-full flex items-center bg-white py-7 px-10 border-b-2 border-gray-400' >
 
@@ -79,7 +87,9 @@ export default function Navbar(props: any) {
                         {!notiLoading && !notiError && notifications.length < 1 && (
                             <p>No new notifications</p>
                         )}
-                        {!notiLoading && !notiError && notifications.length > 0 && notifications.map((item, index) => (
+                        {!notiLoading && !notiError && notifications.length > 0 && notifications
+                        .sort(sort)
+                        .map((item, index) => (
                             <div className="w-full h-auto p-0 flex flex-col mb-5">
                                 <p className='text-sm font-Graphik-Regular text-black'>{item.message}</p>
                                 <p className='text-xs mt-3 text-gray-500 font-Graphik-Regular'>{new Date(item.created_at).toDateString()}</p>
