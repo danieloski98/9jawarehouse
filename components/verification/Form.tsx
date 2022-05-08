@@ -12,7 +12,7 @@ export default function Form({formik, nextStep}: IProps) {
     <div className='xl:w-4/6 lg:w-4/6 md:w-full sm:w-full flex h-auto xl:items-end lg:items-end md:items-start sm:items-start mt-6 xl:flex-col lg:flex-col md:flex-col sm:flex-col'>
         <div className="w-full flex">
             <div className="flex flex-col flex-1 mr-10">
-                <label className=' font-Circular-std-book text-black mb-3'>Firstname</label>
+                <label className=' font-Circular-std-book text-black mb-3'>First Name</label>
                 <Input borderWidth={0} height="63px" bg="#F1EEEE" borderRadius={0} name="first_name" value={formik.values.first_name} onChange={formik.handleChange} onBlur={formik.handleBlur} onFocus={() => formik.setFieldTouched('first_name', true, true)} />
                 {
                     formik.touched.first_name && formik.errors.first_name && (
@@ -21,7 +21,7 @@ export default function Form({formik, nextStep}: IProps) {
                 }
             </div>
             <div className="flex flex-col flex-1">
-                <label className=' font-Circular-std-book text-black mb-3'>Lastname</label>
+                <label className=' font-Circular-std-book text-black mb-3'>Last Name</label>
                 <Input borderWidth={0} height="63px" bg="#F1EEEE" borderRadius={0} name="last_name" value={formik.values.last_name} onChange={formik.handleChange} onBlur={formik.handleBlur} onFocus={() => formik.setFieldTouched('last_name', true, true)} />
                 {
                     formik.touched.last_name && formik.errors.last_name && (
