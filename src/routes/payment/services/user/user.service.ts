@@ -86,6 +86,7 @@ export class UserService {
         amount: amount * 100,
         currency: 'NGN',
         bearer: 'account',
+        callback_url: 'https://9jawarehouse.vercel.app/verifypayment',
         metadata: {
           fullname: `${user.first_name} ${user.last_name}`,
           phone: user.phone,
