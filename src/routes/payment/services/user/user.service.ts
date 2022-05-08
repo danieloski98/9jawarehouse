@@ -86,7 +86,6 @@ export class UserService {
         amount: amount * 100,
         currency: 'NGN',
         bearer: 'account',
-        callback_url: 'http://localhost:3000/verifypayment',
         metadata: {
           fullname: `${user.first_name} ${user.last_name}`,
           phone: user.phone,
