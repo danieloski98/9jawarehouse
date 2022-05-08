@@ -124,7 +124,7 @@ export default function ContactUs() {
 
                 <div className="flex flex-col mt-5">
                     <p className="text-md font-Cerebri-sans-book">Email</p>
-                    <p className="mt-0 font-Cerebri-sans-book text-themeGreen">Support@9jawarehouse.com</p>
+                    <p className="mt-0 font-Cerebri-sans-book text-themeGreen">support@9jawarehouse.com</p>
                 </div>
 
                 <div className="w-full flex mt-6">

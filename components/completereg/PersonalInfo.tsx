@@ -55,7 +55,7 @@ export default function PersonalInfo({ next, states, formik }: IProps) {
     <div className="w-full h-auto flex flex-col">
         <p className="text-2xl Cerebri-sans-book text-gray-600">Personal Information</p>
         <p className="text-sm font-semibold text-gray-500 mt-4">
-        Fill out the following fields below with valid informations to enable customers to find you easily 
+        Fill out the following fields below with valid information to enable customers to find you easily 
         </p>
 
         <div className="w-full flex xl:flex-row lg:flex-row md:flex-col sm:flex-col justify-between  mt-6 font-semibold text-sm text-gray-500">
@@ -101,7 +101,7 @@ export default function PersonalInfo({ next, states, formik }: IProps) {
 
         <div className="w-full flex xl:flex-row lg:flex-row md:flex-col sm:flex-col justify-between mt-6 font-semibold text-sm text-gray-500">
             <div className="w-full">
-                <label>House / Business Address</label>
+                <label>House or Business Address</label>
                 <div className="xl:w-11/12 lg:w-11/12 md:w-full sm:w-full">
                     <Input border="none" bgColor="whitesmoke" borderRadius={0} className="bg-gray-100 mt-3" name="business_address" value={formik.values.business_address} onChange={formik.handleChange} onFocus={() => formik.setFieldTouched('address', true, true)} />
                 </div>

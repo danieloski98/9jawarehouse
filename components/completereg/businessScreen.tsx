@@ -73,7 +73,7 @@ export default function BusinessInfo({ next, images, picker, profilePic, formik,
             <p className="text-2xl Cerebri-sans-book text-gray-600 ml-4">Business Information</p>
         </div>
         <p className="text-sm font-semibold text-gray-500 mt-4">
-        Provide more information of your business or services you render 
+        Provide more information for your business or services you render.
         </p>
 
         <div className="flex flex-col mt-8">

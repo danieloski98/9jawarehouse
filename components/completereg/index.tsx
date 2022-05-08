@@ -45,7 +45,7 @@ export default function CompleteRegistration() {
     <div className="w-full h-auto flex flex-col">
         <Navbar page={1} setPage={() => {}} services={services} />
         <div className="w-full h-20 bg-white text-center shadow-lg z-10 xl:px-0 lg:px-0 md:px-5 sm:px-5">
-            <p className="Cerebri-sans-book text-md text-gray-600 mt-6">Complete your 9jaWarehosue Account Set up</p>
+            <p className="Cerebri-sans-book text-md text-gray-600 mt-6">Complete your 9jaWarehouse Account Set up</p>
         </div>
 
         <div className="flex-1 bg-gray-100 overflow-y-auto overflow-x-hidden z-10">

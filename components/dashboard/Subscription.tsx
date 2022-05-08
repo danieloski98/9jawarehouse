@@ -79,19 +79,19 @@ const SubModal = ({ open, onClose, user }: IProps) => {
                         <div className="w-full flex flex-col py-10">
                         <p className=" font-Circular-std-book text-xl text-gray-500 text-center">Select A Subscription Plan</p>
                         <div className="w-full flex justify-center ">
-                            <p className=" font-Cerebri-sans-book mt-4 text-center text-gray-600 text-sm w-4/5">By choosing a Subscription Plan you will have access to all feature, if your account doesnt meet our criteria we will make a refund back to you</p>
+                            {/* <p className=" font-Cerebri-sans-book mt-4 text-center text-gray-600 text-sm w-4/5">By choosing a Subscription Plan you will have access to all feature, if your account doesnt meet our criteria we will make a refund back to you</p> */}
                         </div>
 
                         <div className="w-full flex xl:flex-row lg:flex-row md:flex-col sm:flex-col justify-center mt-6">
 
                             <div onClick={() => setSel(1)} className={sel === 1 ? SELECTED:NOTSELECTED}>
-                                <h1 className=' font-bold text-xl text-themeGreen'>BRONZE</h1>
+                                <h1 className=' font-bold text-xl text-themeGreen'>BRONZE MEMBERSHIP</h1>
                                 <div className="flex justify-center items-center mt-1">
-                                    <span className="font-semibold text-md text-gray-500">N5,000</span> <span className="font-semibold text-md text-gray-500 ml-1">/ 1 Month</span>
+                                    <span className="font-semibold text-md text-gray-500">N5,000</span> <span className="font-semibold text-md text-gray-500 ml-1"> for 1 Month</span>
                                 </div>
                                 <ul className='font-Cerebri-sans-book mt-4 text-sm text-gray-500 list-decimal list-outside text-left px-2'>
-                                    <li className='mt-2'>One weekly post on instagram, facebook and twitter.</li>
-                                    <li className='mt-2'>One weekly post on instagram reels.</li>
+                                    <li className='mt-2'>One weekly post each on instagram, facebook and twitter.</li>
+                                    <li className='mt-2'>One weekly post each on instagram reels.</li>
                                     <li className='mt-2'>One instagram story weekly.</li>
                                 </ul>
                                
@@ -99,14 +99,14 @@ const SubModal = ({ open, onClose, user }: IProps) => {
                             </div>
 
                             <div onClick={() => setSel(2)} className={sel === 2 ? SELECTED:NOTSELECTED}>
-                                <h1 className='font-bold text-xl text-themeGreen'>SILVER</h1>
+                                <h1 className='font-bold text-xl text-themeGreen'>SILVER MEMBERSHIP</h1>
                                 <div className="flex justify-center items-center mt-1">
-                                    <span className="font-semibold text-md text-gray-500">N10,000</span> <span className="font-semibold text-md text-gray-500 ml-1">/ 3 Month</span>
+                                    <span className="font-semibold text-md text-gray-500">N10,000</span> <span className="font-semibold text-md text-gray-500 ml-1">for 3 Month</span>
                                 </div>
                                <ul className='font-Cerebri-sans-book mt-4 text-sm text-gray-500 list-decimal list-outside text-left px-2'>
-                                    <li className='mt-2'>Two weekly post on instagram, facebook and twitter.</li>
-                                    <li className='mt-2'>Two weekly post on instagram reels.</li>
-                                    <li className='mt-2'>Two instagram story weekly.</li>
+                                    <li className='mt-2'>Two weekly post each on instagram, facebook and twitter.</li>
+                                    <li className='mt-2'>Two weekly post each on instagram reels.</li>
+                                    <li className='mt-2'>Two instagram each story weekly.</li>
                                     <li className='mt-2'>One video post on instagram and facebook weekly.</li>
                                     <li className='mt-2'>Access to mentorship and business materials, rebranding and sale strategies.</li>
                                 </ul>
@@ -114,15 +114,15 @@ const SubModal = ({ open, onClose, user }: IProps) => {
                             </div>
 
                             <div onClick={() => setSel(3)} className={sel === 3 ? SELECTED:NOTSELECTED}>
-                                <h1 className='font-bold text-xl text-themeGreen'>GOLD</h1>
+                                <h1 className='font-bold text-xl text-themeGreen'>GOLD MEMBERSHIP</h1>
                                 <div className="flex justify-center items-center mt-1">
-                                    <span className="font-semibold text-md text-gray-500">N20,000</span> <span className="font-semibold text-md text-gray-500">/ 6 Month</span>
+                                    <span className="font-semibold text-md text-gray-500">N20,000 </span> <span className="font-semibold text-md text-gray-500">for 6 Month</span>
                                 </div>
                                 <ul className='font-Cerebri-sans-book mt-4 text-sm text-gray-500 list-decimal list-outside text-left px-2'>
-                                    <li className='mt-2'>Three weekly post on instagram, facebook and twitter.</li>
-                                    <li className='mt-2'>Three weekly post on instagram reels and facebook story.</li>
+                                    <li className='mt-2'>Three weekly post each on instagram, facebook and twitter.</li>
+                                    <li className='mt-2'>Three weekly post each on instagram reels and facebook story.</li>
                                     <li className='mt-2'>Three instagram story weekly.</li>
-                                    <li className='mt-2'>Three video post on instagram and facebook weekly.</li>
+                                    <li className='mt-2'>Three video post each on instagram and facebook weekly.</li>
                                     <li className='mt-2'>Access to mentorship and business materials, rebranding and sale strategies.</li>
                                     <li className='mt-2'>Monthly business feature on instagram and facebook.</li>
                                     <li className='mt-2'>Opportunity to go live on 9jawarehouse instagram page to discuss business</li>
@@ -210,7 +210,7 @@ export default function Subscription() {
         <p className="text-xl font-Circular-std-medium text-gray-600 ">Subscription Status</p>
         {
             user.disabled && (
-                <p className="text-sm font-Cerebri-sans-book text-gray-500 mt-4">You are currently not on any subscription plan, To Access all features you will need to upgrade to a monthly plan</p>
+                <p className="text-sm font-Cerebri-sans-book text-gray-500 mt-4">You are currently not on any subscription plan, To Access all features you will need to Subscribe to a plan</p>
             )
         }
 
@@ -255,13 +255,13 @@ export default function Subscription() {
             )
         }
 
-        {
+        {/* {
             !loading && !error && subs.length < 1 && (
                 <div className="w-full h-32 flex flex-col font-Cerebri-sans-book justify-center">
                     <p>You Currently do not have any subscription</p>
                 </div>
             )
-        }
+        } */}
 
         {
             !loading && !error && subs.length > 0 && show && (
