@@ -43,9 +43,9 @@ export class EmailService {
   ): Promise<IReturnObject> {
     try {
       const mailOption: MailOptions = {
-        from: process.env.COMPANY_EMAIL,
+        from: `9jaWarehouse Enterprise ${process.env.COMPANY_EMAIL}`,
         to: body.email,
-        subject: `Account creation Successful`,
+        subject: `Account Verification Code`,
         html: `<p> Your account has been created successfully ${body.email}. Here is your otp code for the verification of your account <b>${code}</b> </p>`,
       };
       this.transporter.sendMail(mailOption, (error: any, info: any) => {
@@ -111,9 +111,9 @@ export class EmailService {
   ): Promise<IReturnObject> {
     try {
       const mailOption: MailOptions = {
-        from: process.env.COMPANY_EMAIL,
+        from: `9jaWarehouse Enterprise ${process.env.COMPANY_EMAIL}`,
         to: body.email,
-        subject: `Password reset`,
+        subject: `Password reset code`,
         html: `<p>use the code ${code} </p>`,
       };
       this.transporter.sendMail(mailOption, (error: any, info: any) => {
@@ -294,7 +294,7 @@ export class EmailService {
   ): Promise<IReturnObject> {
     try {
       const mailOption: MailOptions = {
-        from: process.env.COMPANY_EMAIL,
+        from: `9jaWarehouse Enterprise ${process.env.COMPANY_EMAIL}`,
         to: email,
         subject: `Account Verification Failed`,
         html: `<p>Your account verification failed. 
@@ -322,12 +322,10 @@ export class EmailService {
     }
   }
 
-  public async sendAcceptedEmail(
-    email: string,
-  ): Promise<IReturnObject> {
+  public async sendAcceptedEmail(email: string): Promise<IReturnObject> {
     try {
       const mailOption: MailOptions = {
-        from: process.env.COMPANY_EMAIL,
+        from: `9jaWarehouse Enterprise ${process.env.COMPANY_EMAIL}`,
         to: email,
         subject: `Account Verification Successful`,
         html: `<p>Your account verification was successful. You can now login and set up your account  </p>`,
@@ -360,10 +358,10 @@ export class EmailService {
   ): Promise<IReturnObject> {
     try {
       const mailOption: MailOptions = {
-        from: process.env.COMPANY_EMAIL,
+        from: `9jaWarehouse Enterprise ${process.env.COMPANY_EMAIL}`,
         to: email,
         subject: `Subscription Successful`,
-        html: `<p>Your ${subType} was successful,
+        html: `<p>Your ${subType} was successful. <br>
         
         Fliers/pictures and content (write up including any preferred hash tags) for us to post for you. 9jaWarehouse Enterprise can also help with the hashtags that our branding team feels will reflect your business. This will come at an extra cost to be discussed with the branding team.
 
@@ -385,6 +383,39 @@ export class EmailService {
           We can accept your content weekly. But must be submitted at most 8pm on Sunday against the new week.
         </span>
         
+        </p>`,
+      };
+      this.transporter.sendMail(mailOption, (error: any, info: any) => {
+        if (error) {
+          this.logger.error(error);
+        } else {
+          this.logger.log(info);
+        }
+      });
+      return Return({
+        error: false,
+        successMessage: 'Account verification email sent',
+        statusCode: 200,
+      });
+    } catch (error) {
+      return Return({
+        error: true,
+        statusCode: 500,
+        trace: error,
+        errorMessage: 'Internal Server error',
+      });
+    }
+  }
+
+  public async sendSubscriptionExpiredEmail(
+    email: string,
+  ): Promise<IReturnObject> {
+    try {
+      const mailOption: MailOptions = {
+        from: `9jaWarehouse Enterprise ${process.env.COMPANY_EMAIL}`,
+        to: email,
+        subject: `Subscription Successful`,
+        html: `<p>Your subscription has expired. please goto your dashboard and pick a subscription plan so you can be found by potential clients.
         </p>`,
       };
       this.transporter.sendMail(mailOption, (error: any, info: any) => {

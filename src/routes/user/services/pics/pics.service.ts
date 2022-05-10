@@ -11,6 +11,7 @@ import { join } from 'path';
 import { existsSync, rmSync } from 'fs';
 import Cloudinary from 'src/utils/cloudinary';
 import { Record, RecordDocument } from 'src/Schema/Record.Schema';
+import { NotificationUserService } from 'src/routes/notifications/services/user/user.service';
 
 @Injectable()
 export class PicsService {
@@ -18,6 +19,7 @@ export class PicsService {
     @InjectModel(Picture.name) private pictureModel: Model<PictureDocument>,
     @InjectModel(ProfilePic.name)
     private profilepicModel: Model<ProfilePicDocument>,
+    private notiService: NotificationUserService,
     @InjectModel(User.name) private userModel: Model<UserDocument>,
     @InjectModel(Record.name) private recordModel: Model<RecordDocument>,
   ) {}
@@ -175,7 +177,9 @@ export class PicsService {
           { _id: record._id },
           { images: imgs },
         );
-
+        await this.notiService.triggerAdminNotification(
+          `A new record was uploaded an is awaiting approval`,
+        );
         return Return({
           error: false,
           statusCode: 200,

@@ -15,6 +15,7 @@ import {
   ForgotPasswordOTP,
 } from 'src/Schema/ForgotPasswordOTP';
 import { ResetPassword } from '../../auth.controller';
+import { NotificationUserService } from 'src/routes/notifications/services/user/user.service';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const randomNumber = require('random-number');
 require('dotenv').config();
@@ -30,6 +31,7 @@ export class UserService {
     @InjectModel(ForgotPasswordOTP.name)
     private FPModal: Model<ForgotPasswordDocument>,
     private httpService: HttpService,
+    private notiService: NotificationUserService,
   ) {}
 
   async createAccount(userDetails: MongoUser): Promise<IReturnObject> {
@@ -149,6 +151,11 @@ export class UserService {
       }, 5000 * 60);
 
       this.logger.log(sentEmail);
+
+      // trigger notification
+      const noti = await this.notiService.triggerAdminNotification(
+        `A new account has been created and is awaiting your approval`,
+      );
 
       if (sentEmail.error) {
         const sentEmail = await this.emailService.sendConfirmationEmail(

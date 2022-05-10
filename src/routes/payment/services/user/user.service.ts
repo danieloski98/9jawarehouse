@@ -151,23 +151,23 @@ export class UserService {
         },
       );
 
-      switch (numq) {
-        case 1: {
-          triggerEvent('1 Month Plan', user);
-          this.emailService.sendSubscriptionEmail(user.email, '1 month plan');
-          break;
-        }
-        case 2: {
-          this.emailService.sendSubscriptionEmail(user.email, '3 months plan');
-          triggerEvent('3 Months Plan', user);
-          break;
-        }
-        case 3: {
-          this.emailService.sendSubscriptionEmail(user.email, '6 months plan');
-          triggerEvent('6 Months Plan', user);
-          break;
-        }
-      }
+      // switch (numq) {
+      //   case 1: {
+      //     triggerEvent('1 Month Plan', user);
+      //     this.emailService.sendSubscriptionEmail(user.email, '1 month plan');
+      //     break;
+      //   }
+      //   case 2: {
+      //     this.emailService.sendSubscriptionEmail(user.email, '3 months plan');
+      //     triggerEvent('3 Months Plan', user);
+      //     break;
+      //   }
+      //   case 3: {
+      //     this.emailService.sendSubscriptionEmail(user.email, '6 months plan');
+      //     triggerEvent('6 Months Plan', user);
+      //     break;
+      //   }
+      // }
 
       return Return({
         error: false,

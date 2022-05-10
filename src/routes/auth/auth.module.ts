@@ -10,9 +10,11 @@ import {
   ForgotPasswordOTP,
   ForgotPasswordOTPSchema,
 } from 'src/Schema/ForgotPasswordOTP';
+import { NotificationsModule } from '../notifications/notifications.module';
 
 @Module({
   imports: [
+    NotificationsModule,
     HttpModule,
     MongooseModule.forFeature([
       { name: MongoUser.name, schema: UserSchema },

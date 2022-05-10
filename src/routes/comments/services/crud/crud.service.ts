@@ -101,6 +101,10 @@ export class CrudService {
         this.userNotificationService.triggerAdminNotification(
           `A customer left a comment.`,
         );
+        this.userNotificationService.triggerNotification(
+          user_id,
+          `A user left you a comment, and it is awaiting approval`,
+        );
         return Return({
           error: false,
           statusCode: 200,
@@ -143,6 +147,14 @@ export class CrudService {
         );
         // renew pin
         await this.pinService.createPin(user_id);
+
+        this.userNotificationService.triggerAdminNotification(
+          `A customer left a comment.`,
+        );
+        this.userNotificationService.triggerNotification(
+          user_id,
+          `A user left you a comment, and it is awaiting approval`,
+        );
 
         this.logger.log(newComment);
         return Return({
