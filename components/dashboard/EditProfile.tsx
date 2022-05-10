@@ -23,6 +23,7 @@ import { ICertificate } from "../../utils/types/certificate";
 import { Certificate } from "crypto";
 import url from "../../utils/url";
 import { IServerReturnObject } from "../../utils/types/serverreturntype";
+import { queryClient } from "../../pages/_app";
 
 interface IProps {
   next: Function;
@@ -167,6 +168,17 @@ export default function EditProfile({ next }: IProps) {
       setLoading(false);
     }
 
+    if (!picked) {
+      const requestPic = await fetch(`${url}user/${details._id}`, {
+        method: 'post',
+        headers: {
+          'content-type': 'application/json'
+        },
+        body: JSON.stringify({ pictures: imgs })
+    });
+    }
+  
+
     if (profilePic !== details.profile_pic) {
       const formData = new FormData();
       formData.append('img', profileFile as any);
@@ -186,6 +198,7 @@ export default function EditProfile({ next }: IProps) {
 
     }
     setLoading(false);
+    queryClient.invalidateQueries();
     next(1);
    }
 
