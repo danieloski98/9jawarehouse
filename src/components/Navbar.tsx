@@ -132,11 +132,11 @@ export default function Navbar(props: any) {
                             <path id="Path_421" d="M0,0A3.061,3.061,0,0,0,2.037,1.127,3.088,3.088,0,0,0,4.288.5,2.886,2.886,0,0,0,4.812,0" transform="translate(6.055 18.852)" fill="none" stroke="#0c0c0c" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
                         </g>
                     </svg>
-                    {unread > 0 && (
+                   
                         <sup className='bg-green-300 w-auto p-1 h-auto rounded-full flex justify-center items-center text-xs'>
                             {notifications.length}
                         </sup>
-                    )}
+                    
                 </div>
                 <div className='ml-0'>
                     <p className='text-sm font-Graphik-Medium'>{admin.fullname}</p>
