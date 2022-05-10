@@ -71,7 +71,6 @@ export class PicsService {
         { pictures: imgs },
       );
       // const recordRec = await this.recordModel.create(rec);
-
       return Return({
         error: false,
         statusCode: 200,
@@ -134,6 +133,14 @@ export class PicsService {
         };
         const recordRec = await this.recordModel.create(rec);
 
+        await this.notiService.triggerAdminNotification(
+          `A new record was uploaded an is awaiting approval`,
+        );
+        this.notiService.triggerNotification(
+          user._id,
+          `Your images have been uploaded and they are currently await approval`,
+        );
+
         return Return({
           error: false,
           statusCode: 200,
@@ -179,6 +186,10 @@ export class PicsService {
         );
         await this.notiService.triggerAdminNotification(
           `A new record was uploaded an is awaiting approval`,
+        );
+        this.notiService.triggerNotification(
+          user._id,
+          `Your images have been uploaded and they are currently await approval`,
         );
         return Return({
           error: false,
