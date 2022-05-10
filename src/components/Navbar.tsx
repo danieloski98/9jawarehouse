@@ -134,7 +134,7 @@ export default function Navbar(props: any) {
                     </svg>
                     {unread > 0 && (
                         <sup className='bg-green-300 w-auto p-1 h-auto rounded-full flex justify-center items-center text-xs'>
-                            <span>{unread}</span>
+                            {notifications.length}
                         </sup>
                     )}
                 </div>
