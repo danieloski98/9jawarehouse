@@ -274,10 +274,11 @@ export default function Navbar({page, setPage}: IProps) {
             
 
             {loggedIn && (
-              <div className="p-1 cursor-pointer rounded-md hover:bg-green-200 ml-2">
+              <div className="p-1 cursor-pointer rounded-md hover:bg-green-200 ml-2 flex">
                 <span onClick={() => setShowNoti(true)}>
                   <Notification size={25} primaryColor='grey' filled style={{ color: 'grey' }}  />
                 </span>
+                <sup className='text-themeGreen font-bold text-md'>{notifications.length}</sup>
               </div>
             )}
 
@@ -291,9 +292,14 @@ export default function Navbar({page, setPage}: IProps) {
 
         <div className="xl:hidden lg:hidden md:flex sm:flex items-center justify-end">
           
-          {loggedIn && <span className='mr-4 ml-2' onClick={() => setShowNoti(true)}>
-            <Notification size={25} primaryColor='grey' filled style={{ color: 'grey' }}  />
-          </span>}
+          {loggedIn && 
+          <div className="p-1 cursor-pointer rounded-md hover:bg-green-200 ml-2 flex mr-4">
+            <span className='mr-0 ml-2' onClick={() => setShowNoti(true)}>
+              <Notification size={25} primaryColor='grey' filled style={{ color: 'grey' }}  />
+            </span>
+            <sup className='text-themeGreen font-bold text-md'>{notifications.length}</sup>
+          </div>
+          }
           <FiMenu size={30} color="grey" onClick={() => setOpen(true)} />
         </div>
 

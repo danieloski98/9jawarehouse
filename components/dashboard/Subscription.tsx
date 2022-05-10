@@ -101,7 +101,7 @@ const SubModal = ({ open, onClose, user }: IProps) => {
                             <div onClick={() => setSel(2)} className={sel === 2 ? SELECTED:NOTSELECTED}>
                                 <h1 className='font-bold text-xl text-themeGreen'>SILVER MEMBERSHIP</h1>
                                 <div className="flex justify-center items-center mt-1">
-                                    <span className="font-semibold text-md text-gray-500">N10,000</span> <span className="font-semibold text-md text-gray-500 ml-1">for 3 Month</span>
+                                    <span className="font-semibold text-md text-gray-500">N10,000</span> <span className="font-semibold text-md text-gray-500 ml-1"> for 3 Month</span>
                                 </div>
                                <ul className='font-Cerebri-sans-book mt-4 text-sm text-gray-500 list-decimal list-outside text-left px-2'>
                                     <li className='mt-2'>Two weekly post each on instagram, facebook and twitter.</li>
@@ -116,7 +116,7 @@ const SubModal = ({ open, onClose, user }: IProps) => {
                             <div onClick={() => setSel(3)} className={sel === 3 ? SELECTED:NOTSELECTED}>
                                 <h1 className='font-bold text-xl text-themeGreen'>GOLD MEMBERSHIP</h1>
                                 <div className="flex justify-center items-center mt-1">
-                                    <span className="font-semibold text-md text-gray-500">N20,000 </span> <span className="font-semibold text-md text-gray-500">for 6 Month</span>
+                                    <span className="font-semibold text-md text-gray-500 mr-1">N20,000  </span> <span className="font-semibold text-md text-gray-500"> for 6 Month</span>
                                 </div>
                                 <ul className='font-Cerebri-sans-book mt-4 text-sm text-gray-500 list-decimal list-outside text-left px-2'>
                                     <li className='mt-2'>Three weekly post each on instagram, facebook and twitter.</li>

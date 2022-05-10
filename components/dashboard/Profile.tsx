@@ -161,7 +161,7 @@ export default function Profile({ setPage }: IProps) {
 
           <div className="flex flex-col items-start flex-1 xl:mt-0 lg:mt-0 md:mt-4 sm:mt-4">
             <p className="text-md font-Circular-std-medium text-gray-600">Phone</p>
-            <p className="text-sm text-gray-500 font-Cerebri-sans-book">{userDetails.phone}</p>
+            <p className="text-sm text-gray-500 font-Cerebri-sans-book">+234-{userDetails.phone}</p>
           </div>
 
           <div className="flex flex-col items-start flex-1 xl:mt-0 lg:mt-0 md:mt-4 sm:mt-4">

@@ -60,14 +60,14 @@ export default function PersonalInfo({ next, states, formik }: IProps) {
 
         <div className="w-full flex xl:flex-row lg:flex-row md:flex-col sm:flex-col justify-between  mt-6 font-semibold text-sm text-gray-500">
             <div className="w-full">
-                <label>Firstname</label>
+                <label>First Name</label>
                 <div className="xl:w-11/12 lg:w-11/12 md:w-full sm:w-full">
                     <Input disabled border="none" bgColor="whitesmoke" borderRadius={0} className="bg-gray-100 mt-3" name="first_name" value={formik.values.first_name} onChange={formik.handleChange} onFocus={() => formik.setFieldTouched('first_name', true, true)} />
                 </div>
                 {formik.touched.first_name && formik.errors.first_name && <p className="text-xs mt-1 Cerebri-sans-book text-red-400">{formik.errors.first_name}</p>}
             </div>
             <div className="w-full xl:mt-0 lg:mt-0 md:mt-2 sm:mt-2">
-                <label>Lastname</label>
+                <label>Last Name</label>
                 <div className="xl:w-11/12 lg:w-11/12 md:w-full sm:w-full">
                     <Input disabled border="none" bgColor="whitesmoke" borderRadius={0} className="bg-gray-100 mt-3" name="last_name" value={formik.values.last_name} onChange={formik.handleChange} onFocus={() => formik.setFieldTouched('last_name', true, true)} />
                 </div>
