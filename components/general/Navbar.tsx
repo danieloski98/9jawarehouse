@@ -184,7 +184,7 @@ export default function Navbar({page, setPage}: IProps) {
   }
 
   const deleteNotification = React.useCallback(async (id: string) => {
-    const request = await fetch(`${url}/notification/${id}`, {
+    const request = await fetch(`${url}notifications/${id}`, {
         method: 'delete',
     });
     const json = await request.json() as IServerReturnObject;

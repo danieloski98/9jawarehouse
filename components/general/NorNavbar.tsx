@@ -57,7 +57,7 @@ export default function NormNavbar() {
   const serv = useSelector((state: RootState) => state.ServicesReducer.services);
   const [sort, setSort] = React.useState(1);
   const dispatch = useDispatch();
-  console.log(user);
+
   const router = useRouter();
 
    // query
@@ -69,7 +69,7 @@ export default function NormNavbar() {
       setNotiError(false)
     },
     onError: (error) => {
-      console.log(error);
+
       setNotiLoading(false);
       setNotiError(true);
     }
@@ -81,7 +81,7 @@ export default function NormNavbar() {
       dispatch(SetServ(dt));
     },
     onError: (error) => {
-      console.log(error);
+   
     }
   })
 
@@ -147,7 +147,7 @@ export default function NormNavbar() {
   }
 
   const deleteNotification = React.useCallback(async (id: string) => {
-    const request = await fetch(`${url}/notification/${id}`, {
+    const request = await fetch(`${url}notifications/${id}`, {
         method: 'delete',
     });
     const json = await request.json() as IServerReturnObject;

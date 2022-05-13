@@ -56,7 +56,7 @@ export default function ServiceNavbar({ search, handleEnter, setSearch}: { searc
   const serv = useSelector((state: RootState) => state.ServicesReducer.services);
   const [sort, setSort] = React.useState(1);
   const dispatch = useDispatch();
-  console.log(user);
+  
   const router = useRouter();
 
    // query
@@ -68,7 +68,7 @@ export default function ServiceNavbar({ search, handleEnter, setSearch}: { searc
       setNotiError(false)
     },
     onError: (error) => {
-      console.log(error);
+   
       setNotiLoading(false);
       setNotiError(true);
     }
@@ -80,7 +80,7 @@ export default function ServiceNavbar({ search, handleEnter, setSearch}: { searc
       dispatch(SetServ(dt));
     },
     onError: (error) => {
-      console.log(error);
+
     }
   })
 
@@ -147,7 +147,7 @@ export default function ServiceNavbar({ search, handleEnter, setSearch}: { searc
 
 
   const deleteNotification = React.useCallback(async (id: string) => {
-    const request = await fetch(`${url}/notification/${id}`, {
+    const request = await fetch(`${url}notifications/${id}`, {
         method: 'delete',
     });
     const json = await request.json() as IServerReturnObject;
