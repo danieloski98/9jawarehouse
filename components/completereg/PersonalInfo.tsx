@@ -25,7 +25,7 @@ interface IProps {
         twitter: '',
         website: '',
         lga: ''
-    }>;
+    } | any>;
 }
 
 export default function PersonalInfo({ next, states, formik }: IProps) {

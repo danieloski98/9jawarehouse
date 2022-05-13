@@ -36,7 +36,7 @@ interface IProps {
         twitter: '',
         website: '',
         lga: ''
-    }>;
+    } | any>;
 }
 
 export default function BusinessInfo({ next, images, picker, profilePic, formik, services, selectService, selectedSerices, deleteService, certificates, addCerts, changeCert, deleteCert, deleteImage }: IProps) {
@@ -167,7 +167,7 @@ export default function BusinessInfo({ next, images, picker, profilePic, formik,
             <div className="w-full xl:mt-0 lg:mt-0 md:mt-2 sm:mt-2">
                 <label>Services</label>
                 <div className="xl:w-11/12 lg:w-11/12 md:w-full sm:w-full">
-                    <Select border="none" bgColor="whitesmoke" borderRadius={0} className="bg-gray-100 mt-3" onChange={(e) => selectService(e.target.value)}>
+                    <Select border="none" bgColor="whitesmoke" borderRadius={0} className="bg-gray-100 mt-3" onChange={(e: any) => selectService(e.target.value)}>
                         <option selected>Pick a Service</option>
                         {services.map((item, index) => (
                             <option key={index.toString()}>{item.name}</option>
@@ -197,21 +197,21 @@ export default function BusinessInfo({ next, images, picker, profilePic, formik,
             <div className="w-full">
                 <label>Certifcate</label>
                 <div className="xl:w-11/12 lg:w-11/12 md:w-full sm:w-full">
-                    <Input value={item.certificate} onChange={(e) => changeCert(index, 'certificate', e.target.value)} border="none" bgColor="whitesmoke" borderRadius={0} className="bg-gray-100 mt-3" />
+                    <Input value={item.certificate} onChange={(e: any) => changeCert(index, 'certificate', e.target.value)} border="none" bgColor="whitesmoke" borderRadius={0} className="bg-gray-100 mt-3" />
                 </div>
             </div>
 
             <div className="w-full xl:mt-0 lg:mt-0 md:mt-4 sm:mt-4">
                 <label>Organisation</label>
                 <div className="xl:w-11/12 lg:w-11/12 md:w-full sm:w-full">
-                    <Input value={item.organization} onChange={(e) => changeCert(index, 'organization', e.target.value)} border="none" bgColor="whitesmoke" borderRadius={0} className="bg-gray-100 mt-3" />
+                    <Input value={item.organization} onChange={(e: any) => changeCert(index, 'organization', e.target.value)} border="none" bgColor="whitesmoke" borderRadius={0} className="bg-gray-100 mt-3" />
                 </div>  
             </div>
 
             <div className="w-full xl:mt-0 lg:mt-0 md:mt-4 sm:mt-4">
                 <label>issued Year</label>
                 <div className="xl:w-11/12 lg:w-11/12 md:w-full sm:w-full">
-                    <Input value={item.year} onChange={(e) => changeCert(index, 'year', e.target.value)} type="date" border="none" bgColor="whitesmoke" borderRadius={0} className="bg-gray-100 mt-3" />
+                    <Input value={item.year} onChange={(e: any) => changeCert(index, 'year', e.target.value)} type="date" border="none" bgColor="whitesmoke" borderRadius={0} className="bg-gray-100 mt-3" />
                 </div>  
             </div>
         </div>
@@ -220,7 +220,7 @@ export default function BusinessInfo({ next, images, picker, profilePic, formik,
             <div className="w-full">
                 <label>Link</label>
                 <div className="xl:w-11/12 lg:w-11/12 md:w-full sm:w-full">
-                    <Input value={item.link} onChange={(e) => changeCert(index, 'link', e.target.value)}  border="none" bgColor="whitesmoke" borderRadius={0} className="bg-gray-100 mt-3" />
+                    <Input value={item.link} onChange={(e: any) => changeCert(index, 'link', e.target.value)}  border="none" bgColor="whitesmoke" borderRadius={0} className="bg-gray-100 mt-3" />
                 </div>
             </div>
 
