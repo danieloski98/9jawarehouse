@@ -143,6 +143,8 @@ export default function EditProfile({ next }: IProps) {
       const json = await request.json() as IServerReturnObject;
       if (json.statusCode !== 200) {
         alert(json.errorMessage);
+        setLoading(false);
+        return;
       }
 
     if (picked) {
@@ -163,12 +165,14 @@ export default function EditProfile({ next }: IProps) {
       const json = await request.json() as IServerReturnObject;
       if (json.statusCode !== 200) {
         alert(json.errorMessage);
+        setLoading(false);
+        return;
       }
 
       setLoading(false);
     }
 
-    if (!picked) {
+    if (!picked && imgs.length > 0) {
       const requestPic = await fetch(`${url}user/${details._id}`, {
         method: 'post',
         headers: {
@@ -191,9 +195,14 @@ export default function EditProfile({ next }: IProps) {
       const json = await request.json() as IServerReturnObject;
       if (json.statusCode !== 200) {
         alert(json.errorMessage);
+        setLoading(false);
+        return;
       }else {
         alert('Changes successful');
         setLoading(false);
+        queryClient.invalidateQueries();
+        next(1);
+        return;
       }
 
     }
@@ -531,7 +540,7 @@ export default function EditProfile({ next }: IProps) {
               <div className="xl:w-11/12 lg:w-11/12 md:w-full sm:w-full">
               <Input
                   value={items.certificate}
-                  onChange={(e) => changeCert(index, 'certificate', e.target.value)}
+                  onChange={(e: any) => changeCert(index, 'certificate', e.target.value)}
                   border="none"
                   bgColor="#F1EEEE"
                   borderRadius={0}
@@ -545,7 +554,7 @@ export default function EditProfile({ next }: IProps) {
               <div className="xl:w-11/12 lg:w-11/12 md:w-full sm:w-full">
                 <Input
                   value={items.organization}
-                  onChange={(e) => changeCert(index, 'organization', e.target.value)}
+                  onChange={(e: any) => changeCert(index, 'organization', e.target.value)}
                   border="none"
                   bgColor="#F1EEEE"
                   borderRadius={0}
@@ -559,7 +568,7 @@ export default function EditProfile({ next }: IProps) {
               <div className="xl:w-11/12 lg:w-11/12 md:w-full sm:w-full">
                 <Input
                   value={items.year}
-                  onChange={(e) => changeCert(index, 'year', e.target.value)}
+                  onChange={(e: any) => changeCert(index, 'year', e.target.value)}
                   type="date"
                   border="none"
                   bgColor="#F1EEEE"
@@ -574,7 +583,7 @@ export default function EditProfile({ next }: IProps) {
               <div className="xl:w-11/12 lg:w-11/12 md:w-full sm:w-full">
                 <Input
                   value={items.link}
-                  onChange={(e) => changeCert(index, 'link', e.target.value)}
+                  onChange={(e: any) => changeCert(index, 'link', e.target.value)}
                   border="none"
                   bgColor="#F1EEEE"
                   borderRadius={0}

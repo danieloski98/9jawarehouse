@@ -102,24 +102,8 @@ export default function BigScreen({ states, services}: {states: IState[], servic
 
     React.useEffect(() => {
         setCertificates([
-            // {
-            //     certificate: '',
-            //     organization: '',
-            //     year: '',
-            //     link: '',
-            // }
         ])
     }, []);
-
-    // React.useEffect(() => {
-    //     function preventBack() {window.history.forward();}  
-        
-    //     // window.history.forward();
-    //     const timer = setTimeout(() => preventBack(), 0);  
-    //     window.onunload = function () {null};
-
-    //     return () => clearTimeout(timer);
-    // }, []);
 
     React.useEffect(() => {
         fileReader.addEventListener('load', () => {
@@ -367,7 +351,6 @@ export default function BigScreen({ states, services}: {states: IState[], servic
 
                     dispatch(updateUser(json.data.user));
                     router.push('/dashboard');
-                // setTimeout(() => , 3000);
                 setLoading(false);
             }
         }

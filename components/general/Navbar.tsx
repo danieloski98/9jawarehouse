@@ -228,7 +228,7 @@ export default function Navbar({page, setPage}: IProps) {
                       <InputLeftElement h="55px" paddingLeft="20px">
                           <Search  size={20} primaryColor='grey' />
                       </InputLeftElement>
-                      <Input type="text" name="search" value={query} autoComplete="off" bgColor="#F1EEEE" w="559px" h="55px" paddingLeft="60px" onKeyPress={handleKeydonw} onChange={(e) => setQuery(e.target.value)} fontSize="sm" className="font-Cerebri-sans-book" />
+                      <Input type="text" name="search" value={query} autoComplete="off" bgColor="#F1EEEE" w="559px" h="55px" paddingLeft="60px" onKeyPress={handleKeydonw} onChange={(e: any) => setQuery(e.target.value)} fontSize="sm" className="font-Cerebri-sans-book" />
                       <InputRightElement h="60px">
                           {query !== '' && <FiX size={20} color="grey" onClick={() => setQuery('')} className='cursor-pointer' />}
                       </InputRightElement>
