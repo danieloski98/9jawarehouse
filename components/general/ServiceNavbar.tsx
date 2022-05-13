@@ -21,6 +21,7 @@ import { IServerReturnObject } from '../../utils/types/serverreturntype';
 import url from '../../utils/url';
 import { useQuery } from 'react-query';
 import { IServices } from '../../utils/types/services';
+import { queryClient } from '../../pages/_app';
 
 // query frunction
 const getNotifications = async (user_id: string) => {
@@ -141,8 +142,25 @@ export default function ServiceNavbar({ search, handleEnter, setSearch}: { searc
 
   const getDate = (date: any) => {
     const dt = moment.default(date);
-    return dt.startOf('hours').fromNow();
+    return dt.startOf('seconds').fromNow();
   }
+
+
+  const deleteNotification = React.useCallback(async (id: string) => {
+    const request = await fetch(`${url}/notification/${id}`, {
+        method: 'delete',
+    });
+    const json = await request.json() as IServerReturnObject;
+
+    if (json.statusCode !== 200) {
+        alert(json.errorMessage);
+        return;
+    } else {
+        alert(json.successMessage);
+        queryClient.invalidateQueries();
+        return;
+    }
+  }, []);
 
   return (
     <div className="w-full h-20 bg-white xl:px-10 lg:px-10 md:px-5 sm:px-5 flex justify-between fixed z-50">
@@ -234,12 +252,12 @@ export default function ServiceNavbar({ search, handleEnter, setSearch}: { searc
                 }
 
             {loggedIn && (
-              <div className="p-1 cursor-pointer rounded-md hover:bg-green-200">
-                <span  onClick={() => setShowNoti(true)} >
-                  <Notification size={25} filled primaryColor="grey" />
-                </span>
-                {/* <FiBell size={25} color="black" className='cursor-pointer'/> */}
-              </div>
+               <div className="p-1 cursor-pointer rounded-md hover:bg-green-200 ml-2 flex">
+               <span onClick={() => setShowNoti(true)}>
+                 <Notification size={25} primaryColor='grey' filled style={{ color: 'grey' }}  />
+               </span>
+              {notifications.length > 0 &&  <sup className='text-themeGreen font-bold text-md'>{notifications.length}</sup>}
+             </div>
             )}
 
             {!loggedIn && (
@@ -256,9 +274,12 @@ export default function ServiceNavbar({ search, handleEnter, setSearch}: { searc
 
         <div className="xl:hidden lg:hidden md:flex sm:flex items-center justify-end">
           
-          {loggedIn && <span className='mr-4 ml-2' onClick={() => setShowNoti(true)}>
-            <Notification size={25} primaryColor='grey' filled style={{ color: 'grey' }}  />
-          </span>}
+          {loggedIn &&  <div className="p-1 cursor-pointer rounded-md hover:bg-green-200 ml-2 flex">
+                <span onClick={() => setShowNoti(true)}>
+                  <Notification size={25} primaryColor='grey' filled style={{ color: 'grey' }}  />
+                </span>
+               {notifications.length > 0 &&  <sup className='text-themeGreen font-bold text-md'>{notifications.length}</sup>}
+              </div>}
           <FiMenu size={30} color="grey" onClick={() => setOpen(true)} />
         </div>
 
@@ -296,6 +317,9 @@ export default function ServiceNavbar({ search, handleEnter, setSearch}: { searc
                       </div>
                       <div className="flex-1 flex flex-col justify-evenly mt-3">
                         <p className='font-Cerebri-sans-book text-sm text-black mb-3 mr-6'>{item.message}</p>
+                        <div className="w-full flex justify-end text-red-400 cursor-pointer text-sm font-Cerebri-sans-book" onClick={() => deleteNotification(item._id)}>
+                          <p>Clear</p>
+                        </div>
                         <div className="flex flex-col">
                           <Divider />
                          

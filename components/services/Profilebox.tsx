@@ -139,7 +139,7 @@ export default function ProfileBox({user, reviews}: IProps) {
 
           <div className="flex flex-1 flex-col xl:mt-0 lg:mt-0 md:mt-4 sm:mt-4">
             <p className="text-lg font-Circular-std-medium text-themeGreen">Phone</p>
-            <p className="text-md font-Cerebri-sans-book mt-2 text-gray-500">+234-{user.phone}</p>
+            <p className="text-md font-Cerebri-sans-book mt-2 text-gray-500">+234{user.phone.slice(1)}</p>
           </div>
 
           <div className="flex flex-1 flex-col xl:mt-0 lg:mt-0 md:mt-4 sm:mt-4">
@@ -223,7 +223,8 @@ export default function ProfileBox({user, reviews}: IProps) {
         </div>
 
          {/* certificates */}
-         <div className="flex flex-col xl:items-start lg:items-start md:items-start sm:items-start xl:mt-10 lg:mt-10 md:mt-6 sm:mt-6 flex-1 xl:ml-10 lg:ml-10 md:mx-5 sm:mx-5">
+          {
+           user.certificates.length > 0 && (         <div className="flex flex-col xl:items-start lg:items-start md:items-start sm:items-start xl:mt-10 lg:mt-10 md:mt-6 sm:mt-6 flex-1 xl:ml-10 lg:ml-10 md:mx-5 sm:mx-5">
             <p className="text-lg font-Circular-std-medium text-themeGreen">Certifications</p>
             <div className="xl:flex lg:flex md:hidden sm:hidden mt-6 flex-wrap text-left w-full">
                 <p className="text-sm font-Circular-std-medium text-themeGreen flex-1">Certificate</p>
@@ -248,7 +249,8 @@ export default function ProfileBox({user, reviews}: IProps) {
               </div>
             ))}
           </div>
-          </div>
+          </div>)
+          }
 
         
 

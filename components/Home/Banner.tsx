@@ -26,6 +26,7 @@ import { IServerReturnObject } from '../../utils/types/serverreturntype';
 import { useQuery } from 'react-query';
 import { INotification } from '../../utils/types/Notification';
 import { IServices } from '../../utils/types/services';
+import { queryClient } from '../../pages/_app';
 
 
 // other components
@@ -200,6 +201,22 @@ const RightNavBar = () => {
       }
     }, []);
 
+    const deleteNotification = React.useCallback(async (id: string) => {
+      const request = await fetch(`${url}admin/notification/${id}`, {
+          method: 'delete',
+      });
+      const json = await request.json() as IServerReturnObject;
+
+      if (json.statusCode !== 200) {
+          alert(json.errorMessage);
+          return;
+      } else {
+          alert(json.successMessage);
+          queryClient.invalidateQueries();
+          return;
+      }
+    }, []);
+
     const compare = React.useCallback(( a: IServices, b: IServices ) => {
       if (sort === 1) {
           if (a.name < b.name) {
@@ -290,7 +307,7 @@ const RightNavBar = () => {
 
              <Menu size="lg" preventOverflow={true}>
               <MenuButton
-                rightIcon={<FiChevronDown size={20} color="grey" />}
+                righticon={<FiChevronDown size={20} color="grey" />}
               >
                 <p className="flex mr-0">
                   {/* <FiSearch size={20} className="text-white" /> */}
@@ -357,7 +374,7 @@ const RightNavBar = () => {
                 <PopoverHeader>
                   <div className="w-full flex justify-between text-themeGreen text-sm py-2">
                     <p className='font-Circular-std-medium'>Notifications</p>
-                    <p className="font-Circular-std-book cursor-pointer">Mark All As Read</p>
+                    {/* <p className="font-Circular-std-book cursor-pointer">Mark All As Read</p> */}
                   </div>
                 </PopoverHeader>
                 {/* <PopoverArrow /> */}
@@ -384,11 +401,15 @@ const RightNavBar = () => {
                                   </div>
                                   <div className="flex-1 flex flex-col justify-evenly mt-3">
                                     <p className='font-Cerebri-sans-book text-sm text-black mb-3 mr-6'>{item.message}</p>
+                                    <div className="w-full flex justify-end text-red-400 cursor-pointer text-sm font-Cerebri-sans-book" onClick={() => deleteNotification(item._id)}>
+                                      <p>Clear</p>
+                                    </div>
                                     <div className="flex flex-col mt-3">
                                       <Divider />
                                      
                                     </div>
                                   </div>
+                                  
                                 </div>
                               ))}
                           </div>
@@ -447,7 +468,7 @@ export default function Banner() {
                             <FiSearch color="white" size={20} />
                         </div>
                         </InputLeftElement>
-                        <Input  height="60px" onKeyPress={handleKeydonw} bgColor="#F1EEEE" onChange={(e) => setQuery(e.target.value)} placeholder="search for services or businesses" fontSize="lg" paddingLeft="100px" className=' font-Cerebri-sans-book' />
+                        <Input  height="60px" onKeyPress={handleKeydonw} bgColor="#F1EEEE" onChange={(e: any) => setQuery(e.target.value)} placeholder="search for services or businesses" fontSize="lg" paddingLeft="100px" className=' font-Cerebri-sans-book' />
                     </InputGroup>
                 </div>
             </div>

@@ -154,7 +154,7 @@ export default function ServiceNavbar() {
 
   const getDate = (date: any) => {
     const dt = moment.default(date);
-    return dt.startOf('hours').fromNow();
+    return dt.startOf('seconds').fromNow();
   }
 
   const handleLogout = () => {

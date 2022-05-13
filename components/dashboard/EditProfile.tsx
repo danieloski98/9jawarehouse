@@ -175,7 +175,7 @@ export default function EditProfile({ next }: IProps) {
           'content-type': 'application/json'
         },
         body: JSON.stringify({ pictures: imgs })
-    });
+      });
     }
   
 

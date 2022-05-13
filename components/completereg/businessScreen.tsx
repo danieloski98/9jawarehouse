@@ -48,7 +48,7 @@ export default function BusinessInfo({ next, images, picker, profilePic, formik,
             return;
         }
 
-        if (services.length < 1) {
+        if (selectedSerices.length < 1) {
             alert('You must select at least 1 service to continue');
             return;
         }
@@ -77,7 +77,7 @@ export default function BusinessInfo({ next, images, picker, profilePic, formik,
         </p>
 
         <div className="flex flex-col mt-8">
-            <p className="text-sm font-semibold text-gray-500 mt-4">Add featured images</p>
+            <p className="text-sm font-semibold text-gray-500 mt-4">Add featured images (5 maxium)</p>
             <div className="w-auto h-32 overflow-x-scroll overflow-y-hidden flex mt-6 ">
 
                 {images.length < 1 && (

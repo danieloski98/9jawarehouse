@@ -202,9 +202,17 @@ export default function LoginForm() {
 
         <div className="w-2/5 h-full  xl:block lg:block md:hidden sm:hidden">
             <Img src="/images/bg.png" alt="girl" className="w-full h-full object-cover" />
-            <div className="z-20 absolute flex flex-col top-96 pt-24 px-8 bottom-0 ">
-                <p className='font-Circular-std-medium text-2xl text-white'>Join 9ja Warehouse!</p>
-                <p className='mt-4 font-Cerebri-sans-book text-sm  text-white'> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Bibendum est ultricies integer quis. Iaculis urna id volutpat lacus laoreet. Mauris vitae ultricies leo integer malesuada. Ac odio tempor orci dapibus ultrices in. Egestas diam in arcu cursus euismod. Dictum fusce ut placerat orci nulla.</p>
+            <div className="z-20 absolute flex flex-col top-64 pt-10 px-16 bottom-0 ">
+                <p className='font-Circular-std-medium text-2xl text-white'>Join 9jaWarehouse!</p>
+                <p className='font-Circular-std-medium text-dm text-white mt-2'>These are the reasons why you need to join the 9jaWarehouse community.</p>
+                <ul className=' list-disc list-outside text-white font-Cerebri-sans-book mt-5'>
+                    <li>Be listed on a trusted website that is visible globally.</li>
+                    <li>Be able to connect and engage with similar and various other business community.</li>
+                    <li>Get access to business mentorship, development and training.</li>
+                    <li>Get help rebranding your business to speak you, your skillset and services.</li>
+                    <li>Reduce your cost of advertising and reach</li>
+                    <li>Show your business growth profile, trends over years Be visible to investors and a greater audience.</li>
+                </ul>
             </div>
         </div>
         

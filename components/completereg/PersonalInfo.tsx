@@ -43,6 +43,10 @@ export default function PersonalInfo({ next, states, formik }: IProps) {
 
   const nextPage = (page: number) => {
       //validate
+      if (!formik.dirty) {
+          alert('Fillin the form correctly to continue');
+          return;
+      }
       if (formik.errors.first_name || formik.errors.last_name || formik.errors.email || formik.errors.phone || formik.errors.business_address || formik.errors.country || formik.errors.state || formik.errors.lga) {
           alert('Please fillin the form correctly');
           return;

@@ -23,6 +23,7 @@ import { IServerReturnObject } from '../../utils/types/serverreturntype';
 import url from '../../utils/url';
 import { IUser } from '../../utils/types/user';
 import { INotification } from '../../utils/types/Notification';
+import { queryClient } from '../../pages/_app';
 
 interface IProps {
   page: number;
@@ -53,7 +54,7 @@ export default function Navbar({page, setPage}: IProps) {
   const pin = useSelector((state: RootState) => state.PinReducer.pin);
   const loggedIn = useSelector((state: RootState) => state.LoggedInReducer.loggedIn);
   const [sort, setSort] = React.useState(1);
-  console.log(user);
+
   const router = useRouter();
 
   const dispatch = useDispatch();
@@ -68,7 +69,6 @@ export default function Navbar({page, setPage}: IProps) {
       setNotiError(false)
     },
     onError: (error) => {
-      console.log(error);
       setNotiLoading(false);
       setNotiError(true);
     }
@@ -175,12 +175,29 @@ export default function Navbar({page, setPage}: IProps) {
     return dt.startOf('hours').fromNow();
   }
 
+
   const handleLogout = () => {
     localStorage.removeItem('9jauser');
     localStorage.removeItem('9jatoken');
     dispatch(logout());
     router.push('/');
   }
+
+  const deleteNotification = React.useCallback(async (id: string) => {
+    const request = await fetch(`${url}/notification/${id}`, {
+        method: 'delete',
+    });
+    const json = await request.json() as IServerReturnObject;
+
+    if (json.statusCode !== 200) {
+        alert(json.errorMessage);
+        return;
+    } else {
+        alert(json.successMessage);
+        queryClient.invalidateQueries();
+        return;
+    }
+  }, []);
 
   return (
     <div className="w-full h-20 py-0 bg-white xl:px-10 lg:px-10 md:px-5 sm:px-5 flex justify-between items-center">
@@ -195,7 +212,7 @@ export default function Navbar({page, setPage}: IProps) {
                   <InputLeftElement  h="50px" paddingLeft="20px">
                       <FiSearch size={25} color="grey" />
                   </InputLeftElement>
-                  <Input type="text" name="search" autoComplete="off" value={query} bgColor="#F1EEEE" paddingLeft="50px"  h="50px" onKeyPress={handleKeydonw} onChange={(e) => setQuery(e.target.value)} fontSize="sm" className="font-Cerebri-sans-book" />
+                  <Input type="text" name="search" autoComplete="off" value={query} bgColor="#F1EEEE" paddingLeft="50px"  h="50px" onKeyPress={handleKeydonw} onChange={(e: any) => setQuery(e.target.value)} fontSize="sm" className="font-Cerebri-sans-book" />
                   <InputRightElement  h="50px">
                   {query !== '' && <FiX size={20} color="grey" onClick={() => setQuery('')} className='cursor-pointer' />}
                   </InputRightElement>
@@ -278,7 +295,7 @@ export default function Navbar({page, setPage}: IProps) {
                 <span onClick={() => setShowNoti(true)}>
                   <Notification size={25} primaryColor='grey' filled style={{ color: 'grey' }}  />
                 </span>
-                <sup className='text-themeGreen font-bold text-md'>{notifications.length}</sup>
+               {notifications.length > 0 &&  <sup className='text-themeGreen font-bold text-md'>{notifications.length}</sup>}
               </div>
             )}
 
@@ -338,6 +355,9 @@ export default function Navbar({page, setPage}: IProps) {
                                   </div>
                                   <div className="flex-1 flex flex-col justify-evenly mt-3">
                                     <p className='font-Cerebri-sans-book text-sm text-black mb-3 mr-6'>{item.message}</p>
+                                    <div className="w-full flex justify-end text-red-400 cursor-pointer text-sm font-Cerebri-sans-book" onClick={() => deleteNotification(item._id)}>
+                                      <p>Clear</p>
+                                    </div>
                                     <div className="flex flex-col">
                                       <Divider />
                                      

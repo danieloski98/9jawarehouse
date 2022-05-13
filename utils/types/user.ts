@@ -62,6 +62,8 @@ export interface IUser {
   createAt: string;
 
   commentLength?: number;
+
+  reg_complete: boolean
 }
 
 export interface ICertificate {

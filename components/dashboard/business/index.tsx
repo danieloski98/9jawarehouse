@@ -32,13 +32,14 @@ const ContactBox = ({user}: {user: IUser}) => {
     return (
         <div className="w-full p-5 border-2 border-gray-200 flex flex-col mb-8">
             <p className=" font-Circular-std-medium text-lg text-themeGreen">Contact</p>
-            <p className="mt-2 text-sm font-Circular-std-book text-gray-500">You can only leave a review about this business if you have previously worked with them</p>
+            <p className="mt-2 text-sm font-Circular-std-book text-gray-500">Reach out to through phone or email vendor to start a conversation</p>
+            
             {user === null && (
                 <Skeleton className='w-full h-32' />
             )}
             {user !== null && (
                  <div className="flex mt-4">
-                    <a href={`tel:${user.phone}`}>
+                    <a href={`tel:+234${user.phone.slice(1)}`}>
                         <Call size={35} primaryColor="#004143" filled />
                         {/* <FiPhone size={25} color="gray" className="cursor-pointer"  /> */}
                     </a>
@@ -56,7 +57,7 @@ const ReviewBox = (props: { open: Function }) => {
     return (
         <div  className="w-full p-5 border-2 border-gray-200 flex flex-col">
             <p className="font-Circular-std-medium text-lg text-themeGreen">Review Business/Vendor</p>
-            <p className="mt-2 text-sm font-Circular-std-book text-gray-500">Reach out to through phone or email vendor to start a conversation</p>
+            <p className="mt-2 text-sm font-Circular-std-book text-gray-500">You can only leave a review about this business if you have previously worked with them</p>
 
             <button onClick={() => props.open(true)} className="mt-3 w-32 bg-themeGreen h-10 text-sm text-white font-Cerebri-sans-book">Write a review</button>
             

@@ -41,6 +41,24 @@ const validationSchema = yup.object({
     website: yup.string(),
 });
 
+type InitialValues = {
+        first_name: string;
+        last_name: string;
+        email: string;
+        phone: string;
+        business_address: string;
+        country: string;
+        state: string;
+        business_name: string;
+        business_description: string;
+        instagram: string;
+        facebook: string;
+        whatsapp: string;
+        twitter: string;
+        website: string;
+        lga: string;
+}
+
 export const initialValues =  {
     firstname: '',
     lastname: '',
@@ -81,7 +99,6 @@ export default function BigScreen({ states, services}: {states: IState[], servic
     const toast = useToast();
     const user = useSelector((state: RootState) => state.UserReducer.user);
 
-    console.log(user);
 
     React.useEffect(() => {
         setCertificates([
@@ -127,7 +144,7 @@ export default function BigScreen({ states, services}: {states: IState[], servic
         }
     }, [fileReader2])
 
-    const formik: any = useFormik({
+    const formik = useFormik<InitialValues>({
         initialValues: {...initialValues, first_name: user.first_name, last_name: user.last_name, email: user.email, business_name: user.business_name, business_description: user.business_description},
         validationSchema,
         onSubmit: () => {},
@@ -258,8 +275,20 @@ export default function BigScreen({ states, services}: {states: IState[], servic
     const submit = async() => {
         const imgs = new FormData();
         const pp = new FormData();
-        setLoading(true);
+       
 
+        if (!formik.isValid || !formik.dirty) {
+            alert('Fill in the form correctly to continue');
+            return;
+        }
+
+        if (service.length < 1) {
+            setLoading(false);
+            alert('Must select at least 1 service');
+            return;
+        }
+
+        setLoading(true);
         const result1 = await fetch(`${url}user/${router.query['id']}`, {
             method: 'post',
             headers: {
@@ -277,6 +306,7 @@ export default function BigScreen({ states, services}: {states: IState[], servic
         if(json1.statusCode !== 200) {
             alert(json1.errorMessage);
             setLoading(false);
+            return;
         }
         // save to localstorage
         const save = localStorage.setItem('9jauser', JSON.stringify(json1.data.user));
