@@ -61,9 +61,9 @@ export default function Navbar(props: any) {
 
     const sort = (a: INotification, b: INotification) => {
         if (a.created_at < b.created_at) {
-                return -1;
+                return 1;
         } else {
-            return 1;
+            return -1;
         }
     }
 
