@@ -107,7 +107,7 @@ export default function Navbar(props: any) {
             </Drawer>
 
             <div style={{width: '650px'}}>
-                <InputGroup>
+                {/* <InputGroup>
                     <InputLeftElement
                         pointerEvents='none'
                         children={
@@ -122,7 +122,7 @@ export default function Navbar(props: any) {
                         }
                     />
                     <Input backgroundColor='#FBFBFB' size='lg' fontSize='sm' border='1px solid #70707017' placeholder='Search For Vendors' />
-                </InputGroup>
+                </InputGroup> */}
             </div>
             <div className='flex flex-1 ml-auto items-center' >
                 <div className="w-16 flex justify-center">
@@ -133,9 +133,11 @@ export default function Navbar(props: any) {
                         </g>
                     </svg>
                    
-                        <sup className='bg-green-300 w-auto p-1 h-auto rounded-full flex justify-center items-center text-xs'>
-                            {notifications.length}
-                        </sup>
+                       {notifications.length > 0 && (
+                            <sup className='bg-green-300 w-auto p-1 h-auto rounded-full flex justify-center items-center text-xs'>
+                                {notifications.length}
+                            </sup>
+                       )}
                     
                 </div>
                 <div className='ml-0'>

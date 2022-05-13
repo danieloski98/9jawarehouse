@@ -36,7 +36,8 @@ export default function Records() {
         <h1 className='text-2xl font-Graphik-Bold text-gray-600'>Customer Images Replacement Records</h1>
         <p className='text-md mt-2 font-Graphik-Regular'>View all replacement images uploaded by vendors</p>
 
-        <TableContainer className='mt-10 bg-white'>
+       <div className="w-full h-96 mt-10 overflow-auto ">
+       <TableContainer className='mt-0 bg-white'>
             <Table>
                 <TableCaption>List of all pending records to be approved</TableCaption>
                 <Thead>
@@ -67,6 +68,7 @@ export default function Records() {
                 </Tbody>
             </Table>
         </TableContainer>
+       </div>
     </div>
   )
 }
