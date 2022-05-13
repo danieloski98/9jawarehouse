@@ -349,6 +349,15 @@ export class User {
   CAC_verified: boolean;
 
   @ApiProperty({
+    type: Boolean,
+  })
+  @Prop({
+    type: Boolean,
+    default: false,
+  })
+  reg_complete: boolean;
+
+  @ApiProperty({
     type: String,
   })
   @Prop({
