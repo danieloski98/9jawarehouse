@@ -27,10 +27,10 @@ import { IUser } from '../../utils/types/user';
 
 // validation
 const validationSchema = yup.object({
-    fullname: yup.string().required(),
-    email: yup.string().email().required(),
+    fullname: yup.string().required('Name is required'),
+    email: yup.string().email().required('Email is required'),
     rating: yup.number(),
-    comment: yup.string().required(),
+    comment: yup.string().required('Comment is required'),
 })
 
 const CommentForm = ({formik, change, images, picker, user, deleteImage}: ICommentProps) => {

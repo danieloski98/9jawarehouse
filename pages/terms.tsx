@@ -30,7 +30,7 @@ export default function Terms() {
 
                       <li>
                           <b className=' font-Circular-std-book text-lg'>Document Description and application</b>
-                          <ul className=' list-disc list-outside pl-10 pt-5'>
+                          <ul className=' list-decimal list-outside pl-10 pt-5'>
                             <li className='text-md font-Cerebri-sans-book'>
                             9jaWarehouse Enterprise terms and conditions document are written under the governing laws of the National Information technology Development Agency Act, 2007 and all other applicable laws and regulations for electronic records and documentation. This document highlights all the terms and conditions guiding the use of 9jaWarehouse Enterprise website (www.9jwarehouse.com) and shall be reserved in digital electronic format without the application and requirements if any signature.
                             </li>

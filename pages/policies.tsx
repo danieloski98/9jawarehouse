@@ -31,7 +31,7 @@ export default function AboutUs() {
 
                     <li>
                           <b className=' font-Circular-std-book text-lg'>Consent / approval:</b>
-                          <ul className=' list-disc list-outside pl-10 pt-5'>
+                          <ul className=' pl-10 pt-5'>
                             <li className='text-md font-Cerebri-sans-book'>
                             By using the 9jaWarehouse Enterprise website(www.9jawarehouse.com) and any of 9jaWarehouse affiliated entities you have agreed to consent to the privacy policy, and you have as well granted legal consent to all items as detailed and defined in this privacy policy. If you have not agreed to or at any point disagree with any of the policies while using the website or any other affiliated entities, log out of the website and/or affiliated entities immediately or close out from the page as applicable.
                             </li>
@@ -40,7 +40,7 @@ export default function AboutUs() {
 
                       <li className='mt-10'>
                           <b className=' font-Circular-std-book text-lg'>Personal Information and Identification:</b>
-                          <ul className=' list-disc list-outside pl-10 pt-5'>
+                          <ul className='pl-10 pt-5'>
                             <li className='text-md font-Cerebri-sans-book'>
                             During the registration process to become a member of 9jaWarehouse Enterprise, 9jaWarehouse Enterprise will request means of identification like – email(s), phone number(s), home/business address, business registration number (CAC), photo, ID card etc. from you. Note that this information is requested to further identify and proof relationship between the type of business, the services rendered and the business owner. This will help mitigate against fraud, criminal activities, and scammers that might be harmful to 9jaWarehouse and any of its affiliated entities. 9jaWarehouse Enterprise makes use of the contact information you provided to us to communicate important messages on products and 9jaWarehouse Enterprise announcement to all registered members of 9jaWarehouse Enterprise. 9jaWarehouse Enterprise review the emails used to give business review to make sure the reviewers are real and not robots. This helps 9jaWarehouse eliminate as much as possible junk e-mails and e-mail bugs. Your business profile also helps us link you to product and services that might be in line with the businesses or opportunities you have interest in or like to reference.
                             </li>
@@ -50,7 +50,7 @@ export default function AboutUs() {
 
                       <li className='mt-10'>
                           <b className=' font-Circular-std-book text-lg'>How we Process and Store Personal Date:</b>
-                          <p>The followings list out how we handle and store personal data on 9jaWarehouse Enterprise.</p>
+                          <p className='mt-5'>The followings list out how we handle and store personal data on 9jaWarehouse Enterprise.</p>
                           <ul className=' list-decimal list-outside pl-10 pt-5'>
                             <li className='text-md font-Cerebri-sans-book'>
                             All data collected during opening of an account or registering any business are collected and processed through our system in a legitimate and legal manner. By providing this information, you have consented to the processing of these documents and information for accuracy and legitimacy.
@@ -78,7 +78,7 @@ export default function AboutUs() {
 
                       <li className='text-md font-Cerebri-sans-book mt-10'>
                               <b className=' font-Circular-std-book text-lg'>Right to Privacy:</b>
-                              <ol>
+                              <ol className="pl-10 mt-5">
                                 <li>
                                 Under some circumstances per the Nigeria Data Protection regulation and any other law as deem applicable, you can/may have objections to the processing of your personal information. At any point in time, you do no longer want to share personal information with 9jaWarehouse Enterprise, request that your personal information be deleted with immediate effect. This can be done by contacting the 9jaWarehouse customer care services via e-mail only. E-mails should be sent to support@9jawarehouse.com with description of action and the E-mail title should read “Request to delete personal information”. Such request will be processed between 24-48 business hours and a confirmation of deletion of personal information will be sent out to you. Such request will be processed per applicable laws and regulations. Should anymore information be required to complete the process, 9jwarehouse Enterprise will reach out to request additional information.
                                 </li>
@@ -89,7 +89,7 @@ export default function AboutUs() {
 
                             <li className='text-md font-Cerebri-sans-book mt-10'>
                               <b className=' font-Circular-std-book text-lg'>Third Party Websites / Other Websites:</b>
-                              <ol className='list-decimal list-outside mt-12'>
+                              <ol className='pl-10 mt-5'>
                                 <li>
                                 9jaWarehouseEnterprisewebsitemaylinkyoutootherwebsitesthatmaycollectpersonal identification information about you – username, password, names etc. 9jaWarehouse Enterprise is not responsible for the privacy and contents of these third-party websites or any other websites that is not 9jaWarehouse website (www.9jaWarehouse.com).
                                 </li>
@@ -99,7 +99,7 @@ export default function AboutUs() {
 
                             <li className='text-md font-Cerebri-sans-book mt-10'>
                               <b className=' font-Circular-std-book text-lg'>Security Precautions and Awareness:</b>
-                              <ol className=' list-decimal list-outside mt-12'>
+                              <ol className='mt-5 pl-10'>
                                 <li>
                                 Our website employs strict security measures and checks. The 9jwarehouse website is hosted on a secured server to ensure full protection of information, account access and any of our members information. All information provided to 9jaWarehouse Enterprise is kept under security guidelines and protected against any breach. But we are aware that the internet is not a perfectly safe space; because of this reason, 9jaWarehouse Enterprise cannot take responsibility for the illegal act of hacking and scamming as long as 9jaWarehouse Enterprise has taken the necessary precautions and steps to avoid such situations or occurrence. Be sure to know that we do our best to always protect your personal data. We encourage members to only access account through a secured environment and networks. 9jaWarehouse Enterprise is not responsible for securing your password and/or username and this information should not be disclosed at any point in time to any other parties. Report any suspicious breach to your account immediately by e- mailing the 9jwarehouse support at support@9jawarehouse.com
                                 </li>
@@ -109,7 +109,7 @@ export default function AboutUs() {
 
                             <li className='text-md font-Cerebri-sans-book mt-10'>
                               <b className=' font-Circular-std-book text-lg'>Changes to Policy</b>
-                              <ol className=' list-decimal list-outside mt-12'>
+                              <ol className='pl-10 mt-5'>
                                 <li>
                                 9jaWarehouse Enterprise reserves the sole right to make changes and/or updates to this privacy policy with or without prior notifications. The most recent privacy policy will always be available on the website. We recommend that members and users of 9jaWarehouse website view the privacy policies regularly. The effectiveness of the privacy policy is from the date of being posted on our website and available to the public.
                                 </li>
