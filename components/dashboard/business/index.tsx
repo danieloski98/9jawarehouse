@@ -39,7 +39,7 @@ const ContactBox = ({user}: {user: IUser}) => {
             )}
             {user !== null && (
                  <div className="flex mt-4">
-                    <a href={`tel:+234${user.phone}`}>
+                    <a href={`tel:+234${user.phone.slice(0)}`}>
                         <Call size={35} primaryColor="#004143" filled />
                         {/* <FiPhone size={25} color="gray" className="cursor-pointer"  /> */}
                     </a>
@@ -176,7 +176,7 @@ export default function Business() {
         <div className="flex-1 h-full flex xl:px-10 lg:px-10 md:px-5 sm:px-5 py-10 ">
             <div className="xl:w-3/4 lg:w-3/4 md:w-full sm:w-full xl:mr-12 lg:mr-12 md:mr-0 sm:mr-0 h-auto">
                 {loading && <Skeleton height={200} />}
-                {!loading && (
+                {!loading && user !== undefined && (
                     <>
                         <ProfileBox user={user} reviews={reviews.length} />
                         <div className="w-full xl:hidden lg:hidden md:block sm:block mb-10">
@@ -187,10 +187,14 @@ export default function Business() {
                     </>
                 )}
             </div>
-            <div className="w-72 h-80 xl:flex lg:flex md:hidden sm:hidden flex-col">
-                <ContactBox user={user} />
-                <ReviewBox open={setShowModal} />
-            </div>
+            {
+                !loading && user !== undefined && (
+                    <div className="w-72 h-80 xl:flex lg:flex md:hidden sm:hidden flex-col">
+                        <ContactBox user={user} />
+                        <ReviewBox open={setShowModal} />
+                    </div>
+                )
+            }
         </div>
 
         <Footer />

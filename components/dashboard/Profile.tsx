@@ -64,7 +64,7 @@ export default function Profile({ setPage }: IProps) {
   const userDetails = useSelector((state: RootState) => state.UserReducer.user);
 
   React.useEffect(() => {
-    if (userDetails !== undefined || userDetails !== {}) {
+    if (userDetails !== undefined || userDetails !== null) {
       setPic(userDetails.pictures[0]);
     }
   }, [userDetails]);
@@ -203,33 +203,33 @@ export default function Profile({ setPage }: IProps) {
             </p>
             <div className="flex w-full mt-2">
               {userDetails.facebook !== "" && (
-                <p className="cursor-pointer" title={userDetails.facebook} onClick={() => open(1, userDetails.facebook)}>
+                <a href={userDetails._id} target="_blank" rel="noreferrer" className="cursor-pointer" title={userDetails.facebook}>
                   <FaFacebook size={25} color="#0085CC" />
-                </p>
+                </a>
               )}
 
               {userDetails.instagram !== "" && (
-                <p title={userDetails.instagram} className="ml-3 cursor-pointer" onClick={() => open(2, userDetails.instagram)}>
+                <a href={userDetails.instagram} target="_blank" rel="noreferrer" title={userDetails.instagram} className="ml-3 cursor-pointer">
                   <FaInstagram size={25} color="#A46599" />
-                </p>
+                </a>
               )}
 
               {userDetails.twitter !== "" && (
-                <p title={userDetails.twitter} className="ml-3 cursor-pointer" onClick={() => open(3, userDetails.twitter)}>
+                <a href={userDetails.twitter} title={userDetails.twitter} className="ml-3 cursor-pointer">
                   <FaTwitter size={25} color="#0ACAFF" />
-                </p>
+                </a>
               )}
 
               {userDetails.whatsapp !== "" && (
-                <p title={userDetails.whatsapp} className="ml-3 cursor-pointer" onClick={() => open(4, userDetails.whatsapp)}>
+                <a href={userDetails.whatsapp} target="_blank" rel="noreferrer" title={userDetails.whatsapp} className="ml-3 cursor-pointer">
                   <FaWhatsapp size={25} color="green" />
-                </p>
+                </a>
               )}
 
               {userDetails.website !== "" && (
-                <p title={userDetails.website} className="ml-3 cursor-pointer" onClick={() => open(5, userDetails.website)}>
+                <a href={userDetails.website} target="_blank" rel="noreferrer" title={userDetails.website} className="ml-3 cursor-pointer">
                   <FaLink size={25} color="#0ACAFF" />
-                </p>
+                </a>
               )}        
             </div>
           </div>
