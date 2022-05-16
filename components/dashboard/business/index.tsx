@@ -39,7 +39,7 @@ const ContactBox = ({user}: {user: IUser}) => {
             )}
             {user !== null && (
                  <div className="flex mt-4">
-                    <a href={`tel:+234${user.phone.slice(1)}`}>
+                    <a href={`tel:+234${user.phone}`}>
                         <Call size={35} primaryColor="#004143" filled />
                         {/* <FiPhone size={25} color="gray" className="cursor-pointer"  /> */}
                     </a>
