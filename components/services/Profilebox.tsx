@@ -180,31 +180,31 @@ export default function ProfileBox({user, reviews}: IProps) {
             </p>
             <div className="flex md:justify-start sm:justify-start w-full mt-2">
               {user.facebook !== "" && (
-                <a href={user.facebook} className="cursor-pointer" title={user.facebook}>
+                <a href={user.facebook} className="cursor-pointer" target="_blank" rel="noreferrer" title={user.facebook}>
                   <FaFacebook size={25} color="#0085CC" />
                 </a>
               )}
 
               {user.instagram !== "" && (
-                <a href={user.instagram} title={user.instagram} className="ml-3 cursor-pointer">
+                <a href={user.instagram} title={user.instagram} target="_blank" rel="noreferrer" className="ml-3 cursor-pointer">
                   <FaInstagram size={25} color="#A46599" />
                 </a>
               )}
 
               {user.twitter !== "" && (
-                <a href={user.twitter} title={user.twitter} className="ml-3 cursor-pointer">
+                <a href={user.twitter} title={user.twitter} target="_blank" rel="noreferrer" className="ml-3 cursor-pointer">
                   <FaTwitter size={25} color="#0ACAFF" />
                 </a>
               )}
 
               {user.whatsapp !== "" && (
-                <a href={user.whatsapp} title={user.whatsapp} className="ml-3 cursor-pointer">
+                <a href={user.whatsapp} title={user.whatsapp} target="_blank" rel="noreferrer" className="ml-3 cursor-pointer">
                   <FaWhatsapp size={25} color="green" />
                 </a>
               )}
 
               {user.website !== "" && (
-                <a href={user.website} title={user.website} className="ml-3 cursor-pointer">
+                <a href={user.website} title={user.website} target="_blank" rel="noreferrer" className="ml-3 cursor-pointer">
                   <FaLink size={25} color="#0ACAFF" />
                 </a>
               )}        
