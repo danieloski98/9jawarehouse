@@ -89,7 +89,7 @@ export class CrudService {
         const userUpdate = await this.userModel.updateOne(
           { _id: user_id },
           {
-            rating: rating > 5 ? 5 : rating / comments.length,
+            rating: rating > 5 ? 5 : rating / comments.length - 1,
           },
         );
         console.log(updatePin);
@@ -142,7 +142,7 @@ export class CrudService {
         const userUpdate = await this.userModel.updateOne(
           { _id: user_id },
           {
-            rating: rating > 5 ? 5 : rating / comments.length,
+            rating: rating > 5 ? 5 : rating / comments.length - 1,
           },
         );
         // renew pin
