@@ -44,7 +44,21 @@ export class EmailService {
         from: `9jaWarehouse Enterprise ${process.env.COMPANY_EMAIL}`,
         to: body.email,
         subject: `Account Verification Code`,
-        html: `<p> Your account has been created successfully ${body.email}. Here is your otp code for the verification of your account <b>${code}</b> </p>`,
+        html: `<div> 
+          <p>You are one step away from joining 9jaWarehouse community. Your verification code is below:</p>
+
+        </br>
+        <b>${code}</b>  </br>
+
+        <p>Enter this verification code to verify your email.</p> </br>
+
+        <p>Thank you for choosing 9jawarehouse Enterprise!</p> </br>
+
+        <p>We are happy to have you onboard.</p> </br>
+
+        <p>support@9jawarehouse.com</p>
+
+        </div>`,
       };
       this.transporter.sendMail(mailOption, (error: any, info: any) => {
         if (error) {
@@ -325,8 +339,19 @@ export class EmailService {
       const mailOption: MailOptions = {
         from: `9jaWarehouse Enterprise ${process.env.COMPANY_EMAIL}`,
         to: email,
-        subject: `Account Verification Successful`,
-        html: `<p>Your account verification was successful. You can now login and set up your account  </p>`,
+        subject: `Account Verification Update`,
+        html: `
+          <div>
+            <p>Hurray! Your account verification was SUCCESSFUL!!</p>
+
+            <p>You can now return to the website (www.9jawarehouse.com) and login with your email and password and complete your details.</p>
+
+            <p>You are one step closer to joining our community.</p>
+
+            <p>We look forward to working with you and knowing more about you and your business. </p>
+
+          </div>
+        `,
       };
       this.transporter.sendMail(mailOption, (error: any, info: any) => {
         if (error) {
