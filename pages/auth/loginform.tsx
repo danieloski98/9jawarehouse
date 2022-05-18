@@ -15,8 +15,8 @@ import { useFormik } from 'formik'
 import Link from 'next/link'
 
 const validationSchema = yup.object({
-    email: yup.string().required().email(),
-    password: yup.string().required(),
+    email: yup.string().required('Email is required').email('Invalid Email'),
+    password: yup.string().required('Password is required'),
 })
 
 // image

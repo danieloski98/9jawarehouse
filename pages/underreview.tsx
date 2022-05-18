@@ -21,8 +21,11 @@ export default function UnderReview() {
                 <div className="w-96 h-auto flex flex-col items-center">
                     <Img src="/images/time.png" className='w-24 h-24' />
                     <p className='mt-4 font-Cerebri-sans-book text-3xl text-black'>Account review in progress</p>
-                    <p className="mt-7 font-Circular-std-book text-gray-400 text-sm text-center">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Bibendum est ultricies integer
+                    <p className="mt-7 font-Circular-std-book text-gray-600 text-md text-center">
+                        Our team is reviewing your account to ensure correctness of your information. We will send you an email on the outcome of the verification as soon as it is completed or if we need anything more from you. Thank you for your patience.
+                    </p>
+                    <p className="mt-7 font-Circular-std-book text-gray-600 text-md text-center">
+                        In the meantime, if you have questions feel free to email us on <b className='text-lg'>support@9jawarehouse.com</b>. 
                     </p>
                    <div className="flex">
                         <button className="mt-24 w-40 h-16 mr-4 text-white font-Cerebri-sans-book text-sm bg-themeGreen" onClick={() => router.push('/')}>

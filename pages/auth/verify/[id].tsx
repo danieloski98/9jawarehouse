@@ -119,17 +119,17 @@ export default function VerifyAccount() {
                 
 
                 <div className="flex flex-col xl:w-4/6 lg:w-4/6 md:w-full sm:w-full">
-                    <h3 className="text-3xl font-Circular-std-medium text-gray-700">Verify Your Account</h3>
-                    <p className="text-sm font-Cerebri-sans-book mt-4 text-gray-500">We sent a 6 digit code to your email address</p>
+                    <h3 className="text-3xl font-Circular-std-medium text-gray-700">We need to verify your Email.</h3>
+                    <p className="text-sm font-Cerebri-sans-book mt-4 text-gray-500">Verify your account with the 6-digit code sent to the email you provided.</p>
                 </div>
 
                 <div className="flex flex-col xl:w-4/6 lg:w-4/6 md:w-full sm:w-full mt-6">
-                    <label className="font-Cerebri-sans-book text-sm">Verification Code</label>
+                    <label className="font-Cerebri-sans-book text-sm">Email Verification Code:</label>
                     <InputGroup bgColor="#F1EEEE" className="mt-2" size="lg">
                         <InputLeftElement>
                             <FiLock size={25} color="gray" />
                         </InputLeftElement>
-                        <Input name="code" className="font-Cerebri-sans-book" value={code} fontSize="md" onChange={(e) => setCode(e.target.value)} />
+                        <Input name="code" className="font-Cerebri-sans-book" value={code} fontSize="md" onChange={(e: any) => setCode(e.target.value)} />
                     </InputGroup>
                 </div>
 
@@ -150,7 +150,7 @@ export default function VerifyAccount() {
         <div className="w-2/5 h-full xl:block lg:block md:hidden sm:hidden bg-blue ">
             <Image src={Girl} alt="girl" className="w-full h-full" />
             <div className="z-20 absolute flex flex-col top-64 pt-10 px-16 bottom-0 ">
-                <p className='font-Circular-std-medium text-2xl text-white'>Join 9jaWarehouse!</p>
+                {/* <p className='font-Circular-std-medium text-2xl text-white'>Join 9jaWarehouse!</p>
                 <p className='font-Circular-std-medium text-dm text-white mt-2'>These are the reasons why you need to join the 9jaWarehouse community.</p>
                 <ul className=' list-disc list-outside text-white font-Cerebri-sans-book mt-5'>
                     <li>Be listed on a trusted website that is visible globally.</li>
@@ -159,7 +159,7 @@ export default function VerifyAccount() {
                     <li>Get help rebranding your business to speak you, your skillset and services.</li>
                     <li>Reduce your cost of advertising and reach</li>
                     <li>Show your business growth profile, trends over years Be visible to investors and a greater audience.</li>
-                </ul>
+                </ul> */}
             </div>
         </div>
     </div>

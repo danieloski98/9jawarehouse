@@ -18,7 +18,7 @@ import url from '../../utils/url';
 import { IServerReturnObject } from '../../utils/types/serverreturntype';
 
 const validationSchema = yup.object({
-    email: yup.string().required().email(),
+    email: yup.string().required('Email is required').email('Invalid Email'),
 })
 
 

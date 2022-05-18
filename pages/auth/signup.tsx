@@ -10,9 +10,9 @@ import Link from 'next/link'
 
 // validationschema
 const validationSchema = yup.object({
-    email: yup.string().required().email(),
-    username: yup.string().required().min(3, 'minimium of 3 characters'),
-    password: yup.string().required().min(8)
+    email: yup.string().required('Email is required').email('Email is required'),
+    username: yup.string().required('Username is required').min(3, 'minimium of 3 characters'),
+    password: yup.string().required('Password is required').min(8)
 })
 
 // image
@@ -103,8 +103,8 @@ export default function Signup() {
             <div className="flex-1 xl:pl-10 lg:pl-10 md:pl-5 sm:pl-5 xl:pr-0 lg:pr-0 md:pr-5 sm:pr-5 flex flex-col justify-center items-center">
 
                 <div className="flex flex-col xl:w-4/6 lg:w-4/6 md:w-full sm:w-full">
-                    <h3 className="text-3xl font-Circular-std-medium text-gray-700">Create An Account</h3>
-                    <p className="text-sm font-Cerebri-sans-book mt-4 text-gray-500">You are one step away from joining 9jaWarehouse</p>
+                    <h3 className="text-3xl font-Circular-std-medium text-gray-700">To become a member is EASY! </h3>
+                    <p className="text-sm font-Cerebri-sans-book mt-4 text-gray-500">Sign up below, you are a step away from joining 9jaWarehouse.</p>
                 </div>
 
                 <div className="flex flex-col xl:w-4/6 lg:w-4/6 md:w-full sm:w-full mt-6">
@@ -164,19 +164,22 @@ export default function Signup() {
 
         <div className="w-2/5 h-full xl:block lg:block md:hidden sm:hidden">
             <Img src="/images/bg.png" alt="girl" className="w-full h-full object-cover" />
-            <div className="z-20 absolute flex flex-col top-64 pt-10 px-16 bottom-0 ">
-                <p className='font-Circular-std-medium text-2xl text-white'>Join 9jaWarehouse!</p>
-                <p className='font-Circular-std-medium text-dm text-white mt-2'>These are the reasons why you need to join the 9jaWarehouse community.</p>
+            <div className="z-20 absolute flex flex-col top-20 pt-10 px-10 bottom-0 ">
+                <p className='font-Circular-std-medium text-2xl text-white'>Why Join 9jaWarehouse Community?</p>
+                <p className='font-Circular-std-medium text-dm text-white mt-2'>Some of the benefits of joining the 9jaWarehouse community.</p>
                 <ul className=' list-disc list-outside text-white font-Cerebri-sans-book mt-5'>
-                    <li>Be listed on a trusted website that is visible globally.</li>
-                    <li>Be able to connect and engage with similar and various other business community.</li>
-                    <li>Get access to business mentorship, development and training.</li>
-                    <li>Get help rebranding your business to speak you, your skillset and services.</li>
-                    <li>Reduce your cost of advertising and reach</li>
-                    <li>Show your business growth profile, trends over years Be visible to investors and a greater audience.</li>
+                    <li>Get your business and services listed on a trusted website that is visible globally.</li>
+                    <li>Reduce your cost of advertising and reaching out to prospective customers.</li>
+                    <li>Increase level engagement on all your business social media platforms.</li>
+                    <li>Make your business growth profile over the years be visible to investors and a greater audience.</li>
+                    <li>Connect and engage with similar businesses and services within and outside your community.</li>
+                    <li>Get unlimited access to business mentorship, development, and trainings.</li>
+                    <li>Rebrand your business and services to speak you and your skillset.</li>
                 </ul>
+                <i className='text-md text-white mt-4 font-bold'>And lots more... ... ..</i>
             </div>
         </div>
+        
     </div>
   );
 }

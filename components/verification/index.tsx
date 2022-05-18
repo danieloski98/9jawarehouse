@@ -22,7 +22,7 @@ const validationSchema = yup.object({
     first_name: yup.string().required('First Name is required'),
     last_name: yup.string().required('Last Name is required'),
     business_name: yup.string().required('Business name is required'),
-    business_description: yup.string().required('Business description'),
+    business_description: yup.string().required('Business description is required'),
 })
 
 
@@ -202,9 +202,9 @@ export default function VerificationDocuments() {
                 <div className="flex flex-col xl:w-4/6 lg:w-4/6 md:w-full sm:w-full">
                     <div className="flex">
                         {stage === 2 && <FiArrowLeftCircle color='black' size={25} className='mt-1' onClick={() => setStage(1)} />}
-                        <div className='ml-5'>
-                            <h3 className="text-3xl font-Cerebri-sans-book text-gray-700">Tell us more about you</h3>
-                            <p className="text-sm font-Cerebri-sans-book mt-2 text-gray-500">Provide information about you and your Business or Service</p>
+                        <div className={stage === 2 ? 'ml-5':'ml-0'}>
+                            <h3 className="text-3xl font-Cerebri-sans-book text-gray-700">We are <span className='text-themeGreen'>HAPPY</span> you are <span className='text-themeGreen'>Here,</span> Tell us more about <span className='text-themeGreen'>YOU</span>.</h3>
+                            <p className="text-sm font-Cerebri-sans-book mt-2 text-gray-500">Provide information about you and your business or service.</p>
                         </div>
                     </div>
                     
@@ -229,8 +229,8 @@ export default function VerificationDocuments() {
         <div className="w-2/5 h-full xl:block lg:block md:hidden sm:hidden">
             <Image src={Girl} alt="girl" className="w-full h-full" />
             <div className="z-20 absolute flex flex-col top-96 pt-24 px-8 bottom-0 ">
-                <p className='font-Circular-std-medium text-2xl text-white'>Join 9ja Warehouse!</p>
-                <p className='mt-4 font-Cerebri-sans-book text-sm  text-white'> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Bibendum est ultricies integer quis. Iaculis urna id volutpat lacus laoreet. Mauris vitae ultricies leo integer malesuada. Ac odio tempor orci dapibus ultrices in. Egestas diam in arcu cursus euismod. Dictum fusce ut placerat orci nulla.</p>
+                {/* <p className='font-Circular-std-medium text-2xl text-white'>Join 9ja Warehouse!</p>
+                <p className='mt-4 font-Cerebri-sans-book text-sm  text-white'> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Bibendum est ultricies integer quis. Iaculis urna id volutpat lacus laoreet. Mauris vitae ultricies leo integer malesuada. Ac odio tempor orci dapibus ultrices in. Egestas diam in arcu cursus euismod. Dictum fusce ut placerat orci nulla.</p> */}
             </div>
         </div>
         
