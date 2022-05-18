@@ -148,7 +148,7 @@ const PinComponent = ({change, changePin, submit, loading, close, user}:{ change
 
             <div className="w-full flex justify-center h-auto mt-6">
                 <div className="xl:w-2/4 lg:w-2/4 md:w-full sm:w-full h-full">
-                    <Input border="none" bgColor="whitesmoke" borderRadius="0" onChange={(e) => changePin(e.target.value)} />
+                    <Input border="none" bgColor="whitesmoke" borderRadius="0" onChange={(e: any) => changePin(e.target.value)} />
 
                     <div className="w-full h-10 flex justify-center mt-6">
                         <button onClick={() => submit()} className="w-96 text-white text-sm bg-themeGreen">

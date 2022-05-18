@@ -15,19 +15,19 @@ export default function Footer() {
             <Link href="/" passHref>
               <Image src="/images/nlogo.png" alt="logo" className="w-16 h-12 object-contain cursor-pointer" />
             </Link>
-            <p className="text-white text-sm font-Circular-std-medium">9jaWareHouse</p>
+            <p className="text-white text-sm font-Circular-std-medium">9jaWarehouse Enterprise</p>
             <div className="flex mt-5 w-full xl:justify-center lg:justify-center md:justify-start sm:justify-start">
-                    <div className="w-10 h-10 rounded-full bg-white flex justify-center items-center mr-6 cursor-pointer">
+                    <div className="w-10 h-10 rounded-full bg-white flex justify-center items-center mx-3 cursor-pointer">
                         <a href="https://www.twitter.com/9ja_warehouse"  target="_blank" rel="noreferrer">
                             <FaTwitter size={20} className='text-themeGreen ' />
                         </a>
                     </div>
-                    <div className="w-10 h-10 rounded-full bg-white flex justify-center items-center mr-6 cursor-pointer">
+                    <div className="w-10 h-10 rounded-full bg-white flex justify-center items-center mx-3 cursor-pointer">
                         <a href="https://www.instagram.com/9ja_warehouse"  target="_blank" rel="noreferrer">
                             <FaInstagram size={20} className='text-themeGreen ' />
                         </a>
                     </div>
-                    <div className="w-10 h-10 rounded-full bg-white flex justify-center items-center mr-6 cursor-pointer">
+                    <div className="w-10 h-10 rounded-full bg-white flex justify-center items-center mx-3 cursor-pointer">
                         <a href="https://web.facebook.com/9ja-Warehouse-112164614644154" target="_blank" rel="noreferrer">
                             <FaFacebookF size={20} className='text-themeGreen ' />
                         </a>
@@ -65,7 +65,7 @@ export default function Footer() {
                 </div>
             </div>
             <div className="flex flex-col xl:h-40 lg:h-40 md:h-auto sm:h-auto md:my-6 sm:my-6 xl:my-0 lg:my-0 w-full">
-                <p className="text-md text-gray-300 font-Circular-std-medium">FOR VENDORS</p>
+                {/* <p className="text-md text-gray-300 font-Circular-std-medium">FOR VENDORS</p>
                 <div className="mt-6 text-sm font-Cerebri-sans-book text-white flex flex-col">
                     <Link href="/faqs">
                         <a className="cursor-pointer">How to change my plan</a>
@@ -73,7 +73,7 @@ export default function Footer() {
                     <Link href="/faqs">
                         <a className="mt-3 cursor-pointer">What is Vendor/Business Pin</a>
                     </Link>
-                </div>
+                </div> */}
             </div>
 
         </div>

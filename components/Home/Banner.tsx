@@ -452,13 +452,13 @@ export default function Banner() {
             <LeftNavbar />
             <div className="flex-1 flex flex-col justify-center xl:px-10 lg:px-10 md:px-5 sm:px-5  xl:py-0 lg:py-0 md:py-12 sm:py-12">
                 <h1 className="xl:text-6xl lg:text-6xl md:text-4xl sm:text-4xl font-Circular-std-medium text-darkGreen">
-                    Discover <span className="text-themeGreen">Vendors</span> <br/>
+                    Discover The Best <span className="text-themeGreen">Vendors</span> <br/>
                 </h1>
                 <h1 className="xl:text-6xl lg:text-6xl md:text-4xl sm:text-4xl font-Circular-std-medium text-darkGreen mt-4">
-                    Near You
+                    Near You!
                 </h1>
                 <p className="xl:w-full lg:w-full md:w-full sm:w-full mt-5 text-lg font-Cerebri-sans-book text-gray-400">
-                Less hassle searching for who is best fit  for Photography, Catering, Event planning, make-up artists, DJs, decorators and more
+                Less hassle searching for who is best fit for your photography, catering, event planning and management, make-up artist, fashion designer, drop shipper, event DJs and more. Search through our 9jaWarehouse list of businesses and services to meet any of your needs.
                 </p>
 
                 <div className="xl:w-9/12 lg:w-9/12 h-auto md:w-full sm:w-full mt-6">

@@ -57,7 +57,7 @@ export default function ContactUs() {
         }
     }
   return (
-    <div className="w-full h-auto flex flex-col">
+    <div className="w-full xl:h-screen lg:h-screen md:h-auto sm:h-auto flex flex-col">
 
         <NormNavbar />
 
@@ -66,7 +66,7 @@ export default function ContactUs() {
             <div className="flex-1 xl:w-full lg:w-full md:w-full sm:w-full mr-10 flex ">
                 <div className="xl:w-4/5 lg:w-4/5 md:w-full sm:w-full h-full ">
                     <p className="text-3xl text-themeGreen font-Circular-std-medium">Contact Us</p>
-                    <p className="text-sm font-Cerebri-sans-book mt-3 text-gray-500">Create screens directly in Method or add your images from Sketch. You can even sync designs from your cloud storage!</p>
+                    <p className="text-sm font-Cerebri-sans-book mt-3 text-gray-500"> Use the below prompt to contact us and we will respond to you within 24 hours.</p>
 
                     <div className="flex flex-col xl:w-full lg:w-full md:w-full sm:w-full mt-6">
                         <label className="font-Cerebri-sans-book text-sm">Email</label>
@@ -119,7 +119,7 @@ export default function ContactUs() {
             <div className=" flex-1 xl:w-72 lg:w-72 md:w-full sm:w-full xl:h-96 lg:h-96 md:h-auto sm:h-auto xl:mt-0 lg:mt-0 md:mb-6 sm:mb-6 md:mt-6 sm:mt-6 flex flex-col xl:justify-center lg:justify-center">
                 <div className="flex flex-col">
                     <p className="text-md font-Cerebri-sans-book">Phone</p>
-                    <p className="mt-0 font-Cerebri-sans-book text-themeGreen">+1 234 567 89 10</p>
+                    <p className="mt-0 font-Cerebri-sans-book text-themeGreen">+447763417061 (WhatsApp Only)</p>
                 </div>
 
                 <div className="flex flex-col mt-5">
@@ -147,7 +147,9 @@ export default function ContactUs() {
             </div>
 
         </div>
+        <div className="w-full">
         <Footer />
+        </div>
     </div>
   );
 }

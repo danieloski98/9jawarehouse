@@ -27,17 +27,17 @@ export default function Features() {
             <div className="flex-1 flex flex-col justify-center items-start text-left xl:pl-20 lg:pl-20 md:pl-10 sm:pl-10 pr-6">
                 
                 <p className="xl:mt-6 lg:mt-6 md:mt-20 sm:mt-20 text-md font-Circular-std-medium text-gray-500 ">FOR VENDORS</p>
-                <h3 className="mt-6 text-themeGreen text-4xl font-Circular-std-medium">Reach More Customers</h3>
-                <p className="mt-6 text-md font-Circular-std-book text-gray-500 xl:w-4/5 lg:w-4/5 md:w-full sm:w-full">Meet customers youre exicted to work with and take your career or business to new heights.</p>
+                <h3 className="mt-6 text-themeGreen text-4xl font-Circular-std-medium">Reach more businesses and customers with ease.</h3>
+                <p className="mt-6 text-md font-Circular-std-book text-gray-500 xl:w-4/5 lg:w-4/5 md:w-full sm:w-full">Meet customers you are excited to work with and take your careers, services, or businesses to new heights.</p>
 
                 <ul className="list-disc mt-6 ml-4 text-md font-Circular-std-book text-gray-500">
-                    <li>Build a Profile that suits your work</li>
-                    <li className="mt-3">Get Reviews on your work</li>
-                    <li className="mt-3">Control when, where, and how you work</li>
+                    <li>Build a Profile that suits your work and services</li>
+                    <li className="mt-3">Get real time, up to date and authentic reviews of your work and any services you rendered. </li>
+                    <li className="mt-3">Control when, where, and how you work and interact with existing and new customers. </li>
                 </ul>
 
                 <button onClick={() => router.push('/auth/signup')} className="w-40 h-10 bg-themeGreen text-white text-sm mt-6 font-Circular-std-book">
-                    Become a Vendor
+                    Become a vendor
                 </button>
 
             </div>
@@ -55,17 +55,19 @@ export default function Features() {
 
             <div className="flex-1 flex flex-col justify-center items-start text-left xl:pl-20 lg:pl-20 md:pl-10 sm:pl-10 pr-6">
                 <p className="mt-6 text-md font-Circular-std-medium text-gray-500 sm:mt-32">FOR CUSTOMERS</p>
-                <h3 className="mt-6 text-themeGreen text-4xl font-Circular-std-medium">Hire A Pro For Any Skill</h3>
+                <h3 className="mt-6 text-themeGreen text-4xl font-Circular-std-medium">Hire one of the best professionals for your:</h3>
                 
 
                 <ul className="list-disc mt-6 ml-4 text-md font-Circular-std-book text-gray-500">
-                    <li>Photography</li>
-                    <li className="mt-3">Events</li>
-                    <li className="mt-3">IT Specialists</li>
-                    <li className="mt-3">Beauty and SPA</li>
+                    <li>Drop Shipping.</li>
+                    <li className="mt-3">Catering Services.</li>
+                    <li className="mt-3">Photography.</li>
+                    <li className="mt-3">Events Management.</li>
+                    <li className="mt-3">Fashion Designer.</li>
+                    <li className="mt-3">Any other businesses and skills.</li>
                 </ul>
 
-                <p className="mt-6 text-md font-Circular-std-book text-green-600 flex cursor-pointer" onClick={() => router.push('/services?service=')}>See All Specialities <FiArrowRight size={20} className="ml-6 cursor-pointer"  /> </p>
+                <p className="mt-6 text-md font-Circular-std-book text-green-600 flex cursor-pointer" onClick={() => router.push('/services?service=')}>See all businesses and services <FiArrowRight size={20} className="ml-6 cursor-pointer"  /> </p>
 
             </div>
 

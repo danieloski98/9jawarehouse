@@ -22,7 +22,7 @@ export default function Terms() {
             <div className="xl:w-4/5 lg:w-4/5 md:w-full sm:w-full h-auto flex flex-col py-6 xl:px-0 lg:px-0 md:px-5 sm:px-5">
 
                 <div className="w-full flex flex-col mt-8">
-                    <p className="text-4xl font-Circular-std-medium text-themeGreen">9jawarehouse Terms and Conditions</p>
+                    <p className="text-4xl font-Circular-std-medium text-themeGreen">9jaWarehouse Terms and Conditions</p>
 
                    {/* main list */}
 
@@ -187,7 +187,7 @@ export default function Terms() {
 
                       <li className='mt-5'>
                           <b className=' font-Circular-std-book text-lg'>Third Party Links, and other Businesses</b>
-                          <ul className=' list-decimal list-outside pl-10 pt-5'>
+                          <ul className='list-outside pl-10 pt-5'>
                             <li className='text-md font-Cerebri-sans-book'>
                             9jaWarehouse Enterprise is not responsible for the content of any unaffiliated website that maybe linked to or from the 9jaWarehouse Enterprise website. These links have been provided only for the convenience of the users this website and you can access at your own risk. Any website accessed from the 9jaWarehouse website is independent from 9jaWarehouse and 9jaWarehouse Enterprise has no control over the contents of these websites. Also, a link to any of these external websites does not mean that 9jaWarehouse Enterprise endorsed or approved or accept any responsibilities for the contents or use of the website by any of our users. At no point in time now and in the future, shall a third-party services, material or products be deemed to have been approved or endorsed by 9jaWarehouse enterprise.
 
@@ -253,7 +253,7 @@ export default function Terms() {
 
                       <li className='mt-5'>
                           <b className=' font-Circular-std-book text-lg'>Subscription</b>
-                          <ul className=' list-decimal list-outside pl-10 pt-5'>
+                          <ul className='list-outside pl-10 pt-5'>
                             <li className='text-md font-Cerebri-sans-book'>
                             9jaWarehouse Enterprise solely has the right to change the price of subscription. Users will be notified 30 days prior in an electronic communication prior to implementation of the change.
                             </li>
@@ -264,7 +264,7 @@ export default function Terms() {
 
                       <li className='mt-5'>
                           <b className=' font-Circular-std-book text-lg'>Applicable Law</b>
-                          <ul className=' list-decimal list-outside pl-10 pt-5'>
+                          <ul className='list-outside pl-10 pt-5'>
                             <li className='text-md font-Cerebri-sans-book'>
                             By visiting this website, you agree that the laws in Nigeria without regard to principles of conflict laws, will govern these terms and conditions.
                             </li>
@@ -274,7 +274,7 @@ export default function Terms() {
 
                       <li className='mt-5'>
                           <b className=' font-Circular-std-book text-lg'>Dispute Resolution</b>
-                          <ul className=' list-decimal list-outside pl-10 pt-5'>
+                          <ul className='list-outside pl-10 pt-5'>
                             <li className='text-md font-Cerebri-sans-book'>
                             Any disputes related to visiting this website shall be arbitrated by the state or federal government of Nigeria court and you consent to exclusive jurisdiction in Benin City, Nigeria.
                             </li>
@@ -284,7 +284,7 @@ export default function Terms() {
 
                       <li className='mt-5'>
                           <b className=' font-Circular-std-book text-lg'>Indemnification</b>
-                          <ul className=' list-decimal list-outside pl-10 pt-5'>
+                          <ul className='list-outside pl-10 pt-5'>
                             <li className='text-md font-Cerebri-sans-book'>
                             By using this website, you agree to indemnify 9jaWarehouse and hold 9jaWarehouse harmless against legal claims and demands that may arise from your use or misuse of our services. 9jaWarehouse Enterprise reserve the right to select its own legal counsel.
                             </li>
@@ -293,7 +293,7 @@ export default function Terms() {
 
                       <li className='mt-5'>
                           <b className=' font-Circular-std-book text-lg'>Limitation on Liability</b>
-                          <ul className=' list-decimal list-outside pl-10 pt-5'>
+                          <ul className=' list-outside pl-10 pt-5'>
                             <li className='text-md font-Cerebri-sans-book'>
                             9jaWarehouse Enterprise is not liable for any damages that may occur to you because of misusing the 9jaWarehouse Enterprise website.
                             </li>
@@ -306,7 +306,7 @@ export default function Terms() {
 
                       <li className='mt-5'>
                           <b className=' font-Circular-std-book text-lg'>Applicable Law</b>
-                          <ul className=' list-decimal list-outside pl-10 pt-5'>
+                          <ul className=' list-outside pl-10 pt-5'>
                             <li className='text-md font-Cerebri-sans-book'>
                             This agreement shall be governed by and interpreted in accordance with the Laws for the Federal Republic of Nigeria. The place of jurisdiction shall exclusively be in Benin City, Nigeria.
                             </li>
@@ -315,7 +315,7 @@ export default function Terms() {
 
                       <li className='mt-5'>
                           <b className=' font-Circular-std-book text-lg'>Copyrights, Trademark & Restrictions</b>
-                          <ul className=' list-decimal list-outside pl-10 pt-5'>
+                          <ul className=' list-outside pl-10 pt-5'>
                             <li className='text-md font-Cerebri-sans-book'>
                             The material included herein, including site design, text, graphics, and the agreements are copyrights of 9jaWarehouse ALL RIGHT RESERVED.
                             </li>
