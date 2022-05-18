@@ -10,6 +10,7 @@ import Footer from '../components/Home/Footer';
 import Image from 'next/image'
 import Guy from '../public/images/guy4.png';
 import Chi from '../public/images/chi.jpg';
+
 import Peace from '../public/images/peace.jpeg';
 import Banner from '../public/images/banner.png';
 import NormNavbar from '../components/general/NorNavbar';
