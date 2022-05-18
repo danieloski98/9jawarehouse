@@ -27,7 +27,7 @@ export default function Stats() {
             <div className="flex md:my-6 sm:my-6 xl:my-0 lg:my-0">
             <FaStar size={55} color="white" />
                 <div className="ml-3 font-Circular-std-book">
-                    <p className="text-3xl">100, 000+</p>
+                    <p className="text-3xl">100,000+</p>
                     <p>Customer Reviews</p>
                 </div>
             </div>

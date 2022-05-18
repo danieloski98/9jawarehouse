@@ -84,6 +84,8 @@ export default function Signup() {
         const json = await request.json();
 
         setLoading(false);
+        const save = localStorage.removeItem('9jauser');
+        const token = localStorage.removeItem('9jatoken');
 
         if (json.statusCode !== 200) {
             alert(json.errorMessage);

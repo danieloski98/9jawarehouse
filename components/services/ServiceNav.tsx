@@ -214,7 +214,7 @@ export default function ServiceNavbar() {
                   >
                     <p className="flex mr-6">
                       {/* <FiSearch size={20} className="text-white" /> */}
-                      <span className="ml-3 font-Circular-std-book text-md cursor-pointer">Find Service</span>
+                      <span className="ml-3 font-Circular-std-book text-md cursor-pointer">Find service</span>
                       <FiChevronDown size={20} color="black" className="ml-1 mt-1" />
                     </p>
                   </MenuButton>
@@ -383,7 +383,7 @@ export default function ServiceNavbar() {
                         <AccordionItem>
                             <AccordionButton>
                                 <Box flex="1" textAlign="left">
-                                  <p className="text-xl font-Cerebri-sans-book text-themeGreen">Find Services</p>
+                                  <p className="text-xl font-Cerebri-sans-book text-themeGreen">Find services</p>
                                 </Box>
                                 <AccordionIcon />
                             </AccordionButton>

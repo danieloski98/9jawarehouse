@@ -107,7 +107,7 @@ export const LeftNavbar = () => {
                         <AccordionItem>
                             <AccordionButton>
                                 <Box flex="1" textAlign="left">
-                                  <p className="text-xl font-Cerebri-sans-book text-themeGreen">Find Services</p>
+                                  <p className="text-xl font-Cerebri-sans-book text-themeGreen">Find services</p>
                                 </Box>
                                 <AccordionIcon />
                             </AccordionButton>
@@ -311,7 +311,7 @@ const RightNavBar = () => {
               >
                 <p className="flex mr-0">
                   {/* <FiSearch size={20} className="text-white" /> */}
-                  <span className="ml-3 font-Circular-std-book text-md cursor-pointer">Find Service</span>
+                  <span className="ml-3 font-Circular-std-book text-md cursor-pointer">Find service</span>
                   <FiChevronDown size={20} color="white" className="ml-1 mt-1" />
                 </p>
               </MenuButton>
@@ -422,7 +422,7 @@ const RightNavBar = () => {
 
             {!loggedIn && (
               <p onClick={() => router.push('/auth/signup')} className="text-md font-Circular-std-book mx-5 flex items-center cursor-pointer">
-                  <span>Become A Vendor</span>
+                  <span>Become a vendor</span>
               </p>
             )}
 
@@ -451,12 +451,14 @@ export default function Banner() {
         <div className="flex-1 flex flex-col">
             <LeftNavbar />
             <div className="flex-1 flex flex-col justify-center xl:px-10 lg:px-10 md:px-5 sm:px-5  xl:py-0 lg:py-0 md:py-12 sm:py-12">
-                <h1 className="xl:text-6xl lg:text-6xl md:text-4xl sm:text-4xl font-Circular-std-medium text-darkGreen">
-                    Discover The Best <span className="text-themeGreen">Vendors</span> <br/>
-                </h1>
-                <h1 className="xl:text-6xl lg:text-6xl md:text-4xl sm:text-4xl font-Circular-std-medium text-darkGreen mt-4">
-                    Near You!
-                </h1>
+                <div className="flex">
+                  <h1 className="xl:text-4xl lg:text-4xl md:text-4xl sm:text-4xl font-Circular-std-medium text-darkGreen">
+                      Discover The Best <span className="text-themeGreen">Vendors</span>  Near You!
+                  </h1>
+                  {/* <h1 className="xl:text-6xl lg:text-6xl md:text-4xl sm:text-4xl font-Circular-std-medium text-darkGreen mt-4">
+                     
+                  </h1> */}
+                </div>
                 <p className="xl:w-full lg:w-full md:w-full sm:w-full mt-5 text-lg font-Cerebri-sans-book text-gray-400">
                 Less hassle searching for who is best fit for your photography, catering, event planning and management, make-up artist, fashion designer, drop shipper, event DJs and more. Search through our 9jaWarehouse list of businesses and services to meet any of your needs.
                 </p>

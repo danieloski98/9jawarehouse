@@ -11,8 +11,8 @@ import * as yup from 'yup';
 import { useFormik } from 'formik'
 
 const validationSchema = yup.object({
-    email: yup.string().email().required(),
-    fullname: yup.string().required(),
+    email: yup.string().email().required('Email is Required'),
+    fullname: yup.string().required('Full Name is required'),
     message: yup.string().required(),
 });
 

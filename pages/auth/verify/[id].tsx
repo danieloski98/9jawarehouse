@@ -147,7 +147,7 @@ export default function VerifyAccount() {
             </div>
         </div>
 
-        <div className="w-2/5 h-full xl:block lg:block md:hidden sm:hidden bg-blue">
+        <div className="w-2/5 h-full xl:block lg:block md:hidden sm:hidden bg-blue ">
             <Image src={Girl} alt="girl" className="w-full h-full" />
             <div className="z-20 absolute flex flex-col top-64 pt-10 px-16 bottom-0 ">
                 <p className='font-Circular-std-medium text-2xl text-white'>Join 9jaWarehouse!</p>
