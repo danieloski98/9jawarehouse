@@ -1,10 +1,10 @@
 {
   "name": "loanapp",
-  "version": "0.0.1",
-  "description": "",
-  "author": "",
+  "version": "1.0.0",
+  "description": "The frontend application for 9jawarehouse platform",
+  "author": "Daniel Emmanuel",
   "private": true,
-  "license": "UNLICENSED",
+  "license": "MIT",
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
@@ -114,6 +114,6 @@
     "testEnvironment": "node"
   },
   "engines": {
-    "node": "v14.19.2"
+    "node": "v14.17.3"
   }
 }

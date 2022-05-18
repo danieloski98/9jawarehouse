@@ -5,8 +5,6 @@ import { ContactForm } from 'src/Types/Contactform';
 import * as nodemailer from 'nodemailer';
 import * as Mg from 'nodemailer-mailgun-transport';
 import { MailOptions } from 'nodemailer/lib/ses-transport';
-import { sendCreationEmail } from 'src/templates/sendCreationMail';
-import { sendResetLink } from 'src/templates/sendPasswordReset';
 import { sendSuccessEmail } from 'src/templates/Loanapplicationemail';
 import { ApplicationSuccessful } from 'src/templates/ApplicationSuccessful';
 import { ApplicationDeclined } from 'src/templates/ApplicationDeclined';
@@ -416,6 +414,41 @@ export class EmailService {
         to: email,
         subject: `Subscription Successful`,
         html: `<p>Your subscription has expired. please goto your dashboard and pick a subscription plan so you can be found by potential clients.
+        </p>`,
+      };
+      this.transporter.sendMail(mailOption, (error: any, info: any) => {
+        if (error) {
+          this.logger.error(error);
+        } else {
+          this.logger.log(info);
+        }
+      });
+      return Return({
+        error: false,
+        successMessage: 'Account verification email sent',
+        statusCode: 200,
+      });
+    } catch (error) {
+      return Return({
+        error: true,
+        statusCode: 500,
+        trace: error,
+        errorMessage: 'Internal Server error',
+      });
+    }
+  }
+
+  public async sendSupport(
+    email: string,
+    message: string,
+  ): Promise<IReturnObject> {
+    try {
+      const mailOption: MailOptions = {
+        from: `${email}`,
+        to: `${process.env.COMPANY_EMAIL}`,
+        subject: `Support Email`,
+        html: `<p>
+          ${message}
         </p>`,
       };
       this.transporter.sendMail(mailOption, (error: any, info: any) => {
