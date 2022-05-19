@@ -86,7 +86,7 @@ export default function Profile({ setPage }: IProps) {
       <ConnectModal isOpen={openModal} close={close} value={modalValue} icon={icon} />
 
       <div className="w-full h-20 flex items-center bg-white px-10">
-        <p className="text-2xl font-Circular-std-medium text-gray-600">Profile</p>
+        <p className="text-2xl font-Circular-std-medium text-gray-600">Business Profile</p>
       </div>
 
       

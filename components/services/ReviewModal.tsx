@@ -143,7 +143,7 @@ const PinComponent = ({change, changePin, submit, loading, close, user}:{ change
                 <p className="text-md font-light ml-6">Back</p>
             </div>
 
-            <p className="font-light text-xl text-themeGreen text-center mt-8">Verify Business/ vendor PIN</p>
+            <p className="font-light text-xl text-themeGreen text-center mt-8">Verify Verify Business and Services</p>
             <p className="font-light text-sm mt-3 text-center">Enter 4 digit PIN from {user.business_name} to approve your comments</p>
 
             <div className="w-full flex justify-center h-auto mt-6">

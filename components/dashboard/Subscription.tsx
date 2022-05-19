@@ -210,7 +210,7 @@ export default function Subscription() {
         <p className="text-xl font-Circular-std-medium text-gray-600 ">Subscription Status</p>
         {
             user.disabled && (
-                <p className="text-sm font-Cerebri-sans-book text-gray-500 mt-4">You are currently not on any subscription plan, To Access all features you will need to Subscribe to a plan</p>
+                <p className="text-sm font-Cerebri-sans-book text-gray-500 mt-4">You are currently not on any subscription. To have access to the different 9jaWarehouse features, please select from one of our three subscription plans.</p>
             )
         }
 

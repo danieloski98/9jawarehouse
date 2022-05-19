@@ -77,7 +77,7 @@ export default function BusinessInfo({ next, images, picker, profilePic, formik,
         </p>
 
         <div className="flex flex-col mt-8">
-            <p className="text-sm font-semibold text-gray-500 mt-4">Add featured images (5 maxium)</p>
+            <p className="text-sm font-semibold text-gray-500 mt-4">Add featured images (5 images maximum)</p>
             <div className="w-auto h-32 overflow-x-scroll overflow-y-hidden flex mt-6 ">
 
                 {images.length < 1 && (
@@ -165,7 +165,7 @@ export default function BusinessInfo({ next, images, picker, profilePic, formik,
         <div className="w-full flex xl:flex-row lg:flex-row md:flex-col sm:flex-col justify-between mt-6 font-semibold text-sm text-gray-500">
 
             <div className="w-full xl:mt-0 lg:mt-0 md:mt-2 sm:mt-2">
-                <label>Services (3services max)</label>
+                <label>Services (3 services maximum)</label>
                 <div className="xl:w-11/12 lg:w-11/12 md:w-full sm:w-full">
                     <Select border="none" bgColor="whitesmoke" borderRadius={0} className="bg-gray-100 mt-3" onChange={(e: any) => selectService(e.target.value)}>
                         <option selected>Pick a Service</option>
@@ -195,7 +195,7 @@ export default function BusinessInfo({ next, images, picker, profilePic, formik,
             <>
                 <div key={index.toString()} className="w-full flex xl:flex-row lg:flex-row md:flex-col sm:flex-col justify-between mt-6 font-semibold text-sm text-gray-500">
             <div className="w-full">
-                <label>Certifcate</label>
+                <label>Certifcate(s)</label>
                 <div className="xl:w-11/12 lg:w-11/12 md:w-full sm:w-full">
                     <Input value={item.certificate} onChange={(e: any) => changeCert(index, 'certificate', e.target.value)} border="none" bgColor="whitesmoke" borderRadius={0} className="bg-gray-100 mt-3" />
                 </div>
@@ -209,7 +209,7 @@ export default function BusinessInfo({ next, images, picker, profilePic, formik,
             </div>
 
             <div className="w-full xl:mt-0 lg:mt-0 md:mt-4 sm:mt-4">
-                <label>issued Year</label>
+                <label>Year issused</label>
                 <div className="xl:w-11/12 lg:w-11/12 md:w-full sm:w-full">
                     <Input value={item.year} onChange={(e: any) => changeCert(index, 'year', e.target.value)} type="date" border="none" bgColor="whitesmoke" borderRadius={0} className="bg-gray-100 mt-3" />
                 </div>  

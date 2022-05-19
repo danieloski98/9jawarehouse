@@ -52,9 +52,9 @@ export default function AboutUs() {
                            <div className="w-64 h-64 overflow-hidden">
                                 <Image src={Guy} alt="man" className="w-40 h-64" />
                            </div>
-                           <p className="text-center font-Circular-std-medium text-lg mt-2">Mr. John Asiruwa</p>
+                           <p className="text-center font-Circular-std-medium text-lg mt-2">Mr. John Asiruwa MS,PE,PMP,PSM.</p>
                            <p className="mt-0 text-center font-Cerebri-sans-book text-sm">Founder / CEO</p>
-                           <p className="mt-2 text-center font-Cerebri-sans-book text-sm">I am John Asiruwa. I am an Mechanical Engineer and a Project Manager. I am interested in professional development of young minds in both business and academics.</p>
+                           <p className="mt-2 text-center font-Cerebri-sans-book text-sm">I am John Asiruwa, I am a Mechnanical Engineer, Project Manager and Enterprenuer. I have been involved in multiples projects cutting across new business developments, education, business strategy and entrepreneurship growth. My vision is to help grow and progress small and medium businesses as well as provide academic mentorship to Nigerians.</p>
                         </div>
 
                         <div className="flex-col flex xl:w-64 lg:w-64 md:w-full sm:w-full items-center mb-4">
@@ -62,8 +62,8 @@ export default function AboutUs() {
                                 <Image src={Chi} alt="man" className="w-40 h-64" />
                            </div>
                            <p className="text-center font-Circular-std-medium text-lg mt-2">Chidinma Okoye </p>
-                           <p className="mt-0 text-center font-Cerebri-sans-book text-sm">social media manager / Trainer</p>
-                           <p className="mt-2 text-center font-Cerebri-sans-book text-sm"> She is an E-commerce guru and Medical Lab scientist. A Social media manager and Brand strategist for Small business owners. She has groomed and help establish hundreds of E-commerce merchants through her trainings</p>
+                           <p className="mt-0 text-center font-Cerebri-sans-book text-sm">social media manager and Trainer</p>
+                           <p className="mt-2 text-center font-Cerebri-sans-book text-sm"> She is an E-commerce guru and Medical Lab scientist. A Social media manager and Brand strategist for Small business owners. She has groomed and help establish hundreds of E-commerce merchants through her trainings.</p>
                         </div>
 
                         <div className="flex-col flex xl:w-64 lg:w-64 md:w-full sm:w-full items-center mb-4">
@@ -72,7 +72,7 @@ export default function AboutUs() {
                            </div>
                            <p className="text-center font-Circular-std-medium text-lg mt-2">Peace Akokadike</p>
                            <p className="mt-0 text-center ffont-Cerebri-sans-book text-sm">Academic and Business Mentor</p>
-                           <p className="mt-2 text-center font-Cerebri-sans-book text-sm">I am Peace Akokadike. I have a Bachelors and Masters Degree in Nursing. Over the years, I have derived joy in helping and supporting young people who are interested in pursuing their academic and budisnes goals.</p>
+                           <p className="mt-2 text-center font-Cerebri-sans-book text-sm">I am Peace Akokadike. I have a Bachelors and Masters Degree in Nursing. Over the years, I have derived joy in helping and supporting young people who are interested in pursuing their academic and busisnes goals.</p>
                         </div>
 
                        

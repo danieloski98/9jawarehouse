@@ -60,7 +60,7 @@ export default function Footer() {
                     </Link>
                     {/* <p className="mt-3 cursor-pointer">Community</p> */}
                     <Link href="/faqs">
-                        <a className="mt-3 cursor-pointer">FAQS</a>
+                        <a className="mt-3 cursor-pointer">FAQ</a>
                     </Link>
                 </div>
             </div>

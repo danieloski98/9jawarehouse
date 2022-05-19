@@ -136,7 +136,7 @@ export default function Sidebar({page, setPage}: IProps) {
 
                 <Link href="/faqs" passHref >
                     <p className="mt-3 p-3 h-12 cursor-pointer bg-themeGreen text-white text-sm font-Cerebri-sans-book  flex justify-center items-center">
-                        FAQS
+                        FAQ
                     </p>
                 </Link>
 

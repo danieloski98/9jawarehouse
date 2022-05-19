@@ -44,11 +44,11 @@ export default function PersonalInfo({ next, states, formik }: IProps) {
   const nextPage = (page: number) => {
       //validate
       if (!formik.dirty) {
-          alert('Fillin the form correctly to continue');
+          alert('Fill in the form correctly to continue');
           return;
       }
       if (formik.errors.first_name || formik.errors.last_name || formik.errors.email || formik.errors.phone || formik.errors.business_address || formik.errors.country || formik.errors.state || formik.errors.lga) {
-          alert('Please fillin the form correctly');
+          alert('Please fill in the form correctly');
           return;
       } else {
           next(page);
@@ -107,7 +107,7 @@ export default function PersonalInfo({ next, states, formik }: IProps) {
             <div className="w-full">
                 <label>House or Business Address</label>
                 <div className="xl:w-11/12 lg:w-11/12 md:w-full sm:w-full">
-                    <Input border="none" bgColor="whitesmoke" borderRadius={0} className="bg-gray-100 mt-3" name="business_address" value={formik.values.business_address} onChange={formik.handleChange} onFocus={() => formik.setFieldTouched('address', true, true)} />
+                    <Input border="none" bgColor="whitesmoke" borderRadius={0} className="bg-gray-100 mt-3" name="business_address" value={formik.values.business_address} onChange={formik.handleChange} onFocus={() => formik.setFieldTouched('business_address', true, true)} />
                 </div>
                 {formik.touched.business_address && formik.errors.business_address && <p className="text-xs mt-1 Cerebri-sans-book text-red-400">{formik.errors.business_address}</p>}
             </div>

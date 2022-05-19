@@ -18,9 +18,9 @@ import url from '../../utils/url';
 import { IServerReturnObject } from '../../utils/types/serverreturntype';
 
 const validationSchema = yup.object({
-    newpassword: yup.string().required().min(8),
-    confirmpassword: yup.string().required().min(8),
-    otp: yup.string().required(),
+    newpassword: yup.string().required('This Field is required').min(8),
+    confirmpassword: yup.string().required('This Field is required').min(8),
+    otp: yup.string().required('This Field is required'),
 })
 
 

@@ -13,7 +13,7 @@ import { useFormik } from 'formik'
 const validationSchema = yup.object({
     email: yup.string().email().required('Email is Required'),
     fullname: yup.string().required('Full Name is required'),
-    message: yup.string().required(),
+    message: yup.string().required('This Field is required'),
 });
 
 import { FaInstagram, FaTwitter, FaLinkedin } from 'react-icons/fa'
@@ -84,7 +84,7 @@ export default function ContactUs() {
                     </div>
 
                     <div className="flex flex-col xl:w-full lg:w-full md:w-full sm:w-full mt-6">
-                        <label className="font-light text-sm">Fullname</label>
+                        <label className="font-Cerebri-sans-book text-sm">Full Name</label>
                         <InputGroup bgColor="#F1EEEE" className="mt-2" size="lg">
                             <InputLeftElement>
                                 <FiUser size={25} color="gray" />

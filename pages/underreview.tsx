@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/router'
 import { LeftNavbar } from '../components/Home/Banner'
 import { Image as Img } from '@chakra-ui/react'
+import Link from 'next/link'
 
 // image
 import Image from 'next/image';
@@ -25,7 +26,8 @@ export default function UnderReview() {
                         Our team is reviewing your account to ensure correctness of your information. We will send you an email on the outcome of the verification as soon as it is completed or if we need anything more from you. Thank you for your patience.
                     </p>
                     <p className="mt-7 font-Circular-std-book text-gray-600 text-md text-center">
-                        In the meantime, if you have questions feel free to email us on <b className='text-lg'>support@9jawarehouse.com</b>. 
+                        In the meantime, if you have questions feel free to email us on  
+                        <Link href="/contactus" passHref><b className='text-lg cursor-pointer underline'> support@9jawarehouse.com</b></Link>. 
                     </p>
                    <div className="flex">
                         <button className="mt-24 w-40 h-16 mr-4 text-white font-Cerebri-sans-book text-sm bg-themeGreen" onClick={() => router.push('/')}>
