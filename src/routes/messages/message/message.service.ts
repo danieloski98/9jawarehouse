@@ -25,7 +25,8 @@ export class MessageService {
       return Return({
         error: false,
         statusCode: 200,
-        successMessage: 'message sent. We are working on it.',
+        successMessage:
+          'Message has been sent. We are working on it and will respond within 24 hours.',
       });
     } catch (error) {
       return Return({

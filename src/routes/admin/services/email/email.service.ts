@@ -384,7 +384,7 @@ export class EmailService {
         from: `9jaWarehouse Enterprise ${process.env.COMPANY_EMAIL}`,
         to: email,
         subject: `Subscription Successful`,
-        html: `<p>Your ${subType} was successful. <br>
+        html: `<p>Your ${subType} Membership Subscription was successful. <br>
         
         Fliers/pictures and content (write up including any preferred hash tags) for us to post for you. 9jaWarehouse Enterprise can also help with the hashtags that our branding team feels will reflect your business. This will come at an extra cost to be discussed with the branding team.
 

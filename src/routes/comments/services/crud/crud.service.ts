@@ -82,14 +82,14 @@ export class CrudService {
           { _id: pinActive._id },
           { use_count: pinActive.use_count + 1 },
         );
-        let rating = payload.rating;
-        for (let i = 0; i < comments.length; i++) {
-          rating += comments[i].rating;
-        }
+        const rating = userExist.rating + payload.rating;
+        // for (let i = 0; i < comments.length; i++) {
+        //   rating += comments[i].rating;
+        // }
         const userUpdate = await this.userModel.updateOne(
           { _id: user_id },
           {
-            rating: rating > 5 ? 5 : rating / comments.length + 1,
+            rating: rating > 5 ? 5 : rating,
           },
         );
         console.log(updatePin);
@@ -135,14 +135,14 @@ export class CrudService {
           business_id: user_id,
         };
         const newComment = await this.commentModel.create(obj);
-        let rating = payload.rating;
-        for (let i = 0; i < comments.length; i++) {
-          rating += comments[i].rating;
-        }
+        const rating = userExist.rating + payload.rating;
+        // for (let i = 0; i < comments.length; i++) {
+        //   rating += comments[i].rating;
+        // }
         const userUpdate = await this.userModel.updateOne(
           { _id: user_id },
           {
-            rating: rating > 5 ? 5 : rating / comments.length + 1,
+            rating: rating > 5 ? 5 : rating,
           },
         );
         // renew pin
