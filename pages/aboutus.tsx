@@ -62,7 +62,7 @@ export default function AboutUs() {
                                 <Image src={Chi} alt="man" className="w-40 h-64" />
                            </div>
                            <p className="text-center font-Circular-std-medium text-lg mt-2">Chidinma Okoye </p>
-                           <p className="mt-0 text-center font-Cerebri-sans-book text-sm">social media manager and Trainer</p>
+                           <p className="mt-0 text-center font-Cerebri-sans-book text-sm">Social Media Manager and Trainer</p>
                            <p className="mt-2 text-center font-Cerebri-sans-book text-sm"> She is an E-commerce guru and Medical Lab scientist. A Social media manager and Brand strategist for Small business owners. She has groomed and help establish hundreds of E-commerce merchants through her trainings.</p>
                         </div>
 
