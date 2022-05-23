@@ -6,7 +6,7 @@ import Settings from '../components/dashboard/Settings';
 import Sidebar from '../components/dashboard/Sidebar';
 import Subscription from '../components/dashboard/Subscription';
 import Navbar from '../components/general/Navbar';
-import { Modal, ModalOverlay, ModalContent, ModalBody, Spinner, useToast, ModalCloseButton } from '@chakra-ui/react'
+import { Modal, ModalOverlay, ModalContent, ModalBody, Spinner, useToast, ModalCloseButton, Input } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import { queryClient } from './_app'
 import Lottie from 'react-lottie-player';
@@ -46,6 +46,10 @@ export default function Dashboard() {
   const [pinloadin, setPinloading] = React.useState(false);
   const [pinmodal, setPinmodal] = React.useState(false);
   const [submodal, setSubmodal] = React.useState(false);
+  const [verifyModal, setVerifyModal] = React.useState(true);
+  const [code, setCode] = React.useState('');
+  const [vloading, setVLoading] = React.useState(false);
+
 
   const user = useSelector((state: RootState) => state.UserReducer.user);
   const Toast = useToast();
@@ -190,16 +194,96 @@ export default function Dashboard() {
     closePinModal();
 }
 
-  return (
-    <div className="w-full h-auto flex flex-col ">
+// email verification
 
-        {/* modal */}
+const sendCode = async() => {
+
+    const request = await fetch(`${url}auth/resendverificationcode/${user._id}`, {
+        method: 'post',
+    });
+    const json = await request.json();
+    console.log(json);
+    
+    if (json.statusCode !== 200) {
+        alert(json.errorMessage);
+    } else {
+        alert(json.successMessage);
+    }
+
+}
+
+const sendCodee = async() => {
+    setVerifyModal(true);
+    const request = await fetch(`${url}auth/resendverificationcode/${user._id}`, {
+        method: 'post',
+    });
+    const json = await request.json();
+    console.log(json);
+    
+    if (json.statusCode !== 200) {
+        alert(json.errorMessage);
+    } else {
+        alert(json.successMessage);
+    }
+
+}
+
+const verify = async() => {
+    setVLoading(true);
+    // console.log(router.query);
+    if (code === '' || code === null ) {
+        alert('please enter your code');
+        return;
+    }
+    const request = await fetch(`${url}auth/verify/${user._id}/${code}`, {
+        method: 'post',
+    });
+
+    const json = await request.json() as IServerReturnObject;
+    setVLoading(false);
+    if (json.statusCode !== 200) {
+        alert(json.errorMessage);
+    }else {
+        setVerifyModal(false);
+        console.log(json.data.user);
+        dispatch(updateUser(json.data.user));
+        localStorage.setItem('9jauser', JSON.stringify(json.data.user))
+        queryClient.invalidateQueries();
+        alert(json.successMessage);
+        setCode('');
+    }
+}
+
+  return (
+    <div className="w-full h-auto flex flex-col bg-gray-100">
+
+        {/* loading modal */}
         <Modal isOpen={loading} onClose={() => setLoading(false)} isCentered={true}>
             <ModalOverlay />
             <ModalContent>
                 <ModalContent className="w-full flex flex-col items-center justify-center h-56">
                     <Spinner colot="green.500" size="xl" />
                     <p className="mt-4 font-Cerebri-sans-book text-xl">Loading Details...</p>
+                </ModalContent>
+            </ModalContent>
+        </Modal>
+
+        {/* verification Modal */}
+
+        <Modal isOpen={verifyModal} onClose={() => setVerifyModal(false)} isCentered={true}>
+            <ModalOverlay />
+            <ModalContent>
+                <ModalCloseButton /> 
+                <ModalContent className="w-full flex flex-col items-center justify-center h-auto p-10">
+                    <p className='font- font-Cerebri-sans-book text-lg text-center'>Verify Email</p>
+                    <Input className="mt-5" value={code} onChange={(e: any) => setCode(e.target.value)} />
+                    <div className="w-full flex mt-5 justify-between">
+                        <button onClick={sendCode} className='w-40 h-10 rounded bg-green-200 text-black font-Cerebri-sans-book'>Resend Code</button>
+                        <button onClick={verify} className='w-40 h-10 rounded bg-themeGreen text-white font-Cerebri-sans-book'>
+                            {!vloading && 'Verify'}
+                            {vloading && <Spinner />}
+                        </button>
+                    </div>
                 </ModalContent>
             </ModalContent>
         </Modal>
@@ -271,17 +355,47 @@ export default function Dashboard() {
                         <div className="w-full h-20 fixed shadow-md z-50">
                             <Navbar page={page} setPage={changePage} />
                         </div>
-                        <div className="z-10 h-auto xl:mt-20 lg:mt-20 md:mt-16 sm:mt-16 overflow-auto bg-gray-100 xl:py-10 lg:p-10 md:p-5 sm:p-5 flex justify-between">
 
-                            <div className="w-1/4 h-full xl:block lg:block md:hidden sm:hidden pb-10 z-0">
-                                <Sidebar page={page} setPage={changePage} />
+                        {!user.verified && (
+                            <div className="w-full xl:h-20 lg:h-20 md:h-40 sm:h-40 bg-red-300 flex xl:flex-row lg:flex-row md:flex-col sm:flex-col justify-center items-center xl:mt-20 lg:mt-20 md:mt-16 sm:mt-16">
+
+                                <p className="text-white font-bold">Please verify your email address</p>
+                                <button onClick={sendCodee} className='w-40 h-10 rounded border-2 border-white text-white font-Circular-std-book xl:ml-5 lg:ml-5 sm:mt-5 md:mt-5 xl:mt-0 lg:mt-0'>Verify</button>
+                                
                             </div>
+                        )}
 
-                            <div className="xl:w-9/12 lg:w-9/12 md:w-full sm:w-full h-auto  xl:ml-10 lg:ml-10 md:ml-0 sm:ml-0 p-0 z-0 ">
-                                {switcher()}
+                        {
+                            user.verified && (
+                                <div className="z-10 h-auto xl:mt-20 lg:mt-20 md:mt-16 sm:mt-16 overflow-auto bg-gray-100 xl:py-10 lg:p-10 md:p-5 sm:p-5 flex justify-between">
+
+                                <div className="w-1/4 h-full xl:block lg:block md:hidden sm:hidden pb-10 z-0">
+                                    <Sidebar page={page} setPage={changePage} />
+                                </div>
+    
+                                <div className="xl:w-9/12 lg:w-9/12 md:w-full sm:w-full h-auto  xl:ml-10 lg:ml-10 md:ml-0 sm:ml-0 p-0 z-0 ">
+                                    {switcher()}
+                                </div>
+    
                             </div>
+                            )
+                        }
 
-                        </div>
+                        {
+                            !user.verified && (
+                                <div className="z-10 h-auto xl:mt-0 lg:mt-0 md:mt-0 sm:mt-0 overflow-auto bg-gray-100 xl:py-10 lg:p-10 md:p-5 sm:p-5 flex justify-between">
+
+                                <div className="w-1/4 h-full xl:block lg:block md:hidden sm:hidden pb-10 z-0">
+                                    <Sidebar page={page} setPage={changePage} />
+                                </div>
+    
+                                <div className="xl:w-9/12 lg:w-9/12 md:w-full sm:w-full h-auto  xl:ml-10 lg:ml-10 md:ml-0 sm:ml-0 p-0 z-0 ">
+                                    {switcher()}
+                                </div>
+    
+                            </div>
+                            )
+                        }
                         <Footer />
                </>
            )

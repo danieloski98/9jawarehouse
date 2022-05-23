@@ -3,8 +3,8 @@ import { FiArrowDownRight, FiArrowRight } from 'react-icons/fi'
 import { useRouter } from 'next/router'
 
 // images
-import Female from '../../public/images/femal_smile.svg';
-import Male from '../../public/images/male_smile.svg';
+import Female from '../../public/images/ww2.jpg';
+import Male from '../../public/images/guyw.jpg';
 import Image from 'next/image';
 
 
@@ -18,9 +18,9 @@ export default function Features() {
 
             <div className="flex-1  flex justify-center items-center">
                 {/* <div className="w-40 h-40 bg-green-200 z-10"></div> */}
-                <div className="w-80 h-72  z-20">
+                <div className="w-80 h-96 overflow-hidden  z-20 ">
                     {/* <div className="w-40 h-72 relative top-80 bg-yellow-300"></div> */}
-                    <Image alt="woman" src={Female} className="w-full h-full" />
+                    <Image alt="woman" src={Female} className="w-full h-full object-contain" />
                 </div>
             </div>
 
@@ -48,7 +48,7 @@ export default function Features() {
 
             <div className="flex-1  flex justify-center items-center">
                 {/* <div className="w-40 h-40 bg-green-200 z-10"></div> */}
-                <div className="w-80 h-72 bg-green-200 z-20 rounded-lg">
+                <div className="w-80 h-96 overflow-hidden bg-green-200 z-20 ">
                     <Image alt="woman" src={Male} className="w-full h-full" />
                 </div>
             </div>

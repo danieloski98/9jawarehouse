@@ -36,11 +36,8 @@ const LeftNavbar = () => {
 }
 
 export default function VerifyAccount() {
-    const [show, setShow] = React.useState(false);
     const [loading, setLoading] = React.useState(false);
     const [code, setCode] = React.useState('');
-    const [min, setMin] = React.useState(0);
-    const [sec, setSec] = React.useState(0);
     const [disabled, setDisabled] = React.useState(false)
 
     const dispatch = useDispatch();
@@ -75,9 +72,6 @@ export default function VerifyAccount() {
     }
 
     const startTimer = async() => {
-        setMin(1);
-        setSec(2);
-        setDisabled(true);
 
         const request = await fetch(`${url}auth/resendverificationcode/${router.query.id}`, {
             method: 'post',
@@ -90,24 +84,6 @@ export default function VerifyAccount() {
         } else {
             alert(json.successMessage);
         }
-
-        const interval = setInterval(() => {
-           if (min > 0) {
-               if (sec >= 1) { setSec(prev => prev - 1)}
-               if (sec === 0) {
-                   setMin(prev => prev - 1);
-                   setSec(59);
-               }
-           } else if (min !== 0) {
-               setSec(prev => prev - 1);
-           } 
-           else if (min === 0 && sec > 0) {
-               setSec(prev => prev - 1);
-           } else if (min === 0 && sec === 0) {
-               setDisabled(false);
-               clearInterval(interval);
-           }
-        }, 1000);
     }
 
   return (

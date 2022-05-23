@@ -106,6 +106,7 @@ export default function LoginForm() {
                 });
                 return;
             } else if (json.statusCode === 200) {
+
                 if (json.data.user.blocked) {
                     // save to localstorage
                     const save = localStorage.setItem('9jauser', JSON.stringify(json.data.user));
