@@ -188,7 +188,7 @@ export class UserService {
       // check if an account with the email exisits
       const accountExisit = await this.userModel
         .findOne({
-          email: payload.email,
+          email: payload.email.toLowerCase(),
         })
         .exec();
       console.log(accountExisit);
