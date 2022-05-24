@@ -46,7 +46,7 @@ export default function Dashboard() {
   const [pinloadin, setPinloading] = React.useState(false);
   const [pinmodal, setPinmodal] = React.useState(false);
   const [submodal, setSubmodal] = React.useState(false);
-  const [verifyModal, setVerifyModal] = React.useState(true);
+  const [verifyModal, setVerifyModal] = React.useState(false);
   const [code, setCode] = React.useState('');
   const [vloading, setVLoading] = React.useState(false);
 
