@@ -121,7 +121,7 @@ export default function Services({states, services}: IProps) {
         (async function() {
             // setState(sr);
             setLoading(true);
-            const request = await fetch(`${url}user?service=${reducerState.query}&state=${reducerState.state}&lga=${reducerState.lga}`);
+            const request = await fetch(`${url}user?service=${reducerState.query}`);
             // router.push(`/services?service=${reducerState.query}&state=${reducerState.state}&lga=${reducerState.lga}`, undefined, {shallow: true});
             const json = await request.json() as IServerReturnObject;
             const data = json.data as IUser[];
@@ -140,9 +140,9 @@ export default function Services({states, services}: IProps) {
 
         setLoading(true);
         const request = await fetch(`${url}user?service=${reducerState.query}&state=${reducerState.state}&lga=${reducerState.lga}`);
-        router.push(`/services?service=${reducerState.query}&state=${reducerState.state}&lga=${reducerState.lga}`, undefined, {shallow: true});
         const json = await request.json() as IServerReturnObject;
         const data = json.data as IUser[];
+        router.push(`/services?service=${reducerState.query}&state=${reducerState.state}&lga=${reducerState.lga}`, undefined, {shallow: true});
         setBusinesses(data);
         setLoading(false);
         setDrawer(false);
@@ -162,6 +162,11 @@ export default function Services({states, services}: IProps) {
       }
       return 0;
     }, [sort]);
+
+    const triggerChange = (name: string) => {
+        dispatch({ type: 'service', payload: name });
+        router.push(`/services?service=${reducerState.query}&state=${reducerState.state}&lga=${reducerState.lga}`, undefined, {shallow: true});
+    }
 
     const compareUser = React.useCallback(( a: IUser, b: IUser ) => {
         if (a.rating > b.rating) {
@@ -184,7 +189,7 @@ export default function Services({states, services}: IProps) {
             <div className="w-full flex flex-col py-6">
                <p className="text-md font-light text-gray-500 mb-6">Filter</p>
                <div className="w-full h-10 mb-5">
-                   <Select defaultValue={sr} value={reducerState.query}  border="none" bgColor="whitesmoke" onChange={(e) => dispatch({ type: 'service', payload: e.target.value})}>
+                   <Select defaultValue={sr} value={reducerState.query}  border="none" bgColor="whitesmoke" onChange={(e:any) => dispatch({ type: 'service', payload: e.target.value})}>
                        <option value={reducerState.query} selected>{reducerState.query}</option>
                        {services
                        .sort(compare)
@@ -194,7 +199,7 @@ export default function Services({states, services}: IProps) {
                    </Select>
                </div>
                <div className="w-full h-10 mb-5">
-                   <Select border="none" bgColor="whitesmoke" borderRadius="0" value={reducerState.state} onChange={(e) => dispatch({ type: 'state', payload: e.target.value})}>
+                   <Select border="none" bgColor="whitesmoke" borderRadius="0" value={reducerState.state} onChange={(e: any) => dispatch({ type: 'state', payload: e.target.value})}>
                        <option value="" selected>State</option>
                        {states.map((item, index) => (
                            <option key={index.toString()} value={item.officialName}>{item.officialName}</option>
@@ -202,7 +207,7 @@ export default function Services({states, services}: IProps) {
                    </Select>
                </div>
                <div className="w-full h-10 mb-5">
-                   <Select border="none" bgColor="whitesmoke" value={reducerState.lga} onChange={(e) => dispatch({ type: 'lga', payload: e.target.value})}>
+                   <Select border="none" bgColor="whitesmoke" value={reducerState.lga} onChange={(e: any) => dispatch({ type: 'lga', payload: e.target.value})}>
                        <option value="" disabled selected>LGA</option>
                        {lgas !== undefined && lgas.length > 0 && lgas.map((item, index) => (
                            <option key={index.toString()} value={item.LGA}>{item.LGA}</option>
@@ -235,7 +240,7 @@ export default function Services({states, services}: IProps) {
             {services
             .sort(compare)
             .map((item, index) => (
-                <div className='mr-5 h-full min-w-max p-2 text-sm font-light rounded-full bg-gray-200' onClick={() => dispatch({ type: 'service', payload: item.name })} key={index.toString()} >{item.name}</div>
+                <div className='mr-5 h-full min-w-max p-2 text-sm font-light rounded-full bg-gray-200' onClick={() => triggerChange(item.name)} key={index.toString()} >{item.name}</div>
             ))}
     </div>
 
@@ -249,7 +254,7 @@ export default function Services({states, services}: IProps) {
                 {services
                 .sort(compare)
                 .map((item, index) => (
-                    <p key={index.toString()} onClick={() => dispatch({ type: 'service', payload: item.name })} className=' cursor-pointer w-full h-auto p-3 hover:bg-gray-200 border-gray-300 font-Cerebri-sans-book text-sm'>{item.name}</p>
+                    <p key={index.toString()} onClick={() => triggerChange(item.name)} className=' cursor-pointer w-full h-auto p-3 hover:bg-gray-200 border-gray-300 font-Cerebri-sans-book text-sm'>{item.name}</p>
                 ))}
             </div>
 
@@ -265,7 +270,7 @@ export default function Services({states, services}: IProps) {
            <div className="w-full h-12 xl:flex lg:flex md:hidden sm:hidden items-center">
                <p className="text-md font-light text-gray-500">Filter :</p>
                <div className="w-32 h-10 ml-6">
-                   <Select border="none" defaultValue={reducerState.query} bgColor="whitesmoke" fontSize="sm" className="font-Cerebri-sans-book" onChange={(e) => dispatch({ type: 'service', payload: e.target.value})}>
+                   <Select border="none" defaultValue={reducerState.query} bgColor="whitesmoke" fontSize="sm" className="font-Cerebri-sans-book" onChange={(e: any) => dispatch({ type: 'service', payload: e.target.value})}>
                        <option value={reducerState.query} selected>{reducerState.query}</option>
                        {services.map((item, index) => (
                            <option key={index.toString()} value={item.name}>{item.name}</option>
@@ -273,7 +278,7 @@ export default function Services({states, services}: IProps) {
                    </Select>
                </div>
                <div className="w-32 h-10 ml-6">
-                    <Select border="none" bgColor="whitesmoke" value={reducerState.state} borderRadius="0" fontSize="sm" className="font-Cerebri-sans-book" onChange={(e) => dispatch({ type: 'state', payload: e.target.value})}>
+                    <Select border="none" bgColor="whitesmoke" value={reducerState.state} borderRadius="0" fontSize="sm" className="font-Cerebri-sans-book" onChange={(e: any) => dispatch({ type: 'state', payload: e.target.value})}>
                        <option value="" selected>State</option>
                        {states.map((item, index) => (
                            <option key={index.toString()} value={item.officialName}>{item.officialName}</option>
@@ -281,7 +286,7 @@ export default function Services({states, services}: IProps) {
                    </Select>
                </div>
                <div className="w-32 h-10 ml-6">
-                    <Select border="none" bgColor="whitesmoke" value={reducerState.lga} fontSize="sm" className="font-Cerebri-sans-book" onChange={(e) => dispatch({type: 'lga', payload: e.target.value })}>
+                    <Select border="none" bgColor="whitesmoke" value={reducerState.lga} fontSize="sm" className="font-Cerebri-sans-book" onChange={(e: any) => dispatch({type: 'lga', payload: e.target.value })}>
                        <option value="" selected>LGA</option>
                        {lgas !== undefined && lgas.length > 0 && lgas.map((item, index) => (
                            <option key={index.toString()} value={item.LGA}>{item.LGA}</option>
