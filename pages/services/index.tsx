@@ -1,4 +1,4 @@
-import React, {useReducer} from 'react';
+import React, {useCallback, useReducer} from 'react';
 import { Select, Drawer, DrawerOverlay, DrawerBody, DrawerContent, DrawerCloseButton, Box, Spinner, Divider } from '@chakra-ui/react'
 import BusinessCard from '../../components/services/businesscard';
 import ServiceNavbar from '../../components/general/ServiceNavbar';
@@ -163,9 +163,18 @@ export default function Services({states, services}: IProps) {
       return 0;
     }, [sort]);
 
-    const triggerChange = (name: string) => {
+    // const trigger = useCallback( async() => {
+    //     setLoading(true);
+    //     const request = await fetch(`${url}user?service=${reducerState.query}`);
+    //     const json = await request.json() as IServerReturnObject;
+    //     const data = json.data as IUser[];
+    //     setBusinesses(data);
+    //     setLoading(false);
+    // }, [reducerState])
+
+    const triggerChange = async(name: string) => {
         dispatch({ type: 'service', payload: name });
-        router.push(`/services?service=${reducerState.query}&state=${reducerState.state}&lga=${reducerState.lga}`, undefined, {shallow: true});
+        router.push(`/services?service=${name}&state=${reducerState.state}&lga=${reducerState.lga}`, undefined, {shallow: true});
     }
 
     const compareUser = React.useCallback(( a: IUser, b: IUser ) => {
@@ -189,7 +198,7 @@ export default function Services({states, services}: IProps) {
             <div className="w-full flex flex-col py-6">
                <p className="text-md font-light text-gray-500 mb-6">Filter</p>
                <div className="w-full h-10 mb-5">
-                   <Select defaultValue={sr} value={reducerState.query}  border="none" bgColor="whitesmoke" onChange={(e:any) => dispatch({ type: 'service', payload: e.target.value})}>
+                   <Select value={reducerState.query}  border="none" bgColor="whitesmoke" onChange={(e:any) => triggerChange(e.target.value)}>
                        <option value={reducerState.query} selected>{reducerState.query}</option>
                        {services
                        .sort(compare)
@@ -270,7 +279,7 @@ export default function Services({states, services}: IProps) {
            <div className="w-full h-12 xl:flex lg:flex md:hidden sm:hidden items-center">
                <p className="text-md font-light text-gray-500">Filter :</p>
                <div className="w-32 h-10 ml-6">
-                   <Select border="none" defaultValue={reducerState.query} bgColor="whitesmoke" fontSize="sm" className="font-Cerebri-sans-book" onChange={(e: any) => dispatch({ type: 'service', payload: e.target.value})}>
+                   <Select border="none" value={reducerState.query} bgColor="whitesmoke" fontSize="sm" className="font-Cerebri-sans-book" onChange={(e: any) => triggerChange(e.target.value)}>
                        <option value={reducerState.query} selected>{reducerState.query}</option>
                        {services.map((item, index) => (
                            <option key={index.toString()} value={item.name}>{item.name}</option>
