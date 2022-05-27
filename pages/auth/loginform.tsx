@@ -109,10 +109,10 @@ export default function LoginForm() {
 
                 if (json.data.user.blocked) {
                     // save to localstorage
-                    const save = localStorage.setItem('9jauser', JSON.stringify(json.data.user));
-                    const token = localStorage.setItem('9jatoken', json.data.token);
-                    dispatch(updateUser(json.data.user))
-                    dispatch(updatetoken(json.data.token));
+                    // const save = localStorage.setItem('9jauser', JSON.stringify(json.data.user));
+                    // const token = localStorage.setItem('9jatoken', json.data.token);
+                    // dispatch(updateUser(json.data.user))
+                    // dispatch(updatetoken(json.data.token));
                     router.push(`/underreview?id=${json.data.user._id}`);
                     return;
                 }
