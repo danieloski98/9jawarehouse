@@ -374,7 +374,7 @@ export default function ServiceNavbar({ search, handleEnter, setSearch}: { searc
                     )}
 
 
-                    <Accordion className="mt-5" allowToggle allowMultiple defaultIndex={[0]}>
+                    {/* <Accordion className="mt-5" allowToggle allowMultiple defaultIndex={[0]}>
 
                         <AccordionItem>
                             <AccordionButton>
@@ -387,7 +387,7 @@ export default function ServiceNavbar({ search, handleEnter, setSearch}: { searc
                             <AccordionPanel>
                               <div className="w-full h-64 overflow-y-auto flex flex-col">
                                 {/* <p>Profile</p> */}
-                                  {[...serv]
+                                  {/* {[...serv]
                                   .sort(compare)
                                   .map((item, index) => (
                                     <>
@@ -403,7 +403,7 @@ export default function ServiceNavbar({ search, handleEnter, setSearch}: { searc
                               </div>
                             </AccordionPanel>
                         </AccordionItem>
-                    </Accordion>
+                    </Accordion> */} 
 
                     {loggedIn && <p onClick={handleLogout} className="text-red-500 mt-5 text-xl ml-5 font-Cerebri-sans-book">Logout</p>}
                   </div>
