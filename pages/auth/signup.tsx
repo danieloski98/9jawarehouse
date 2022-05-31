@@ -103,7 +103,7 @@ export default function Signup() {
             <div className="flex-1 xl:pl-10 lg:pl-10 md:pl-5 sm:pl-5 xl:pr-0 lg:pr-0 md:pr-5 sm:pr-5 flex flex-col justify-center items-center">
 
                 <div className="flex flex-col xl:w-4/6 lg:w-4/6 md:w-full sm:w-full">
-                    <h3 className="text-3xl font-Circular-std-medium text-gray-700">To become a member is EASY! </h3>
+                    <h3 className="text-3xl font-Circular-std-medium text-gray-700">To become a member is <span className="text-themeGreen">EASY!</span> </h3>
                     <p className="text-sm font-Cerebri-sans-book mt-4 text-gray-500">Sign up below, you are a step away from joining 9jaWarehouse.</p>
                 </div>
 

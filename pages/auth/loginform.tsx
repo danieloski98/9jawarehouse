@@ -153,7 +153,7 @@ export default function LoginForm() {
                 
 
                 <div className="flex flex-col xl:w-4/6 lg:w-4/6 md:w-full sm:w-full">
-                    <h3 className="text-3xl font-Circular-std-medium text-gray-700">Login In an existing account</h3>
+                    <h3 className="text-3xl font-Circular-std-medium text-gray-700">Login into an existing account</h3>
                     <p className="text-sm font-Cerebri-sans-book mt-4 text-gray-500">Welcome back!</p>
                 </div>
 

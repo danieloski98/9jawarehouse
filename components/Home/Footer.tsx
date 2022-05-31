@@ -45,7 +45,7 @@ export default function Footer() {
                     </Link>
                     {/* <p className="mt-3 cursor-pointer">Trust, safety & security</p> */}
                     <Link href="/policies">
-                        <a className="mt-3 cursor-pointer">privacy Policy</a>
+                        <a className="mt-3 cursor-pointer">Privacy Policy</a>
                     </Link>
                     <Link href="/terms">
                         <a className="mt-3 cursor-pointer">Terms & conditions</a>

@@ -66,6 +66,13 @@ export default function BusinessInfo({ next, images, picker, profilePic, formik,
         next(page);
     }
 
+    const compare = ( a: IServices, b: IServices ) => {
+        if (a.name < b.name) {
+            return 1;
+        } 
+        return -1;
+      };
+
   return (
     <div className="w-full h-auto flex flex-col">
         <div className="flex items-center h-auto">
@@ -169,7 +176,9 @@ export default function BusinessInfo({ next, images, picker, profilePic, formik,
                 <div className="xl:w-11/12 lg:w-11/12 md:w-full sm:w-full">
                     <Select border="none" bgColor="whitesmoke" borderRadius={0} className="bg-gray-100 mt-3" onChange={(e: any) => selectService(e.target.value)}>
                         <option selected>Pick a Service</option>
-                        {services.map((item, index) => (
+                        {[...services]
+                        .sort(compare)
+                        .map((item, index) => (
                             <option key={index.toString()}>{item.name}</option>
                         ))}
                         {/* <option>Lagos</option> */}
