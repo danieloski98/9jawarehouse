@@ -163,8 +163,23 @@ export default function Signup() {
         </div>
 
         <div className="w-2/5 h-full xl:block lg:block md:hidden sm:hidden">
-            <Img src="/images/bg.png" alt="girl" className="w-full h-full object-cover" />
-            <div className="z-20 absolute flex flex-col top-20 pt-10 px-10 bottom-0 ">
+            <div className="w-full h-full loginform">
+                <div className="w-full h-full background-blur flex flex-col justify-center px-16 pt-10">
+                    <p className='font-Circular-std-medium text-2xl text-white'>Why Join 9jaWarehouse Community?</p>
+                    <p className='font-Circular-std-medium text-dm text-white mt-2'>Some of the benefits of joining the 9jaWarehouse community.</p>
+                    <ul className=' list-disc list-outside text-white font-Cerebri-sans-book mt-5'>
+                        <li>Get your business and services listed on a trusted website that is visible globally.</li>
+                        <li>Reduce your cost of advertising and reaching out to prospective customers.</li>
+                        <li>Increase level engagement on all your business social media platforms.</li>
+                        <li>Make your business growth profile over the years be visible to investors and a greater audience.</li>
+                        <li>Connect and engage with similar businesses and services within and outside your community.</li>
+                        <li>Get unlimited access to business mentorship, development, and trainings.</li>
+                        <li>Rebrand your business and services to speak you and your skillset.</li>
+                    </ul>
+                    <i className='text-md text-white mt-4 font-bold'>And lots more... ... ..</i>
+                </div>
+            </div>
+            {/* <div className="z-20 absolute flex flex-col top-20 pt-10 px-10 bottom-0 ">
                 <p className='font-Circular-std-medium text-2xl text-white'>Why Join 9jaWarehouse Community?</p>
                 <p className='font-Circular-std-medium text-dm text-white mt-2'>Some of the benefits of joining the 9jaWarehouse community.</p>
                 <ul className=' list-disc list-outside text-white font-Cerebri-sans-book mt-5'>
@@ -177,7 +192,7 @@ export default function Signup() {
                     <li>Rebrand your business and services to speak you and your skillset.</li>
                 </ul>
                 <i className='text-md text-white mt-4 font-bold'>And lots more... ... ..</i>
-            </div>
+            </div> */}
         </div>
         
     </div>

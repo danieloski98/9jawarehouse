@@ -20,6 +20,24 @@ a {
   box-sizing: border-box;
 }
 
+.underreview {
+  background-image: url('../public/images/girl2.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.loginform {
+  background-image: url('../public/images/bg.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.background-blur {
+  background-color: rgba(41, 238, 143, 0.271);
+}
+
 .stats {
   background-image: url(../public/images/patternpad.svg);
   background-size: cover;

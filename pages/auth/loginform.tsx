@@ -202,8 +202,21 @@ export default function LoginForm() {
         </div>
 
         <div className="w-2/5 h-full  xl:block lg:block md:hidden sm:hidden">
-            <Img src="/images/bg.png" alt="girl" className="w-full h-full object-cover" />
-            <div className="z-20 absolute flex flex-col top-64 pt-10 px-16 bottom-0 ">
+            <div className="w-full h-full loginform">
+                <div className="w-full h-full background-blur flex flex-col justify-center px-16 pt-10">
+                    <p className='font-Circular-std-medium text-2xl text-white'>Join 9jaWarehouse!</p>
+                    <p className='font-Circular-std-medium text-dm text-white mt-2'>These are the reasons why you need to join the 9jaWarehouse community.</p>
+                    <ul className=' list-disc list-outside text-white font-Cerebri-sans-book mt-5'>
+                        <li>Be listed on a trusted website that is visible globally.</li>
+                        <li>Be able to connect and engage with similar and various other business community.</li>
+                        <li>Get access to business mentorship, development and training.</li>
+                        <li>Get help rebranding your business to speak you, your skillset and services.</li>
+                        <li>Reduce your cost of advertising and reach</li>
+                        <li>Show your business growth profile, trends over years Be visible to investors and a greater audience.</li>
+                    </ul>
+                </div>
+            </div>
+            {/* <div className="z-20 absolute flex flex-col top-64 pt-10 px-16 bottom-0 ">
                 <p className='font-Circular-std-medium text-2xl text-white'>Join 9jaWarehouse!</p>
                 <p className='font-Circular-std-medium text-dm text-white mt-2'>These are the reasons why you need to join the 9jaWarehouse community.</p>
                 <ul className=' list-disc list-outside text-white font-Cerebri-sans-book mt-5'>
@@ -214,7 +227,7 @@ export default function LoginForm() {
                     <li>Reduce your cost of advertising and reach</li>
                     <li>Show your business growth profile, trends over years Be visible to investors and a greater audience.</li>
                 </ul>
-            </div>
+            </div> */}
         </div>
         
     </div>
