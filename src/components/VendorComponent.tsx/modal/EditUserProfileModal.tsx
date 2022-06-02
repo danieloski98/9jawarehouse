@@ -162,6 +162,13 @@ export default function EditUserProfileModal({close, user}: IProps) {
         
     }
 
+      const sort = (a: IServices, b: IServices) => {
+        if (a.name < b.name) {
+                return -1;
+        }
+        return 1;
+    }
+
     return (
         <div style={{width: '960px', height: '920px'}} className='bg-white rounded-lg px-10 py-4 pb-14'  > 
             <div className='w-full flex items-center' >
@@ -221,7 +228,9 @@ export default function EditUserProfileModal({close, user}: IProps) {
                         <div className="">
                             <Select className="bg-gray-100 mt-3" onChange={(e) => selectService(e.target.value)}>
                                 <option selected>Pick a Service</option>
-                                {services.map((item, index) => (
+                                {services
+                                .sort(sort)
+                                .map((item, index) => (
                                     <option key={index.toString()}>{item.name}</option>
                                 ))}
                                 {/* <option>Lagos</option> */}
