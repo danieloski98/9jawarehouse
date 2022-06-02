@@ -180,6 +180,8 @@ export default function Resetpassword() {
                         <li>Reduce your cost of advertising and reach</li>
                         <li>Show your business growth profile, trends over years Be visible to investors and a greater audience.</li>
                     </ul>
+
+                    <b className="text-white mt-4 font-Cerebri-sans-book">Open for Advertisement</b>
                 </div>
             </div>
         </div>

@@ -176,7 +176,9 @@ export default function Signup() {
                         <li>Get unlimited access to business mentorship, development, and trainings.</li>
                         <li>Rebrand your business and services to speak you and your skillset.</li>
                     </ul>
-                    <i className='text-md text-white mt-4 font-bold'>And lots more... ... ..</i>
+                    {/* <i className='text-md text-white mt-4 font-bold'>And lots more... ... ..</i> */}
+
+                    <b className="text-white mt-4 font-Cerebri-sans-book">Open for Advertisement</b>
                 </div>
             </div>
             {/* <div className="z-20 absolute flex flex-col top-20 pt-10 px-10 bottom-0 ">
