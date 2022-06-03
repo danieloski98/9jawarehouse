@@ -319,7 +319,7 @@ const verify = async() => {
         </Modal>
 
         {/* no subscriptions */}
-
+{/* 
         <Modal isOpen={submodal} onClose={() => setSubmodal(false)} size="xl" isCentered>
             <ModalOverlay />
             <ModalContent>
@@ -347,7 +347,7 @@ const verify = async() => {
 
                 </ModalBody>
             </ModalContent>
-        </Modal>
+        </Modal> */}
 
        {
            !loading && (

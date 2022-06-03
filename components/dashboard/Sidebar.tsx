@@ -93,12 +93,12 @@ export default function Sidebar({page, setPage}: IProps) {
                 </div>
             </div>
 
-            <div className={page === 3 ? ACTIVE:INACTIVE} onClick={() => setPage(3)}>
+            {/* <div className={page === 3 ? ACTIVE:INACTIVE} onClick={() => setPage(3)}>
                 <div className="flex items-center pl-6">
                     <TimeCircle size={25} filled primaryColor='grey' />
                     <p className="ml-4 text-sm font-Cerebri-sans-book  ">Subscriptions</p>
                 </div>
-            </div>
+            </div> */}
 
             <div className={page === 4 ? ACTIVE:INACTIVE} onClick={() => setPage(4)}>
                 <div className="flex items-center pl-6">
