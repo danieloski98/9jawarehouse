@@ -40,6 +40,20 @@ export class CrudService {
         pictures: joi.array().optional(),
       });
 
+      // if a particular user has left a comment
+      const leftComment = await this.commentModel.find({
+        email: payload.email,
+        business_id: user_id,
+      });
+
+      if (leftComment.length > 0) {
+        return Return({
+          error: true,
+          statusCode: 400,
+          errorMessage: 'You have already left a review',
+        });
+      }
+
       const pinActive = await this.pinModel.findOne({
         business_id: user_id,
         code: pin,
@@ -82,7 +96,7 @@ export class CrudService {
           { _id: pinActive._id },
           { use_count: pinActive.use_count + 1 },
         );
-        const rating = userExist.rating + payload.rating;
+        const rating = (userExist.rating + payload.rating) / comments.length;
         // for (let i = 0; i < comments.length; i++) {
         //   rating += comments[i].rating;
         // }
@@ -135,7 +149,7 @@ export class CrudService {
           business_id: user_id,
         };
         const newComment = await this.commentModel.create(obj);
-        const rating = userExist.rating + payload.rating;
+        const rating = (userExist.rating + payload.rating) / comments.length;
         // for (let i = 0; i < comments.length; i++) {
         //   rating += comments[i].rating;
         // }
