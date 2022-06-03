@@ -9,7 +9,7 @@ import { sendSuccessEmail } from 'src/templates/Loanapplicationemail';
 import { ApplicationSuccessful } from 'src/templates/ApplicationSuccessful';
 import { ApplicationDeclined } from 'src/templates/ApplicationDeclined';
 import { AdminLoanSuccess } from 'src/templates/AdminLoanSuccess';
-import { User as MongoUser, UserDocument } from 'src/Schema/User.schema';
+import { User as MongoUser, User, UserDocument } from 'src/Schema/User.schema';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require('dotenv').config();
@@ -334,21 +334,82 @@ export class EmailService {
     }
   }
 
-  public async sendAcceptedEmail(email: string): Promise<IReturnObject> {
+  public async sendAcceptedEmail(user: User): Promise<IReturnObject> {
     try {
       const mailOption: MailOptions = {
         from: `9jaWarehouse Enterprise ${process.env.COMPANY_EMAIL}`,
-        to: email,
+        to: user.email,
         subject: `Account Verification Update`,
         html: `
           <div>
-            <p>Hurray! Your account verification was SUCCESSFUL!!</p>
+            <p>Hello ${user.business_name}</p>
 
-            <p>You can now return to the website (www.9jawarehouse.com) and login with your email and password and complete your details.</p>
+            <p>We are happy to see you join the 9jaWarehouse Enterprise business community. One of our goals is to help you grow and develop your business and skill set while also providing a platform that is searchable globally so your business can have a larger reach.</p>
 
-            <p>You are one step closer to joining our community.</p>
+            <p>
+              <b>
+                You are currently enrolled in the free sign up account. 9jaWarehouse offers a subscription based plan that can help your business. Below are the different subscriptions and their benefits: 
+              </b>
+            </p>
 
-            <p>We look forward to working with you and knowing more about you and your business. </p>
+            <h4 style="margin-top: 20px; text-decoration: underline; font-weight: 500">Bronze Membership Subscription - #5,000 for one month</h4>
+
+            <ol style="margin-top: 20px">
+              <li>One post on Instagram per week</li>
+              <li>One post on Facebook per week</li>
+              <li>One reel on Instagram per week</li>
+              <li>One post on Twitter</li>
+              <li>One story per week</li>
+              <li>Free next month subscription after bringing in 8 members</li>
+            </ol>
+
+            <h4 style="margin-top: 20px; text-decoration: underline; font-weight: 500">Silver Membership Subscription - #10,000 for three months</h4>
+
+            <ol style="margin-top: 20px">
+              <li>Two post on Instagram per week</li>
+              <li>Two post on Facebook per week</li>
+              <li>Two reels on Instagram per week</li>
+              <li>Two stories on Instagram per week</li>
+              <li>Two post on twitter</li>
+              <li>One video post of Facebook and Instagram per week</li>
+              <li>20% off subscription after bringing in 4 members</li>
+              <li>Access to mentorship and business material, rebranding and sale strategies</li>
+            </ol>
+
+            <h4 style="margin-top: 20px; text-decoration: underline; font-weight: 500">Gold Membership Subscription - #20,000 for six months</h4>
+
+            <ol style="margin-top: 20px">
+              <li>Three post on Instagram per week</li>
+              <li>Three post on Facebook per week</li>
+              <li>Three reels on Instagram and Facebook per week</li>
+              <li>Three stories on Instagram per week</li>
+              <li>Three post on twitter</li>
+              <li>Monthly Business Feature  on Instagram and Facebook</li>
+              <li>Opportunity to go live on 9jawarehouse Instagram page to discuss business</li>
+              <li>50% off subscription after bringing in 5 members</li>
+              <li>Access to mentorship and business material, rebranding and sale strategies</li>
+              <li>Opportunity to be selected for business funding * terms and conditions applies</li>
+              <li>Two advertisements per month * when the app is released</li>
+            </ol>
+
+            <h5 style="margin-top: 20px; text-decoration: underline; font-weight: 300">Additional Perks:</h5>
+
+            <ul style="margin-top: 20px">
+              <li>Advertisement on our website page</li>
+              <li>Chance to get featured in our monthly business of the week
+              </li>
+            </ul>
+
+            <p>If you are interested in any of the subscriptions, reach out to us on: </p>
+
+            <p>
+              <b>Email: <a href="mailto:support@9jawarehouse.com">support@9jawarehouse.com</a></b>
+            </p>
+
+            <b>WhatsApp (Message Only): +447763417061</b>
+
+            <p>Thank you,</p>
+            <p>9jaWarehouse Enterprise Support Team.</p>
 
           </div>
         `,
