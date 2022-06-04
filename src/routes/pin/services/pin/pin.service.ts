@@ -9,6 +9,7 @@ import { OtpGateway } from 'src/websockets/otp.gateway';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const randomNumber = require('random-number');
 import { pusher } from 'src/main';
+import { EmailService } from 'src/routes/admin/services/email/email.service';
 
 @Injectable()
 export class PinService {
@@ -17,6 +18,7 @@ export class PinService {
     @InjectModel(PIN.name) private pinModel: Model<PINDocument>,
     @InjectModel(User.name) private userModel: Model<UserDocument>,
     private SocketGateway: OtpGateway,
+    private emailService: EmailService,
   ) {}
 
   public async createPin(user_id: string): Promise<IReturnObject> {
@@ -32,7 +34,6 @@ export class PinService {
       }
       // check if the user has a pin
       const piinn = await this.pinModel.find({ business_id: user_id });
-      this.logger.error('this is the pin service');
 
       if (piinn.length < 1) {
         console.log('this is the if block');
@@ -58,12 +59,14 @@ export class PinService {
         );
         // get new User
         const user = await this.userModel.findById(user_id);
+        const emailDetails = await this.emailService.sendAcceptedEmail(user);
+        this.logger.log(emailDetails);
         this.logger.log(user);
 
         return Return({
           error: false,
           statusCode: 200,
-          successMessage: 'Pin generated succesfully ya',
+          successMessage: 'Pin generated succesfully.',
           data: {
             user,
             pin: code,

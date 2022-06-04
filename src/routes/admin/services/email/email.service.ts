@@ -334,6 +334,45 @@ export class EmailService {
     }
   }
 
+  public async sendApprovedEmail(email: string): Promise<IReturnObject> {
+    try {
+      const mailOption: MailOptions = {
+        from: `9jaWarehouse Enterprise ${process.env.COMPANY_EMAIL}`,
+        to: email,
+        subject: `Account Verification Successful`,
+        html: `
+        <div>
+          <h3>HURRAY! Your account verification was SUCCESSFULL!!</h3>
+
+          <p>You can now return to the website (<a href="https://www.9jawarehouse.com">www.9jawarehouse.com</a>) and login with your email and password and complete your details.</p>
+
+          <p>You are one step closer to joining our community.</p>
+
+          <p>We look forward to working with you and knowing more about you and your business.</p>
+        </div>`,
+      };
+      this.transporter.sendMail(mailOption, (error: any, info: any) => {
+        if (error) {
+          this.logger.error(error);
+        } else {
+          this.logger.log(info);
+        }
+      });
+      return Return({
+        error: false,
+        successMessage: 'Account verification email sent',
+        statusCode: 200,
+      });
+    } catch (error) {
+      return Return({
+        error: true,
+        statusCode: 500,
+        trace: error,
+        errorMessage: 'Internal Server error',
+      });
+    }
+  }
+
   public async sendAcceptedEmail(user: User): Promise<IReturnObject> {
     try {
       const mailOption: MailOptions = {

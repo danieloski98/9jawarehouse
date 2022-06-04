@@ -4,6 +4,7 @@ import { CommentSchema, Comment } from 'src/Schema/Comment.Schema';
 import { PIN, PINSchema } from 'src/Schema/PIN.Schema';
 import { User, UserSchema } from 'src/Schema/User.schema';
 import { OtpGateway } from 'src/websockets/otp.gateway';
+import { EmailService } from '../admin/services/email/email.service';
 import { NotificationsModule } from '../notifications/notifications.module';
 import { PinService } from '../pin/services/pin/pin.service';
 import { CommentsController } from './comments.controller';
@@ -19,6 +20,6 @@ import { CrudService } from './services/crud/crud.service';
     NotificationsModule,
   ],
   controllers: [CommentsController],
-  providers: [CrudService, PinService, OtpGateway],
+  providers: [CrudService, PinService, OtpGateway, EmailService],
 })
 export class CommentsModule {}

@@ -114,7 +114,7 @@ export class AdminService {
     try {
       const userEmail = await this.userModel.findById(_id);
       const user = await this.userModel.updateOne({ _id }, { blocked: false });
-      const email = await this.emailService.sendAcceptedEmail(userEmail);
+      const email = await this.emailService.sendApprovedEmail(userEmail.email);
       console.log(email);
       return Return({
         error: false,
