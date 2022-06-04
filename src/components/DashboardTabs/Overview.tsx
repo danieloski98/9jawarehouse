@@ -59,14 +59,14 @@ export default function Overview() {
                     <p style={{fontSize: '20px'}} className='font-Graphik-Medium'>Overview</p>
                     <p style={{color: '#8A8A8A'}} className='text-sm font-Graphik-Regular' >Keep track of 9jawarehosue performance</p>
                 </div>
-                <div className='ml-auto'>
+                {/* <div className='ml-auto'>
                     <Select className='font-Graphik-Regular ' fontSize='12px' backgroundColor='white' placeholder='Past 30 days'>
                         <option value='option1'>Option 1</option>
                         <option value='option2'>Option 2</option>
                         <option value='option3'>Option 3</option>
                     </Select>
-                </div>
-                <button style={{backgroundColor: '#1A8F85'}} className='px-4 py-3 font-Graphik-Regular text-sm text-white rounded-md ml-4' >Download Report</button>
+                </div> */}
+                {/* <button style={{backgroundColor: '#1A8F85'}} className='px-4 py-3 font-Graphik-Regular text-sm text-white rounded-md ml-4' >Download Report</button> */}
             </div>
             <div className='w-full flex my-6 px-8 items-center justify-between ' >
                 <div className='bg-white w-full mx-2 p-4 rounded-lg' >

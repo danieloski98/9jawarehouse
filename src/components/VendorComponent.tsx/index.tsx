@@ -10,6 +10,14 @@ import { IUser } from '../../types/user';
 import { theme } from '../../utils/theme';
 import {FiArchive} from 'react-icons/fi'
 import { queryClient } from '../../App';
+const xlsx = require('json-as-xlsx')
+
+const settings = {
+    fileName: '9jawarehouse user list', // Name of the spreadsheet
+    extraLength: 3, // A bigger number means that columns will be wider
+    writeOptions: {} // Style options from https://github.com/SheetJS/sheetjs#writing-options
+}
+
 
 
 const getActivity = async () => {
@@ -161,6 +169,42 @@ export default function Vendors() {
         return 0;
       }, [sort]);
 
+
+      // excel sheet data
+
+      let xdata = [
+        {
+          sheet: 'Users List',
+          columns: [
+            { label: 'firstname', value: (row: IUser) => row.first_name },
+            { label: 'lastname', value: (row: IUser) => row.last_name },
+            { label: 'phone', value: (row: IUser) => row.phone },
+            { label: 'verified', value: (row: IUser) => row.verified },
+            { label: 'phone', value: (row: IUser) => row.phone },
+            { label: 'blocked', value: (row: IUser) => row.blocked },
+            { label: 'disabled', value: (row: IUser) => row.disabled },
+            { label: 'username', value: (row: IUser) => row.username },
+            { label: 'business_address', value: (row: IUser) => row.business_address },
+            { label: 'profile_pic', value: (row: IUser) => row.profile_pic },
+            { label: 'business_name', value: (row: IUser) => row.business_name },
+            { label: 'business_description', value: (row: IUser) => row.business_description },
+            { label: 'LGA', value: (row: IUser) => row.lga },
+            { label: 'state', value: (row: IUser) => row.state },
+            { label: 'facebook', value: (row: IUser) => row.facebook },
+            { label: 'linkedin', value: (row: IUser) => row.linkedin },
+            { label: 'twitter', value: (row: IUser) => row.twitter },
+            { label: 'whatsapp', value: (row: IUser) => row.whatsapp },
+            { label: 'website', value: (row: IUser) => row.website },
+            { label: 'rating', value: (row: IUser) => row.rating },
+            { label: 'verification_document', value: (row: IUser) => row.verification_document },
+            { label: 'CAC', value: (row: IUser) => row.CAC },
+            { label: 'services', value: (row: IUser) => row.services },
+            { label: 'certificates', value: (row: IUser) => row.certificates },
+          ],
+          content: users,
+        }, 
+      ];
+
     return (
         <div className='w-full h-full' >
             <div className='w-full flex items-center' > 
@@ -196,15 +240,15 @@ export default function Vendors() {
                 <p style={{fontSize: '16px'}} className='font-Graphik-SemiBold'>All Vendors</p>
             
                 <div className='ml-auto flex items-center'>
-                    <Input  className='font-Graphik-Regular mx-2' fontSize='14px' backgroundColor='#FBFBFB' placeholder='Search name or email' onChange={(e) => setSearch(e.target.value)} value={search} />
+                    <Input  className='font-Graphik-Regular mx-2' fontSize='14px' backgroundColor='#FBFBFB' placeholder='Search name or email' onChange={(e: any) => setSearch(e.target.value)} value={search} />
                     
                 <p style={{fontSize: '14px'}} className='font-Graphik-Medium mx-2'>Filter</p>
-                    <Select className='font-Graphik-Regular mx-2' fontSize='14px' backgroundColor='#FBFBFB' onChange={(e) => setSort(parseInt(e.target.value))}>
+                    <Select className='font-Graphik-Regular mx-2' fontSize='14px' backgroundColor='#FBFBFB' onChange={(e: any) => setSort(parseInt(e.target.value))}>
                         <option value={1}>Busines name</option>
                         <option value={2}>Date Created</option>
                         
                     </Select>
-                <button style={{backgroundColor: '#1A8F85'}} className='px-2 py-2 w-56 font-Graphik-Regular text-xs text-white rounded-md ml-8' >Download Report</button>
+                <button onClick={() => xlsx(xdata, settings)} style={{backgroundColor: '#1A8F85'}} className='px-2 py-2 w-56 font-Graphik-Regular text-xs text-white rounded-md ml-8' >Download Report</button>
                 </div>
             </div>
             <div className='bg-white w-full py-6' >

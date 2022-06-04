@@ -93,13 +93,13 @@ export default function Subscriptions() {
                     <p style={{fontSize: '20px'}} className='font-Graphik-Medium'>Subscriptions</p>
                     <p style={{color: '#8A8A8A'}} className='text-sm font-Graphik-Regular' >Keep Track of all subscriptions on 9jawarehouse</p>
                 </div>
-                <div className='ml-auto'>
+                {/* <div className='ml-auto'>
                     <Select className='font-Graphik-Regular ' fontSize='12px' backgroundColor='white' placeholder='Past 30 days'>
                         <option value='option1'>Option 1</option>
                         <option value='option2'>Option 2</option>
                         <option value='option3'>Option 3</option>
                     </Select>
-                </div>
+                </div> */}
             </div>
             <div className='flex items-center my-12' >
                 {/* <p style={{fontSize: '16px'}} className='font-Graphik-SemiBold'>Reviews</p> */}
