@@ -23,10 +23,10 @@ export default function UnderReview() {
                     <Img src="/images/time.png" className='w-24 h-24' />
                     <p className='mt-4 font-Cerebri-sans-book text-3xl text-black'>Account review in progress</p>
                     <p className="mt-7 font-Circular-std-book text-gray-600 text-md text-center">
-                        Our team is currently reviewing your account to ensure the correctness of the information provided. We will send you an email on the outcome of the verification process as soon as it is completed or if we need anything more from you. Thank you for your patience and for choosing the 9jawarehouse.
+                        Our team is currently reviewing your account to ensure the correctness of the information provided. We will send you an email on the outcome of the verification process as soon as it is completed or if we need anything more from you. Thank you for your patience and for choosing 9jawarehouse.
                     </p>
                     <p className="mt-7 font-Circular-std-book text-gray-600 text-md text-center">
-                        In the meantime, if you have questions, please feel free to email us on  
+                        In the meantime, if you have questions, please feel free to email us at  
                         <Link href="/contactus" passHref><b className='text-lg cursor-pointer underline'> support@9jawarehouse.com</b></Link>. 
                     </p>
                    <div className="flex">
