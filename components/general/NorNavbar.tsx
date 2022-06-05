@@ -313,7 +313,7 @@ export default function NormNavbar() {
                 }).map((item, index) => (
                     <div className="w-full h-auto px-0 py-2 flex flex-col" key={index.toString()}>
                        <div className="w-full  cursor-pointer h-full flex justify-end items-center">
-                        <p className='font-Circular-std-medium text-xs text-gray-400 mt-3'>{getDate(item.created_at)}</p>
+                        <p className='font-Circular-std-medium text-xs text-gray-400 mt-3'>{new Date(item.created_at).toDateString()}</p>
                       </div>
                       <div className="flex-1 flex flex-col justify-evenly mt-3">
                         <p className='font-Cerebri-sans-book text-sm text-black mb-3 mr-6'>{item.message}</p>
