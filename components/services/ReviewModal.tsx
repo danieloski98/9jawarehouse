@@ -46,7 +46,7 @@ const CommentForm = ({formik, change, images, picker, user, deleteImage}: IComme
                     <div className="w-full h-auto flex xl:flex-row lg:flex-row md:flex-col sm:flex-col mt-6">
                         <div className="flex-1">
                             <div className="flex flex-col">
-                                <label className=' font-Cerebri-sans-book text-md'>Email </label>
+                                <label className=' font-Cerebri-sans-book text-md'>Email <i>(Private)</i></label>
                                 <Input border="none" name="email" value={formik.values.email} onChange={formik.handleChange} onBlur={formik.handleBlur} onFocus={() => formik.setFieldTouched('email', true, true)} bgColor="whitesmoke" borderRadius="0" />
                                 {formik.touched.email && formik.errors.email && (
                                     <p className="text-sm font-semibold text-red-500 mt-2">{formik.errors.email}</p>
@@ -193,6 +193,7 @@ export default function ReviewModal({ open, setOpen, id, user }: IProps) {
         onSubmit: () => {},
     });
 
+    
     // React.useEffect(() => {
     //     return () => {
     //         formik.resetForm();
@@ -305,6 +306,8 @@ export default function ReviewModal({ open, setOpen, id, user }: IProps) {
                 queryClient.invalidateQueries();
                 alert(json1.successMessage);
                 setLoading(false);
+                formik.resetForm()
+                setStage(1);
                 close();
             }
         }
