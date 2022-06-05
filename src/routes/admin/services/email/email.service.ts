@@ -378,7 +378,7 @@ export class EmailService {
       const mailOption: MailOptions = {
         from: `9jaWarehouse Enterprise ${process.env.COMPANY_EMAIL}`,
         to: user.email,
-        subject: `Account Verification Update`,
+        subject: `Welcome to 9jaWarehouse Enterprise Business Community`,
         html: `
           <div>
             <p>Hello ${user.business_name}</p>
