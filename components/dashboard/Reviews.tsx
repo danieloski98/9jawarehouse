@@ -48,13 +48,13 @@ const Comments = ({ review }: {review: IComment}) => {
                 <div className="mt-1 ml-3 flex flex-col">
                 {/* <p className="font-semibold text-sm text-gray-500">Overall Rating</p> */}
                     <div className="flex h-4 items-center">
-                        <p className="text-xxl font-Cerebri-sans-book text-themeGreen mr-2">{review.rating}/5</p>
+                        <p className="text-xxl font-Cerebri-sans-book text-themeGreen mr-2">{review.rating.toFixed(1)}/5</p>
                         <ReactStars
                             count={5}
                             onChange={ratingChanged}
                             size={20}
                             activeColor="#ffd700"
-                            value={review.rating}
+                            value={review.rating.toFixed(1)}
                             isHalf={true}
                             edit={false}
                             color="lightgrey"
