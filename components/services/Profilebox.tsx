@@ -97,12 +97,12 @@ export default function ProfileBox({user, reviews}: IProps) {
               ))}
               </div>
               <div className="flex items-center text-sm font-Cerebri-sans-book text-gray-600 mt-4">
-                <span className="mr-4">{Math.ceil(user.rating)}/5</span>
+                <span className="mr-4">{user.rating.toFixed(1)}/5.0</span>
                 <ReactStars
                         count={5}
                         size={18}
                         activeColor="#ffd700"
-                        value={Math.ceil(user.rating)}
+                        value={user.rating}
                         isHalf={true}
                         edit={false}
                         color="lightgrey"
