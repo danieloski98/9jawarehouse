@@ -314,10 +314,11 @@ export default function Navbar({page, setPage}: IProps) {
             <span className='mr-0 ml-2' onClick={() => setShowNoti(true)}>
               <Notification size={25} primaryColor='grey' filled style={{ color: 'grey' }}  />
             </span>
-            <sup className='text-themeGreen font-bold text-md'>{notifications.length}</sup>
+            {notifications.length > 0 &&  <sup className='text-themeGreen font-bold text-md'>{notifications.length}</sup>}
           </div>
           }
           <FiMenu size={30} color="grey" onClick={() => setOpen(true)} />
+          
         </div>
 
 
@@ -436,7 +437,7 @@ export default function Navbar({page, setPage}: IProps) {
                                   <div className="w-full flex flex-col font-Cerebri-sans-book">
                                     <p onClick={() => navigate(1)}>Profile</p>
                                     <p className="mt-3" onClick={() => navigate(2)}>Customer Reviews</p>
-                                    <p className="mt-3" onClick={() => navigate(3)}>Subscriptions</p>
+                                    {/* <p className="mt-3" onClick={() => navigate(3)}>Subscriptions</p> */}
                                     <p className="mt-3" onClick={() => navigate(4)}>Settings</p>
                                   </div>
                                 </AccordionPanel>

@@ -68,9 +68,9 @@ export default function BusinessInfo({ next, images, picker, profilePic, formik,
 
     const compare = ( a: IServices, b: IServices ) => {
         if (a.name < b.name) {
-            return 1;
+            return -1;
         } 
-        return -1;
+        return 1;
       };
 
   return (
