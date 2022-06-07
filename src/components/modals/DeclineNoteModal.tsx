@@ -55,7 +55,7 @@ export default function DeclineNoteModal({open, close, id}: IProps) {
         <ModalContent className='h-64'>
             <ModalCloseButton onClick={() => close(false)} />
             <ModalBody className=''>
-                <p className='font- font-Graphik-Regular text-gray-600 text-md mt-10'>Live a note why the account wasn't approved</p>
+                <p className='font- font-Graphik-Regular text-gray-600 text-md mt-10'>Leave a note why the account wasn't approved</p>
                 <Textarea className='mt-5' value={msg} onChange={(e) => setMsg(e.target.value)}></Textarea>
                 <button onClick={Disapprove} className='w-full py-3 text-white font-Graphik-Regular text-sm rounded-md h-12 mt-4' style={{backgroundColor: '#1A8F85'}} >
                     {!loading && 'Send'}
