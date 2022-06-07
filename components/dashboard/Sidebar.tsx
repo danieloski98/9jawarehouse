@@ -140,7 +140,7 @@ export default function Sidebar({page, setPage}: IProps) {
                     </p>
                 </Link>
 
-            <p className="ml-0 text-md font-Cerebri-sans-book  mt-8">For further assistance </p>
+            <p className="ml-0 text-md font-Cerebri-sans-book  mt-8">For Further Assistance </p>
 
             <Link href="/contactus" passHref>
                 <p className="mt-3 p-3 h-12 cursor-pointer bg-themeGreen text-white text-sm font-Cerebri-sans-book  flex justify-center items-center">
