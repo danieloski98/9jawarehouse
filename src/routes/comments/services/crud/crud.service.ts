@@ -283,7 +283,10 @@ export class CrudService {
         });
       }
 
-      const reviews = await this.commentModel.find({ business_id: id });
+      const reviews = await this.commentModel.find({
+        business_id: id,
+        reviewed: true,
+      });
       console.log(reviews);
       return Return({
         error: false,
