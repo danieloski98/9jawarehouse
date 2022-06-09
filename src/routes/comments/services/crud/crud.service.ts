@@ -96,28 +96,6 @@ export class CrudService {
           { _id: pinActive._id },
           { use_count: pinActive.use_count + 1 },
         );
-        const updatedComments = await this.commentModel.find({
-          business_id: user_id,
-        });
-        let rating = 0;
-
-        for (let i = 0; i < updatedComments.length; i++) {
-          rating = rating + updatedComments[i].rating;
-        }
-
-        // for (let i = 0; i < comments.length; i++) {
-        //   rating += comments[i].rating;
-        // }
-        const userUpdate = await this.userModel.updateOne(
-          { _id: user_id },
-          {
-            rating:
-              rating / updatedComments.length > 5
-                ? 5
-                : rating / updatedComments.length,
-          },
-        );
-        console.log(updatePin);
         this.logger.log(newComment);
         // this.userNotificationService.triggerNotification(
         //   user_id,
@@ -160,27 +138,7 @@ export class CrudService {
           business_id: user_id,
         };
         const newComment = await this.commentModel.create(obj);
-        const updatedComments = await this.commentModel.find({
-          business_id: user_id,
-        });
-        let rating = 0;
 
-        for (let i = 0; i < updatedComments.length; i++) {
-          rating = rating + updatedComments[i].rating;
-        }
-
-        // for (let i = 0; i < comments.length; i++) {
-        //   rating += comments[i].rating;
-        // }
-        const userUpdate = await this.userModel.updateOne(
-          { _id: user_id },
-          {
-            rating:
-              rating / updatedComments.length > 5
-                ? 5
-                : rating / updatedComments.length,
-          },
-        );
         // renew pin
         await this.pinService.createPin(user_id);
 
@@ -217,6 +175,24 @@ export class CrudService {
         { reviewed: true },
       );
       console.log(reviews);
+      const user = await this.commentModel.findById(id);
+      const updatedComments = await this.commentModel.find({
+        business_id: user._id,
+      });
+      let rating = 0;
+
+      for (let i = 0; i < updatedComments.length; i++) {
+        rating = rating + updatedComments[i].rating;
+      }
+      const userUpdate = await this.userModel.updateOne(
+        { _id: user._id },
+        {
+          rating:
+            rating / updatedComments.length > 5
+              ? 5
+              : rating / updatedComments.length,
+        },
+      );
       return Return({
         error: false,
         statusCode: 200,
