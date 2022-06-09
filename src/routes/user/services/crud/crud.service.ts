@@ -89,7 +89,7 @@ export class CrudService {
         const user = await this.userModel.find({
           $text: { $search: query.service },
           verified: true,
-          // disabled: false,
+          //disabled: false,
           blocked: false,
           state: query.state,
         });
