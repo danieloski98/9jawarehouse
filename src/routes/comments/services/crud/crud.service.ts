@@ -175,17 +175,19 @@ export class CrudService {
         { reviewed: true },
       );
       console.log(reviews);
-      const user = await this.commentModel.findById(id);
+      const comment = await this.commentModel.findById(id);
+
       const updatedComments = await this.commentModel.find({
-        business_id: user._id,
+        business_id: comment.business_id,
       });
       let rating = 0;
 
       for (let i = 0; i < updatedComments.length; i++) {
         rating = rating + updatedComments[i].rating;
       }
+      console.log(rating);
       const userUpdate = await this.userModel.updateOne(
-        { _id: user._id },
+        { _id: comment.business_id },
         {
           rating:
             rating / updatedComments.length > 5
@@ -200,6 +202,7 @@ export class CrudService {
         data: reviews,
       });
     } catch (error) {
+      console.log(error);
       return Return({
         error: true,
         statusCode: 500,
