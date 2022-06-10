@@ -143,7 +143,7 @@ export class CrudService {
         await this.pinService.createPin(user_id);
 
         this.userNotificationService.triggerAdminNotification(
-          `A customer left a comment.`,
+          `A customer left a comment for ${userExist.business_name}`,
         );
         this.userNotificationService.triggerNotification(
           user_id,

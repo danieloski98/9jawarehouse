@@ -154,7 +154,7 @@ export class UserService {
 
       // trigger notification
       const noti = await this.notiService.triggerAdminNotification(
-        `A new account has been created and is awaiting your approval`,
+        `A new account has been created with email ${savedUser.email}, and is awaiting your approval`,
       );
 
       if (sentEmail.error) {
