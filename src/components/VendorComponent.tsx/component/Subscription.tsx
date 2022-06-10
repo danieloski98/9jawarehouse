@@ -74,7 +74,7 @@ export default function Subscription({user}: {user: IUser}) {
             <div className='w-full flex items-center my-12' > 
                 <div className='w-auto' >
                     <div className='flex items-center' >
-                        <div style={{borderColor: '#C2C2C2'}} className='w-10 h-10 rounded-lg cursor-pointer flex justify-center items-center border' > 
+                        {/* <div style={{borderColor: '#C2C2C2'}} className='w-10 h-10 rounded-lg cursor-pointer flex justify-center items-center border' > 
                             <IoIosArrowBack color='#878787' />
                         </div>
                         <div style={{borderColor: '#C2C2C2'}} className='w-auto h-10 font-Graphik-Bold rounded-lg flex border mx-2'> 
@@ -90,14 +90,14 @@ export default function Subscription({user}: {user: IUser}) {
                             <div style={{color: '#202020'}} className='w-10 cursor-pointer h-10 rounded-lg flex text-white justify-center items-center' >
                                 4
                             </div>
-                        </div>
-                        <div style={{borderColor: '#C2C2C2'}} className='w-10 h-10 rounded-lg cursor-pointer flex justify-center items-center border' >
+                        </div> */}
+                        {/* <div style={{borderColor: '#C2C2C2'}} className='w-10 h-10 rounded-lg cursor-pointer flex justify-center items-center border' >
                             <IoIosArrowForward color='#878787' />
-                        </div>
+                        </div> */}
                     </div>
-                    <p style={{fontSize: '14px'}} className='font-Graphik-Regular mt-2'>Showing <span className='font-Graphik-SemiBold' >1-10</span> from <span className='font-Graphik-SemiBold' >46 data</span></p>
+                    <p style={{fontSize: '14px'}} className='font-Graphik-Regular mt-2'>Showing <span className='font-Graphik-SemiBold' >1-{user.subscriptions?.length}</span> from <span className='font-Graphik-SemiBold' >{user.subscriptions?.length} data</span></p>
                 </div>
-                <div className='w-full flex items-center ml-20'>
+                {/* <div className='w-full flex items-center ml-20'>
                     <Input  className='font-Graphik-Regular mx-2' fontSize='14px' backgroundColor='#FBFBFB' placeholder='Search tranactions' />
                     
                     <p style={{fontSize: '14px'}} className=' ml-10 font-Graphik-Medium mx-2'>Filter</p>
@@ -107,7 +107,7 @@ export default function Subscription({user}: {user: IUser}) {
                         <option value='option3'>Option 3</option>
                     </Select>
                 <button style={{backgroundColor: '#1A8F85'}} className='px-8 py-3 font-Graphik-Regular text-sm text-white rounded-md ml-8' >Apply</button>
-                </div>
+                </div> */}
             </div>
             <div className='bg-white w-full py-6' > 
                 <Table variant='unstyled' >

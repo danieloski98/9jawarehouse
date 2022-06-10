@@ -56,7 +56,7 @@ export default function RoleManage() {
                                         <path d="M8 8L1 15M1 1L8 8L1 1ZM8 8L15 15L8 8ZM8 8L15 1L8 8Z" stroke="#000" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
                                     </svg>
                                     <p onClick={()=> navigate(`/dashboard/rolemanagement/edituser/${item._id}`)} className='font-Graphik-Regular cursor-pointer text-sm mr-10'>Edit</p>
-                                    <p onClick={()=> setShowModal(true)} className='font-Graphik-Regular text-sm my-2 cursor-pointer '>Delete</p>
+                                    {/* <p onClick={()=> setShowModal(true)} className='font-Graphik-Regular text-sm my-2 cursor-pointer '>Delete</p> */}
                                     {/* <p className='font-Graphik-Regular text-sm cursor-pointer '>Reset Password</p> */}
                                 </div>
                             :null}
@@ -86,7 +86,7 @@ export default function RoleManage() {
                                         <path d="M8 8L1 15M1 1L8 8L1 1ZM8 8L15 15L8 8ZM8 8L15 1L8 8Z" stroke="#000" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
                                     </svg>
                                     <p onClick={()=> navigate(`/dashboard/rolemanagement/edituser/${item._id}`)} className='font-Graphik-Regular cursor-pointer text-sm mr-10'>Edit</p>
-                                    <p onClick={()=> setShowModal(true)} className='font-Graphik-Regular text-sm my-2 cursor-pointer '>Delete</p>
+                                    {/* <p onClick={()=> setShowModal(true)} className='font-Graphik-Regular text-sm my-2 cursor-pointer '>Delete</p> */}
                                     {/* <p className='font-Graphik-Regular text-sm cursor-pointer '>Reset Password</p> */}
                                 </div>
                             :null}

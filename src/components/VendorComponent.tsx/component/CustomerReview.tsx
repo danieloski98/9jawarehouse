@@ -2,47 +2,18 @@ import { Input, Select, Table, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react
 import React from 'react'
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io'
 import { useNavigate } from 'react-router-dom';
+import { IComment } from '../../../types/comments';
 import { IUser } from '../../../types/user';
+import CustomerModal from '../../modals/ActivityModal.tsx/CustomerModal';
 
-const Information = [
-    {
-      service: 'Event Planner',
-      user: 'John Anderson',
-      time: 'June 20, 2021',
-      vendor: 'Adamu James',
-      approved: 'June 20, 2021',
-      status: 'Approved'
-    },
-    {
-      service: 'Event Planner',
-      user: 'John Anderson',
-      time: 'June 20, 2021',
-      vendor: 'Adamu James',
-      approved: 'June 20, 2021',
-      status: 'Pending'
-    },
-    {
-      service: 'Event Planner',
-      user: 'John Anderson',
-      time: 'June 20, 2021',
-      vendor: 'Adamu James',
-      approved: 'June 20, 2021',
-      status: 'Rejected'
-    },
-    {
-      service: 'Event Planner',
-      user: 'John Anderson',
-      time: 'June 20, 2021',
-      vendor: 'Adamu James',
-      approved: 'June 20, 2021',
-      status: 'Approved'
-    },
-]
 
 
 export default function CustomerReview({user}: {user: IUser}) {
     const [approved, setApproved] = React.useState(0);
     const [average, setAv] = React.useState(0);
+    const [showModal, setShowModal] = React.useState(false) 
+    const [showRejectModal, setShowRejectModal] = React.useState(false);
+    const [comment, setComment]= React.useState({} as IComment);
 
     React.useEffect(() => {
         const appro = user.comments?.filter((item) => item.reviewed).length as number;
@@ -56,6 +27,11 @@ export default function CustomerReview({user}: {user: IUser}) {
         setAv(av);
 
     }, [user]);
+
+    const open = (com: IComment) => {
+        setComment(com);
+        setShowModal(true);
+    }
 
     const navigate = useNavigate();
     
@@ -81,10 +57,10 @@ export default function CustomerReview({user}: {user: IUser}) {
             <div className='w-full flex items-center my-12' > 
                 <div className='w-auto' >
                     <div className='flex items-center' >
-                        <div style={{borderColor: '#C2C2C2'}} className='w-10 h-10 rounded-lg cursor-pointer flex justify-center items-center border' > 
+                        {/* <div style={{borderColor: '#C2C2C2'}} className='w-10 h-10 rounded-lg cursor-pointer flex justify-center items-center border' > 
                             <IoIosArrowBack color='#878787' />
-                        </div>
-                        <div style={{borderColor: '#C2C2C2'}} className='w-auto h-10 font-Graphik-Bold rounded-lg flex border mx-2'> 
+                        </div> */}
+                        {/* <div style={{borderColor: '#C2C2C2'}} className='w-auto h-10 font-Graphik-Bold rounded-lg flex border mx-2'> 
                             <div style={{backgroundColor: '#3E3F41'}} className='w-10 cursor-pointer h-10 rounded-lg flex text-white justify-center items-center' >
                                 1
                             </div>
@@ -97,14 +73,14 @@ export default function CustomerReview({user}: {user: IUser}) {
                             <div style={{color: '#202020'}} className='w-10 cursor-pointer h-10 rounded-lg flex text-white justify-center items-center' >
                                 4
                             </div>
-                        </div>
-                        <div style={{borderColor: '#C2C2C2'}} className='w-10 h-10 rounded-lg cursor-pointer flex justify-center items-center border' >
+                        </div> */}
+                        {/* <div style={{borderColor: '#C2C2C2'}} className='w-10 h-10 rounded-lg cursor-pointer flex justify-center items-center border' >
                             <IoIosArrowForward color='#878787' />
-                        </div>
+                        </div> */}
                     </div>
-                    <p style={{fontSize: '14px'}} className='font-Graphik-Regular mt-2'>Showing <span className='font-Graphik-SemiBold' >1-10</span> from <span className='font-Graphik-SemiBold' >46 data</span></p>
+                    <p style={{fontSize: '14px'}} className='font-Graphik-Regular mt-2'>Showing <span className='font-Graphik-SemiBold' >1-{user.comments?.length}</span> from <span className='font-Graphik-SemiBold' >{user.comments?.length} data</span></p>
                 </div>
-                <div className='w-full flex items-center ml-20'>
+                {/* <div className='w-full flex items-center ml-20'>
                     <Input  className='font-Graphik-Regular mx-2' fontSize='14px' backgroundColor='#FBFBFB' placeholder='Search…' />
                     
                     <p style={{fontSize: '14px'}} className=' ml-10 font-Graphik-Medium mx-2'>Filter</p>
@@ -114,7 +90,7 @@ export default function CustomerReview({user}: {user: IUser}) {
                         <option value='option3'>Option 3</option>
                     </Select>
                 <button style={{backgroundColor: '#1A8F85'}} className='px-8 py-3 font-Graphik-Regular text-sm text-white rounded-md ml-8' >Apply</button>
-                </div>
+                </div> */}
             </div>
             <div className='bg-white w-full py-6' >
 
@@ -140,7 +116,9 @@ export default function CustomerReview({user}: {user: IUser}) {
                                     <Td>{new Date(item.created_at).toDateString()}</Td>
                                     <Td style={item.reviewed ? {color: '#0CD27C'} :  {color: '#F60D0D'}}>{item.reviewed ? 'Approved':'Not Approved'}</Td>
                                     <Td >
-                                        <svg className='mx-auto cursor-pointer' id="Iconly_Bold_Show" data-name="Iconly/Bold/Show" xmlns="http://www.w3.org/2000/svg" width="15" height="12" viewBox="0 0 15 12">
+                                        <svg 
+                                        onClick={() => open(item)}
+                                        className='mx-auto cursor-pointer' id="Iconly_Bold_Show" data-name="Iconly/Bold/Show" xmlns="http://www.w3.org/2000/svg" width="15" height="12" viewBox="0 0 15 12">
                                             <g id="Show">
                                                 <path id="Show-2" data-name="Show" d="M7.493,12C4.4,12,1.611,9.836.044,6.211a.543.543,0,0,1,0-.429C1.609,2.161,4.394,0,7.493,0H7.5a6.98,6.98,0,0,1,4.3,1.534,10.676,10.676,0,0,1,3.154,4.248.543.543,0,0,1,0,.429C13.389,9.836,10.6,12,7.5,12ZM4.573,6A2.923,2.923,0,1,0,7.5,3.091,2.918,2.918,0,0,0,4.573,6Zm1.1,0a1.865,1.865,0,0,1,.037-.356h.036a1.5,1.5,0,0,0,1.5-1.44A1.492,1.492,0,0,1,7.5,4.18,1.814,1.814,0,1,1,5.672,6Z" fill="#200e32"/>
                                             </g>
@@ -152,6 +130,17 @@ export default function CustomerReview({user}: {user: IUser}) {
                     </Tbody> 
                 </Table>
             </div>
+
+
+            {showModal ? 
+            (
+                <>
+                    <div className="h-auto flex justify-center items-center overflow-x-hidden overflow-y-hidden fixed pb-4 px-4 inset-0 z-50 outline-none focus:outline-none"> 
+                        <CustomerModal close={setShowModal} next={setShowRejectModal} comment={comment} />
+                    </div> 
+                    <div className="opacity-25 fixed flex flex-1 inset-0 z-20 bg-black"/>
+                </>
+            ) : null} 
         </div>
     )
 }

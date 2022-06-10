@@ -202,11 +202,11 @@ export default function EditUserProfileModal({close, user}: IProps) {
                         <div className="w-full">
                         <InputGroup>
                             <InputLeftElement>
-                                <div className="flex items-center w-full h-full pt-6 pl-3 text-xs">
-                                <span>+234</span>
+                                <div className="flex items-center w-full h-full pt-1 pl-3 text-xs">
+                                <span className=' mr-4'>+234</span>
                                 </div>
                             </InputLeftElement>
-                            <Input fontSize="xs" className="bg-gray-100 mt-3 " name="phone" value={formik.values.phone} onChange={formik.handleChange} onFocus={() => formik.setFieldTouched('phone', true, true)} />
+                            <Input fontSize="sm" paddingLeft="50px" className="bg-gray-100 mt-0 " name="phone" value={formik.values.phone} onChange={formik.handleChange} onFocus={() => formik.setFieldTouched('phone', true, true)} />
                         </InputGroup>
                     </div>
                     {formik.touched.phone && formik.errors.phone && <p className="text-xs mt-1 Cerebri-sans-book text-red-400">{formik.errors.phone}</p>}

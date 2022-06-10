@@ -125,6 +125,18 @@ export default function Activity() {
                 return -1;
             }
         }
+
+        if (sort === 3) {
+            if ((a.reviewed) < (b.reviewed)) {
+                return -1;
+            }
+        }
+
+        if (sort === 4) {
+            if ((a.reviewed) > (b.reviewed)) {
+                return -1;
+            }
+        }
         return 0;
       }, [sort]);
 
@@ -136,11 +148,11 @@ export default function Activity() {
                     <p style={{color: '#8A8A8A'}} className='text-sm font-Graphik-Regular' >Manage all customer reviews for vendors</p>
                 </div>
                 <div className='ml-auto'>
-                    <Select className='font-Graphik-Regular ' fontSize='12px' backgroundColor='white' placeholder='Past 30 days'>
+                    {/* <Select className='font-Graphik-Regular ' fontSize='12px' backgroundColor='white' placeholder='Past 30 days'>
                         <option value='option1'>Option 1</option>
                         <option value='option2'>Option 2</option>
                         <option value='option3'>Option 3</option>
-                    </Select>
+                    </Select> */}
                 </div>
             </div>
             <div className='w-full flex my-6 px-8 items-center justify-between ' >
@@ -167,12 +179,14 @@ export default function Activity() {
                 <p style={{fontSize: '16px'}} className='font-Graphik-SemiBold'>Reviews</p>
             
                 <div className='ml-auto flex items-center'>
-                    <Input  className='font-Graphik-Regular mx-2' fontSize='14px' backgroundColor='#FBFBFB' placeholder='Search by name or email' onChange={(e) => setSearch(e.target.value)} value={search} />
+                    <Input  className='font-Graphik-Regular mx-2' fontSize='14px' backgroundColor='#FBFBFB' placeholder='Search by name or email' onChange={(e: any) => setSearch(e.target.value)} value={search} />
                     
                 <p style={{fontSize: '14px'}} className='font-Graphik-Medium mx-2'>Filter</p>
-                    <Select className='font-Graphik-Regular mx-2' fontSize='14px' backgroundColor='#FBFBFB' onChange={(e) => setSort(parseInt(e.target.value))}>
+                    <Select className='font-Graphik-Regular mx-2' fontSize='14px' backgroundColor='#FBFBFB' onChange={(e: any) => setSort(parseInt(e.target.value))}>
                         <option value={1}>Email</option>
                         <option value={2}>Full name</option>
+                        <option value={3}>Pending</option>
+                        <option value={4}>Approved</option>
                     </Select>
                 <button style={{backgroundColor: '#1A8F85'}} className='px-8 py-3 font-Graphik-Regular text-sm text-white rounded-md ml-8' >Apply</button>
                 </div>

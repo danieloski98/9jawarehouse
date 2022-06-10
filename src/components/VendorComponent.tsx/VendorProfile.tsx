@@ -68,9 +68,9 @@ export default function VendorProfile() {
                 <div onClick={()=> setTab(2)} style={tab === 2 ? {backgroundColor: '#004143', color: 'white'}: {}} className='w-full cursor-pointer font-Graphik-Regular mx-3 py-3 rounded-lg flex justify-center items-center' >
                     Verification
                 </div>
-                <div onClick={()=> setTab(3)} style={tab === 3 ? {backgroundColor: '#004143', color: 'white'}: {}} className='w-full cursor-pointer font-Graphik-Regular mx-3 py-3 rounded-lg flex justify-center items-center' >
+                {/* <div onClick={()=> setTab(3)} style={tab === 3 ? {backgroundColor: '#004143', color: 'white'}: {}} className='w-full cursor-pointer font-Graphik-Regular mx-3 py-3 rounded-lg flex justify-center items-center' >
                     Subscriptions
-                </div>
+                </div> */}
                 {/* <div onClick={()=> setTab(4)} style={tab === 4 ? {backgroundColor: '#004143', color: 'white'}: {}} className='w-full cursor-pointer font-Graphik-Regular mx-3 py-3 rounded-lg flex justify-center items-center' >
                     Support Tickets
                 </div> */}

@@ -81,12 +81,12 @@ export default function Overview() {
                     <p className='text-sm font-Graphik-Medium mt-1' >Total Vendor Reviews</p>
                     {/* <p style={{color: '#8A8A8A'}} className='text-xs font-Graphik-Regular mt-2' ><span style={{color: '#E00253'}} >-2%</span> than last month</p> */}
                 </div> 
-                <div className='bg-white w-full mx-2 p-4 rounded-lg' >
+                {/* <div className='bg-white w-full mx-2 p-4 rounded-lg' >
                     {!loading && <p style={{fontSize: '24px'}} className='font-Graphik-SemiBold'>{data.totalSubs}</p>}
-                    {loading && <Spinner size="sm" color={theme.primaryColor} />}
-                    <p className='text-sm font-Graphik-Medium mt-1' >Total Subscription</p>
+                    {loading && <Spinner size="sm" color={theme.primaryColor} />} */}
+                    {/* <p className='text-sm font-Graphik-Medium mt-1' >Total Subscription</p> */}
                     {/* <p style={{color: '#8A8A8A'}} className='text-xs font-Graphik-Regular mt-2' ><span style={{color: '#0CD27C'}} >-2%</span> than last month</p> */}
-                </div> 
+                {/* </div>  */}
             </div>
         </div>
     )

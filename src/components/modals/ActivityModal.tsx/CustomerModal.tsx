@@ -175,7 +175,7 @@ export default function CustomerModal({close, next, comment}: IProps) {
                             {comment.pictures.length > 0 && comment.pictures.map((item, index) => (
                                 <img key={index.toString()} src={item} alt='' className='w-20 h-20 mx-1 rounded cursor-pointer' onClick={() => {setImg(item); setVisible(true)}} />
                             ))}
-                            {comment.pictures.length < 1 && <p>No images uploaded</p>}
+                            {comment !== undefined && comment.pictures.length < 1 && <p>No images uploaded</p>}
                         </div>
                     </div>
                 </div>
