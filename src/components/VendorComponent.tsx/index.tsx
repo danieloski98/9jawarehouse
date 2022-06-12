@@ -168,7 +168,7 @@ export default function Vendors() {
         }
 
         if (sort === 3) {
-            if ((a.blocked) === true && (!b.blocked) === false) {
+            if (a.blocked > b.blocked) {
                 return -1;
             }
         }
@@ -178,7 +178,7 @@ export default function Vendors() {
                 return -1;
             }
         }
-        return 0;
+        return 1;
       }, [sort]);
 
 
@@ -288,7 +288,9 @@ export default function Vendors() {
                                     <Td>{item.business_name}</Td>
                                     <Td>{item.email}</Td>
                                     <Td>{new Date(item.createAt).toDateString()}</Td>
-                                    <Td>{item.blocked ? 'INACTIVE':'ACTIVE'}</Td>
+                                    <Td>
+                                        <p className={item.blocked ? "text-yellow-500 font-bold": "text-green-500 font-bold"}>{item.blocked ? 'PENDING':'APPROVED'}</p>
+                                    </Td>
                                     <Td className='flex items-center justify-between' >
                                         <FiArchive color="black" size={20} onClick={()=> {setActive(item); setDeleteModal(true);} } />
                                         <svg onClick={()=> {setActive(item);  setShowModal(true)}} className='mx-2 cursor-pointer' id="Iconly_Bold_Edit" data-name="Iconly/Bold/Edit" xmlns="http://www.w3.org/2000/svg" width="12.218" height="13.913" viewBox="0 0 12.218 13.913">
