@@ -166,6 +166,18 @@ export default function Vendors() {
                 return -1;
             }
         }
+
+        if (sort === 3) {
+            if ((a.blocked) === true && (!b.blocked) === false) {
+                return -1;
+            }
+        }
+
+        if (sort === 4) {
+            if ((a.blocked) === false && (b.blocked)) {
+                return -1;
+            }
+        }
         return 0;
       }, [sort]);
 
@@ -246,7 +258,8 @@ export default function Vendors() {
                     <Select className='font-Graphik-Regular mx-2' fontSize='14px' backgroundColor='#FBFBFB' onChange={(e: any) => setSort(parseInt(e.target.value))}>
                         <option value={1}>Busines name</option>
                         <option value={2}>Date Created</option>
-                        
+                        <option value={3}>Pending</option>
+                        <option value={4}>Approved</option>
                     </Select>
                 <button onClick={() => xlsx(xdata, settings)} style={{backgroundColor: '#1A8F85'}} className='px-2 py-2 w-56 font-Graphik-Regular text-xs text-white rounded-md ml-8' >Download Report</button>
                 </div>
