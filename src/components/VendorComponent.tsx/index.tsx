@@ -188,6 +188,7 @@ export default function Vendors() {
         {
           sheet: 'Users List',
           columns: [
+            { label: 'email', value: (row: IUser) => row.email },
             { label: 'firstname', value: (row: IUser) => row.first_name },
             { label: 'lastname', value: (row: IUser) => row.last_name },
             { label: 'phone', value: (row: IUser) => row.phone },
