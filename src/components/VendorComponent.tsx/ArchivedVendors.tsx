@@ -154,8 +154,8 @@ export default function ArchivedVendors() {
             </div>
 
             <div className='flex items-center my-12' >
-                <p style={{fontSize: '14px'}} className='font-Graphik-Regular'>Showing <span className='font-Graphik-SemiBold' >1-10</span> from <span className='font-Graphik-SemiBold' >46 data</span></p>
-                <div className='flex items-center ml-auto' >
+                <p style={{fontSize: '14px'}} className='font-Graphik-Regular'>Showing <span className='font-Graphik-SemiBold' >1-{users.length}</span> from <span className='font-Graphik-SemiBold' >{users.length} data</span></p>
+                {/* <div className='flex items-center ml-auto' >
                     <div style={{borderColor: '#C2C2C2'}} className='w-10 h-10 rounded-lg cursor-pointer flex justify-center items-center border' > 
                         <IoIosArrowBack color='#878787' />
                     </div>
@@ -176,7 +176,7 @@ export default function ArchivedVendors() {
                     <div style={{borderColor: '#C2C2C2'}} className='w-10 h-10 rounded-lg cursor-pointer flex justify-center items-center border' >
                         <IoIosArrowForward color='#878787' />
                     </div>
-                </div>
+                </div> */}
             </div>
 
         {restoreModal ? 

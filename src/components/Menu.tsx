@@ -53,29 +53,29 @@ export default function Menu(props: any) {
                 </div>
 
                 <div  className='w-full cursor-pointer px-4 my-3' >
-                    <div onClick={() => ClickHandler(Array[1])} style={active === '/dashboard/activity' ? { backgroundColor: '#004143' } : {}} className='w-full h-full py-3 rounded-lg flex flex-row items-center ' >
+                    <div onClick={() => ClickHandler(Array[1])} style={active.includes('activity') ? { backgroundColor: '#004143' } : {}} className='w-full h-full py-3 rounded-lg flex flex-row items-center ' >
                         <div className='w-12 ml-2 flex justify-center items-center' >
                             <Icons icons="activity" index={active} />
                         </div>
-                        <p style={active === '/dashboard/activity' ? { color: '#fff' } : { color: '#777777' }} className=' font-Graphik-Regular text-base' >Activity</p>
+                        <p style={active.includes('activity') ? { color: '#fff' } : { color: '#777777' }} className=' font-Graphik-Regular text-base' >Activity</p>
                     </div>
                 </div>
 
                 <div  className='w-full cursor-pointer px-4 my-3' >
-                    <div onClick={() => ClickHandler(Array[2])} style={active === '/dashboard/vendors' ? { backgroundColor: '#004143' } : {}} className='w-full h-full py-3 rounded-lg flex flex-row items-center ' >
+                    <div onClick={() => ClickHandler(Array[2])} style={active.includes('vendors') ? { backgroundColor: '#004143' } : {}} className='w-full h-full py-3 rounded-lg flex flex-row items-center ' >
                         <div className='w-12 ml-2 flex justify-center items-center' >
                             <Icons icons="vendors" index={active} />
                         </div>
-                        <p style={active === '/dashboard/vendors' ? { color: '#fff' } : { color: '#777777' }} className=' font-Graphik-Regular text-base' >Vendors</p>
+                        <p style={active.includes('vendors') ? { color: '#fff' } : { color: '#777777' }} className=' font-Graphik-Regular text-base' >Vendors</p>
                     </div>
                 </div>
 
                 <div  className='w-full cursor-pointer px-4 my-3' >
-                    <div onClick={() => ClickHandler(Array[3])} style={active === '/dashboard/categories' ? { backgroundColor: '#004143' } : {}} className='w-full h-full py-3 rounded-lg flex flex-row items-center ' >
+                    <div onClick={() => ClickHandler(Array[3])} style={active.includes('categories') ? { backgroundColor: '#004143' } : {}} className='w-full h-full py-3 rounded-lg flex flex-row items-center ' >
                         <div className='w-12 ml-2 flex justify-center items-center' >
                             <Icons icons="categories" index={active} />
                         </div>
-                        <p style={active === '/dashboard/categories' ? { color: '#fff' } : { color: '#777777' }} className=' font-Graphik-Regular text-base' >Categories</p>
+                        <p style={active.includes('categories') ? { color: '#fff' } : { color: '#777777' }} className=' font-Graphik-Regular text-base' >Categories</p>
                     </div>
                 </div>
 
@@ -89,29 +89,29 @@ export default function Menu(props: any) {
                 </div> */}
 
                 <div  className='w-full cursor-pointer px-4 my-3' >
-                    <div onClick={() => ClickHandler(Array[6])} style={active === '/dashboard/records' ? { backgroundColor: '#004143' } : {}} className='w-full h-full py-3 rounded-lg flex flex-row items-center ' >
+                    <div onClick={() => ClickHandler(Array[6])} style={active.includes('records') ? { backgroundColor: '#004143' } : {}} className='w-full h-full py-3 rounded-lg flex flex-row items-center ' >
                         <div className='w-12 ml-2 flex justify-center items-center' >
                             <Icons icons="records" index={active} />
                         </div>
-                        <p style={active === '/dashboard/records' ? { color: '#fff' } : { color: '#777777' }} className=' font-Graphik-Regular text-base' >Records</p>
+                        <p style={active.includes('records') ? { color: '#fff' } : { color: '#777777' }} className=' font-Graphik-Regular text-base' >Records</p>
                     </div>
                 </div>
 
                 <div  className='w-full cursor-pointer px-4 my-3' >
-                    <div onClick={() => ClickHandler(Array[4])} style={active === '/dashboard/rolemanagement' ? { backgroundColor: '#004143' } : {}} className='w-full h-full py-3 rounded-lg flex flex-row items-center ' >
+                    <div onClick={() => ClickHandler(Array[4])} style={active.includes('rolemanagement')? { backgroundColor: '#004143' } : {}} className='w-full h-full py-3 rounded-lg flex flex-row items-center ' >
                         <div className='w-12 ml-2 flex justify-center items-center' >
                             <Icons icons="rolemanagement" index={active} />
                         </div>
-                        <p style={active === '/dashboard/rolemanagement' ? { color: '#fff' } : { color: '#777777' }} className=' font-Graphik-Regular text-base' >Role Management</p>
+                        <p style={active.includes('rolemanagement') ? { color: '#fff' } : { color: '#777777' }} className=' font-Graphik-Regular text-base' >Role Management</p>
                     </div>
                 </div>
 
                 <div  className='w-full cursor-pointer px-4 my-3' >
-                    <div onClick={() => ClickHandler(Array[5])} style={ active === '/dashboard/accountsettings' ? { backgroundColor: '#004143' } : {}} className='w-full h-full py-3 rounded-lg flex flex-row items-center ' >
+                    <div onClick={() => ClickHandler(Array[5])} style={ active.includes('accountsettings') ? { backgroundColor: '#004143' } : {}} className='w-full h-full py-3 rounded-lg flex flex-row items-center ' >
                         <div className='w-12 ml-2 flex justify-center items-center' >
                             <Icons icons="accountsettings" index={active} />
                         </div>
-                        <p style={active === '/dashboard/accountsettings' ? { color: '#fff' } : { color: '#777777' }} className=' font-Graphik-Regular text-base' >Account Settings</p>
+                        <p style={active.includes('accountsettings') ? { color: '#fff' } : { color: '#777777' }} className=' font-Graphik-Regular text-base' >Account Settings</p>
                     </div>
                 </div>
 
