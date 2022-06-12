@@ -139,7 +139,7 @@ export default function ProfileBox({user, reviews}: IProps) {
 
           <div className="flex flex-1 flex-col xl:mt-0 lg:mt-0 md:mt-4 sm:mt-4">
             <p className="text-lg font-Circular-std-medium text-themeGreen">Phone</p>
-            <p className="text-md font-Cerebri-sans-book mt-2 text-gray-500">+234{user.phone.slice(1)}</p>
+            <p className="text-md font-Cerebri-sans-book mt-2 text-gray-500">+234{user.phone}</p>
           </div>
 
           <div className="flex flex-1 flex-col xl:mt-0 lg:mt-0 md:mt-4 sm:mt-4">

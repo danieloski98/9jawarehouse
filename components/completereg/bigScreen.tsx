@@ -200,6 +200,10 @@ export default function BigScreen({ states, services}: {states: IState[], servic
 
     const fileProcessor = (files: any[]) => {
         if (caller === 1) {
+            if (imagesFiles.length >= 3) {
+                alert('You can only pick 3 images');
+                return
+            }
             const imgs = [...imagesFiles, files[0]];
             setImagesFiles(imgs);
             fileReader.readAsDataURL(files[0]);

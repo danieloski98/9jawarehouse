@@ -170,7 +170,7 @@ export default function Signup() {
                     <ul className=' list-disc list-outside text-white font-Cerebri-sans-book mt-5'>
                         <li>Get your business and services listed on a trusted website that is visible globally.</li>
                         <li>Reduce your cost of advertising and reaching out to prospective customers.</li>
-                        <li>Increase level engagement on all your business social media platforms.</li>
+                        <li>Increase the level of engagement on all your business social media platforms.</li>
                         <li>Make your business growth profile over the years be visible to investors and a greater audience.</li>
                         <li>Connect and engage with similar businesses and services within and outside your community.</li>
                         <li>Get unlimited access to business mentorship, development, and trainings.</li>

@@ -91,11 +91,11 @@ export default function PersonalInfo({ next, states, formik }: IProps) {
                 <label>Phone</label>
                 <div className="w-full xl:w-11/12 lg:w-11/12 md:w-full sm:w-full">
                     <InputGroup>
-                        <InputLeftElement>
+                        {/* <InputLeftElement>
                             <div className="flex items-center w-full h-full pt-6 pl-0 text-xs">
                             <span>+234</span>
                             </div>
-                        </InputLeftElement>
+                        </InputLeftElement> */}
                         <Input border="none" bgColor="whitesmoke" borderRadius={0} fontSize="xs" className="bg-gray-100 mt-3 " name="phone" value={formik.values.phone} onChange={formik.handleChange} onFocus={() => formik.setFieldTouched('phone', true, true)} />
                     </InputGroup>
                 </div>

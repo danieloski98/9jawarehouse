@@ -84,7 +84,7 @@ export default function BusinessInfo({ next, images, picker, profilePic, formik,
         </p>
 
         <div className="flex flex-col mt-8">
-            <p className="text-sm font-semibold text-gray-500 mt-4">Add featured images (5 images maximum)</p>
+            <p className="text-sm font-semibold text-gray-500 mt-4">Add featured images (3 images maximum)</p>
             <div className="w-auto h-32 overflow-x-scroll overflow-y-hidden flex mt-6 ">
 
                 {images.length < 1 && (
@@ -115,7 +115,7 @@ export default function BusinessInfo({ next, images, picker, profilePic, formik,
                    
                    </div>
                 ))}    
-                {images.length > 0 && images.length < 5 && (
+                {images.length > 0 && images.length < 3 && (
                      <div onClick={() => picker(1)} className=" w-32 h-32 min-w-32 max-w-md bg-gray-200 flex justify-center items-center mr-4 cursor-pointer">
                         <FiCamera size={35} color="grey" />
                     </div>
