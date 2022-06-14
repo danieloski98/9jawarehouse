@@ -54,7 +54,7 @@ export default function VerificationDocuments() {
     const [docName, setDocName] = React.useState('');
     const [doc, setDoc] = React.useState('');
     const [cac, setCac] = React.useState('');
-    const [docType, setDocType] = React.useState('Drivers License');
+    const [docType, setDocType] = React.useState('NIN');
     const [stage, setStage] = React.useState(1);
     const toast = useToast();
     const router = useRouter();
@@ -109,10 +109,10 @@ export default function VerificationDocuments() {
     const readerDoc = (files: File[]) => {
         const neededDoc = files[0];
         setDocfile(neededDoc);
-        if (neededDoc.size > 5719878) {
+        if (neededDoc.size > 1000000) {
             toast({
                 status: 'warning',
-                description: 'Can\'t use an image greater than 5MB',
+                description: 'Can\'t use an image greater than 1MB',
                 title: 'Image Too Large',
                 position: 'top',
                 isClosable: true,
@@ -127,10 +127,12 @@ export default function VerificationDocuments() {
     const readerCac = (files: any[]) => {
         const neededDoc = files[0];
         setCacfile(neededDoc);
-        if (neededDoc.size > 5719878) {
+        // 5719878
+        // 1000000
+        if (neededDoc.size > 1000000) {
             toast({
                 status: 'warning',
-                description: 'Can\'t use an image greater than 5MB',
+                description: 'Can\'t use an image greater than 1MB',
                 title: 'Image Too Large',
                 position: 'top',
                 isClosable: true,
