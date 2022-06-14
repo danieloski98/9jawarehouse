@@ -159,11 +159,6 @@ export default function VerificationDocuments() {
         // formdata
         const formData = new FormData();
 
-        formData.append('first_name', formik.values.first_name);
-        formData.append('last_name', formik.values.last_name);
-        formData.append('business_name', formik.values.business_name);
-        formData.append('business_description', formik.values.business_description);
-        formData.append('verification_document_type', docType);
         formData.append('verification_document', docFile);
 
         if (cacFile !== null) {
@@ -173,11 +168,17 @@ export default function VerificationDocuments() {
         setLoading(true);
         const request = await fetch(`${url}user/${router.query['id']}/verification`, {
             method: 'put',
-            body: formData,
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify({
+                ...formik.values,
+                verification_document_type: docType
+            }),
         });
 
         const json = await request.json() as IServerReturnObject;
-        setLoading(false);
+       
         if (json.statusCode !== 200) {
             toast({
                 title: 'Error',
@@ -187,8 +188,28 @@ export default function VerificationDocuments() {
                 isClosable: true,
                 duration: 5000
             });
+            setLoading(false);
             return;
         } else {
+            // upload images
+            const req = await fetch(`${url}user/${router.query['id']}/verification/documents`, {
+                method: 'put',
+                body: formData,
+            });
+            const js = await req.json() as IServerReturnObject;
+
+            if (js.error) {
+                toast({
+                    title: 'Error',
+                    description: js.errorMessage,
+                    position: 'top',
+                    status: 'error',
+                    isClosable: true,
+                    duration: 5000
+                });
+                setLoading(false);
+                return;
+            }
             toast({
                 title: 'Message',
                 description: json.successMessage,
@@ -197,7 +218,8 @@ export default function VerificationDocuments() {
                 isClosable: true,
                 duration: 5000
             });
-            router.push('/underreview');
+            setLoading(false);
+            router.push(`/underreview?id=${router.query['id']}`);
         }
     }
 
