@@ -2,10 +2,13 @@
 /dist
 /node_modules
 /public
+
+
 /docs
 /files
 /pictures
 /commentPics
+/docuents
 
 .env
 

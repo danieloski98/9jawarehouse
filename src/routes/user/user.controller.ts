@@ -11,7 +11,10 @@ import {
   UploadedFiles,
   UseInterceptors,
 } from '@nestjs/common';
-import { AnyFilesInterceptor } from '@nestjs/platform-express';
+import {
+  AnyFilesInterceptor,
+  FileFieldsInterceptor,
+} from '@nestjs/platform-express';
 import { ApiBody, ApiParam, ApiProperty, ApiTags } from '@nestjs/swagger';
 import { Response } from 'express';
 import { join } from 'path';
@@ -20,6 +23,7 @@ import { IFile } from 'src/Types/file';
 import { AdminService } from './services/admin/admin.service';
 import { CrudService } from './services/crud/crud.service';
 import { PicsService } from './services/pics/pics.service';
+import { Multer } from 'multer';
 
 class ICert {
   @ApiProperty()
@@ -243,15 +247,23 @@ export class UserController {
   @ApiParam({ type: String, name: 'id' })
   @ApiBody({ type: User })
   @Put(':id/verification')
-  // @UseInterceptors(
-  //   AnyFilesInterceptor({
-  //     dest: join(process.cwd(), '/pictures'),
-  //   }),
-  // )
+  @UseInterceptors(
+    FileFieldsInterceptor(
+      [
+        { name: 'verification_document', maxCount: 1 },
+        { name: 'cac', maxCount: 1 },
+      ],
+      { dest: 'documents' },
+    ),
+  )
   async uploadverificationfiles(
     @Res() res: Response,
     @Param() param: any,
-    @UploadedFiles() files: IFile[],
+    @UploadedFiles()
+    files: {
+      verification_document: Array<Express.Multer.File>;
+      cac: Array<Express.Multer.File>;
+    },
     @Body()
     body: {
       first_name: string;
@@ -263,8 +275,11 @@ export class UserController {
       cac?: string;
     },
   ) {
-    console.log(body);
-    const result = await this.crudService.uploadDocuments(param['id'], body);
+    const result = await this.crudService.uploadDocuments(
+      param['id'],
+      body,
+      files,
+    );
     res.status(result.statusCode).send(result);
   }
 

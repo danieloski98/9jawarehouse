@@ -343,13 +343,14 @@ export class CrudService {
       business_name: string;
       business_description: string;
       verification_document_type: string;
-      verification_document: string;
-      cac?: string;
+    },
+    files?: {
+      verification_document: Array<Express.Multer.File>;
+      cac: Array<Express.Multer.File>;
     },
   ): Promise<IReturnObject> {
     try {
       const userExist = await this.userModel.findById(id);
-      console.log(typeof details.cac);
       if (userExist === null) {
         return Return({
           error: true,
@@ -360,20 +361,32 @@ export class CrudService {
 
       // update the details
       // upload the images
+      // console.log(files);
+      const doc = files.verification_document[0];
+
+      // let cac: Express.Multer.File | null;
+      // if (files.cac) {
+      //   cac = files.cac[0];
+      // }
       const verification_doc = await cloudinary.uploader.upload(
-        details.verification_document,
+        `${process.cwd()}/${files.verification_document[0].path}`,
       );
+      console.log(verification_doc.secure_url);
+
       let cac_doc: UploadApiResponse;
-      if ((details.cac as string).length !== 0) {
-        cac_doc = await cloudinary.uploader.upload(details.cac);
+      if (files.cac) {
+        cac_doc = await cloudinary.uploader.upload(
+          `${process.cwd()}/${files.cac[0].path}`,
+        );
       }
+
       const updatedValues = await this.userModel.updateOne(
         { _id: id },
         {
           ...details,
           verification_document_type: details.verification_document_type,
           verification_document: verification_doc.secure_url,
-          CAC: (details.cac as string).length !== 0 ? cac_doc.secure_url : '',
+          CAC: files.cac ? cac_doc.secure_url : '',
           disabled: true,
         },
       );
