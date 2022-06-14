@@ -48,8 +48,8 @@ export default function VerificationDocuments() {
     const [openSuccessModal, setOpenSuccessModal] = React.useState(false);
     const docReader = React.useRef(new FileReader()).current;
     const cacReader = React.useRef(new FileReader()).current;
-    const [docFile, setDocfile] = React.useState({} as File);
-    const [cacFile, setCacfile] = React.useState({} as File);
+    const [docFile, setDocfile] = React.useState(null as null | File);
+    const [cacFile, setCacfile] = React.useState(null as null | File);
     const [cacName, setCacname] = React.useState('');
     const [docName, setDocName] = React.useState('');
     const [doc, setDoc] = React.useState('');
@@ -77,23 +77,23 @@ export default function VerificationDocuments() {
         setStage(2);
     }
 
-    React.useEffect(() => {
-        docReader.onload = () => {
-            setDoc(docReader.result as string);
-        }
-        return () => {
-            docReader.removeEventListener('load', () => {});
-        }
-    }, [docReader])
+    // React.useEffect(() => {
+    //     docReader.onload = () => {
+    //         setDoc(docReader.result as string);
+    //     }
+    //     return () => {
+    //         docReader.removeEventListener('load', () => {});
+    //     }
+    // }, [docReader])
 
-    React.useEffect(() => {
-        cacReader.onload = () => {
-            setCac(cacReader.result as string);
-        }
-        return () => {
-            cacReader.removeEventListener('load', () => {});
-        }
-    }, [cacReader])
+    // React.useEffect(() => {
+    //     cacReader.onload = () => {
+    //         setCac(cacReader.result as string);
+    //     }
+    //     return () => {
+    //         cacReader.removeEventListener('load', () => {});
+    //     }
+    // }, [cacReader])
 
 
     const pickDoc = () => {
@@ -121,7 +121,7 @@ export default function VerificationDocuments() {
             return;
         }
         setDocName(neededDoc.name);
-        docReader.readAsDataURL(neededDoc);
+        // docReader.readAsDataURL(neededDoc);
     }
 
     const readerCac = (files: any[]) => {
@@ -139,12 +139,12 @@ export default function VerificationDocuments() {
             return;
         }
         setCacname(neededDoc.name);
-        cacReader.readAsDataURL(neededDoc);
+        // cacReader.readAsDataURL(neededDoc);
     }
 
     const submit = async () => {
         
-        if (doc === '') {
+        if (docFile === null) {
             toast({
                 title: 'Warning',
                 description: 'Please select a document to continue',
@@ -164,15 +164,16 @@ export default function VerificationDocuments() {
         formData.append('verification_document_type', docType);
         formData.append('verification_document', docFile);
 
-        if (cac !== '') {
-            formData.append('cac', cacFile);
+        if (cacFile !== null) {
+            formData.append('cac', cacFile as File);
         }
 
         setLoading(true);
         const request = await fetch(`${url}user/${router.query['id']}/verification`, {
             method: 'put',
             body: formData,
-        })
+        });
+        
         const json = await request.json() as IServerReturnObject;
         setLoading(false);
         if (json.statusCode !== 200) {
