@@ -247,6 +247,24 @@ export class UserController {
   @ApiParam({ type: String, name: 'id' })
   @ApiBody({ type: User })
   @Put(':id/verification')
+  async uploadverificationfiles(
+    @Res() res: Response,
+    @Param() param: any,
+    @Body()
+    body: {
+      first_name: string;
+      last_name: string;
+      business_name: string;
+      business_description: string;
+      verification_document_type: string;
+    },
+  ) {
+    console.log(body);
+    const result = await this.crudService.uploadDocuments(param['id'], body);
+    res.status(result.statusCode).send(result);
+  }
+
+  @Put(':id/verification/documents')
   @UseInterceptors(
     FileFieldsInterceptor(
       [
@@ -256,7 +274,7 @@ export class UserController {
       { dest: 'documents' },
     ),
   )
-  async uploadverificationfiles(
+  async uploadVerificationDocuments(
     @Res() res: Response,
     @Param() param: any,
     @UploadedFiles()
@@ -264,25 +282,12 @@ export class UserController {
       verification_document: Array<Express.Multer.File>;
       cac: Array<Express.Multer.File>;
     },
-    @Body()
-    body: {
-      first_name: string;
-      last_name: string;
-      business_name: string;
-      business_description: string;
-      verification_document_type: string;
-      verification_document: string;
-      cac?: string;
-    },
   ) {
-    const result = await this.crudService.uploadDocuments(param['id'], body);
+    const result = await this.crudService.uploadVerificationImages(
+      param['id'],
+      files,
+    );
     res.status(result.statusCode).send(result);
-    if (result.error) {
-      const imageUpload = await this.crudService.uploadVerificationImages(
-        param['id'],
-        files,
-      );
-    }
   }
 
   @ApiTags('User')

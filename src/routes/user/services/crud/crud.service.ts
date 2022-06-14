@@ -416,9 +416,19 @@ export class CrudService {
         },
       );
 
-      return {
-        message: 'done uploding',
-      };
-    } catch (error) {}
+      return Return({
+        error: false,
+        statusCode: 200,
+        successMessage: 'Images uploaded',
+      });
+    } catch (error) {
+      console.log(error);
+      return Return({
+        error: true,
+        statusCode: 500,
+        trace: error,
+        errorMessage: 'Internal Server error.',
+      });
+    }
   }
 }
