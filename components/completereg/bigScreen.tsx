@@ -198,11 +198,15 @@ export default function BigScreen({ states, services}: {states: IState[], servic
         picker?.click();
     }
 
-    const fileProcessor = (files: any[]) => {
+    const fileProcessor = (files: File[]) => {
         if (caller === 1) {
             if (imagesFiles.length >= 3) {
                 alert('You can only pick 3 images');
                 return
+            }
+            if (files[0].size > 1000000) {
+                alert('Image size must not br greater than 1MB');
+                return;
             }
             const imgs = [...imagesFiles, files[0]];
             setImagesFiles(imgs);
@@ -210,6 +214,10 @@ export default function BigScreen({ states, services}: {states: IState[], servic
             return;
         } 
         if (caller === 2) {
+            if (files[0].size > 1000000) {
+                alert('Image size must not br greater than 1MB');
+                return;
+            }
             setProfilePic(files[0]);
             fileReader2.readAsDataURL(files[0]);
             return;
