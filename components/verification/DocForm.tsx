@@ -23,8 +23,8 @@ export default function DocForm({docType, doc, pickDoc, setDocType, docName, cac
                        <label htmlFor="" className='mb-3 font-Circular-std-book text-black'>Identity Document (5MB max)</label>
                        <div className="w-full h-16">
                        <Select bg="whitesmoke" h="63px" value={docType} onChange={(e: any) => setDocType(e.target.value)} fontSize="sm" borderRadius={0} borderWidth="0px" className='font-Circular-std-book'>
+                            <option value="NIN">NIN</option>
                            <option value="Drivers License">Driver Lincense </option>
-                           <option value="NIN">NIN</option>
                            <option value="company ID">Company ID</option>
                        </Select>
                        </div>
