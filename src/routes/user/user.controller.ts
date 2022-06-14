@@ -275,12 +275,14 @@ export class UserController {
       cac?: string;
     },
   ) {
-    const result = await this.crudService.uploadDocuments(
-      param['id'],
-      body,
-      files,
-    );
+    const result = await this.crudService.uploadDocuments(param['id'], body);
     res.status(result.statusCode).send(result);
+    if (result.error) {
+      const imageUpload = await this.crudService.uploadVerificationImages(
+        param['id'],
+        files,
+      );
+    }
   }
 
   @ApiTags('User')

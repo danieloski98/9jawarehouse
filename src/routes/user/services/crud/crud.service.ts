@@ -344,10 +344,6 @@ export class CrudService {
       business_description: string;
       verification_document_type: string;
     },
-    files?: {
-      verification_document: Array<Express.Multer.File>;
-      cac: Array<Express.Multer.File>;
-    },
   ): Promise<IReturnObject> {
     try {
       const userExist = await this.userModel.findById(id);
@@ -359,6 +355,38 @@ export class CrudService {
         });
       }
 
+      const updatedValues = await this.userModel.updateOne(
+        { _id: id },
+        {
+          ...details,
+          verification_document_type: details.verification_document_type,
+          disabled: true,
+        },
+      );
+      return Return({
+        error: false,
+        statusCode: 200,
+        successMessage: 'Done',
+      });
+    } catch (error) {
+      console.log(error);
+      return Return({
+        error: true,
+        statusCode: 500,
+        trace: error,
+        errorMessage: 'Internal Server error.',
+      });
+    }
+  }
+
+  async uploadVerificationImages(
+    id: string,
+    files: {
+      verification_document: Array<Express.Multer.File>;
+      cac: Array<Express.Multer.File>;
+    },
+  ) {
+    try {
       // update the details
       // upload the images
       // console.log(files);
@@ -383,26 +411,14 @@ export class CrudService {
       const updatedValues = await this.userModel.updateOne(
         { _id: id },
         {
-          ...details,
-          verification_document_type: details.verification_document_type,
           verification_document: verification_doc.secure_url,
           CAC: files.cac ? cac_doc.secure_url : '',
-          disabled: true,
         },
       );
-      return Return({
-        error: false,
-        statusCode: 200,
-        successMessage: 'Done',
-      });
-    } catch (error) {
-      console.log(error);
-      return Return({
-        error: true,
-        statusCode: 500,
-        trace: error,
-        errorMessage: 'Internal Server error.',
-      });
-    }
+
+      return {
+        message: 'done uploding',
+      };
+    } catch (error) {}
   }
 }
