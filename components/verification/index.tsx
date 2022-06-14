@@ -173,7 +173,7 @@ export default function VerificationDocuments() {
             method: 'put',
             body: formData,
         });
-        
+
         const json = await request.json() as IServerReturnObject;
         setLoading(false);
         if (json.statusCode !== 200) {
@@ -222,10 +222,10 @@ export default function VerificationDocuments() {
                 </div>   
                
                {stage === 1 ?  <Form formik={formik as FormikProps<{first_name: '', last_name: '', business_name: '', business_description: ''}>} nextStep={nextStep} /> : <DocForm 
-                 doc={doc}
+                 doc={docFile}
                  docName={docName}
                  pickDoc={pickDoc}
-                 cac={cac}
+                 cac={cacFile}
                  cacName={cacName}
                  pickCac={pickCac}
                  submit={submit}
