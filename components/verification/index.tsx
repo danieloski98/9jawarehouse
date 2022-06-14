@@ -48,6 +48,8 @@ export default function VerificationDocuments() {
     const [openSuccessModal, setOpenSuccessModal] = React.useState(false);
     const docReader = React.useRef(new FileReader()).current;
     const cacReader = React.useRef(new FileReader()).current;
+    const [docFile, setDocfile] = React.useState({} as File);
+    const [cacFile, setCacfile] = React.useState({} as File);
     const [cacName, setCacname] = React.useState('');
     const [docName, setDocName] = React.useState('');
     const [doc, setDoc] = React.useState('');
@@ -106,6 +108,7 @@ export default function VerificationDocuments() {
 
     const readerDoc = (files: File[]) => {
         const neededDoc = files[0];
+        setDocfile(neededDoc);
         if (neededDoc.size > 5019878) {
             toast({
                 status: 'warning',
@@ -123,6 +126,7 @@ export default function VerificationDocuments() {
 
     const readerCac = (files: any[]) => {
         const neededDoc = files[0];
+        setCacfile(neededDoc);
         if (neededDoc.size > 5019878) {
             toast({
                 status: 'warning',
@@ -150,18 +154,24 @@ export default function VerificationDocuments() {
             });
             return;
         }
+        // formdata
+        const formData = new FormData();
+
+        formData.append('first_name', formik.values.first_name);
+        formData.append('last_name', formik.values.last_name);
+        formData.append('business_name', formik.values.business_name);
+        formData.append('business_description', formik.values.business_description);
+        formData.append('verification_document_type', docType);
+        formData.append('verification_document', docFile);
+
+        if (cac !== '') {
+            formData.append('cac', cacFile);
+        }
+
         setLoading(true);
         const request = await fetch(`${url}user/${router.query['id']}/verification`, {
             method: 'put',
-            headers: {
-                'content-type': 'application/json'
-            },
-            body: JSON.stringify({
-                ...formik.values,
-                cac: cac,
-                verification_document_type: docType,
-                verification_document: doc,
-            })
+            body: formData,
         })
         const json = await request.json() as IServerReturnObject;
         setLoading(false);
