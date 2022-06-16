@@ -5,11 +5,12 @@ import { UserDocument, User } from 'src/Schema/User.schema';
 import { IFile } from 'src/Types/file';
 import { Return } from 'src/utils/Returnfunctions';
 import { IReturnObject } from 'src/utils/ReturnObject';
-import { join } from 'path';
+import { join, extname } from 'path';
 import { existsSync, rmSync } from 'fs';
 import cloudinary from 'src/utils/cloudinary';
 import { CommentDocument, Comment } from 'src/Schema/Comment.Schema';
 import { UploadApiResponse } from 'cloudinary';
+import { exists, copyFile, rm, access, constants } from 'fs';
 
 @Injectable()
 export class CrudService {
@@ -392,27 +393,77 @@ export class CrudService {
       // console.log(files);
       const doc = files.verification_document[0];
 
-      // let cac: Express.Multer.File | null;
-      // if (files.cac) {
-      //   cac = files.cac[0];
-      // }
-      const verification_doc = await cloudinary.uploader.upload(
-        `${process.cwd()}/${files.verification_document[0].path}`,
+      // copy document
+      copyFile(
+        join(process.cwd(), `public/doc/${doc.filename}`),
+        join(
+          process.cwd(),
+          `public/doc/${doc.filename}${extname(doc.originalname)}`,
+        ),
+        () => {
+          console.log('done');
+        },
       );
-      console.log(verification_doc.secure_url);
 
-      let cac_doc: UploadApiResponse;
+      let cac: Express.Multer.File | null;
       if (files.cac) {
-        cac_doc = await cloudinary.uploader.upload(
-          `${process.cwd()}/${files.cac[0].path}`,
-        );
+        cac = files.cac[0];
+      }
+
+      copyFile(
+        join(process.cwd(), `public/doc/${cac.filename}`),
+        join(
+          process.cwd(),
+          `public/doc/${cac.filename}${extname(cac.originalname)}`,
+        ),
+        () => {
+          console.log('done');
+        },
+      );
+      // const verification_doc = await cloudinary.uploader.upload(
+      //   `${process.cwd()}/${files.verification_document[0].path}`,
+      //   { chunk_size: files.verification_document[0].size, async: true },
+      // );
+      // console.log(verification_doc.secure_url);
+
+      // let cac_doc: UploadApiResponse;
+      // if (files.cac) {
+      //   cac_doc = await cloudinary.uploader.upload(
+      //     `${process.cwd()}/${files.cac[0].path}`,
+      //     { chunk_size: files.cac[0].size, async: true },
+      //   );
+      // }
+
+      const DOCURL =
+        process.env.NODE_ENV === 'development'
+          ? join(
+              process.env.DOC_LOCAL_URL,
+              `/doc/${doc.filename}${extname(doc.originalname)}`,
+            )
+          : join(
+              process.env.DOC_Live_URL,
+              `/doc/${doc.filename}${extname(doc.originalname)}`,
+            );
+
+      let CACURL;
+      if (files.cac) {
+        CACURL =
+          process.env.NODE_ENV === 'development'
+            ? join(
+                process.env.DOC_LOCAL_URL,
+                `/doc/${cac.filename}${extname(cac.originalname)}`,
+              )
+            : join(
+                process.env.DOC_Live_URL,
+                `/doc/${cac.filename}${extname(cac.originalname)}`,
+              );
       }
 
       const updatedValues = await this.userModel.updateOne(
         { _id: id },
         {
-          verification_document: verification_doc.secure_url,
-          CAC: files.cac ? cac_doc.secure_url : '',
+          verification_document: DOCURL,
+          CAC: files.cac ? CACURL : '',
         },
       );
 

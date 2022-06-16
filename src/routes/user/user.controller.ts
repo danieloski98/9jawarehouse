@@ -271,7 +271,7 @@ export class UserController {
         { name: 'verification_document', maxCount: 1 },
         { name: 'cac', maxCount: 1 },
       ],
-      { dest: 'documents' },
+      { dest: 'public/doc' },
     ),
   )
   async uploadVerificationDocuments(
