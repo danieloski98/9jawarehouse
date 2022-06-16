@@ -109,7 +109,7 @@ export default function VerificationDocuments() {
     const readerDoc = (files: File[]) => {
         const neededDoc = files[0];
         setDocfile(neededDoc);
-        if (neededDoc.size > 1000000) {
+        if (neededDoc.size > 5719878) {
             toast({
                 status: 'warning',
                 description: 'Can\'t use an image greater than 1MB',
@@ -129,7 +129,7 @@ export default function VerificationDocuments() {
         setCacfile(neededDoc);
         // 5719878
         // 1000000
-        if (neededDoc.size > 1000000) {
+        if (neededDoc.size > 5719878) {
             toast({
                 status: 'warning',
                 description: 'Can\'t use an image greater than 1MB',
