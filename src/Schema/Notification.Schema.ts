@@ -33,7 +33,7 @@ export class Notification {
   @ApiProperty()
   @Prop({
     type: String,
-    default: new Date('23/2/2022').toDateString(),
+    default: new Date('23/2/2022'),
   })
   created_at: string;
 }
