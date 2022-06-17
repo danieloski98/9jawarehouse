@@ -71,7 +71,7 @@ export class Subscription {
   @ApiProperty()
   @Prop({
     type: Date,
-    default: new Date().toISOString(),
+    default: new Date(Date.now()).toISOString(),
   })
   created_at: Date;
 }

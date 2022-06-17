@@ -17,7 +17,7 @@ export class Code {
   @ApiProperty()
   @Prop({
     type: String,
-    default: new Date().toUTCString(),
+    default: new Date(Date.now()).toISOString(),
   })
   created_at: string;
 }

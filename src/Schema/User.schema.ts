@@ -362,7 +362,7 @@ export class User {
   })
   @Prop({
     type: String,
-    default: new Date().toISOString(),
+    default: new Date(Date.now()).toISOString(),
   })
   createAt: string;
 }

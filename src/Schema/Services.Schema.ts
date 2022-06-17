@@ -13,7 +13,7 @@ export class Service {
   @ApiProperty()
   @Prop({
     type: String,
-    default: new Date().toISOString(),
+    default: new Date(Date.now()).toISOString(),
   })
   created_at: string;
 }

@@ -63,7 +63,7 @@ export class Comment {
   @ApiProperty()
   @Prop({
     type: Date,
-    default: new Date().toISOString(),
+    default: new Date(Date.now()).toISOString(),
   })
   updated_at: Date;
 }
