@@ -112,7 +112,7 @@ export default function VerificationDocuments() {
         if (neededDoc.size > 5719878) {
             toast({
                 status: 'warning',
-                description: 'Can\'t use an image greater than 1MB',
+                description: 'Can\'t use an image greater than 5MB',
                 title: 'Image Too Large',
                 position: 'top',
                 isClosable: true,
@@ -132,7 +132,7 @@ export default function VerificationDocuments() {
         if (neededDoc.size > 5719878) {
             toast({
                 status: 'warning',
-                description: 'Can\'t use an image greater than 1MB',
+                description: 'Can\'t use an image greater than 5MB',
                 title: 'Image Too Large',
                 position: 'top',
                 isClosable: true,
