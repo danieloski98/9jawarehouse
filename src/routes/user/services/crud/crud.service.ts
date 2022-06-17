@@ -384,13 +384,14 @@ export class CrudService {
     id: string,
     files: {
       verification_document: Array<Express.Multer.File>;
-      cac: Array<Express.Multer.File>;
+      cac?: Array<Express.Multer.File>;
     },
   ) {
     try {
       // update the details
       // upload the images
       // console.log(files);
+      console.log(files.cac);
       const doc = files.verification_document[0];
 
       // copy document
@@ -406,20 +407,21 @@ export class CrudService {
       );
 
       let cac: Express.Multer.File | null;
-      if (files.cac) {
+      if (files.cac !== undefined) {
         cac = files.cac[0];
+
+        copyFile(
+          join(process.cwd(), `public/doc/${cac.filename}`),
+          join(
+            process.cwd(),
+            `public/doc/${cac.filename}${extname(cac.originalname)}`,
+          ),
+          () => {
+            console.log('done');
+          },
+        );
       }
 
-      copyFile(
-        join(process.cwd(), `public/doc/${cac.filename}`),
-        join(
-          process.cwd(),
-          `public/doc/${cac.filename}${extname(cac.originalname)}`,
-        ),
-        () => {
-          console.log('done');
-        },
-      );
       // const verification_doc = await cloudinary.uploader.upload(
       //   `${process.cwd()}/${files.verification_document[0].path}`,
       //   { chunk_size: files.verification_document[0].size, async: true },
@@ -446,7 +448,7 @@ export class CrudService {
             );
 
       let CACURL;
-      if (files.cac) {
+      if (files.cac !== undefined) {
         CACURL =
           process.env.NODE_ENV === 'development'
             ? join(
@@ -463,7 +465,7 @@ export class CrudService {
         { _id: id },
         {
           verification_document: DOCURL,
-          CAC: files.cac ? CACURL : '',
+          CAC: files.cac !== undefined ? CACURL : '',
         },
       );
 
