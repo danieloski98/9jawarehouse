@@ -17,7 +17,7 @@ export class ForgotPasswordOTP {
   @ApiProperty()
   @Prop({
     type: String,
-    default: new Date().toISOString(),
+    default: new Date('23/2/2022').toDateString(),
   })
   created_at: string;
 }
