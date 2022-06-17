@@ -33,7 +33,7 @@ export default function UnderReview() {
                         <button className="mt-24 w-40 h-16 mr-4 text-white font-Cerebri-sans-book text-sm bg-themeGreen" onClick={() => router.push('/')}>
                             Go to homepage
                         </button>
-                        <button className="mt-24 w-40 h-16 text-white font-Cerebri-sans-book text-sm bg-themeGreen" onClick={() => router.push(`/auth/verification/${id}`)}>
+                        <button className="mt-24 w-40 h-16 text-white font-Cerebri-sans-book text-sm bg-themeGreen" onClick={() => router.push(`/auth/reupload/${id}`)}>
                             Reupload Documents
                         </button>
                    </div>
