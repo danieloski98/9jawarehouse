@@ -39,6 +39,9 @@ const getUser = async (_id: string) => {
     return json;
 }
 
+const INA = "z-10 h-auto xl:mt-2 lg:mt-2 md:mt-16 sm:mt-16 overflow-auto bg-gray-100 xl:py-10 lg:p-10 md:p-5 sm:p-5 flex justify-between";
+const AC = "z-10 h-auto xl:mt-20 lg:mt-20 md:mt-16 sm:mt-16 overflow-auto bg-gray-100 xl:py-10 lg:p-10 md:p-5 sm:p-5 flex justify-between"
+
 export default function Dashboard() {
 
   const [page, setPage] = React.useState(1 as number);
@@ -213,19 +216,7 @@ const sendCode = async() => {
 }
 
 const sendCodee = async() => {
-    setVerifyModal(true);
-    const request = await fetch(`${url}auth/resendverificationcode/${user._id}`, {
-        method: 'post',
-    });
-    const json = await request.json();
-    console.log(json);
-    
-    if (json.statusCode !== 200) {
-        alert(json.errorMessage);
-    } else {
-        alert(json.successMessage);
-    }
-
+  router.push(`/auth/reupload/${user._id}`);
 }
 
 const verify = async() => {
@@ -356,18 +347,26 @@ const verify = async() => {
                             <Navbar page={page} setPage={changePage} />
                         </div>
 
-                        {!user.verified && (
+                        {/* <div className="w-full h-24 bg-red-300"></div> */}
+
+                        {user.blocked && (
                             <div className="w-full xl:h-20 lg:h-20 md:h-40 sm:h-40 bg-red-300 flex xl:flex-row lg:flex-row md:flex-col sm:flex-col justify-center items-center xl:mt-20 lg:mt-20 md:mt-16 sm:mt-16">
 
-                                <p className="text-white font-bold">Please verify your email address</p>
-                                <button onClick={sendCodee} className='w-40 h-10 rounded border-2 border-white text-white font-Circular-std-book xl:ml-5 lg:ml-5 sm:mt-5 md:mt-5 xl:mt-0 lg:mt-0'>Verify</button>
+                                {user.verification_document === "" ? <p className="text-white font-bold">Your account has not been approved.</p> : <p className="text-white font-bold">Your account is currently undereview.</p>}
+                                {user.verification_document === "" && (
+                                    <button onClick={sendCodee} className='w-40 h-10 rounded border-2 border-white text-white font-Circular-std-book xl:ml-5 lg:ml-5 sm:mt-5 md:mt-5 xl:mt-0 lg:mt-0'>Upload Documents</button>
+                                )}
+
+                                {user.verification_document !== "" && (
+                                    <button onClick={sendCodee} className='w-auto h-10 rounded border-2 border-white text-white font-Circular-std-book xl:ml-5 lg:ml-5 sm:mt-5 md:mt-5 xl:mt-0 lg:mt-0 px-3'>Reupload Documents</button>
+                                )}
                                 
                             </div>
                         )}
 
                         {
                             user.verified && (
-                                <div className="z-10 h-auto xl:mt-20 lg:mt-20 md:mt-16 sm:mt-16 overflow-auto bg-gray-100 xl:py-10 lg:p-10 md:p-5 sm:p-5 flex justify-between">
+                                <div className={user.blocked ? INA : AC}>
 
                                 <div className="w-1/4 h-full xl:block lg:block md:hidden sm:hidden pb-10 z-0">
                                     <Sidebar page={page} setPage={changePage} />

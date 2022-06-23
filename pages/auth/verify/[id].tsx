@@ -66,7 +66,7 @@ export default function VerifyAccount() {
             // dispatch(updateUser(json.data.user));
             // dispatch(updatetoken(json.data.token));
             // dispatch(login())
-            router.push(`/auth/verification/${router.query.id}`)
+            router.push(`/registration/${router.query.id}`)
             // console.log(json);
         }
     }

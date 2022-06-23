@@ -194,7 +194,7 @@ export default function VerificationDocuments() {
             duration: 5000
         });
         setLoading(false);
-        router.push(`/underreview?id=${router.query['id']}`);
+        router.push(`/dashboard`);
 
     }
 

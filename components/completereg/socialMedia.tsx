@@ -51,7 +51,7 @@ const sub = () => {
 
         <div className="w-full flex xl:flex-row lg:flex-row md:flex-col sm:flex-col justify-between  mt-6 font-semibold text-sm text-gray-500">
             <div className="w-full">
-                <label>Instagram</label>
+                <label>Instagram Link</label>
                 <div className="xl:w-11/12 lg:w-11/12 md:w-full sm:w-full">
                     <Input border="none" bgColor="whitesmoke" borderRadius={0} className="bg-gray-100 mt-3" name="instagram" value={formik.values.instagram} onChange={formik.handleChange} onFocus={() => formik.setFieldTouched('instagram', true, true)} />
                 </div>
@@ -64,7 +64,7 @@ const sub = () => {
 
         <div className="w-full flex xl:flex-row lg:flex-row md:flex-col sm:flex-col justify-between mt-6 font-semibold text-sm text-gray-500">
             <div className="w-full">
-                <label>Twitter</label>
+                <label>Twitter Link</label>
                 <div className="xl:w-11/12 lg:w-11/12 md:w-full sm:w-full">
                     <Input border="none" bgColor="whitesmoke" borderRadius={0} className="bg-gray-100 mt-3" name="twitter" value={formik.values.twitter} onChange={formik.handleChange} onFocus={() => formik.setFieldTouched('twitter', true, true)} />
                 </div>
@@ -77,7 +77,7 @@ const sub = () => {
 
         <div className="w-full flex xl:flex-row lg:flex-row md:flex-col sm:flex-col justify-between mt-6 font-semibold text-sm text-gray-500">
             <div className="w-full">
-                <label>Facebook</label>
+                <label>Facebook Link</label>
                 <div className="xl:w-11/12 lg:w-11/12 md:w-full sm:w-full">
                     <Input border="none" bgColor="whitesmoke" borderRadius={0} className="bg-gray-100 mt-3" name="facebook" value={formik.values.facebook} onChange={formik.handleChange} onFocus={() => formik.setFieldTouched('facebook', true, true)} />
                 </div>
@@ -90,7 +90,7 @@ const sub = () => {
 
         <div className="w-full flex xl:flex-row lg:flex-row md:flex-col sm:flex-col justify-between mt-6 font-semibold text-sm text-gray-500">
             <div className="w-full">
-                <label>Website</label>
+                <label>Website Link</label>
                 <div className="xl:w-11/12 lg:w-11/12 md:w-full sm:w-full">
                     <Input border="none" bgColor="whitesmoke" borderRadius={0} className="bg-gray-100 mt-3" name="website" value={formik.values.website} onChange={formik.handleChange} onFocus={() => formik.setFieldTouched('website', true, true)} />
                 </div>

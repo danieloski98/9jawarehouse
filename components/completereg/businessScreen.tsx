@@ -150,7 +150,7 @@ export default function BusinessInfo({ next, images, picker, profilePic, formik,
             <div className="w-full">
                 <label>Business Name</label>
                 <div className="xl:w-11/12 lg:w-11/12 md:w-full sm:w-full">
-                    <Input disabled border="none" bgColor="whitesmoke" borderRadius={0} className="bg-gray-100 mt-3" name="business_name" value={formik.values.business_name} onChange={formik.handleChange} onFocus={() => formik.setFieldTouched('business_name', true, true)} />
+                    <Input  border="none" bgColor="whitesmoke" borderRadius={0} className="bg-gray-100 mt-3" name="business_name" value={formik.values.business_name} onChange={formik.handleChange} onFocus={() => formik.setFieldTouched('business_name', true, true)} />
                 </div>
                 {formik.touched.business_name && formik.errors.business_name && <p className="text-xs mt-1 Cerebri-sans-book text-red-400">{formik.errors.business_name}</p>}
             </div>
@@ -163,7 +163,7 @@ export default function BusinessInfo({ next, images, picker, profilePic, formik,
             <div className="w-full">
                 <label>Business description</label>
                 <div className="w-full">
-                    <Textarea disabled  bgColor="whitesmoke" borderRadius={0} fontSize="xs" className="bg-gray-100 mt-3 w-full h-40 text-gray-500 font-semibold text-sm p-3" name="business_description" value={formik.values.business_description} onChange={formik.handleChange} onFocus={() => formik.setFieldTouched('business_description', true, true)}  />
+                    <Textarea   bgColor="whitesmoke" borderRadius={0} fontSize="xs" className="bg-gray-100 mt-3 w-full h-40 text-gray-500 font-semibold text-sm p-3" name="business_description" value={formik.values.business_description} onChange={formik.handleChange} onFocus={() => formik.setFieldTouched('business_description', true, true)}  />
                 </div>
                 {formik.touched.business_description && formik.errors.business_description && <p className="text-xs mt-1 Cerebri-sans-book text-red-400">{formik.errors.business_description}</p>}
             </div>

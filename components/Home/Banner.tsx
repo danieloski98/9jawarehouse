@@ -459,9 +459,11 @@ export default function Banner() {
                      
                   </h1> */}
                 </div>
-                <p className="xl:w-full lg:w-full md:w-full sm:w-full mt-5 text-lg font-Cerebri-sans-book text-gray-400">
-                Less hassle searching for who is best fit for your photography, catering, event planning and management, make-up artist, fashion designer, drop shipper, event DJs and more. Search through our 9jaWarehouse list of businesses and services to meet any of your needs.
-                </p>
+               <ol className='text-md text-gray-400 font-Cerebri-sans-book list-disc list-inside mt-5 ml-2'>
+                <li>Get your business registered for FREE.</li>
+                <li>Get noticed by potential investors.</li>
+                <li> Get global visibility on your business. </li>
+               </ol>
 
                 <div className="xl:w-9/12 lg:w-9/12 h-auto md:w-full sm:w-full mt-6">
                     <InputGroup>
@@ -470,7 +472,7 @@ export default function Banner() {
                             <FiSearch color="white" size={20} />
                         </div>
                         </InputLeftElement>
-                        <Input  height="60px" onKeyPress={handleKeydonw} bgColor="#F1EEEE" onChange={(e: any) => setQuery(e.target.value)} placeholder="search for services or businesses" fontSize="lg" paddingLeft="100px" className=' font-Cerebri-sans-book' />
+                        <Input  height="60px" onKeyPress={handleKeydonw} bgColor="#F1EEEE" onChange={(e: any) => setQuery(e.target.value)} placeholder="Search for anything in Nigeria….." fontSize="lg" paddingLeft="100px" className=' font-Cerebri-sans-book' />
                     </InputGroup>
                 </div>
             </div>

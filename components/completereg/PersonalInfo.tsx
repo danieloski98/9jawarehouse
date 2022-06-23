@@ -66,14 +66,14 @@ export default function PersonalInfo({ next, states, formik }: IProps) {
             <div className="w-full">
                 <label>First Name</label>
                 <div className="xl:w-11/12 lg:w-11/12 md:w-full sm:w-full">
-                    <Input disabled border="none" bgColor="whitesmoke" borderRadius={0} className="bg-gray-100 mt-3" name="first_name" value={formik.values.first_name} onChange={formik.handleChange} onFocus={() => formik.setFieldTouched('first_name', true, true)} />
+                    <Input  border="none" bgColor="whitesmoke" borderRadius={0} className="bg-gray-100 mt-3" name="first_name" value={formik.values.first_name} onChange={formik.handleChange} onFocus={() => formik.setFieldTouched('first_name', true, true)} />
                 </div>
                 {formik.touched.first_name && formik.errors.first_name && <p className="text-xs mt-1 Cerebri-sans-book text-red-400">{formik.errors.first_name}</p>}
             </div>
             <div className="w-full xl:mt-0 lg:mt-0 md:mt-2 sm:mt-2">
                 <label>Last Name</label>
                 <div className="xl:w-11/12 lg:w-11/12 md:w-full sm:w-full">
-                    <Input disabled border="none" bgColor="whitesmoke" borderRadius={0} className="bg-gray-100 mt-3" name="last_name" value={formik.values.last_name} onChange={formik.handleChange} onFocus={() => formik.setFieldTouched('last_name', true, true)} />
+                    <Input  border="none" bgColor="whitesmoke" borderRadius={0} className="bg-gray-100 mt-3" name="last_name" value={formik.values.last_name} onChange={formik.handleChange} onFocus={() => formik.setFieldTouched('last_name', true, true)} />
                 </div>
                 {formik.touched.last_name && formik.errors.last_name && <p className="text-xs mt-1 Cerebri-sans-book text-red-400">{formik.errors.last_name}</p>}
             </div>
@@ -83,7 +83,7 @@ export default function PersonalInfo({ next, states, formik }: IProps) {
             <div className="w-full">
                 <label>Email</label>
                 <div className="xl:w-11/12 lg:w-11/12 md:w-full sm:w-full">
-                    <Input disabled border="none" bgColor="whitesmoke" borderRadius={0} className="bg-gray-100 mt-3" name="email" value={formik.values.email} onChange={formik.handleChange} onFocus={() => formik.setFieldTouched('email', true, true)} />
+                    <Input  border="none" bgColor="whitesmoke" borderRadius={0} className="bg-gray-100 mt-3" name="email" value={formik.values.email} onChange={formik.handleChange} onFocus={() => formik.setFieldTouched('email', true, true)} />
                 </div>
                 {formik.touched.email && formik.errors.email && <p className="text-xs mt-1 Cerebri-sans-book text-red-400">{formik.errors.email}</p>}
             </div>
@@ -114,7 +114,7 @@ export default function PersonalInfo({ next, states, formik }: IProps) {
             <div className="w-full xl:mt-0 lg:mt-0 md:mt-2 sm:mt-2">
                 <label>Country</label>
                 <div className="xl:w-11/12 lg:w-11/12 md:w-full sm:w-full">
-                    <Input disabled border="none" bgColor="whitesmoke" borderRadius={0} className="bg-gray-100 mt-3" name="country" value={formik.values.country} onChange={formik.handleChange} onFocus={() => formik.setFieldTouched('country', true, true)} />
+                    <Input  border="none" bgColor="whitesmoke" borderRadius={0} className="bg-gray-100 mt-3" name="country" value={formik.values.country} onChange={formik.handleChange} onFocus={() => formik.setFieldTouched('country', true, true)} />
                 </div>
                 {formik.touched.country && formik.errors.country && <p className="text-xs mt-1 Cerebri-sans-book text-red-400">{formik.errors.country}</p>}
             </div>

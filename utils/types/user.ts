@@ -63,7 +63,9 @@ export interface IUser {
 
   commentLength?: number;
 
-  reg_complete: boolean
+  reg_complete: boolean;
+
+  verification_document: string;
 }
 
 export interface ICertificate {
