@@ -3,6 +3,9 @@ import type { AppProps } from 'next/app'
 import { ChakraProvider } from '@chakra-ui/react'
 import { theme } from '../utils/theme'
 import Head from 'next/head'
+import Script from 'next/script';
+import { useEffect } from 'react';
+import { useRouter } from 'next/router'
 
 // redux
 import { store } from '../store';
@@ -12,8 +15,25 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 
 export const queryClient = new QueryClient();
 
+function FacebookPixel() {
+  const router = useRouter() 
+
+  useEffect(() => {
+    import("react-facebook-pixel")
+      .then((x) => x.default)
+      .then((ReactPixel) => {
+        ReactPixel.init('748044199533092');
+        ReactPixel.pageView();
+
+        router.events.on("routeChangeComplete", () => {
+          ReactPixel.pageView();
+        });
+      });
+  });
+  return null;
+}
+
 function MyApp({ Component, pageProps }: AppProps) {
-  
 
   return (
     <ChakraProvider>
@@ -23,6 +43,9 @@ function MyApp({ Component, pageProps }: AppProps) {
           <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1 "  />
           {/* <meta http-equiv="X-UA-Compatible" content="ie=edge" ></meta> */}
           </Head>
+
+            <FacebookPixel />
+
           <Component {...pageProps} />
         </Provider>
       </QueryClientProvider>

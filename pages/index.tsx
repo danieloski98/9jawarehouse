@@ -1,5 +1,6 @@
 import type { NextPage } from 'next'
 
+
 // components
 import Banner from '../components/Home/Banner';
 import Stats from '../components/Home/Stats';
@@ -11,6 +12,7 @@ import Footer from '../components/Home/Footer';
 const Home: NextPage = () => {
   return (
     <div className="w-auto h-auto overflow-hidden">
+
       <Banner />
       <Stats />
       <Features />
