@@ -460,7 +460,7 @@ export default function Banner() {
                   </h1> */}
                 </div>
                <ol className='text-md text-gray-400 font-Cerebri-sans-book list-disc list-inside mt-5 ml-2'>
-                <li>Get your business registered for <b>FREE</b>.</li>
+                <li>Get your business registered for <b className='text-themeGreen'>FREE</b>.</li>
                 <li>Get noticed by potential investors.</li>
                 <li> Get global visibility on your business. </li>
                </ol>
