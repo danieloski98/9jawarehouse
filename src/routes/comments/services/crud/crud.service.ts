@@ -136,6 +136,7 @@ export class CrudService {
         const obj: Comment = {
           ...payload,
           business_id: user_id,
+          created_at: new Date().toLocaleString(),
         };
         const newComment = await this.commentModel.create(obj);
 

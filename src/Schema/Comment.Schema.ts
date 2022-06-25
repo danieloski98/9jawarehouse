@@ -58,14 +58,14 @@ export class Comment {
     type: Date,
     default: new Date().toISOString(),
   })
-  created_at: Date;
+  created_at: string;
 
   @ApiProperty()
   @Prop({
     type: Date,
-    default: new Date(Date.now()).toISOString(),
+    default: new Date().toLocaleString(),
   })
-  updated_at: Date;
+  updated_at: string;
 }
 
 export const CommentSchema = SchemaFactory.createForClass(Comment);

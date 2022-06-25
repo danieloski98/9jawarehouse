@@ -32,10 +32,10 @@ export class Notification {
 
   @ApiProperty()
   @Prop({
-    type: String,
-    default: new Date(Date.now()).toISOString(),
+    type: Date,
+    default: new Date().toISOString(),
   })
-  created_at: string;
+  created_at: Date;
 }
 
 export const NotificationSchema = SchemaFactory.createForClass(Notification);

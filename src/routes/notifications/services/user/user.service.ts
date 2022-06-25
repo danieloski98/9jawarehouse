@@ -133,6 +133,7 @@ export class NotificationUserService {
       const newNotObj = {
         message,
         business_id,
+        created_at: new Date().toLocaleString(),
       };
       const newNoti = await this.notificationModel.create(newNotObj);
       this.webSocket.server.emit(`NOTIFICATION:${business_id}`, newNoti);
@@ -157,6 +158,7 @@ export class NotificationUserService {
       const newNotObj = {
         message,
         forAdmin: true,
+        created_at: new Date().toLocaleString(),
       };
       const newNoti = await this.notificationModel.create(newNotObj);
       // this.webSocket.server.emit(`NOTIFICATION:${business_id}`, newNoti);

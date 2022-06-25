@@ -34,14 +34,14 @@ export class Record {
   @ApiProperty()
   @Prop({
     type: String,
-    default: new Date(Date.now()).toISOString(),
+    default: new Date().toLocaleString(),
   })
   created_at: string;
 
   @ApiProperty()
   @Prop({
     type: String,
-    default: new Date(Date.now()).toISOString(),
+    default: new Date().toLocaleString(),
   })
   updated_at: string;
 }

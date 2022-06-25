@@ -361,10 +361,10 @@ export class User {
     type: String,
   })
   @Prop({
-    type: String,
-    default: new Date(Date.now()).toISOString(),
+    type: Date,
+    default: new Date().toISOString(),
   })
-  createAt: string;
+  createAt: Date;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

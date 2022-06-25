@@ -108,6 +108,7 @@ export class UserService {
             phone: userDetails.phone,
             paystack_id: paystack_request.data.data.id,
             customer_code: paystack_request.data.data.customer_code,
+            createAt: new Date().toLocaleString(),
           }
         : {
             email: userDetails.email.toLowerCase(),
@@ -116,6 +117,7 @@ export class UserService {
             phone: userDetails.phone,
             paystack_id: paystack_request.data.data.id,
             customer_code: paystack_request.data.data.customer_code,
+            createAt: new Date().toLocaleString(),
           };
 
       // create the record
