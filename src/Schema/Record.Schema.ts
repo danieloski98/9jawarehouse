@@ -33,10 +33,10 @@ export class Record {
 
   @ApiProperty()
   @Prop({
-    type: String,
-    default: new Date().toLocaleString(),
+    type: Date,
+    default: new Date().toISOString(),
   })
-  created_at: string;
+  created_at: Date;
 
   @ApiProperty()
   @Prop({

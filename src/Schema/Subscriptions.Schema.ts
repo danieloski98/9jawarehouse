@@ -71,7 +71,7 @@ export class Subscription {
   @ApiProperty()
   @Prop({
     type: Date,
-    default: new Date().toLocaleString(),
+    default: new Date().toISOString(),
   })
   created_at: Date;
 }

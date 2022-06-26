@@ -58,7 +58,7 @@ export class Comment {
     type: Date,
     default: new Date().toISOString(),
   })
-  created_at: string;
+  created_at: Date;
 
   @ApiProperty()
   @Prop({

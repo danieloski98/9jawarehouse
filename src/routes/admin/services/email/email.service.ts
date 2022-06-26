@@ -343,12 +343,6 @@ export class EmailService {
         html: `
         <div>
           <h3>HURRAY! Your account verification was SUCCESSFULL!!</h3>
-
-          <p>You can now return to the website (<a href="https://www.9jawarehouse.com">www.9jawarehouse.com</a>) and login with your email and password and complete your details.</p>
-
-          <p>You are one step closer to joining our community.</p>
-
-          <p>We look forward to working with you and knowing more about you and your business.</p>
         </div>`,
       };
       this.transporter.sendMail(mailOption, (error: any, info: any) => {
