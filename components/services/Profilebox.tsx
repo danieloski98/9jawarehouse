@@ -204,7 +204,7 @@ export default function ProfileBox({user, reviews}: IProps) {
               )}
 
               {user.website !== "" && (
-                <a href={user.website} title={user.website} target="_blank" rel="noreferrer" className="ml-3 cursor-pointer">
+                <a href={`https://${user.website}`} title={user.website} target="_blank" rel="noreferrer" className="ml-3 cursor-pointer">
                   <FaLink size={25} color="#0ACAFF" />
                 </a>
               )}        

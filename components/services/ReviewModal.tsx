@@ -5,6 +5,7 @@ import ReactStars from "react-rating-stars-component";
 import { FiCamera, FiX } from 'react-icons/fi'
 import { queryClient } from '../../pages/_app'
 import { AnimatePresence, motion } from 'framer-motion'
+import Compressor from 'compressorjs'
 
 import Good from '../../public/images/good.svg';
 
@@ -28,7 +29,7 @@ import { IUser } from '../../utils/types/user';
 // validation
 const validationSchema = yup.object({
     fullname: yup.string().required('Name is required'),
-    email: yup.string().email().required('Email is required'),
+    email: yup.string().email('Invalid Email').required('Email is required'),
     rating: yup.number(),
     comment: yup.string().required('Comment is required'),
 })
@@ -95,7 +96,7 @@ const CommentForm = ({formik, change, images, picker, user, deleteImage}: IComme
                                             animate={{ y: 0, opacity: 1 }}
                                             exit={{ y: -100, opacity: 0 }}
                                         className="mt-8">
-                                            <p className="text-md text-gray-500 font-light">Upload Pictures (Optional)</p>
+                                            <p className="text-md text-gray-500 font-light">Upload Pictures (Optional) (2MB max size)</p>
                                             <button onClick={() => picker()} className="w-full h-12 bg-green-100 text-themeGreen mt-2">Tap To Upload Picture</button>
                                         </motion.div>
                                     )   
@@ -242,9 +243,19 @@ export default function ReviewModal({ open, setOpen, id, user }: IProps) {
 
 
     const fileProcessor = (files: any[]) => {
-        const imgs = [...imgfiles, files[0]];
-        setFiles(imgs);
-        fileReader.readAsDataURL(files[0]);
+        if (files[0].size > 2000000) {
+            alert('Can\'t use an image greater than 2MB');
+            return;
+        }
+        new Compressor(files[0], {
+            quality: 0.3,
+            success: (res) => {
+                const imgs = [...imgfiles, res];
+                setFiles(imgs);
+                fileReader.readAsDataURL(res);
+            }
+        })
+        
     }
 
     const submit = async () => {
