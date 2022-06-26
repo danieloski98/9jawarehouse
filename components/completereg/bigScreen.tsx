@@ -5,6 +5,7 @@ import BusinessInfo from './businessScreen';
 import SocialMediaInfo from './socialMedia';
 import {useRouter} from 'next/router'
 import { useToast } from '@chakra-ui/react'
+import Compressor from 'compressorjs'
 
 
 import * as yup from 'yup';
@@ -204,22 +205,40 @@ export default function BigScreen({ states, services}: {states: IState[], servic
                 alert('You can only pick 3 images');
                 return
             }
-            if (files[0].size > 1000000) {
-                alert('Image size must not br greater than 1MB');
+            if (files[0].size > 2000000) {
+                alert('Image size must not br greater than 2MB');
                 return;
             }
-            const imgs = [...imagesFiles, files[0]];
-            setImagesFiles(imgs);
-            fileReader.readAsDataURL(files[0]);
+            new Compressor(files[0], {
+                quality: 0.3,
+                success: (res) => {
+                    console.log(res.size);
+                    // const imgs = [...imagesFiles, files[0]];
+                    // setImagesFiles(imgs);
+                    // fileReader.readAsDataURL(files[0]);
+                    const imgs = [...imagesFiles, res];
+                    setImagesFiles(imgs);
+                    fileReader.readAsDataURL(res);
+                }
+            })
+            
             return;
         } 
         if (caller === 2) {
-            if (files[0].size > 1000000) {
-                alert('Image size must not br greater than 1MB');
+            if (files[0].size > 2000000) {
+                alert('Image size must not br greater than 2MB');
                 return;
             }
-            setProfilePic(files[0]);
-            fileReader2.readAsDataURL(files[0]);
+            new Compressor(files[0], {
+                quality: 0.3,
+                success: (res) => {
+                    console.log(res.size);
+                    setProfilePic(res);
+                    fileReader2.readAsDataURL(res);
+                }
+            })
+            // setProfilePic(files[0]);
+            // fileReader2.readAsDataURL(files[0]);
             return;
         }
         

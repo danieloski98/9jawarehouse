@@ -10,6 +10,7 @@ import Image from 'next/image';
 import Girl from '../../public/images/girl2.png';
 import Logo from '../../public/images/nlogo.png';
 import Envelope from '../../public/images/envelope.svg';
+import Compressor from 'compressorjs'
 
 
 import { FiSearch, FiMenu } from 'react-icons/fi'
@@ -108,7 +109,7 @@ export default function VerificationDocuments() {
 
     const readerDoc = (files: File[]) => {
         const neededDoc = files[0];
-        setDocfile(neededDoc);
+       
         if (neededDoc.size > 5719878) {
             toast({
                 status: 'warning',
@@ -119,14 +120,23 @@ export default function VerificationDocuments() {
                 duration: 5000,
             });
             return;
+        } else {
+            new Compressor(files[0], {
+                quality: 0.3,
+                success: (res: File) => {
+                    console.log(res.size);
+                    setDocfile(res);
+                    setDocName(res.name);
+                }
+            });
         }
-        setDocName(neededDoc.name);
+        
         // docReader.readAsDataURL(neededDoc);
     }
 
     const readerCac = (files: any[]) => {
         const neededDoc = files[0];
-        setCacfile(neededDoc);
+        
         // 5719878
         // 1000000
         if (neededDoc.size > 5719878) {
@@ -139,9 +149,16 @@ export default function VerificationDocuments() {
                 duration: 5000,
             });
             return;
+        } else {
+            new Compressor(files[0], {
+                quality: 0.3,
+                success: (res: File) => {
+                    console.log(res.size);
+                    setCacfile(res);
+                    setCacname(res.name);
+                }
+            });
         }
-        setCacname(neededDoc.name);
-        // cacReader.readAsDataURL(neededDoc);
     }
 
     const submit = async () => {

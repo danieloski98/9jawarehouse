@@ -14,6 +14,7 @@ import { FiChevronLeft, FiCamera, FiX, FiHelpCircle } from "react-icons/fi";
 import { FaCamera } from 'react-icons/fa'
 import { IoMdHelpCircle } from 'react-icons/io'
 import Link from "next/link";
+import Compressor from 'compressorjs'
 
 // redux
 import { useSelector, useDispatch } from "react-redux";
@@ -120,14 +121,35 @@ export default function EditProfile({ next }: IProps) {
     }
 
  const filesProcessor = (files: any[]) => {
-   const imgs = [...imgsFiles, files[0]];
-   setImgsFiles(imgs);
-  fileReader.readAsDataURL(files[0]);
+  if (files[0].szie > 2000000) {
+    alert('Image size must not br greater than 2MB');
+    return;
+  } else {
+    new Compressor(files[0], {
+      quality: 0.3,
+      success: (res) => {
+        const imgs = [...imgsFiles, res];
+        setImgsFiles(imgs);
+       fileReader.readAsDataURL(res);
+      }
+  });
+  }
+  
   }
 
   const profileProcessor = (files: any[]) => {
-    setProfileFile(files[0]);
-    fileReader2.readAsDataURL(files[0]);
+    if (files[0].size > 2000000) {
+      alert('Image size must not br greater than 2MB');
+      return;
+    } else {
+      new Compressor(files[0], {
+        quality: 0.3,
+        success: (res) => {
+          setProfileFile(res);
+          fileReader2.readAsDataURL(res);
+        }
+    })
+    }
    }
 
    const submit = async () => {
@@ -252,8 +274,8 @@ export default function EditProfile({ next }: IProps) {
           </p>
 
           {/* featured images */}
-
-          <div className="w-auto h-32 overflow-x-auto overflow-y-hidden flex mt-6 flex-nowrap">
+          <p className="mt-4">2MB max</p>
+          <div className="w-auto h-32 overflow-x-auto overflow-y-hidden flex mt-2 flex-nowrap">
             {imgs.map((item, index) => (
               <div className="w-32 min-w-max max-w-md h-full overflow-hidden mr-4 " key={index.toString()}>
 
