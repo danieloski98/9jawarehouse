@@ -57,7 +57,7 @@ export default function EditUserProfileModal({close, user}: IProps) {
             country: 'Nigeria',
             state: user.state,
             business_name: user.business_name,
-            description: user.business_description,
+            business_description: user.business_description,
             instagram: user.linkedin,
             facebook: user.facebook,
             whatsapp: user.whatsapp,
