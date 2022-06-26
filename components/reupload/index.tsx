@@ -110,10 +110,10 @@ export default function VerificationDocuments() {
     const readerDoc = (files: File[]) => {
         const neededDoc = files[0];
        
-        if (neededDoc.size > 5719878) {
+        if (neededDoc.size > 2000000) {
             toast({
                 status: 'warning',
-                description: 'Can\'t use an image greater than 5MB',
+                description: 'Can\'t use an image greater than 2MB',
                 title: 'Image Too Large',
                 position: 'top',
                 isClosable: true,
@@ -139,10 +139,10 @@ export default function VerificationDocuments() {
         
         // 5719878
         // 1000000
-        if (neededDoc.size > 5719878) {
+        if (neededDoc.size > 2000000) {
             toast({
                 status: 'warning',
-                description: 'Can\'t use an image greater than 5MB',
+                description: 'Can\'t use an image greater than 2MB',
                 title: 'Image Too Large',
                 position: 'top',
                 isClosable: true,
