@@ -232,6 +232,27 @@ export class UserService {
           this.logger.warn(typeof accountExisit);
           const jwt = await this.generateJWT(payload);
           delete accountExisit.password;
+          if (!accountExisit.verified) {
+            // generate code
+            const options = {
+              min: 100000,
+              max: 199999,
+              integer: true,
+            };
+            const code = randomNumber(options);
+            const newCode = await this.codeModel.create({
+              user_id: accountExisit._id,
+              code,
+            });
+
+            this.logger.log(newCode);
+
+            //send email
+            const sentEmail = await this.emailService.sendConfirmationEmail(
+              accountExisit,
+              code,
+            );
+          }
           return Return({
             error: false,
             statusCode: 200,
