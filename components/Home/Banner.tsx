@@ -452,18 +452,19 @@ export default function Banner() {
             <LeftNavbar />
             <div className="flex-1 flex flex-col justify-center xl:px-10 lg:px-10 md:px-5 sm:px-5  xl:py-0 lg:py-0 md:py-12 sm:py-12">
                 <div className="flex">
-                  <h1 className="xl:text-4xl lg:text-4xl md:text-4xl sm:text-4xl font-Circular-std-medium text-darkGreen">
+                  <h1 className="xl:text-4xl lg:text-4xl md:text-4xl sm:text-4xl font-Circular-std-medium text-darkGreen xl:w-4/5 lg:w-4/5 md:w-full sm:w-full ">
                       Discover The Best <span className="text-themeGreen">Vendors</span>  Near You!
                   </h1>
                   {/* <h1 className="xl:text-6xl lg:text-6xl md:text-4xl sm:text-4xl font-Circular-std-medium text-darkGreen mt-4">
                      
                   </h1> */}
                 </div>
-               <ol className='text-md text-gray-400 font-Cerebri-sans-book list-disc list-inside mt-5 ml-2'>
-                <li>Get your business registered for <b className='text-themeGreen'>FREE</b>.</li>
+                <p  className='text-md text-gray-400 font-Cerebri-sans-book list-disc list-inside mt-5 ml-2 xl:w-3/4 lg:w-3/4 md:w-full sm:w-full'>Get your business registered for <b className='text-themeGreen'>FREE</b>, noticed by potential investors, and gain global visibility on your business.</p>
+               {/* <ol>
+                <li>Get your business registered for <b >FREE</b>.</li>
                 <li>Get noticed by potential investors.</li>
                 <li> Get global visibility on your business. </li>
-               </ol>
+               </ol> */}
 
                 <div className="xl:w-9/12 lg:w-9/12 h-auto md:w-full sm:w-full mt-6">
                     <InputGroup>
