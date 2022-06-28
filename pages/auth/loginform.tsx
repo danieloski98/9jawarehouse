@@ -107,15 +107,16 @@ export default function LoginForm() {
                 return;
             } else if (json.statusCode === 200) {
 
-                // if (json.data.user.blocked) {
-                //     // save to localstorage
-                //     // const save = localStorage.setItem('9jauser', JSON.stringify(json.data.user));
-                //     // const token = localStorage.setItem('9jatoken', json.data.token);
-                //     // dispatch(updateUser(json.data.user))
-                //     // dispatch(updatetoken(json.data.token));
-                //     router.push(`/underreview?id=${json.data.user._id}`);
-                //     return;
-                // }
+                if (!json.data.user.verified) {
+                    // save to localstorage
+                    // const save = localStorage.setItem('9jauser', JSON.stringify(json.data.user));
+                    // const token = localStorage.setItem('9jatoken', json.data.token);
+                    // dispatch(updateUser(json.data.user))
+                    // dispatch(updatetoken(json.data.token));
+                    alert('Your email has not been verified. You will be taken to the email verification page, please check your email')
+                    router.push(`/auth/verify/${json.data.user._id}`);
+                    return;
+                }
                 // if (!json.data.user.pin) {
                 //     // save to localstorage
                 //     const save = localStorage.setItem('9jauser', JSON.stringify(json.data.user));
@@ -130,8 +131,8 @@ export default function LoginForm() {
                 // alert(json.successMessage);
                 
                 // save to localstorage
-                const save = localStorage.setItem('9jauser', JSON.stringify(json.data.user));
-                const token = localStorage.setItem('9jatoken', json.data.token);
+                // const save = localStorage.setItem('9jauser', JSON.stringify(json.data.user));
+                // const token = localStorage.setItem('9jatoken', json.data.token);
 
                 dispatch(updateUser(json.data.user))
                 dispatch(updatetoken(json.data.token));
