@@ -117,7 +117,7 @@ export default function LoginForm() {
                     router.push(`/auth/verify/${json.data.user._id}`);
                     return;
                 }
-                if (json.data.user.verified && !json.data.user.pin) {
+                if (!json.data.user.pin) {
                     // save to localstorage
                     const save = localStorage.setItem('9jauser', JSON.stringify(json.data.user));
                     const token = localStorage.setItem('9jatoken', json.data.token);
