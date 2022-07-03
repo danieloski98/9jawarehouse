@@ -12,6 +12,7 @@ import { store } from '../store';
 import { Provider } from 'react-redux'
 import { QueryClientProvider, QueryClient } from 'react-query';
 import "react-responsive-carousel/lib/styles/carousel.min.css"; 
+import url from '../utils/url'
 
 export const queryClient = new QueryClient();
 
@@ -34,7 +35,7 @@ function FacebookPixel() {
 }
 
 function MyApp({ Component, pageProps }: AppProps) {
-
+console.log(url);
   return (
     <ChakraProvider>
       <QueryClientProvider client={queryClient}>
