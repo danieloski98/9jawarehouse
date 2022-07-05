@@ -205,8 +205,8 @@ export default function BigScreen({ states, services}: {states: IState[], servic
                 alert('You can only pick 3 images');
                 return
             }
-            if (files[0].size > 2000000) {
-                alert('Image size must not br greater than 2MB');
+            if (files[0].size > 5555000) {
+                alert('Image size must not br greater than 5MB');
                 return;
             }
             new Compressor(files[0], {
@@ -225,8 +225,8 @@ export default function BigScreen({ states, services}: {states: IState[], servic
             return;
         } 
         if (caller === 2) {
-            if (files[0].size > 2000000) {
-                alert('Image size must not br greater than 2MB');
+            if (files[0].size > 5555000) {
+                alert('Image size must not br greater than 5MB');
                 return;
             }
             new Compressor(files[0], {

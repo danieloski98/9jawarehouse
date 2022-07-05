@@ -121,8 +121,8 @@ export default function EditProfile({ next }: IProps) {
     }
 
  const filesProcessor = (files: any[]) => {
-  if (files[0].szie > 2000000) {
-    alert('Image size must not br greater than 2MB');
+  if (files[0].szie > 5555000) {
+    alert('Image size must not br greater than 5MB');
     return;
   } else {
     new Compressor(files[0], {
@@ -138,8 +138,8 @@ export default function EditProfile({ next }: IProps) {
   }
 
   const profileProcessor = (files: any[]) => {
-    if (files[0].size > 2000000) {
-      alert('Image size must not br greater than 2MB');
+    if (files[0].size > 5555000) {
+      alert('Image size must not br greater than 5MB');
       return;
     } else {
       new Compressor(files[0], {

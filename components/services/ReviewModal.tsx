@@ -243,8 +243,8 @@ export default function ReviewModal({ open, setOpen, id, user }: IProps) {
 
 
     const fileProcessor = (files: any[]) => {
-        if (files[0].size > 2000000) {
-            alert('Can\'t use an image greater than 2MB');
+        if (files[0].size > 5555000) {
+            alert('Can\'t use an image greater than 5MB');
             return;
         }
         new Compressor(files[0], {
