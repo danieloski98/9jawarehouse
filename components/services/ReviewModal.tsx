@@ -96,7 +96,7 @@ const CommentForm = ({formik, change, images, picker, user, deleteImage}: IComme
                                             animate={{ y: 0, opacity: 1 }}
                                             exit={{ y: -100, opacity: 0 }}
                                         className="mt-8">
-                                            <p className="text-md text-gray-500 font-light">Upload Pictures (Optional) (2MB max size)</p>
+                                            <p className="text-md text-gray-500 font-light">Upload Pictures (Optional) (5MB max size)</p>
                                             <button onClick={() => picker()} className="w-full h-12 bg-green-100 text-themeGreen mt-2">Tap To Upload Picture</button>
                                         </motion.div>
                                     )   

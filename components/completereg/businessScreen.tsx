@@ -84,7 +84,7 @@ export default function BusinessInfo({ next, images, picker, profilePic, formik,
         </p>
 
         <div className="flex flex-col mt-8">
-            <p className="text-sm font-semibold text-gray-500 mt-4">Add featured images (3 images maximum) (2MB max image size)</p>
+            <p className="text-sm font-semibold text-gray-500 mt-4">Add featured images (3 images maximum) (5MB max image size)</p>
             <div className="w-auto h-32 overflow-x-scroll overflow-y-hidden flex mt-6 ">
 
                 {images.length < 1 && (

@@ -274,7 +274,7 @@ export default function EditProfile({ next }: IProps) {
           </p>
 
           {/* featured images */}
-          <p className="mt-4">2MB max</p>
+          <p className="mt-4">5MB max</p>
           <div className="w-auto h-32 overflow-x-auto overflow-y-hidden flex mt-2 flex-nowrap">
             {imgs.map((item, index) => (
               <div className="w-32 min-w-max max-w-md h-full overflow-hidden mr-4 " key={index.toString()}>
