@@ -352,7 +352,7 @@ const verify = async() => {
                         {user.blocked && (
                             <div className="w-full xl:h-20 lg:h-20 md:h-40 sm:h-40 bg-red-300 flex xl:flex-row lg:flex-row md:flex-col sm:flex-col justify-center items-center xl:mt-20 lg:mt-20 md:mt-16 sm:mt-16">
 
-                                {user.verification_document === "" ? <p className="text-white font-bold">For your account to be visible to everyone, upload a verification documentation.</p> : <p className="text-white font-bold">Your account is currently under review.</p>}
+                                {user.verification_document === "" ? <p className="text-white font-bold sm:px-4 sm:text-center">For your account to be visible to everyone, upload a verification document.</p> : <p className="text-white font-bold">Your account is currently under review.</p>}
                                 {user.verification_document === "" && (
                                     <button onClick={sendCodee} className='w-40 h-10 rounded border-2 border-white text-white font-Circular-std-book xl:ml-5 lg:ml-5 sm:mt-5 md:mt-5 xl:mt-0 lg:mt-0'>Upload Documents</button>
                                 )}
