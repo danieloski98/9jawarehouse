@@ -58,7 +58,7 @@ export default function EditUserProfileModal({close, user}: IProps) {
             state: user.state,
             business_name: user.business_name,
             business_description: user.business_description,
-            instagram: user.linkedin,
+            instagram: user.instagram,
             facebook: user.facebook,
             whatsapp: user.whatsapp,
             twitter: user.twitter,
