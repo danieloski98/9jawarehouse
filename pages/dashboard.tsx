@@ -261,6 +261,7 @@ const verify = async() => {
 
         {/* verification Modal */}
 
+
         <Modal isOpen={verifyModal} onClose={() => setVerifyModal(false)} isCentered={true}>
             <ModalOverlay />
             <ModalContent>
