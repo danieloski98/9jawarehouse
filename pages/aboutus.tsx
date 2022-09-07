@@ -44,7 +44,7 @@ export default function AboutUs() {
                     </p>
                 </div> */}
 
-                <div className="w-full flex flex-col mt-12 mb-12 xl:items-start lg:items-start md:items-center sm:items-center ">
+                {/* <div className="w-full flex flex-col mt-12 mb-12 xl:items-start lg:items-start md:items-center sm:items-center ">
                     <p className="text-4xl font-Circular-std-medium text-themeGreen">Meet the Team</p>
                     <div className="w-full grid xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-1 sm:grid-cols-1 mt-6">
 
@@ -77,7 +77,7 @@ export default function AboutUs() {
 
                        
                     </div>
-                </div>
+                </div> */}
 
             </div>
         </div>
